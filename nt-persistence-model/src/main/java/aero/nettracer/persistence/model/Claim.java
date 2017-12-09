@@ -14,10 +14,11 @@ import org.hibernate.annotations.Proxy;
 
 @Entity
 @DiscriminatorValue("NTCLAIM")
-@Proxy(lazy = true)
 public class Claim extends FsClaim {
+
+
 	
-	public Claim(){
+	/*public Claim(){
 		super();
 	}
 	
@@ -108,5 +109,5 @@ public class Claim extends FsClaim {
 	
 	public int getFraudStatusId() {
 		return super.getFraudStatusId();
-	} 
+	} */
 }

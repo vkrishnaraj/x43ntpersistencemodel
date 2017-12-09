@@ -5,38 +5,36 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderColumn;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
-import org.hibernate.annotations.IndexColumn;
-
-//for auto checklist feature
 
 @Entity
-@Table(name = "CHECKLIST_TASK")
+@Table(name = "checklist_task")
 @Cache(usage = CacheConcurrencyStrategy.READ_ONLY)
-
 public class ChecklistTask {
-	private long id;
-	//private long version_id;
-	private long order_id;
-	private String description;  // to store resource key
 
-	private ChecklistVersion checklistVersion;   // an task belongs to a task_version
-	private List<ChecklistTaskOption> checklistTaskOptions;  //a task has options
+	private long id;
+	private String description;
+	private long orderId;
+	private ChecklistVersion checklistVersion;
+
+	//Mapped entites
+	private List<ChecklistTaskOption> checklistTaskOptions;
+
+	//Transient Fields
+	private IncidentChecklist snapshotData;
 
 	@Id
 	@GeneratedValue
-	@Column(name = "Task_ID")
+	@Column(name = "task_id")
 	public long getId() {
 		return id;
 	}
@@ -45,23 +43,7 @@ public class ChecklistTask {
 		this.id = id;
 	}
 
-/*	@Column(nullable = false)
-	public long getVersion_id() {
-		return version_id;
-	}
-
-	public void setVersion_id(long version_id) {
-		this.version_id = version_id;
-	}*/
-	
-	public long getOrder_id() {
-		return order_id;
-	}
-
-	public void setOrder_id(long order_id) {
-		this.order_id = order_id;
-	}
-	
+	@Column(name = "description")
 	public String getDescription() {
 		return description;
 	}
@@ -69,9 +51,18 @@ public class ChecklistTask {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	
+
+	@Column(name = "order_id")
+	public long getOrderId() {
+		return orderId;
+	}
+
+	public void setOrderId(long orderId) {
+		this.orderId = orderId;
+	}
+
 	@ManyToOne
-	@JoinColumn(name = "Version_ID")
+	@JoinColumn(name = "version_id")
 	public ChecklistVersion getChecklistVersion() {
 		return checklistVersion;
 	}
@@ -79,13 +70,11 @@ public class ChecklistTask {
 	public void setChecklistVersion(ChecklistVersion checklistVersion) {
 		this.checklistVersion = checklistVersion;
 	}
-	
-	@OneToMany(mappedBy="checklistTask", 
-            targetEntity=ChecklistTaskOption.class,
-             fetch=FetchType.EAGER,
-              cascade=CascadeType.ALL)
-    @IndexColumn(name="order_id")
-    @Fetch(FetchMode.SELECT)
+
+	@OneToMany(mappedBy="checklistTask",
+			targetEntity=ChecklistTaskOption.class,
+			cascade=CascadeType.ALL)
+	@OrderColumn(name="order_id")
 	public List<ChecklistTaskOption> getChecklistTaskOptions() {
 		return checklistTaskOptions;
 	}
@@ -93,28 +82,13 @@ public class ChecklistTask {
 	public void setChecklistTaskOptions(List<ChecklistTaskOption> checklistTaskOptions) {
 		this.checklistTaskOptions = checklistTaskOptions;
 	}
-	
-	private IncidentChecklist snapshotData;  // to get the state of the task
-	
+
 	@Transient
 	public IncidentChecklist getSnapshotData() {
 		return snapshotData;
 	}
+
 	public void setSnapshotData(IncidentChecklist snapshotData) {
 		this.snapshotData = snapshotData;
 	}
-	
-	private String dispName;  // to replace description with this key for internationalization
-	
-	/*@Transient
-	public String getDispName() {
-		return setDispNameByKey(description);
-	}
-	private String setDispNameByKey( String value ){  
-		String result = null;
-		MessageSource messages = SpringUtils.getMessageSource();
-		result = "" +  messages.getMessage("com.bagnet.nettracer.tracing.resources.ApplicationResources", null, Locale.US );
-		return result;
-	} */
-
 }

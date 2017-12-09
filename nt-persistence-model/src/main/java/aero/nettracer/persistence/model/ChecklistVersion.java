@@ -1,53 +1,44 @@
 package aero.nettracer.persistence.model;
 
-import java.io.Serializable;
 import java.util.List;
 
-import aero.nettracer.persistence.model.i8n.LocaleBasedObject;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderColumn;
 import javax.persistence.Table;
-import javax.persistence.Transient;
-
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
-import org.hibernate.annotations.IndexColumn;
-
-//for auto checklist feature
 
 @Entity
-@Table(name = "CHECKLIST_VERSION")
+@Table(name = "checklist_version")
 @Cache(usage = CacheConcurrencyStrategy.READ_ONLY)
-public class ChecklistVersion extends LocaleBasedObject implements Serializable {
+public class ChecklistVersion {
 	private static final long serialVersionUID = 1L;
 	
-	private long version_id;
+	private long id;
 	private boolean active;
 	private List<ChecklistTask> checklistTasks;
 
 	@Id
 	@GeneratedValue
-	public long getVersion_id() {
-		return version_id;
+	@Column(name = "version_id")
+	public long getId() {
+		return id;
 	}
 
 
-	public void setVersion_id(long version_id) {
-		this.version_id = version_id;
+	public void setId(long version_id) {
+		this.id = id;
 	}
 
-	@Column(nullable = false)
+	@Column(name = "active", nullable = false)
 	public boolean isActive() {
 		return active;
 	}
-
 
 	public void setActive(boolean active) {
 		this.active = active;
@@ -55,10 +46,8 @@ public class ChecklistVersion extends LocaleBasedObject implements Serializable 
 
 	@OneToMany(mappedBy="checklistVersion",
             targetEntity=ChecklistTask.class,
-             fetch=FetchType.EAGER,
               cascade=CascadeType.ALL)
-    @IndexColumn(name="order_id")
-    @Fetch(FetchMode.SELECT)
+    @OrderColumn(name="order_id")
 	public List<ChecklistTask> getChecklistTasks() {
 		return checklistTasks;
 	}
@@ -67,9 +56,5 @@ public class ChecklistVersion extends LocaleBasedObject implements Serializable 
 		this.checklistTasks = checklistTasks;
 	}
 	
-	@Override
-	@Transient
-	public String getKey() {
-		return "" + serialVersionUID;
-	}
+
 }
