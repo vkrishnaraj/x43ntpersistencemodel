@@ -16,52 +16,18 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 @Table(name = "airport")
 @Cacheable
 @Cache(usage = CacheConcurrencyStrategy.READ_ONLY)
-public class Airport implements Serializable {
-	private static final long serialVersionUID = -8920424497356057481L;
-	
-	@Id @GeneratedValue
-	@Column(name="id")
+public class Airport {
+
 	private int id;
-	
-	@Column(length = 3)
-	private String airport_code;
-	
-	@Column(length = 255)
-	private String airport_desc;
-	
-	@Column(length = 2)
+	private String airportCode;
+	private String airportDesc;
 	private String locale;
-	
-	@Column(length = 3)
 	private String country;
-	
-	@Column(length = 255)
 	private String timezone;
 
-	public String getLocale() {
-		return locale;
-	}
-
-	public void setLocale(String locale) {
-		this.locale = locale;
-	}
-
-	public String getAirport_code() {
-		return airport_code;
-	}
-
-	public void setAirport_code(String airport_code) {
-		this.airport_code = airport_code;
-	}
-
-	public String getAirport_desc() {
-		return airport_desc;
-	}
-
-	public void setAirport_desc(String airport_desc) {
-		this.airport_desc = airport_desc;
-	}
-
+	@Id
+	@GeneratedValue
+	@Column(name = "id")
 	public int getId() {
 		return id;
 	}
@@ -70,6 +36,34 @@ public class Airport implements Serializable {
 		this.id = id;
 	}
 
+	@Column(name = "airport_code")
+	public String getAirportCode() {
+		return airportCode;
+	}
+
+	public void setAirportCode(String airportCode) {
+		this.airportCode = airportCode;
+	}
+
+	@Column(name = "airport_desc")
+	public String getAirportDesc() {
+		return airportDesc;
+	}
+
+	public void setAirportDesc(String airportDesc) {
+		this.airportDesc = airportDesc;
+	}
+
+	@Column(name = "locale")
+	public String getLocale() {
+		return locale;
+	}
+
+	public void setLocale(String locale) {
+		this.locale = locale;
+	}
+
+	@Column(name = "country")
 	public String getCountry() {
 		return country;
 	}
@@ -78,6 +72,7 @@ public class Airport implements Serializable {
 		this.country = country;
 	}
 
+	@Column(name = "timezone")
 	public String getTimezone() {
 		return timezone;
 	}

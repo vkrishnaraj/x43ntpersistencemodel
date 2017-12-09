@@ -35,7 +35,7 @@ public class Passenger implements Serializable {
 
 	private final Logger log = LoggerFactory.getLogger(getClass());
 	
-	private int Passenger_ID;
+	private int passengerId;
 	private String jobtitle;
 	private int salutation;
 	private String firstname;

@@ -6,206 +6,104 @@
  */
 package aero.nettracer.persistence.model;
 
-import java.io.Serializable;
+import java.sql.Timestamp;
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.Transient;
-import org.hibernate.annotations.Proxy;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
 @Table(name = "agent")
-public class Agent implements Serializable {
+public class Agent {
 
-	private static final long serialVersionUID = 6039540000777064696L;
-
-	private int Agent_ID;
-	private Station station;
-	private int usergroup_id;
-	private String firstname;
-	private String mname;
-	private String lastname;
+	private int id;
+	private String firstName;
+	private String middleName;
+	private String lastName;
 	private int timeout;
-	private String username;
+	private String userName;
 	private String password;
 	private boolean active;
-	private String defaultlocale;
-	private String currentlocale;
-	private String defaultcurrency;
-	private String defaulttimezone;
-	private String currenttimezone;
+	private Station station;
+	private String companyCode;
+	private String defaultLocale;
+	private String currentLocale;
+	private String defaultCurrency;
+	private String defaultTimezone;
+	private String currentTimezone;
+	private NTDateFormat dateFormat;
+	private NTTimeFormat timeFormat;
 	private Work_Shift shift;
-	private NTDateFormat dateformat;
-	private NTTimeFormat timeformat;
-	private String companycode_ID;
-	private int is_wt_user;
+	private UserGroup userGroup;
+	private Timestamp lastLoggedOn;
+	private int online;
+	private Date lastPasswordResetDate;
+	private int wtUser;
+	private boolean wsEnabled;
+	private int maxWsSessions;
+	private boolean webEnabled;
 	private boolean resetPassword;
-	private int failedLogins;
-
-	private Date last_logged_on;
-	private int is_online;
-	private Date last_pass_reset_date;
 	private boolean accountLocked;
-
-	private boolean web_enabled;
-	private boolean ws_enabled;
-	private int max_ws_sessions;
-	private UserGroup cachedGroup = null;
-
+	private int failedLogins;
 	private boolean inboundQueue;
-	private double loadpercentage;
+	private double loadPercentage;
 	private boolean inbound;
 	private boolean acaa;
 	private boolean damaged;
-
-	private boolean load_unassigned;
+	private boolean loadUnassigned;
 
 	public Agent() { }
 
-	public Agent(int Agent_ID) {
-		this.Agent_ID = Agent_ID;
-	}
-
-	@ManyToOne
-	@JoinColumn(name = "shift_id")
-	public Work_Shift getShift() {
-		return shift;
-	}
-
-
-	public void setShift(Work_Shift shift) {
-		this.shift = shift;
-	}
-
-	@ManyToOne
-	@JoinColumn(name = "dateformat_ID")
-	public NTDateFormat getDateformat() {
-		return dateformat;
-	}
-
-
-	public void setDateformat(NTDateFormat dateformat) {
-		this.dateformat = dateformat;
-	}
-
-	@ManyToOne
-	@JoinColumn(name = "timeformat_ID")
-	public NTTimeFormat getTimeformat() {
-		return timeformat;
-	}
-
-
-	public void setTimeformat(NTTimeFormat timeformat) {
-		this.timeformat = timeformat;
-	}
-
-	@Transient
-	public String getInitial() {
-		StringBuffer sb = new StringBuffer(3);
-		if (firstname != null && firstname.length() > 1) {
-			sb.append(firstname.substring(0, 1).toUpperCase());
-		}
-		if (mname != null && mname.length() > 1) {
-			sb.append(mname.substring(0, 1).toUpperCase());
-		}
-		if (lastname != null && lastname.length() > 1) {
-			sb.append(lastname.substring(0, 1).toUpperCase());
-		}
-		return sb.toString();
-	}
-
-
-	public String getMname() {
-		return mname;
-	}
-
-
-	public void setMname(String mname) {
-		this.mname = mname;
-	}
-
-
-	public boolean isActive() {
-		return active;
-	}
-
-
-	public void setActive(boolean active) {
-		this.active = active;
+	public Agent(int id) {
+		this.id = id;
 	}
 
 	@Id
 	@GeneratedValue
-	public int getAgent_ID() {
-		return Agent_ID;
+	@Column(name = "agent_id")
+	public int getId() {
+		return id;
 	}
 
-
-	public void setAgent_ID(int agent_ID) {
-		Agent_ID = agent_ID;
+	public void setId(int id) {
+		this.id = id;
 	}
 
-	public String getCurrentlocale() {
-		return currentlocale;
+	@Column(name = "firstname")
+	public String getFirstName() {
+		return firstName;
 	}
 
-	public void setCurrentlocale(String currentlocale) {
-		this.currentlocale = currentlocale;
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
 	}
 
-	public String getDefaultcurrency() {
-		return defaultcurrency;
+	@Column(name = "mname")
+	public String getMiddleName() {
+		return middleName;
 	}
 
-	public String getCompanycode_ID() {
-		return companycode_ID;
+	public void setMiddleName(String middleName) {
+		this.middleName = middleName;
 	}
 
-	public void setCompanycode_ID(String companycode_ID) {
-		this.companycode_ID = companycode_ID;
+	@Column(name = "lastname")
+	public String getLastName() {
+		return lastName;
 	}
 
-	public void setDefaultcurrency(String defaultcurrency) {
-		this.defaultcurrency = defaultcurrency;
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
 	}
 
-	public String getDefaultlocale() {
-		return defaultlocale;
-	}
-
-	public void setDefaultlocale(String defaultlocale) {
-		this.defaultlocale = defaultlocale;
-	}
-
-	public String getFirstname() {
-		return firstname;
-	}
-
-	public void setFirstname(String firstname) {
-		this.firstname = firstname;
-	}
-
-	public String getLastname() {
-		return lastname;
-	}
-
-	public void setLastname(String lastname) {
-		this.lastname = lastname;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
+	@Column(name = "timeout")
 	public int getTimeout() {
 		return timeout;
 	}
@@ -214,51 +112,35 @@ public class Agent implements Serializable {
 		this.timeout = timeout;
 	}
 
-	public String getUsername() {
-		return username;
+	@Column(name = "username")
+	public String getUserName() {
+		return userName;
 	}
 
-	public void setUsername(String username) {
-		this.username = username;
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 
-	public String getCurrenttimezone() {
-		return currenttimezone;
+	@Column(name = "password")
+	public String getPassword() {
+		return password;
 	}
 
-	public void setCurrenttimezone(String currenttimezone) {
-		this.currenttimezone = currenttimezone;
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
-	public String getDefaulttimezone() {
-		return defaulttimezone;
+	@Column(name = "active")
+	public boolean isActive() {
+		return active;
 	}
 
-	public void setDefaulttimezone(String defaulttimezone) {
-		this.defaulttimezone = defaulttimezone;
-	}
-
-	public int getUsergroup_id() {
-		return usergroup_id;
-	}
-
-	public void setUsergroup_id(int usergroup_id) {
-		this.usergroup_id = usergroup_id;
-		cachedGroup = null;
-	}
-
-	@Transient
-	public UserGroup getGroup() {
-		return cachedGroup;
-	}
-
-	public void setGroup(UserGroup group) {
-		this.cachedGroup = group;
-		this.usergroup_id = group.getUserGroup_ID();
+	public void setActive(boolean active) {
+		this.active = active;
 	}
 
 	@ManyToOne
-	@JoinColumn(name = "station_ID")
+	@JoinColumn(name = "station_id")
 	public Station getStation() {
 		return station;
 	}
@@ -266,142 +148,230 @@ public class Agent implements Serializable {
 	public void setStation(Station station) {
 		this.station = station;
 	}
-	
-	public int getIs_online() {
-		return is_online;
+
+	@Column(name = "companycode_id")
+	public String getCompanyCode() {
+		return companyCode;
 	}
 
-	public void setIs_online(int is_online) {
-		this.is_online = is_online;
+	public void setCompanyCode(String companyCode) {
+		this.companyCode = companyCode;
 	}
 
-	public Date getLast_logged_on() {
-		return last_logged_on;
+	@Column(name = "defaultlocale")
+	public String getDefaultLocale() {
+		return defaultLocale;
 	}
 
-	public void setLast_logged_on(Date last_logged_on) {
-		this.last_logged_on = last_logged_on;
-	}
-	
-
-	public Date getLast_pass_reset_date() {
-		return last_pass_reset_date;
+	public void setDefaultLocale(String defaultLocale) {
+		this.defaultLocale = defaultLocale;
 	}
 
-	public void setLast_pass_reset_date(Date last_pass_reset_date) {
-		this.last_pass_reset_date = last_pass_reset_date;
-	}
-	
-	
-	public boolean isWeb_enabled() {
-		return web_enabled;
+	@Column(name = "currentlocale")
+	public String getCurrentLocale() {
+		return currentLocale;
 	}
 
-	public void setWeb_enabled(boolean web_enabled) {
-		this.web_enabled = web_enabled;
+	public void setCurrentLocale(String currentLocale) {
+		this.currentLocale = currentLocale;
 	}
 
-	public boolean isWs_enabled() {
-		return ws_enabled;
+	@Column(name = "defaultcurrency")
+	public String getDefaultCurrency() {
+		return defaultCurrency;
 	}
 
-	public void setWs_enabled(boolean ws_enabled) {
-		this.ws_enabled = ws_enabled;
-	}
-	
-	public int getMax_ws_sessions() {
-		return max_ws_sessions;
+	public void setDefaultCurrency(String defaultCurrency) {
+		this.defaultCurrency = defaultCurrency;
 	}
 
-	public void setMax_ws_sessions(int max_ws_sessions) {
-		this.max_ws_sessions = max_ws_sessions;
+	@Column(name = "defaulttimezone")
+	public String getDefaultTimezone() {
+		return defaultTimezone;
 	}
 
-	public int getIs_wt_user() {
-		return is_wt_user;
+	public void setDefaultTimezone(String defaultTimezone) {
+		this.defaultTimezone = defaultTimezone;
 	}
 
-	public void setIs_wt_user(int is_wt_user) {
-		this.is_wt_user = is_wt_user;
+	@Column(name = "currenttimezone")
+	public String getCurrentTimezone() {
+		return currentTimezone;
 	}
-	
-	public boolean isReset_password() {
+
+	public void setCurrentTimezone(String currentTimezone) {
+		this.currentTimezone = currentTimezone;
+	}
+
+	@ManyToOne
+	@JoinColumn(name = "dateformat_id")
+	public NTDateFormat getDateFormat() {
+		return dateFormat;
+	}
+
+	public void setDateFormat(NTDateFormat dateFormat) {
+		this.dateFormat = dateFormat;
+	}
+
+	@ManyToOne
+	@JoinColumn(name = "timeformat_id")
+	public NTTimeFormat getTimeFormat() {
+		return timeFormat;
+	}
+
+	public void setTimeFormat(NTTimeFormat timeFormat) {
+		this.timeFormat = timeFormat;
+	}
+
+	@ManyToOne
+	@JoinColumn(name = "shift_id")
+	public Work_Shift getShift() {
+		return shift;
+	}
+
+	public void setShift(Work_Shift shift) {
+		this.shift = shift;
+	}
+
+	@ManyToOne
+	@JoinColumn(name = "usergroup_id")
+	public UserGroup getUserGroup() {
+		return userGroup;
+	}
+
+	public void setUserGroup(UserGroup userGroup) {
+		this.userGroup = userGroup;
+	}
+
+	@Column(name = "last_logged_on")
+	@Temporal(TemporalType.TIMESTAMP)
+	public Timestamp getLastLoggedOn() {
+		return lastLoggedOn;
+	}
+
+	public void setLastLoggedOn(Timestamp lastLoggedOn) {
+		this.lastLoggedOn = lastLoggedOn;
+	}
+
+	@Column(name = "is_online")
+	public int getOnline() {
+		return online;
+	}
+
+	public void setOnline(int online) {
+		this.online = online;
+	}
+
+	@Column(name = "last_pass_reset_date")
+	public Date getLastPasswordResetDate() {
+		return lastPasswordResetDate;
+	}
+
+	public void setLastPasswordResetDate(Date lastPasswordResetDate) {
+		this.lastPasswordResetDate = lastPasswordResetDate;
+	}
+
+	@Column(name = "is_wt_user")
+	public int getWtUser() {
+		return wtUser;
+	}
+
+	public void setWtUser(int wtUser) {
+		this.wtUser = wtUser;
+	}
+
+	@Column(name = "ws_enabled")
+	public boolean isWsEnabled() {
+		return wsEnabled;
+	}
+
+	public void setWsEnabled(boolean wsEnabled) {
+		this.wsEnabled = wsEnabled;
+	}
+
+	@Column(name = "max_ws_sessions")
+	public int getMaxWsSessions() {
+		return maxWsSessions;
+	}
+
+	public void setMaxWsSessions(int maxWsSessions) {
+		this.maxWsSessions = maxWsSessions;
+	}
+
+	@Column(name = "web_enabled")
+	public boolean isWebEnabled() {
+		return webEnabled;
+	}
+
+	public void setWebEnabled(boolean webEnabled) {
+		this.webEnabled = webEnabled;
+	}
+
+	@Column(name = "reset_password")
+	public boolean isResetPassword() {
 		return resetPassword;
 	}
 
-	public void setReset_password(boolean resetPassword) {
+	public void setResetPassword(boolean resetPassword) {
 		this.resetPassword = resetPassword;
 	}
 
-	public int getFailed_logins() {
-		return failedLogins;
-	}
-
-	public void setFailed_logins(int failedLogins) {
-		this.failedLogins = failedLogins;
-	}
-	
-	public String toString() {
-		StringBuffer sb = new StringBuffer(2000);
-		sb.append("Agent ID=" + this.getAgent_ID() + " fname=" + this.getFirstname() + " lname="
-				+ this.getLastname() + " timeout=" + this.getTimeout() + " username=" + this.getUsername()
-				+ " password=" + this.getPassword() + " active=" + this.isActive() + " dlocale="
-				+ this.getDefaultlocale() + " clocale=" + this.getCurrentlocale() + " dcure="
-				+ this.getDefaultcurrency());
-		sb.append("\n\t " + this.getStation());
-		return sb.toString();
-	}
-
-	public String toXML() {
-		StringBuffer sb = new StringBuffer("<agent>");
-		sb.append("<Agent_ID>" + Agent_ID + "</Agent_ID>");
-		sb.append("<username>" + username + "</username>");
-		sb.append(station.toXML());
-		sb.append("</agent>");
-		return sb.toString();
-	}
-
-	public boolean isAccount_locked() {
+	@Column(name = "account_locked")
+	public boolean isAccountLocked() {
 		return accountLocked;
 	}
 
-	public void setAccount_locked(boolean accountLocked) {
+	public void setAccountLocked(boolean accountLocked) {
 		this.accountLocked = accountLocked;
 	}
 
+	@Column(name = "failed_logins")
+	public int getFailedLogins() {
+		return failedLogins;
+	}
+
+	public void setFailedLogins(int failedLogins) {
+		this.failedLogins = failedLogins;
+	}
+
+	@Column(name = "inboundQueue")
 	public boolean isInboundQueue() {
 		return inboundQueue;
 	}
 
 	public void setInboundQueue(boolean inboundQueue) {
 		this.inboundQueue = inboundQueue;
-	}	
-
-	public double getLoadpercentage() {
-		return loadpercentage;
 	}
 
-	public void setLoadpercentage(double loadpercentage) {
-		this.loadpercentage = loadpercentage;
-	}	
-	
-	public boolean getInbound() {
+	@Column(name = "loadpercentage")
+	public double getLoadPercentage() {
+		return loadPercentage;
+	}
+
+	public void setLoadPercentage(double loadPercentage) {
+		this.loadPercentage = loadPercentage;
+	}
+
+	@Column(name = "inbound")
+	public boolean isInbound() {
 		return inbound;
 	}
 
 	public void setInbound(boolean inbound) {
 		this.inbound = inbound;
-	}	
+	}
 
-	public boolean getAcaa() {
+	@Column(name = "acaa")
+	public boolean isAcaa() {
 		return acaa;
 	}
 
 	public void setAcaa(boolean acaa) {
 		this.acaa = acaa;
-	}	
+	}
 
-	public boolean getDamaged() {
+	@Column(name = "damaged")
+	public boolean isDamaged() {
 		return damaged;
 	}
 
@@ -409,11 +379,12 @@ public class Agent implements Serializable {
 		this.damaged = damaged;
 	}
 
-	public boolean isLoad_unassigned() {
-		return load_unassigned;
+	@Column(name = "load_unassigned")
+	public boolean isLoadUnassigned() {
+		return loadUnassigned;
 	}
 
-	public void setLoad_unassigned(boolean load_unassigned) {
-		this.load_unassigned = load_unassigned;
+	public void setLoadUnassigned(boolean loadUnassigned) {
+		this.loadUnassigned = loadUnassigned;
 	}
 }

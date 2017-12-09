@@ -44,7 +44,7 @@ public class OHD implements Serializable {
 	private static final long serialVersionUID = -6651594161173132503L;
 	
 	
-	private String OHD_ID;
+	private String ohdId;
 	
 	
 	private Station foundAtStation;

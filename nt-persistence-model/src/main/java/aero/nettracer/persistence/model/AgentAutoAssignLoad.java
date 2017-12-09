@@ -7,7 +7,7 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = "agent_autoassign_load")
-public class AgentAutoAssignLoad implements Serializable {
+public class AgentAutoAssignLoad {
 
 	private AgentIncidentGroup agentIncidentGroup;
 	private int weight;

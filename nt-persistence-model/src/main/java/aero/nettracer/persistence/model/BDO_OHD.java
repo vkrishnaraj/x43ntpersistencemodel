@@ -1,7 +1,5 @@
 package aero.nettracer.persistence.model;
 
-import java.io.Serializable;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,24 +7,19 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 @Entity
-public class BDO_OHD implements Serializable {
+@Table(name = "bdo_ohd")
+public class BDO_OHD {
 
-
-    private static final long serialVersionUID = 5987745309850770831L;
-    @Id
-    @GeneratedValue
     private int id;
-
-    @ManyToOne
-    @JoinColumn(name = "bdo_ID")
     private BDO bdo;
-
-    @OneToOne
-    @JoinColumn(name = "ohd_id")
     private OHD ohd;
 
+    @Id
+    @GeneratedValue
+    @Column(name = "id")
     public int getId() {
         return id;
     }
@@ -35,6 +28,8 @@ public class BDO_OHD implements Serializable {
         this.id = id;
     }
 
+    @ManyToOne
+    @JoinColumn(name = "bdo_id", updatable = false, nullable = false)
     public BDO getBdo() {
         return bdo;
     }
@@ -43,6 +38,8 @@ public class BDO_OHD implements Serializable {
         this.bdo = bdo;
     }
 
+    @OneToOne
+    @JoinColumn(name = "ohd_id", updatable = false, nullable = false)
     public OHD getOhd() {
         return ohd;
     }

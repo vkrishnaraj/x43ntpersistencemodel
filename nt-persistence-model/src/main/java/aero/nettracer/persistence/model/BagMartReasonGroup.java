@@ -1,15 +1,15 @@
 package aero.nettracer.persistence.model;
 
-import org.hibernate.annotations.Proxy;
-
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
 @Table(name = "company_irregularity_code_groups")
-public class BagMartReasonGroup
-{
-    @Id
-    @GeneratedValue
+public class BagMartReasonGroup {
+
     private int id;
     private String description;
 
@@ -29,6 +29,9 @@ public class BagMartReasonGroup
     public final static String REROUTE_ERROR="Reroute Error";
     public final static String TRANSFER_ERROR="Transfer Error";
 
+    @Id
+    @GeneratedValue
+    @Column(name = "id")
     public int getId() {
         return id;
     }
@@ -37,14 +40,7 @@ public class BagMartReasonGroup
         this.id = id;
     }
 
-    public String getReasonGroup() {
-        return description;
-    }
-
-    public void setReasonGroup(String description) {
-        this.description = description;
-    }
-
+    @Column(name = "description")
     public String getDescription() {
         return description;
     }

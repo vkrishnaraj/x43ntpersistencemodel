@@ -1,549 +1,186 @@
-/*
- * Created on Jul 14, 2004
- *
- * Window - Preferences - Java - Code Style - Code Templates
- */
 package aero.nettracer.persistence.model;
 
-import java.io.Serializable;
-import java.util.ArrayList;
+import java.sql.Time;
+import java.sql.Timestamp;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
-import java.util.TimeZone;
 
-import aero.nettracer.commons.constant.GenericConstants;
-import aero.nettracer.commons.utils.CommonsConstants;
-import aero.nettracer.commons.utils.GenericDateUtils;
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
+import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.persistence.Transient;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
-
-/**
- * @author Administrator
- */
+import org.hibernate.annotations.OrderBy;
 
 @Entity
-public class BDO implements Serializable {
+@Table(name = "bdo")
+public class BDO {
 
-	
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 808096229983825702L;
-	
+	private int id;
+	private Incident incident;
+	private Agent agent;
+	private Date createDate;
+	private Time createTime;
+	private DeliverCompany deliverCompany;
+	private Deliver_ServiceLevel serviceLevel;
+	private Station station = new Station();
+	private String companyCode;
+	private Date deliveryDate;
+	private DeliveryIntegrationType deliveryIntegrationType;
+	private String deliveryIntegrationId;
+	private int integrationDeliverCompanyId;
+	private boolean canceled;
+	private Timestamp lastDeliveryUpdate;
+	private DeliveryStatusType deliveryStatus;
+	private double origDelivCost;
+	private Date pickupDate;
+	private Time pickupTime;
+	private double distance;
+	private int pickupTimezoneId;
+	private List<OHD> onhands;
+	private Set<BDO_Passenger> passengers;
+	private Set<Item> items;
+
 	@Id
 	@GeneratedValue
-	private int BDO_ID;
-	
-	@ManyToOne
-	@JoinColumn(name = "delivercompany_ID")
-	private DeliverCompany delivercompany;
+	@Column(name = "bdo_id")
+	public int getId() {
+		return id;
+	}
 
-	@ManyToOne
-	@JoinColumn(name = "servicelevel_ID")
-	private Deliver_ServiceLevel servicelevel;
-
-	@ManyToOne
-	@JoinColumn(name = "station_ID")
-	private Station station = new Station();
-
-	private String companycode_ID;
+	public void setId(int id) {
+		this.id = id;
+	}
 
 	@ManyToOne
-	@JoinColumn(name = "agent_ID", nullable = false)
-	private Agent agent;
-
-	@Temporal(value = TemporalType.DATE)
-	private Date createdate;
-
-	@Temporal(value = TemporalType.TIME)
-	private Date createtime;
-
-	@Temporal(value = TemporalType.DATE)
-	private Date deliverydate;
-
-	@Temporal(value = TemporalType.DATE)
-	private Date pickupdate;
-
-	@Temporal(value = TemporalType.TIME)
-	private Date pickuptime;
-
-	private int pickuptz_id;
-
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	@Fetch(FetchMode.SELECT)
-	@JoinColumn(name = "bdo_id")
-	private Set<BDO_OHD> bdoOhd;
-
-	@ManyToOne
-	@JoinColumn(name = "Incident_ID")
-	private Incident incident;
-
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	@org.hibernate.annotations.OrderBy(clause = "bdo_passenger_ID")
-	@Fetch(FetchMode.SELECT)
-	@JoinColumn(name = "bdo_ID")
-	private Set<BDO_Passenger> passengers; // passenger name and addresses
-
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	@org.hibernate.annotations.OrderBy(clause = "item_ID")
-	@Fetch(FetchMode.SELECT)
-	@JoinColumn(name = "bdo_id")
-	private Set<Item_BDO> item_bdo;
-
-	@Transient
-	private String _DATEFORMAT; // current login agent's date format
-
-	@Transient
-	private String _TIMEFORMAT; // current login agent's time format
-
-	@Transient
-	private TimeZone _TIMEZONE;
-
-	@Enumerated(EnumType.STRING)
-	private DeliveryIntegrationType delivery_integration_type;
-
-	private String delivery_integration_id;
-	private int integrationDelivercompany_ID;
-
-	@OneToOne
-	@JoinColumn(name="bdo_id", referencedColumnName="bdo_id")
-	private Remark remark;
-
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	@Fetch(FetchMode.SELECT)
-	@JoinColumn(name = "bdo_id")
-	private Set<ExpensePayout> expensePayouts;
-
-	private boolean canceled;
-
-	@Temporal(value = TemporalType.TIMESTAMP)
-	private Date lastDeliveryUpdate;
-
-	@Enumerated(EnumType.STRING)
-	private DeliveryStatusType deliveryStatus;
-
-	private double origDelivCost;
-	private double distance;
-
-	@Transient
-	private OHD ohd;
-
-
-	public Date getLastDeliveryUpdate() {
-  	return lastDeliveryUpdate;
-  }
-
-	public void setLastDeliveryUpdate(Date lastDeliveryUpdate) {
-  	this.lastDeliveryUpdate = lastDeliveryUpdate;
-  }
-
-
-	/**
-	 * @return Returns the passengers.
-	 */
-	public Set<BDO_Passenger> getPassengers() {
-		return passengers;
-	}
-
-	/**
-	 * @param passengers
-	 *          The passengers to set.
-	 */
-	public void setPassengers(Set<BDO_Passenger> passengers) {
-		this.passengers = passengers;
-	}
-
-	public Set<Item> getItems() {
-		LinkedHashSet<Item> set = new LinkedHashSet<Item>();
-		if (item_bdo != null) {
-			for (Item_BDO i: item_bdo) {
-				set.add(i.getItem());
-			}
-		}
-		return set;
-	}
-
-	/**
-	 * @return Returns the bagcount.
-	 */
-	public int getBagcount() {
-		if (item_bdo != null && item_bdo.size() > 0) return item_bdo.size();
-		else if (incident == null && bdoOhd != null) return bdoOhd.size();
-		else return 0;
-	}
-
-	/**
-	 * @return Returns the agent.
-	 */
-	public Agent getAgent() {
-		return agent;
-	}
-
-	/**
-	 * @param agent
-	 *          The agent to set.
-	 */
-	public void setAgent(Agent agent) {
-		this.agent = agent;
-	}
-
-	public String getAgentinit() {
-		return agent.getUsername();
-	}
-
-	/**
-	 * @return Returns the bDO_ID.
-	 */
-	public int getBDO_ID() {
-		return BDO_ID;
-	}
-
-	/**
-	 * @param bdo_id
-	 *          The bDO_ID to set.
-	 */
-	public void setBDO_ID(int bdo_id) {
-		BDO_ID = bdo_id;
-	}
-
-	public String getBDO_ID_ref() {
-		StringBuffer s = new StringBuffer();
-		s.append("BDO");
-		String num = Integer.toString(BDO_ID);
-		// padd new number to # digits that total length will equal to
-		// tracingconstants.incident_len
-		for (int i = 0; i < CommonsConstants.INCIDENT_LEN - num.length() - 3; i++) {
-			s.append("0");
-		}
-		s.append(num);
-		return s.toString();
-	}
-
-	/**
-	 * @return Returns the companycode_ID.
-	 */
-	public String getCompanycode_ID() {
-		return companycode_ID;
-	}
-
-	/**
-	 * @param companycode_ID
-	 *          The companycode_ID to set.
-	 */
-	public void setCompanycode_ID(String companycode_ID) {
-		this.companycode_ID = companycode_ID;
-	}
-
-	/**
-	 * @return Returns the createdate.
-	 */
-	public Date getCreatedate() {
-		return createdate;
-	}
-
-	/**
-	 * @param createdate
-	 *          The createdate to set.
-	 */
-	public void setCreatedate(Date createdate) {
-		this.createdate = createdate;
-	}
-
-	/**
-	 * @return Returns the createtime.
-	 */
-	public Date getCreatetime() {
-		return createtime;
-	}
-
-	/**
-	 * @param createtime
-	 *          The createtime to set.
-	 */
-	public void setCreatetime(Date createtime) {
-		this.createtime = createtime;
-	}
-
-	public String getDispcreatetime() {
-		Date tempdate = GenericDateUtils.convertToDate( GenericDateUtils.formatDate(getCreatedate(), GenericConstants.DB_DATEFORMAT, null, null) + " "
-				+ GenericDateUtils.formatDate(getCreatetime(), GenericConstants.DB_TIMEFORMAT, null, null),GenericConstants.DB_DATETIMEFORMAT,null);
-
-		return GenericDateUtils.formatDate(tempdate, _DATEFORMAT + " " + _TIMEFORMAT, null, _TIMEZONE);
-	}
-
-	/**Get date and time then format to yyyy-MM-dd HH:mm:ss format for return
-	 *
-	 * @return the pickuptime for display only
-	 */
-	public String getDisppickuptime() {
-		Date tempdate = GenericDateUtils.convertToDate( GenericDateUtils.formatDate(getPickupdate(), GenericConstants.DB_DATEFORMAT, null, null) + " "
-				+ GenericDateUtils.formatDate(getPickuptime(), GenericConstants.DB_TIMEFORMAT, null, null),GenericConstants.DB_DATETIMEFORMAT,null);
-
-		return GenericDateUtils.formatDate(tempdate, _DATEFORMAT + " " + _TIMEFORMAT, null, _TIMEZONE);
-	}
-
-	/**
-	 * @return Returns the delivercompany.
-	 */
-	public DeliverCompany getDelivercompany() {
-		return delivercompany;
-	}
-
-	/**
-	 * @param delivercompany
-	 *          The delivercompany to set.
-	 */
-	public void setDelivercompany(DeliverCompany delivercompany) {
-		this.delivercompany = delivercompany;
-	}
-
-	/**
-	 * @return Returns the servicelevel.
-	 */
-	public Deliver_ServiceLevel getServicelevel() {
-		return servicelevel;
-	}
-
-	/**
-	 * @param servicelevel
-	 *          The servicelevel to set.
-	 */
-	public void setServicelevel(Deliver_ServiceLevel servicelevel) {
-		this.servicelevel = servicelevel;
-	}
-
-	/**
-	 * @return Returns the deliverydate.
-	 */
-	public Date getDeliverydate() {
-		return deliverydate;
-	}
-
-	/**
-	 * @param deliverydate
-	 *          The deliverydate to set.
-	 */
-	public void setDeliverydate(Date deliverydate) {
-		this.deliverydate = deliverydate;
-	}
-
-	public String getDispdeliverydate() {
-		return GenericDateUtils.formatDate(getDeliverydate(), _DATEFORMAT, null, null);
-	}
-
-	/**
-	 * @return Returns the pickupdate.
-	 */
-	public Date getPickupdate() {
-		return pickupdate;
-	}
-
-	/**
-	 * @param pickupdate
-	 *          The pickupdate to set.
-	 */
-	public void setPickupdate(Date pickupdate) {
-		this.pickupdate = pickupdate;
-	}
-
-	/**
-	 * @return Returns the pickuptime.
-	 */
-	public Date getPickuptime() {
-		return pickuptime;
-	}
-
-	/**
-	 * @param pickuptime
-	 *          The pickuptime to set.
-	 */
-	public void setPickuptime(Date pickuptime) {
-		this.pickuptime = pickuptime;
-	}
-
-	public String getDisppickupdate() {
-		return GenericDateUtils.formatDate(getPickupdate(), _DATEFORMAT, null, null);
-	}
-
-	/**
-	 * @return Returns the station.
-	 */
-	public Station getStation() {
-		return station;
-	}
-
-	/**
-	 * @param station
-	 *          The station to set.
-	 */
-	public void setStation(Station station) {
-		this.station = station;
-	}
-
-	public Set<BDO_OHD> getBdoOhd() {
-		return bdoOhd;
-	}
-
-	public void setBdoOhd(Set<BDO_OHD> bdoOhd) {
-		this.bdoOhd = bdoOhd;
-	}
-
-	/**
-	 * @return Returns the incident.
-	 */
+	@JoinColumn(name = "incident_id")
 	public Incident getIncident() {
 		return incident;
 	}
 
-	/**
-	 * @param incident
-	 *          The incident to set.
-	 */
 	public void setIncident(Incident incident) {
 		this.incident = incident;
 	}
 
-	public BDO_Passenger getPassenger(int i) {
-		if (this.getPassengers() != null) {
-			ArrayList<BDO_Passenger> t = new ArrayList<BDO_Passenger>(this.getPassengers());
-			return (BDO_Passenger) t.get(i);
-		} else return null;
+	@ManyToOne
+	@JoinColumn(name = "agent_id", nullable = false)
+	public Agent getAgent() {
+		return agent;
 	}
 
-	/**
-	 * @return Returns the _DATEFORMAT.
-	 */
-	public String get_DATEFORMAT() {
-		return _DATEFORMAT;
+	public void setAgent(Agent agent) {
+		this.agent = agent;
 	}
 
-	/**
-	 * @param _dateformat
-	 *          The _DATEFORMAT to set.
-	 */
-	public void set_DATEFORMAT(String _dateformat) {
-		_DATEFORMAT = _dateformat;
+	@Column(name = "createdate", updatable = false)
+	@Temporal(TemporalType.DATE)
+	public Date getCreateDate() {
+		return createDate;
 	}
 
-	/**
-	 * @return Returns the _TIMEFORMAT.
-	 */
-	public String get_TIMEFORMAT() {
-		return _TIMEFORMAT;
+	public void setCreateDate(Date createDate) {
+		this.createDate = createDate;
 	}
 
-	/**
-	 * @param _timeformat
-	 *          The _TIMEFORMAT to set.
-	 */
-	public void set_TIMEFORMAT(String _timeformat) {
-		_TIMEFORMAT = _timeformat;
+	@Column(name = "createtime", updatable = false)
+	@Temporal(TemporalType.TIME)
+	public Time getCreateTime() {
+		return createTime;
 	}
 
-	/**
-	 * @return Returns the _TIMEZONE.
-	 */
-	public TimeZone get_TIMEZONE() {
-		return _TIMEZONE;
+	public void setCreateTime(Time createTime) {
+		this.createTime = createTime;
 	}
 
-	/**
-	 * @param _timezone
-	 *          The _TIMEZONE to set.
-	 */
-	public void set_TIMEZONE(TimeZone _timezone) {
-		_TIMEZONE = _timezone;
+	@ManyToOne
+	@JoinColumn(name = "delivercompany_id")
+	public DeliverCompany getDeliverCompany() {
+		return deliverCompany;
 	}
 
-	/**
-	 * @return the delivery_integration_type
-	 */
-	public DeliveryIntegrationType getDelivery_integration_type() {
-		return delivery_integration_type;
+	public void setDeliverCompany(DeliverCompany deliverCompany) {
+		this.deliverCompany = deliverCompany;
 	}
 
-	/**
-	 * @param delivery_integration_type the delivery_integration_type to set
-	 */
-	public void setDelivery_integration_type(
-			DeliveryIntegrationType delivery_integration_type) {
-		this.delivery_integration_type = delivery_integration_type;
+	@ManyToOne
+	@JoinColumn(name = "servicelevel_id")
+	public Deliver_ServiceLevel getServiceLevel() {
+		return serviceLevel;
 	}
 
-	/**
-	 * @return Returns unique ID provided by delivery company.
-	 */
-	public String getDelivery_integration_id() {
-		return delivery_integration_id;
+	public void setServiceLevel(Deliver_ServiceLevel serviceLevel) {
+		this.serviceLevel = serviceLevel;
 	}
 
-	/**
-	 * @param delivery_integration_id
-	 */
-	public void setDelivery_integration_id(String delivery_integration_id) {
-		this.delivery_integration_id = delivery_integration_id;
-
+	@ManyToOne
+	@JoinColumn(name = "station_id")
+	public Station getStation() {
+		return station;
 	}
 
-	/**
-	 * @return the integrationDelivercompany
-	 */
-	public int getIntegrationDelivercompany_ID() {
-		return integrationDelivercompany_ID;
+	public void setStation(Station station) {
+		this.station = station;
 	}
 
-	/**
-	 * @param integrationDelivercompany_ID the integrationDelivercompany to set
-	 */
-	public void setIntegrationDelivercompany_ID(
-			int integrationDelivercompany_ID) {
-		this.integrationDelivercompany_ID = integrationDelivercompany_ID;
+	@Column(name = "companycode_id")
+	public String getCompanyCode() {
+		return companyCode;
 	}
 
-	/**
-	 * @return Returns the items.
-	 */
-	public Set<ExpensePayout> getExpensePayouts() {
-		return expensePayouts;
+	public void setCompanyCode(String companyCode) {
+		this.companyCode = companyCode;
 	}
 
-	public void setExpensePayouts(Set<ExpensePayout> expensePayouts) {
-		this.expensePayouts = expensePayouts;
+	@Column(name = "deliverydate")
+	@Temporal(value = TemporalType.DATE)
+	public Date getDeliveryDate() {
+		return deliveryDate;
 	}
 
-	public ExpensePayout getExpensePayout() {
-		if (expensePayouts == null || expensePayouts.size() == 0) {
-			return null;
-		}
-		return (ExpensePayout) expensePayouts.toArray()[0];
+	public void setDeliveryDate(Date deliveryDate) {
+		this.deliveryDate = deliveryDate;
 	}
 
-	public void setExpensePayout(ExpensePayout createNewBdoPayout) {
-		expensePayouts = new HashSet<ExpensePayout>();
-		if(createNewBdoPayout != null){
-			expensePayouts.add(createNewBdoPayout);
-		}
+	@Enumerated(EnumType.STRING)
+	@Column(name = "delivery_integration_type")
+	public DeliveryIntegrationType getDeliveryIntegrationType() {
+		return deliveryIntegrationType;
 	}
 
-	/**
-	 * @return
-	 */
+	public void setDeliveryIntegrationType(DeliveryIntegrationType deliveryIntegrationType) {
+		this.deliveryIntegrationType = deliveryIntegrationType;
+	}
+
+	@Column(name = "delivery_integration_id")
+	public String getDeliveryIntegrationId() {
+		return deliveryIntegrationId;
+	}
+
+	public void setDeliveryIntegrationId(String deliveryIntegrationId) {
+		this.deliveryIntegrationId = deliveryIntegrationId;
+	}
+
+	@Column(name = "integrationdelivercompany_id")
+	public int getIntegrationDeliverCompanyId() {
+		return integrationDeliverCompanyId;
+	}
+
+	public void setIntegrationDeliverCompanyId(int integrationDeliverCompanyId) {
+		this.integrationDeliverCompanyId = integrationDeliverCompanyId;
+	}
+
+	@Column(name = "canceled")
 	public boolean isCanceled() {
 		return canceled;
 	}
@@ -552,45 +189,55 @@ public class BDO implements Serializable {
 		this.canceled = canceled;
 	}
 
-	/**
-	 * @return Returns the items.
-	 */
-	public Set<Item_BDO> getItem_bdo() {
-		return item_bdo;
+	@Column(name = "lastdeliveryupdate")
+	public Timestamp getLastDeliveryUpdate() {
+		return lastDeliveryUpdate;
 	}
 
-	public void setItem_bdo(Set<Item_BDO> item_bdo) {
-		this.item_bdo = item_bdo;
+	public void setLastDeliveryUpdate(Timestamp lastDeliveryUpdate) {
+		this.lastDeliveryUpdate = lastDeliveryUpdate;
 	}
 
-	/**
-	 * @return the delivery_integration_type
-	 */
+	@Enumerated(EnumType.STRING)
+	@Column(name = "deliverystatus")
 	public DeliveryStatusType getDeliveryStatus() {
-  	return deliveryStatus;
-  }
+		return deliveryStatus;
+	}
 
 	public void setDeliveryStatus(DeliveryStatusType deliveryStatus) {
-  	this.deliveryStatus = deliveryStatus;
-  }
+		this.deliveryStatus = deliveryStatus;
+	}
 
-	/**
-	 * @return the origDelivCost
-	 */
+	@Column(name = "origdelivcost")
 	public double getOrigDelivCost() {
 		return origDelivCost;
 	}
 
-	/**
-	 * @param origDelivCost the origDelivCost to set
-	 */
 	public void setOrigDelivCost(double origDelivCost) {
 		this.origDelivCost = origDelivCost;
 	}
 
-	/**
-	 * @return the distance
-	 */
+	@Column(name = "pickupdate")
+	@Temporal(TemporalType.DATE)
+	public Date getPickupDate() {
+		return pickupDate;
+	}
+
+	public void setPickupDate(Date pickupDate) {
+		this.pickupDate = pickupDate;
+	}
+
+	@Column(name = "pickuptime")
+	@Temporal(TemporalType.TIME)
+	public Time getPickupTime() {
+		return pickupTime;
+	}
+
+	public void setPickupTime(Time pickupTime) {
+		this.pickupTime = pickupTime;
+	}
+
+	@Column(name = "distance")
 	public double getDistance() {
 		return distance;
 	}
@@ -599,45 +246,42 @@ public class BDO implements Serializable {
 		this.distance = distance;
 	}
 
-	/**
-	 * @return the pickuptz
-	 */
-	public int getPickuptz_id() {
-		return pickuptz_id;
+	@Column(name = "pickuptz_id")
+	public int getPickupTimezoneId() {
+		return pickupTimezoneId;
 	}
 
-	public void setPickuptz_id(int pickuptz_id) {
-		this.pickuptz_id = pickuptz_id;
+	public void setPickupTimezoneId(int pickupTimezoneId) {
+		this.pickupTimezoneId = pickupTimezoneId;
 	}
 
-	public Remark getRemark() {
-		return remark;
+	@ManyToMany(cascade = CascadeType.PERSIST)
+	@JoinTable(name = "bdo_ohd", joinColumns = @JoinColumn(name = "bdo_id", referencedColumnName = "bdo_id"), inverseJoinColumns = @JoinColumn(name = "ohd_id", referencedColumnName = "ohd_id"))
+	public List<OHD> getOnhands() {
+		return onhands;
 	}
 
-	public void setRemark(Remark remark) {
-		this.remark = remark;
+	public void setOnhands(List<OHD> onhands) {
+		this.onhands = onhands;
 	}
 
-	public OHD getOhd() {
-		if(this.bdoOhd != null && this.bdoOhd.size() == 1) {
-			return this.bdoOhd.iterator().next().getOhd();
-		}
-		return ohd;
+	@OneToMany
+	@OrderBy(clause = "bdo_passenger_id")
+	public Set<BDO_Passenger> getPassengers() {
+		return passengers;
 	}
 
-	public void setOhd(OHD ohd) {
-		if(bdoOhd == null) {
-			bdoOhd = new LinkedHashSet<BDO_OHD>();
-		}
-		BDO_OHD bdoOhdObj = new BDO_OHD();
-		bdoOhdObj.setOhd(ohd);
-		bdoOhdObj.setBdo(this);
-		bdoOhd.add(bdoOhdObj);
-		this.ohd = ohd;
+	public void setPassengers(Set<BDO_Passenger> passengers) {
+		this.passengers = passengers;
 	}
 
-	//This method is just to support integration with delivery systems for a BDO with multiple Onhands.
-	public void setOhdRef(OHD ohd) {
-		this.ohd = ohd;
+	@ManyToMany(cascade = CascadeType.PERSIST)
+	@JoinTable(name = "item_bdo", joinColumns = @JoinColumn(name = "bdo_id", referencedColumnName = "bdo_id"), inverseJoinColumns = @JoinColumn(name = "item_id", referencedColumnName = "item_id"))
+	public Set<Item> getItems() {
+		return items;
+	}
+
+	public void setItems(Set<Item> items) {
+		this.items = items;
 	}
 }

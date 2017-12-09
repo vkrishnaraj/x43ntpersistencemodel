@@ -23,7 +23,7 @@ import org.hibernate.annotations.Proxy;
 public class UserGroup implements Serializable {
 
 	private static final long serialVersionUID = -943540365618533114L;
-	private int UserGroup_ID;
+	private int userGroupId;
 	private String description;
 	private String description2;
 	private Set<GroupComponentPolicy> componentPolicies;

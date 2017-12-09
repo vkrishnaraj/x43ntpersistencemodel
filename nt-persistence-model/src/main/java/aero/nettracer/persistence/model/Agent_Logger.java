@@ -1,122 +1,82 @@
 package aero.nettracer.persistence.model;
 
 import java.io.Serializable;
-import java.util.Date;
-import java.util.TimeZone;
+import java.sql.Timestamp;
 
-import aero.nettracer.commons.utils.GenericDateUtils;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.persistence.Transient;
-import org.hibernate.annotations.Proxy;
 
 @Entity
 @Table(name = "agent_logger")
-public class Agent_Logger implements Serializable {
+public class Agent_Logger {
 
-	private int ID;
-	private int agent_ID;
-	private String companycode_ID;
-	private Date log_in_time;
-	private Date log_off_time;
+    private int id;
+    private int agentId;
+    private String companyCode;
+    private Timestamp  logInTime;
+    private Timestamp logOffTime;
+    private boolean expired;
 
-	private String _DATEFORMAT; // current login agent's date format
-	private String _TIMEFORMAT; // current login agent's time format
-	private TimeZone _TIMEZONE;
+    @Id
+    @GeneratedValue
+    @Column(name = "id")
+    public int getId() {
+        return id;
+    }
 
-	private String username;
+    public void setId(int id) {
+        this.id = id;
+    }
 
-	private boolean expired = false;
+    @Column(name="agent_id")
+    public int getAgentId() {
+        return agentId;
+    }
 
-	public int getAgent_ID() {
-		return agent_ID;
-	}
+    public void setAgentId(int agentId) {
+        this.agentId = agentId;
+    }
 
-	public void setAgent_ID(int agent_ID) {
-		this.agent_ID = agent_ID;
-	}
+    @Column(name = "companycode_id")
+    public String getCompanyCode() {
+        return companyCode;
+    }
 
-	public String getCompanycode_ID() {
-		return companycode_ID;
-	}
+    public void setCompanyCode(String companyCode) {
+        this.companyCode = companyCode;
+    }
 
-	public void setCompanycode_ID(String companycode_ID) {
-		this.companycode_ID = companycode_ID;
-	}
+    @Column(name = "log_in_time")
+    @Temporal(TemporalType.TIMESTAMP)
+    public Timestamp getLogInTime() {
+        return logInTime;
+    }
 
-	public void set_DATEFORMAT(String _dateformat) {
-		_DATEFORMAT = _dateformat;
-	}
+    public void setLogInTime(Timestamp logInTime) {
+        this.logInTime = logInTime;
+    }
 
-	public void set_TIMEFORMAT(String _timeformat) {
-		_TIMEFORMAT = _timeformat;
-	}
+    @Column(name = "log_off_time")
+    @Temporal(TemporalType.TIMESTAMP)
+    public Timestamp getLogOffTime() {
+        return logOffTime;
+    }
 
-	public void set_TIMEZONE(TimeZone _timezone) {
-		_TIMEZONE = _timezone;
-	}
+    public void setLogOffTime(Timestamp logOffTime) {
+        this.logOffTime = logOffTime;
+    }
 
-	@Transient
-	public String getDisplayLoggedOn() {
-		return GenericDateUtils.formatDate(this.getLog_in_time(), _DATEFORMAT + " " + _TIMEFORMAT, null,
-				_TIMEZONE);
-	}
+    @Column(name = "expired")
+    public boolean isExpired() {
+        return expired;
+    }
 
-	@Transient
-	public String getDisplayLoggedOff() {
-
-		if (this.getLog_off_time() == null) return "";
-
-		return GenericDateUtils.formatDate(this.getLog_off_time(), _DATEFORMAT + " " + _TIMEFORMAT, null,
-				_TIMEZONE);
-	}
-
-	@Id
-	@GeneratedValue
-	public int getID() {
-		return ID;
-	}
-
-	public void setID(int id) {
-		ID = id;
-	}
-
-	@Temporal(TemporalType.TIMESTAMP)
-	public Date getLog_in_time() {
-		return log_in_time;
-	}
-
-	public void setLog_in_time(Date log_in_time) {
-		this.log_in_time = log_in_time;
-	}
-
-	@Temporal(TemporalType.TIMESTAMP)
-	public Date getLog_off_time() {
-		return log_off_time;
-	}
-
-	public void setLog_off_time(Date log_off_time) {
-		this.log_off_time = log_off_time;
-	}
-
-	@Transient
-	public String getUsername() {
-		return username;
-	}
-
-	public void setUsername(String username) {
-		this.username = username;
-	}
-
-	public boolean isExpired() {
-		return expired;
-	}
-
-	public void setExpired(boolean expired) {
-		this.expired = expired;
-	}
+    public void setExpired(boolean expired) {
+        this.expired = expired;
+    }
 }

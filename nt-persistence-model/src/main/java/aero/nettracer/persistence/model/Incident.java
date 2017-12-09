@@ -56,7 +56,7 @@ public class Incident implements Serializable {
 	@Version
 	private int version;
 
-	private String Incident_ID;
+	private String incidentId;
 	private Station stationcreated;
 	private Station stationassigned;
 	private Station faultstation;

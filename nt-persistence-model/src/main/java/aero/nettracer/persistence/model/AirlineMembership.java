@@ -2,53 +2,56 @@ package aero.nettracer.persistence.model;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import org.hibernate.annotations.Proxy;
 
 @Entity
-@Table(name = "AirlineMembership")
-public class AirlineMembership implements Serializable {
-	private int membership_ID;
-	private String membershipnum = "";
-	private String membershipstatus = "";
-	private String companycode_ID;
+@Table(name = "airlineMembership")
+public class AirlineMembership {
 
-	public String getCompanycode_ID() {
-		return companycode_ID;
-	}
-
-	public void setCompanycode_ID(String companycode_ID) {
-		this.companycode_ID = companycode_ID;
-	}
+	private int id;
+	private String companyCode;
+	private String membershipNumber;
+	private String membershipStatus;
 
 	@Id
 	@GeneratedValue
-	public int getMembership_ID() {
-		return membership_ID;
+	@Column(name = "membership_id")
+	public int getId() {
+		return id;
 	}
 
-	public void setMembership_ID(int membership_ID) {
-		this.membership_ID = membership_ID;
+	public void setId(int id) {
+		this.id = id;
 	}
 
-	public String getMembershipstatus() {
-		return membershipstatus;
+	@Column(name = "companycode_id")
+	public String getCompanyCode() {
+		return companyCode;
 	}
 
-	public void setMembershipstatus(String membershipstatus) {
-		this.membershipstatus = membershipstatus;
+	public void setCompanyCode(String companyCode) {
+		this.companyCode = companyCode;
 	}
 
-	public String getMembershipnum() {
-		return membershipnum;
+	@Column(name = "membershipnum")
+	public String getMembershipNumber() {
+		return membershipNumber;
 	}
 
-	public void setMembershipnum(String membershipnum) {
-		this.membershipnum = membershipnum;
+	public void setMembershipNumber(String membershipNumber) {
+		this.membershipNumber = membershipNumber;
 	}
 
+	@Column(name = "membershipstatus")
+	public String getMembershipStatus() {
+		return membershipStatus;
+	}
 
+	public void setMembershipStatus(String membershipStatus) {
+		this.membershipStatus = membershipStatus;
+	}
 }

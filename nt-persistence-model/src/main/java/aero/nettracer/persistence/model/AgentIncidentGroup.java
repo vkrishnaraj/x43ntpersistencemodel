@@ -1,40 +1,39 @@
 package aero.nettracer.persistence.model;
 
-import org.apache.commons.lang.StringUtils;
+import javax.persistence.Column;
+import org.apache.commons.lang3.StringUtils;
 
 import javax.persistence.Embeddable;
 import java.io.Serializable;
 
-/**
- * Created by Wen Yan on 10/8/2017.
- */
 @Embeddable
-public class AgentIncidentGroup implements Serializable {
+public class AgentIncidentGroup {
 
-    private String agent_username;
-    private String incident_group_name;
+    private String agentUserName;
+    private String incidentGroupName;
 
     public AgentIncidentGroup() {}
 
-    public AgentIncidentGroup(String agent_username, String incident_group_name) {
-        this.agent_username = agent_username;
-        this.incident_group_name = incident_group_name;
+    public AgentIncidentGroup(String agentUserName, String incidentGroupName) {
+        this.agentUserName = agentUserName;
+        this.incidentGroupName = incidentGroupName;
+    }
+    @Column(name = "agent_username")
+    public String getAgentUserName() {
+        return agentUserName;
     }
 
-    public String getAgent_username() {
-        return agent_username;
+    public void setAgentUserName(String agentUserName) {
+        this.agentUserName = agentUserName;
     }
 
-    public void setAgent_username(String agent_username) {
-        this.agent_username = agent_username;
+    @Column(name = "incident_group_name")
+    public String getIncidentGroupName() {
+        return incidentGroupName;
     }
 
-    public String getIncident_group_name() {
-        return incident_group_name;
-    }
-
-    public void setIncident_group_name(String incident_group_name) {
-        this.incident_group_name = incident_group_name;
+    public void setIncidentGroupName(String incidentGroupName) {
+        this.incidentGroupName = incidentGroupName;
     }
 
     @Override
@@ -44,13 +43,13 @@ public class AgentIncidentGroup implements Serializable {
         }
 
         AgentIncidentGroup agentIncidentGroup = (AgentIncidentGroup) aig;
-        return (!StringUtils.isBlank(this.agent_username) && !StringUtils.isBlank(this.incident_group_name)
-                && !StringUtils.isBlank(agentIncidentGroup.getAgent_username()) && !StringUtils.isBlank(agentIncidentGroup.getIncident_group_name())
-                && this.agent_username.equals(agentIncidentGroup.getAgent_username()) && this.incident_group_name.equals(agentIncidentGroup.getIncident_group_name()));
+        return (!StringUtils.isBlank(this.agentUserName) && !StringUtils.isBlank(this.incidentGroupName)
+                && !StringUtils.isBlank(agentIncidentGroup.getAgentUserName()) && !StringUtils.isBlank(agentIncidentGroup.getIncidentGroupName())
+                && this.agentUserName.equals(agentIncidentGroup.getAgentUserName()) && this.incidentGroupName.equals(agentIncidentGroup.getIncidentGroupName()));
     }
 
     @Override
     public int hashCode () {
-        return agent_username.hashCode() + incident_group_name.hashCode();
+        return agentUserName.hashCode() + incidentGroupName.hashCode();
     }
 }

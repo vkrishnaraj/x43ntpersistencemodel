@@ -1,50 +1,53 @@
 package aero.nettracer.persistence.model;
 
 
+import java.io.Serializable;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
-import org.hibernate.annotations.Proxy;
-
-import javax.persistence.*;
-import java.io.Serializable;
 
 @Entity
 @Table(name = "bagtag_expeditetag_mapping")
-public class BagTagExpediteTagMapping implements Serializable{
-    @Id
-    @GeneratedValue
+public class BagTagExpediteTagMapping {
+
     private int id;
-
-    @OneToOne
-    @JoinColumn(name = "ohd_id")
-    @Fetch(FetchMode.SELECT)
     private OHD ohd;
-
-    @Column(name = "claimnum_ohd")
     private String claimnumOhd;
-
-    @Column(name = "primary_expedite_tag")
     private String primaryExpediteTagNumber;
-
-    @Column(name = "secondary_expedite_tag")
     private String secondaryExpediteTagNumber;
 
+    @Id
+    @GeneratedValue
+    @Column(name = "id")
     public int getId() { return id; }
 
     public void setId(int id) { this.id = id; }
 
+    @OneToOne
+    @JoinColumn(name = "ohd_id")
+    @Fetch(FetchMode.SELECT)
     public OHD getOhd() { return ohd; }
 
     public void setOhd(OHD ohd) { this.ohd = ohd; }
 
+    @Column(name = "claimnum_ohd")
     public String getClaimnumOhd() { return claimnumOhd; }
 
     public void setClaimnumOhd(String claimnumOhd) { this.claimnumOhd = claimnumOhd; }
 
+    @Column(name = "primary_expedite_tag")
     public String getPrimaryExpediteTagNumber() { return primaryExpediteTagNumber; }
 
     public void setPrimaryExpediteTagNumber(String primaryExpediteTagNumber) { this.primaryExpediteTagNumber = primaryExpediteTagNumber; }
 
+    @Column(name = "secondary_expedite_tag")
     public String getSecondaryExpediteTagNumber() { return secondaryExpediteTagNumber; }
 
     public void setSecondaryExpediteTagNumber(String secondaryExpediteTagNumber) { this.secondaryExpediteTagNumber = secondaryExpediteTagNumber; }

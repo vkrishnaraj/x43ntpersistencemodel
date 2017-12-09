@@ -19,7 +19,7 @@ import org.hibernate.annotations.Proxy;
 @Table(name = "work_shift")
 public class Work_Shift implements Serializable {
 
-	private int shift_id;
+	private int shiftId;
 	private String shift_code;
 	private String shift_description;
 	private Company company;

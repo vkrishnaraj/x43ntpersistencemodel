@@ -11,7 +11,7 @@ import org.hibernate.annotations.Proxy;
 @Entity
 @Table(name = "dateformat")
 public class NTDateFormat implements Serializable {
-	private int Dateformat_ID;
+	private int dateFormatId;
 	private String format;
 
 	@Id

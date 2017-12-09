@@ -32,7 +32,7 @@ public class Station implements Serializable {
 	private static final long serialVersionUID = -8920424497356057481L;
 	
 	@Id @GeneratedValue
-	private int station_ID;
+	private int stationId;
 	
 	@ManyToOne(targetEntity = Company.class)
 	@JoinColumn(name="companycode_ID")
