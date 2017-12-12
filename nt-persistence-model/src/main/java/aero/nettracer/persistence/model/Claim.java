@@ -9,45 +9,28 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Transient;
 
-import org.hibernate.annotations.Proxy;
-
 
 @Entity
 @DiscriminatorValue("NTCLAIM")
 public class Claim extends FsClaim {
 
+    public Claim(){
+        super();
+    }
 
-	
-	/*public Claim(){
-		super();
-	}
-	
-	public Claim(long id) {
-		super(id);
-	}
+    public Claim(long id) {
+        super(id);
+    }
 
-	private static final long serialVersionUID = 1L;
+    private Incident ntIncident;
+    private ClaimProrate claimprorate;
+    private Status status;
+    private Signature signature;
+    private Claim_Questionnaire questionnaire;
 
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "ntIncident_Incident_ID")
-	private Incident ntIncident;
-	
-	@ManyToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "Claimprorate_ID")
-	private ClaimProrate claimprorate;
 
 	@ManyToOne
-	@JoinColumn(name = "Status_ID")
-	private Status status;
-
-	@ManyToOne(targetEntity = Signature.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	@JoinColumn(name = "signature_id")
-	private Signature signature;
-
-	@ManyToOne(targetEntity = Claim_Questionnaire.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	@JoinColumn(name = "questionnaire_id")
-	private Claim_Questionnaire questionnaire;
-	
+	@JoinColumn(name = "ntincident_incident_id")
 	public Incident getNtIncident() {
 		return ntIncident;
 	}
@@ -56,18 +39,22 @@ public class Claim extends FsClaim {
 		super.setNtIncidentId(ntIncident.getIncident_ID());
 		this.ntIncident = ntIncident;
 	}
-	
+
+	@ManyToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "claimprorate_id")
 	public ClaimProrate getClaimprorate() {
 		return claimprorate;
 	}
 
 	public void setClaimprorate(ClaimProrate claimprorate) {
 		if (claimprorate != null) {
-			super.setClaimProrateId(claimprorate.getClaimprorate_ID());
+			super.setClaimProrateId(claimprorate.getId());
 		}
 		this.claimprorate = claimprorate;
 	}
-	
+
+	@ManyToOne
+	@JoinColumn(name = "Status_ID")
 	public Status getStatus() {
 		return status;
 	}
@@ -77,6 +64,8 @@ public class Claim extends FsClaim {
 		this.status = status;
 	}
 
+	@ManyToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "signature_id")
 	public Signature getSignature() {
 		return signature;
 	}
@@ -85,6 +74,8 @@ public class Claim extends FsClaim {
 		this.signature = signature;
 	}
 
+	@ManyToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "questionnaire_id")
 	public Claim_Questionnaire getQuestionnaire() {
 		return questionnaire;
 	}
@@ -103,11 +94,11 @@ public class Claim extends FsClaim {
 		status.setStatus_ID(statusId);
 	}
 	
+	public int getFraudStatusId() {
+		return super.getFraudStatusId();
+	}
+
 	public void setFraudStatusId(int statusId) {
 		super.setFraudStatusId(statusId);
 	}
-	
-	public int getFraudStatusId() {
-		return super.getFraudStatusId();
-	} */
 }

@@ -9,6 +9,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
 @Table(name = "bdo_passenger")
@@ -16,26 +18,26 @@ public class BDO_Passenger {
 	
 	private int id;
 	private BDO bdo;
-	private String firstName;
-	private String lastName;
-	private String middleName;
+	private String firstname;
+	private String lastname;
+	private String middlename;
 	private String address1;
 	private String address2;
 	private String city;
-	private String stateId;
+	private String state_ID;
 	private String province;
-	private String countryCode;
+	private String countrycode_ID;
 	private String zip;
 	private String hotel;
-	private String homePhone;
-	private String workPhone;
+	private String homephone;
+	private String workphone;
 	private String mobile;
 	private String pager;
 	private String altphone;
 	private String email;
 	private Date valid_bdate;
 	private Date valid_edate;
-	private String hotelPhone;
+	private String hotelphone;
 
 	@Id
 	@GeneratedValue
@@ -59,30 +61,30 @@ public class BDO_Passenger {
 	}
 
 	@Column(name = "firstname")
-	public String getFirstName() {
-		return firstName;
+	public String getFirstname() {
+		return firstname;
 	}
 
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
+	public void setFirstname(String firstname) {
+		this.firstname = firstname;
 	}
 
 	@Column(name = "middlename")
-	public String getMiddleName() {
-		return middleName;
+	public String getLastname() {
+		return lastname;
 	}
 
-	public void setMiddleName(String middleName) {
-		this.middleName = middleName;
+	public void setLastname(String lastname) {
+		this.lastname = lastname;
 	}
 
 	@Column(name = "lastname")
-	public String getLastName() {
-		return lastName;
+	public String getMiddlename() {
+		return middlename;
 	}
 
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
+	public void setMiddlename(String middlename) {
+		this.middlename = middlename;
 	}
 
 	@Column(name = "address1")
@@ -113,12 +115,12 @@ public class BDO_Passenger {
 	}
 
 	@Column(name = "state_id")
-	public String getStateId() {
-		return stateId;
+	public String getState_ID() {
+		return state_ID;
 	}
 
-	public void setStateId(String stateId) {
-		this.stateId = stateId;
+	public void setState_ID(String state_ID) {
+		this.state_ID = state_ID;
 	}
 
 	@Column(name = "province")
@@ -131,12 +133,12 @@ public class BDO_Passenger {
 	}
 
 	@Column(name = "countrycode_id")
-	public String getCountryCode() {
-		return countryCode;
+	public String getCountrycode_ID() {
+		return countrycode_ID;
 	}
 
-	public void setCountryCode(String countryCode) {
-		this.countryCode = countryCode;
+	public void setCountrycode_ID(String countrycode_ID) {
+		this.countrycode_ID = countrycode_ID;
 	}
 
 	@Column(name = "zip")
@@ -158,21 +160,21 @@ public class BDO_Passenger {
 	}
 
 	@Column(name = "homephone")
-	public String getHomePhone() {
-		return homePhone;
+	public String getHomephone() {
+		return homephone;
 	}
 
-	public void setHomePhone(String homePhone) {
-		this.homePhone = homePhone;
+	public void setHomephone(String homephone) {
+		this.homephone = homephone;
 	}
 
 	@Column(name = "workphone")
-	public String getWorkPhone() {
-		return workPhone;
+	public String getWorkphone() {
+		return workphone;
 	}
 
-	public void setWorkPhone(String workPhone) {
-		this.workPhone = workPhone;
+	public void setWorkphone(String workphone) {
+		this.workphone = workphone;
 	}
 
 	@Column(name = "mobile")
@@ -212,6 +214,7 @@ public class BDO_Passenger {
 	}
 
 	@Column(name = "valid_bdate")
+	@Temporal(TemporalType.DATE)
 	public Date getValid_bdate() {
 		return valid_bdate;
 	}
@@ -221,6 +224,7 @@ public class BDO_Passenger {
 	}
 
 	@Column(name = "valid_edate")
+	@Temporal(TemporalType.DATE)
 	public Date getValid_edate() {
 		return valid_edate;
 	}
@@ -230,11 +234,11 @@ public class BDO_Passenger {
 	}
 
 	@Column(name = "hotelphone")
-	public String getHotelPhone() {
-		return hotelPhone;
+	public String getHotelphone() {
+		return hotelphone;
 	}
 
-	public void setHotelPhone(String hotelPhone) {
-		this.hotelPhone = hotelPhone;
+	public void setHotelphone(String hotelphone) {
+		this.hotelphone = hotelphone;
 	}
 }

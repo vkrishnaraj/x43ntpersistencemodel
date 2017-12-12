@@ -1,26 +1,28 @@
 package aero.nettracer.persistence.model;
 
-import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
 @Table(name = "articles")
-public class Articles implements Serializable {
+public class Articles {
 
 	private int id;
-	private int itemId;
 	private String article;
-	private String description;
-	private Date purchaseDate;
+	private String description = "";
+	private Date purchasedate;
 	private double cost;
 	private Incident incident;
-	private String currencyId;
+	private String currency_ID;
 	private Date enteredDate =  new Date();
 	private int statusId;
 
@@ -33,15 +35,6 @@ public class Articles implements Serializable {
 
 	public void setId(int id) {
 		this.id = id;
-	}
-
-	@Column(name = "item_id")
-	public int getItemId() {
-		return itemId;
-	}
-
-	public void setItemId(int itemId) {
-		this.itemId = itemId;
 	}
 
 	@Column(name = "article")
@@ -63,12 +56,13 @@ public class Articles implements Serializable {
 	}
 
 	@Column(name = "purchasedate")
-	public Date getPurchaseDate() {
-		return purchaseDate;
+	@Temporal(TemporalType.DATE)
+	public Date getPurchasedate() {
+		return purchasedate;
 	}
 
-	public void setPurchaseDate(Date purchaseDate) {
-		this.purchaseDate = purchaseDate;
+	public void setPurchasedate(Date purchasedate) {
+		this.purchasedate = purchasedate;
 	}
 
 	@Column(name = "cost")
@@ -80,7 +74,8 @@ public class Articles implements Serializable {
 		this.cost = cost;
 	}
 
-	@Column(name = "incident_id")
+	@ManyToOne
+	@JoinColumn(name = "incident_ID")
 	public Incident getIncident() {
 		return incident;
 	}
@@ -90,15 +85,16 @@ public class Articles implements Serializable {
 	}
 
 	@Column(name = "currency_id")
-	public String getCurrencyId() {
-		return currencyId;
+	public String getCurrency_ID() {
+		return currency_ID;
 	}
 
-	public void setCurrencyId(String currencyId) {
-		this.currencyId = currencyId;
+	public void setCurrency_ID(String currency_ID) {
+		this.currency_ID = currency_ID;
 	}
 
 	@Column(name = "entereddate")
+	@Temporal(TemporalType.DATE)
 	public Date getEnteredDate() {
 		return enteredDate;
 	}

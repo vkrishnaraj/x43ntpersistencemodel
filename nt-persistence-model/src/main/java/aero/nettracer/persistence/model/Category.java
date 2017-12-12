@@ -13,7 +13,7 @@ public class Category {
 	private long id;
 	private String description;
 	private int type;
-	private int categoryValue;
+	private int categoryVal;
 
 	@Id
 	@GeneratedValue
@@ -45,11 +45,11 @@ public class Category {
 	}
 
 	@Column(name = "categoryVal")
-	public int getCategoryValue() {
-		return categoryValue;
+	public int getCategoryVal() {
+		return categoryVal;
 	}
 
-	public void setCategoryValue(int categoryValue) {
-		this.categoryValue = categoryValue;
+	public void setCategoryVal(int categoryVal) {
+		this.categoryVal = categoryVal;
 	}
 }

@@ -1,8 +1,6 @@
 package aero.nettracer.persistence.model;
 
 
-import java.io.Serializable;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,8 +8,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 
 @Entity
 @Table(name = "bagtag_expeditetag_mapping")
@@ -32,7 +28,6 @@ public class BagTagExpediteTagMapping {
 
     @OneToOne
     @JoinColumn(name = "ohd_id")
-    @Fetch(FetchMode.SELECT)
     public OHD getOhd() { return ohd; }
 
     public void setOhd(OHD ohd) { this.ohd = ohd; }

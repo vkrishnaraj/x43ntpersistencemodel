@@ -1,33 +1,34 @@
 package aero.nettracer.persistence.model;
 
-import java.io.Serializable;
-
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import org.hibernate.annotations.Proxy;
 
 @Entity
-@Table(name = "CountryCode")
-public class CountryCode implements Serializable {
-	private String CountryCode_ID;
+@Table(name = "countrycode")
+public class CountryCode {
+
+	private String id;
 	private String country;
 
+	@Id
+	@Column(name = "countrycode_id")
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	@Column(name = "country")
 	public String getCountry() {
 		return country;
 	}
 
 	public void setCountry(String country) {
 		this.country = country;
-	}
-
-	@Id
-	public String getCountryCode_ID() {
-		return CountryCode_ID;
-	}
-
-	public void setCountryCode_ID(String countryCode_ID) {
-		CountryCode_ID = countryCode_ID;
 	}
 
 }

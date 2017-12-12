@@ -24,31 +24,31 @@ import javax.persistence.TemporalType;
 public class Agent {
 
 	private int id;
-	private String firstName;
-	private String middleName;
-	private String lastName;
+	private String firstname;
+	private String mname;
+	private String lastname;
 	private int timeout;
-	private String userName;
+	private String username;
 	private String password;
 	private boolean active;
 	private Station station;
-	private String companyCode;
-	private String defaultLocale;
-	private String currentLocale;
-	private String defaultCurrency;
-	private String defaultTimezone;
-	private String currentTimezone;
-	private NTDateFormat dateFormat;
-	private NTTimeFormat timeFormat;
+	private String companycode_ID;
+	private String defaultlocale;
+	private String currentlocale;
+	private String defaultcurrency;
+	private String defaulttimezone;
+	private String currenttimezone;
+	private NTDateFormat dateformat;
+	private NTTimeFormat timeformat;
 	private Work_Shift shift;
 	private UserGroup userGroup;
-	private Timestamp lastLoggedOn;
-	private int online;
-	private Date lastPasswordResetDate;
-	private int wtUser;
-	private boolean wsEnabled;
-	private int maxWsSessions;
-	private boolean webEnabled;
+	private Timestamp last_logged_on;
+	private int is_online;
+	private Date last_pass_reset_date;
+	private int is_wt_user;
+	private boolean ws_enabled;
+	private int max_ws_sessions;
+	private boolean web_enabled;
 	private boolean resetPassword;
 	private boolean accountLocked;
 	private int failedLogins;
@@ -57,7 +57,7 @@ public class Agent {
 	private boolean inbound;
 	private boolean acaa;
 	private boolean damaged;
-	private boolean loadUnassigned;
+	private boolean load_unassigned;
 
 	public Agent() { }
 
@@ -77,30 +77,30 @@ public class Agent {
 	}
 
 	@Column(name = "firstname")
-	public String getFirstName() {
-		return firstName;
+	public String getFirstname() {
+		return firstname;
 	}
 
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
+	public void setFirstname(String firstname) {
+		this.firstname = firstname;
 	}
 
 	@Column(name = "mname")
-	public String getMiddleName() {
-		return middleName;
+	public String getMname() {
+		return mname;
 	}
 
-	public void setMiddleName(String middleName) {
-		this.middleName = middleName;
+	public void setMname(String mname) {
+		this.mname = mname;
 	}
 
 	@Column(name = "lastname")
-	public String getLastName() {
-		return lastName;
+	public String getLastname() {
+		return lastname;
 	}
 
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
+	public void setLastname(String lastname) {
+		this.lastname = lastname;
 	}
 
 	@Column(name = "timeout")
@@ -113,12 +113,12 @@ public class Agent {
 	}
 
 	@Column(name = "username")
-	public String getUserName() {
-		return userName;
+	public String getUsername() {
+		return username;
 	}
 
-	public void setUserName(String userName) {
-		this.userName = userName;
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
 	@Column(name = "password")
@@ -150,77 +150,77 @@ public class Agent {
 	}
 
 	@Column(name = "companycode_id")
-	public String getCompanyCode() {
-		return companyCode;
+	public String getCompanycode_ID() {
+		return companycode_ID;
 	}
 
-	public void setCompanyCode(String companyCode) {
-		this.companyCode = companyCode;
+	public void setCompanycode_ID(String companycode_ID) {
+		this.companycode_ID = companycode_ID;
 	}
 
 	@Column(name = "defaultlocale")
-	public String getDefaultLocale() {
-		return defaultLocale;
+	public String getDefaultlocale() {
+		return defaultlocale;
 	}
 
-	public void setDefaultLocale(String defaultLocale) {
-		this.defaultLocale = defaultLocale;
+	public void setDefaultlocale(String defaultlocale) {
+		this.defaultlocale = defaultlocale;
 	}
 
 	@Column(name = "currentlocale")
-	public String getCurrentLocale() {
-		return currentLocale;
+	public String getCurrentlocale() {
+		return currentlocale;
 	}
 
-	public void setCurrentLocale(String currentLocale) {
-		this.currentLocale = currentLocale;
+	public void setCurrentlocale(String currentlocale) {
+		this.currentlocale = currentlocale;
 	}
 
 	@Column(name = "defaultcurrency")
-	public String getDefaultCurrency() {
-		return defaultCurrency;
+	public String getDefaultcurrency() {
+		return defaultcurrency;
 	}
 
-	public void setDefaultCurrency(String defaultCurrency) {
-		this.defaultCurrency = defaultCurrency;
+	public void setDefaultcurrency(String defaultcurrency) {
+		this.defaultcurrency = defaultcurrency;
 	}
 
 	@Column(name = "defaulttimezone")
-	public String getDefaultTimezone() {
-		return defaultTimezone;
+	public String getDefaulttimezone() {
+		return defaulttimezone;
 	}
 
-	public void setDefaultTimezone(String defaultTimezone) {
-		this.defaultTimezone = defaultTimezone;
+	public void setDefaulttimezone(String defaulttimezone) {
+		this.defaulttimezone = defaulttimezone;
 	}
 
 	@Column(name = "currenttimezone")
-	public String getCurrentTimezone() {
-		return currentTimezone;
+	public String getCurrenttimezone() {
+		return currenttimezone;
 	}
 
-	public void setCurrentTimezone(String currentTimezone) {
-		this.currentTimezone = currentTimezone;
+	public void setCurrenttimezone(String currenttimezone) {
+		this.currenttimezone = currenttimezone;
 	}
 
 	@ManyToOne
 	@JoinColumn(name = "dateformat_id")
-	public NTDateFormat getDateFormat() {
-		return dateFormat;
+	public NTDateFormat getDateformat() {
+		return dateformat;
 	}
 
-	public void setDateFormat(NTDateFormat dateFormat) {
-		this.dateFormat = dateFormat;
+	public void setDateformat(NTDateFormat dateformat) {
+		this.dateformat = dateformat;
 	}
 
 	@ManyToOne
 	@JoinColumn(name = "timeformat_id")
-	public NTTimeFormat getTimeFormat() {
-		return timeFormat;
+	public NTTimeFormat getTimeformat() {
+		return timeformat;
 	}
 
-	public void setTimeFormat(NTTimeFormat timeFormat) {
-		this.timeFormat = timeFormat;
+	public void setTimeformat(NTTimeFormat timeformat) {
+		this.timeformat = timeformat;
 	}
 
 	@ManyToOne
@@ -245,66 +245,67 @@ public class Agent {
 
 	@Column(name = "last_logged_on")
 	@Temporal(TemporalType.TIMESTAMP)
-	public Timestamp getLastLoggedOn() {
-		return lastLoggedOn;
+	public Timestamp getLast_logged_on() {
+		return last_logged_on;
 	}
 
-	public void setLastLoggedOn(Timestamp lastLoggedOn) {
-		this.lastLoggedOn = lastLoggedOn;
+	public void setLast_logged_on(Timestamp last_logged_on) {
+		this.last_logged_on = last_logged_on;
 	}
 
 	@Column(name = "is_online")
-	public int getOnline() {
-		return online;
+	public int getIs_online() {
+		return is_online;
 	}
 
-	public void setOnline(int online) {
-		this.online = online;
+	public void setIs_online(int is_online) {
+		this.is_online = is_online;
 	}
 
 	@Column(name = "last_pass_reset_date")
-	public Date getLastPasswordResetDate() {
-		return lastPasswordResetDate;
+	public Date getLast_pass_reset_date() {
+		return last_pass_reset_date;
 	}
 
-	public void setLastPasswordResetDate(Date lastPasswordResetDate) {
-		this.lastPasswordResetDate = lastPasswordResetDate;
+	public void setLast_pass_reset_date(Date last_pass_reset_date) {
+		this.last_pass_reset_date = last_pass_reset_date;
 	}
 
 	@Column(name = "is_wt_user")
-	public int getWtUser() {
-		return wtUser;
+	public int getIs_wt_user() {
+		return is_wt_user;
 	}
 
-	public void setWtUser(int wtUser) {
-		this.wtUser = wtUser;
+	public void setIs_wt_user(int is_wt_user) {
+		this.is_wt_user = is_wt_user;
 	}
+
 
 	@Column(name = "ws_enabled")
-	public boolean isWsEnabled() {
-		return wsEnabled;
+	public boolean isWs_enabled() {
+		return ws_enabled;
 	}
 
-	public void setWsEnabled(boolean wsEnabled) {
-		this.wsEnabled = wsEnabled;
+	public void setWs_enabled(boolean ws_enabled) {
+		this.ws_enabled = ws_enabled;
 	}
 
 	@Column(name = "max_ws_sessions")
-	public int getMaxWsSessions() {
-		return maxWsSessions;
+	public int getMax_ws_sessions() {
+		return max_ws_sessions;
 	}
 
-	public void setMaxWsSessions(int maxWsSessions) {
-		this.maxWsSessions = maxWsSessions;
+	public void setMax_ws_sessions(int max_ws_sessions) {
+		this.max_ws_sessions = max_ws_sessions;
 	}
 
 	@Column(name = "web_enabled")
-	public boolean isWebEnabled() {
-		return webEnabled;
+	public boolean isWeb_enabled() {
+		return web_enabled;
 	}
 
-	public void setWebEnabled(boolean webEnabled) {
-		this.webEnabled = webEnabled;
+	public void setWeb_enabled(boolean web_enabled) {
+		this.web_enabled = web_enabled;
 	}
 
 	@Column(name = "reset_password")
@@ -380,11 +381,11 @@ public class Agent {
 	}
 
 	@Column(name = "load_unassigned")
-	public boolean isLoadUnassigned() {
-		return loadUnassigned;
+	public boolean isLoad_unassigned() {
+		return load_unassigned;
 	}
 
-	public void setLoadUnassigned(boolean loadUnassigned) {
-		this.loadUnassigned = loadUnassigned;
+	public void setLoad_unassigned(boolean load_unassigned) {
+		this.load_unassigned = load_unassigned;
 	}
 }

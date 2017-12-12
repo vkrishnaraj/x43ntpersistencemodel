@@ -10,20 +10,13 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
-import org.hibernate.annotations.Proxy;
-
 @Entity
-@Table(name = "Crm")
+@Table(name = "crm")
 public class CrmFile {
 
 	private long id;
-	
 	private Incident incident;
-	
 	private String crm_key;
-	
 	private CRMStatus status;
 	
 	public enum CRMStatus {
@@ -32,6 +25,7 @@ public class CrmFile {
 
 	@Id
 	@GeneratedValue
+	@Column(name = "id")
 	public long getId() {
 		return id;
 	}
@@ -42,7 +36,6 @@ public class CrmFile {
 
 	@OneToOne
 	@JoinColumn(name = "incident_id")
-	@Fetch(FetchMode.SELECT)
 	public Incident getIncident() {
 		return incident;
 	}
@@ -51,7 +44,7 @@ public class CrmFile {
 		this.incident = incident;
 	}
 
-	@Column(length = 128, name = "crm_key")
+	@Column(name = "crm_key")
 	public String getCrm_key() {
 		return crm_key;
 	}

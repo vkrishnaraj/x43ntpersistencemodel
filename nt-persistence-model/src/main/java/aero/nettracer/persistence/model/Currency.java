@@ -1,26 +1,25 @@
 package aero.nettracer.persistence.model;
 
-import java.io.Serializable;
-
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.persistence.Transient;
-import org.hibernate.annotations.Proxy;
 
 @Entity
-@Table(name = "Currency")
-public class Currency implements Serializable {
-	private String Currency_ID;
+@Table(name = "currency")
+public class Currency {
+
+	private String id;
 	private String description;
 
 	@Id
-	public String getCurrency_ID() {
-		return Currency_ID;
+	@Column(name = "currency_id")
+	public String getId() {
+		return id;
 	}
 
-	public void setCurrency_ID(String currency_ID) {
-		Currency_ID = currency_ID;
+	public void setId(String id) {
+		this.id = id;
 	}
 
 	public String getDescription() {
@@ -29,11 +28,6 @@ public class Currency implements Serializable {
 
 	public void setDescription(String description) {
 		this.description = description;
-	}
-
-	@Transient
-	public String getId_desc() {
-		return Currency_ID + " - " + description;
 	}
 
 }

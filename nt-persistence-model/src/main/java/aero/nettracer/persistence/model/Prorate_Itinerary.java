@@ -36,7 +36,7 @@ public class Prorate_Itinerary implements Serializable {
 
 	private String _DATEFORMAT;
 	
-	private ClaimProrate claimprorate;
+	private ClaimProrate claimProrate;
 
 	public String toXML() {
 		StringBuffer sb = new StringBuffer();

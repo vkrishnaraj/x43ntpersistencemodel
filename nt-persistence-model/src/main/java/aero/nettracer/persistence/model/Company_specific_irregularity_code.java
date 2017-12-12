@@ -6,51 +6,59 @@
  */
 package aero.nettracer.persistence.model;
 
-import java.io.Serializable;
-
-import javax.persistence.*;
-
-import org.hibernate.annotations.Proxy;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 @Entity
 @Table(name = "company_irregularity_codes")
-public class Company_specific_irregularity_code implements Serializable {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 6577844701884219201L;
-	private int code_id;
+public class Company_specific_irregularity_code {
+
+	private int id;
 	private int loss_code;
 	private String description;
+	private Company company;
 	private int report_type;
 	private boolean show_to_limited_users;
 	private boolean active;
 	private boolean controllable;
-	private boolean transferStation;
 	private boolean departStation;
+	private boolean transferStation;
 	private boolean destinationStation;
 	private boolean anyStation;
-
-
-	private Company company;
 	private BagMartReasonGroup reasonGroup;
-
-	public int getReport_type() {
-		return report_type;
-	}
-
-	public void setReport_type(int report_type) {
-		this.report_type = report_type;
-	}
 
 	@Id
 	@GeneratedValue
-	public int getCode_id() {
-		return code_id;
+	@Column(name = "code_id")
+	public int getId() {
+		return id;
 	}
 
-	public void setCode_id(int code_id) {
-		this.code_id = code_id;
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	@Column(name = "loss_code")
+	public int getLoss_code() {
+		return loss_code;
+	}
+
+	public void setLoss_code(int loss_code) {
+		this.loss_code = loss_code;
+	}
+
+	@Column(name = "description")
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 	@ManyToOne
@@ -63,27 +71,16 @@ public class Company_specific_irregularity_code implements Serializable {
 		this.company = company;
 	}
 
-	public String getDescription() {
-		return description;
+	@Column(name = "report_type")
+	public int getReport_type() {
+		return report_type;
 	}
 
-	public void setDescription(String description) {
-		this.description = description;
+	public void setReport_type(int report_type) {
+		this.report_type = report_type;
 	}
 
-	public int getLoss_code() {
-		return loss_code;
-	}
-
-	public void setLoss_code(int loss_code) {
-		this.loss_code = loss_code;
-	}
-
-	@Transient
-	public String getCombination() {
-		return loss_code + " - " + description;
-	}
-
+	@Column(name = "show_to_limited_users")
 	public boolean isShow_to_limited_users() {
 		return show_to_limited_users;
 	}
@@ -92,6 +89,7 @@ public class Company_specific_irregularity_code implements Serializable {
 		this.show_to_limited_users = show_to_limited_users;
 	}
 
+	@Column(name = "active")
 	public boolean isActive() {
 		return active;
 	}
@@ -100,37 +98,16 @@ public class Company_specific_irregularity_code implements Serializable {
 		this.active = active;
 	}
 
+	@Column(name = "controllable")
 	public boolean isControllable() {
 		return controllable;
 	}
 
-	public void  setControllable(boolean controllable) {
+	public void setControllable(boolean controllable) {
 		this.controllable = controllable;
 	}
 
-	@Transient
-	public String getActiveDisp() {
-		return active ? "Yes" : "No";
-	}
-
-	@Transient
-	public String getControllableDisp() {
-		return controllable ? "Yes" : "No";
-	}
-
-	@Transient
-	public String getCodeDescription(){
-		return getLoss_code()+" - "+getDescription();
-	}
-
-	public boolean isTransferStation() {
-		return transferStation;
-	}
-
-	public void setTransferStation(boolean transferStation) {
-		this.transferStation = transferStation;
-	}
-
+	@Column(name = "departstation")
 	public boolean isDepartStation() {
 		return departStation;
 	}
@@ -139,6 +116,16 @@ public class Company_specific_irregularity_code implements Serializable {
 		this.departStation = departStation;
 	}
 
+	@Column(name = "transferstation")
+	public boolean isTransferStation() {
+		return transferStation;
+	}
+
+	public void setTransferStation(boolean transferStation) {
+		this.transferStation = transferStation;
+	}
+
+	@Column(name = "destinationstation")
 	public boolean isDestinationStation() {
 		return destinationStation;
 	}
@@ -147,6 +134,7 @@ public class Company_specific_irregularity_code implements Serializable {
 		this.destinationStation = destinationStation;
 	}
 
+	@Column(name = "anystation")
 	public boolean isAnyStation() {
 		return anyStation;
 	}
@@ -156,7 +144,7 @@ public class Company_specific_irregularity_code implements Serializable {
 	}
 
 	@ManyToOne
-	@JoinColumn(name="reasonGrouping_Id")
+	@JoinColumn(name="reasongrouping_id")
 	public BagMartReasonGroup getReasonGroup() {
 		return reasonGroup;
 	}
@@ -164,13 +152,4 @@ public class Company_specific_irregularity_code implements Serializable {
 	public void setReasonGroup(BagMartReasonGroup reasonGroup) {
 		this.reasonGroup = reasonGroup;
 	}
-
-	@Override
-	public String toString() {
-		return String
-				.format("Company_specific_irregularity_code [code_id=%s, loss_code=%s, description=%s, report_type=%s, company=%s]",
-						code_id, loss_code, description, report_type, company);
-	}
-	
-	
 }

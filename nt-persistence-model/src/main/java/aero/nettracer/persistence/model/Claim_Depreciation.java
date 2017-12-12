@@ -1,14 +1,12 @@
 package aero.nettracer.persistence.model;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import aero.nettracer.commons.utils.GenericDateUtils;
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -16,20 +14,17 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.persistence.Transient;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
-import org.hibernate.annotations.Proxy;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import org.hibernate.annotations.OrderBy;
 
-/**
- * @author Sean Fine
- * Class representing Claim Depreciation object
- */
 @Entity
 @Table(name = "claim_depreciation")
 public class Claim_Depreciation {
 
 	private int id;
+	private Claim claim;
+	private Claim_Type claimType;
 	private Date dateCalculate; 
 	private double totalWeight;
 	private double maxLiablity;
@@ -38,15 +33,12 @@ public class Claim_Depreciation {
 	private double totalClaimed;
 	private double additionalDepreciation;
 	private double totalApprovedPayout;
-	
-	private Claim_Type claimType;
-	private Claim claim;
 
-	private List<Depreciation_Item> itemlist=new ArrayList<Depreciation_Item>();
+	private List<Depreciation_Item> itemList=new ArrayList<Depreciation_Item>();
 
-	private String _DATEFORMAT; // current login agent's date format
-
-	@Id @GeneratedValue
+	@Id
+	@GeneratedValue
+	@Column(name = "id")
 	public int getId() {
 		return id;
 	}
@@ -55,7 +47,7 @@ public class Claim_Depreciation {
 		this.id = id;
 	}
 
-	@OneToOne(targetEntity =  Claim.class)
+	@OneToOne
 	@JoinColumn(name="claim_id")
 	public Claim getClaim() {
 		return claim;
@@ -65,17 +57,8 @@ public class Claim_Depreciation {
 		this.claim = claim;
 	}
 
-	public Date getDateCalculate() {
-		return dateCalculate;
-	}
-
-	public void setDateCalculate(Date dateCalculate) {
-		this.dateCalculate = dateCalculate;
-	}
-
 	@ManyToOne
-	@JoinColumn(name = "claimType_id", nullable = true)
-	@Fetch(FetchMode.SELECT)
+	@JoinColumn(name = "claimtype_id", nullable = true)
 	public Claim_Type getClaimType() {
 		return claimType;
 	}
@@ -84,66 +67,17 @@ public class Claim_Depreciation {
 		this.claimType = claimType;
 	}
 
-	@Transient
-	public int getClaimTypeId() {
-		if(claimType!=null)
-			return claimType.getId();
-		else 
-			return 0;
+	@Column(name = "datecalculate")
+	@Temporal(TemporalType.DATE)
+	public Date getDateCalculate() {
+		return dateCalculate;
 	}
 
-	/*public void setClaimTypeId(int claimTypeId) {
-		if(claimTypeId!=0){
-			Claim_Type type=ClaimBMO.getClaimTypeById(claimTypeId);
-			if(type!=null){
-				this.claimType=type;
-			} else {
-				this.claimType=new Claim_Type();
-				this.claimType.setId(claimTypeId);
-			}
-		} else {
-			this.claimType=null;
-		}
-	}*/
-
-	@OneToMany(mappedBy = "claimDepreciation", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	@org.hibernate.annotations.OrderBy(clause = "id")
-	public List<Depreciation_Item> getItemlist() {
-		return itemlist;
+	public void setDateCalculate(Date dateCalculate) {
+		this.dateCalculate = dateCalculate;
 	}
 
-	public void setItemlist(List<Depreciation_Item> itemlist) {
-		this.itemlist = itemlist;
-	}
-
-	@Transient
-	public String get_DATEFORMAT() {
-		return _DATEFORMAT;
-	}
-
-	@Transient
-	public void set_DATEFORMAT(String _DATEFORMAT) {
-		this._DATEFORMAT = _DATEFORMAT;
-	}
-
-	@Transient
-	public void setDispDateCalculate(String s) {
-		setDateCalculate(GenericDateUtils.convertToDate(s, _DATEFORMAT, null));
-	}
-
-	@Transient
-	public String getDispDateCalculate() {
-		return GenericDateUtils.formatDate(getDateCalculate(), _DATEFORMAT, null, null);
-	}
-
-	public String getWeightMetric() {
-		return weightMetric;
-	}
-
-	public void setWeightMetric(String weightMetric) {
-		this.weightMetric = weightMetric;
-	}
-
+	@Column(name = "totalweight")
 	public double getTotalWeight() {
 		return totalWeight;
 	}
@@ -152,6 +86,7 @@ public class Claim_Depreciation {
 		this.totalWeight = totalWeight;
 	}
 
+	@Column(name = "maxliablity")
 	public double getMaxLiablity() {
 		return maxLiablity;
 	}
@@ -160,6 +95,16 @@ public class Claim_Depreciation {
 		this.maxLiablity = maxLiablity;
 	}
 
+	@Column(name = "weightmetric")
+	public String getWeightMetric() {
+		return weightMetric;
+	}
+
+	public void setWeightMetric(String weightMetric) {
+		this.weightMetric = weightMetric;
+	}
+
+	@Column(name = "currency")
 	public String getCurrency() {
 		return currency;
 	}
@@ -168,6 +113,7 @@ public class Claim_Depreciation {
 		this.currency = currency;
 	}
 
+	@Column(name = "totalclaimed")
 	public double getTotalClaimed() {
 		return totalClaimed;
 	}
@@ -176,6 +122,7 @@ public class Claim_Depreciation {
 		this.totalClaimed = totalClaimed;
 	}
 
+	@Column(name = "additionalDepreciation")
 	public double getAdditionalDepreciation() {
 		return additionalDepreciation;
 	}
@@ -184,6 +131,7 @@ public class Claim_Depreciation {
 		this.additionalDepreciation = additionalDepreciation;
 	}
 
+	@Column(name = "totalapprovedpayout")
 	public double getTotalApprovedPayout() {
 		return totalApprovedPayout;
 	}
@@ -191,46 +139,15 @@ public class Claim_Depreciation {
 	public void setTotalApprovedPayout(double totalApprovedPayout) {
 		this.totalApprovedPayout = totalApprovedPayout;
 	}
-	
-	@Transient
-	public String getDispTotalApprovedPayout() {
 
-		DecimalFormat format = (DecimalFormat) java.text.NumberFormat
-				.getInstance();
-		format.applyPattern("##0.00");
-		format.setMinimumFractionDigits(2);
-		return format.format(totalApprovedPayout);
+	@OneToMany(mappedBy = "claimDepreciation", cascade = CascadeType.ALL)
+	@OrderBy(clause = "id")
+	public List<Depreciation_Item> getItemList() {
+		return itemList;
 	}
 
-	@Transient
-	public void setDispTotalApprovedPayout(String totalApprovedPayout) {
-		double tap=0;
-		try{
-			tap=Double.valueOf(totalApprovedPayout);
-		} catch (Exception e) {
-			
-		}
-		setTotalApprovedPayout(tap);
+	public void setItemList(List<Depreciation_Item> itemList) {
+		this.itemList = itemList;
 	}
 
-	@Transient
-	public double getTotalClaim(){
-		double tc=0;
-		if(itemlist!=null && itemlist.size()>0)
-			for(Depreciation_Item di:itemlist){
-				tc+=di.getAmountClaimed();
-			}
-		return tc;
-	}
-
-	@Transient
-	public double getTotalValue(){
-		double tv=0;
-		if(itemlist!=null && itemlist.size()>0)
-			for(Depreciation_Item di:itemlist){
-				tv+=di.getClaimValue();
-			}
-		return tv;
-	}
-	
 }

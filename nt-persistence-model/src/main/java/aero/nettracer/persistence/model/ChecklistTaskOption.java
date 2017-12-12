@@ -17,7 +17,7 @@ public class ChecklistTaskOption {
 
 	private long id;
 	private String description;
-	private long orderId;
+	private long order_id;
 	private ChecklistTask checklistTask;
 
 	@Id
@@ -41,12 +41,12 @@ public class ChecklistTaskOption {
 	}
 
 	@Column(name = "order_id")
-	public long getOrderId() {
-		return orderId;
+	public long getOrder_id() {
+		return order_id;
 	}
 
-	public void setOrderId(long orderId) {
-		this.orderId = orderId;
+	public void setOrder_id(long order_id) {
+		this.order_id = order_id;
 	}
 
 	@ManyToOne

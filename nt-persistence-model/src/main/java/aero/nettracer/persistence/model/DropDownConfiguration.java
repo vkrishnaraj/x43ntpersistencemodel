@@ -1,31 +1,26 @@
 package aero.nettracer.persistence.model;
 
-import java.io.Serializable;
-
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Transient;
-import org.hibernate.annotations.Proxy;
 
 @Entity
 @Table(name = "drop_down_configuration")
-public class DropDownConfiguration implements Serializable{
+public class DropDownConfiguration {
 
-
-
-    @Id
-    @GeneratedValue
     private int id;
     private String companyCode;
     private String dropDownName;
     private String optionKey;
     private String optionValue;
     private int displayOrder;
-    @Transient
     private boolean isSelected;
 
+    @Id
+    @GeneratedValue
     public int getId() {
         return id;
     }
@@ -34,6 +29,7 @@ public class DropDownConfiguration implements Serializable{
         this.id = id;
     }
 
+    @Column(name = "companycode")
     public String getCompanyCode() {
         return companyCode;
     }
@@ -42,6 +38,7 @@ public class DropDownConfiguration implements Serializable{
         this.companyCode = companyCode;
     }
 
+    @Column(name = "dropdownname")
     public String getDropDownName() {
         return dropDownName;
     }
@@ -50,6 +47,7 @@ public class DropDownConfiguration implements Serializable{
         this.dropDownName = dropDownName;
     }
 
+    @Column(name = "optionkey")
     public String getOptionKey() {
         return optionKey;
     }
@@ -58,6 +56,7 @@ public class DropDownConfiguration implements Serializable{
         this.optionKey = optionKey;
     }
 
+    @Column(name = "optionvalue")
     public String getOptionValue() {
         return optionValue;
     }
@@ -66,6 +65,7 @@ public class DropDownConfiguration implements Serializable{
         this.optionValue = optionValue;
     }
 
+    @Column(name = "displayorder")
     public int getDisplayOrder() {
         return displayOrder;
     }
@@ -74,6 +74,7 @@ public class DropDownConfiguration implements Serializable{
         this.displayOrder = displayOrder;
     }
 
+    @Transient
     public boolean isSelected() {
         return isSelected;
     }

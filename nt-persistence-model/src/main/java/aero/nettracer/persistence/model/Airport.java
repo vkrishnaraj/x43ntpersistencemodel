@@ -1,14 +1,11 @@
 package aero.nettracer.persistence.model;
 
-import java.io.Serializable;
-
 import javax.persistence.Cacheable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
-
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -19,8 +16,8 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 public class Airport {
 
 	private int id;
-	private String airportCode;
-	private String airportDesc;
+	private String airport_code;
+	private String airport_desc;
 	private String locale;
 	private String country;
 	private String timezone;
@@ -37,21 +34,21 @@ public class Airport {
 	}
 
 	@Column(name = "airport_code")
-	public String getAirportCode() {
-		return airportCode;
+	public String getAirport_code() {
+		return airport_code;
 	}
 
-	public void setAirportCode(String airportCode) {
-		this.airportCode = airportCode;
+	public void setAirport_code(String airport_code) {
+		this.airport_code = airport_code;
 	}
 
 	@Column(name = "airport_desc")
-	public String getAirportDesc() {
-		return airportDesc;
+	public String getAirport_desc() {
+		return airport_desc;
 	}
 
-	public void setAirportDesc(String airportDesc) {
-		this.airportDesc = airportDesc;
+	public void setAirport_desc(String airport_desc) {
+		this.airport_desc = airport_desc;
 	}
 
 	@Column(name = "locale")

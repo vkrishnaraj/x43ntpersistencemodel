@@ -1,16 +1,11 @@
 package aero.nettracer.persistence.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.Proxy;
-
-/**
- * @author Sean Fine
- * Class representing Claim Type object
- */
 @Entity
 @Table(name = "claim_type")
 public class Claim_Type {
@@ -18,7 +13,9 @@ public class Claim_Type {
 	private int id;
 	private String description;
 
-	@Id @GeneratedValue
+	@Id
+	@GeneratedValue
+	@Column(name = "id")
 	public int getId() {
 		return id;
 	}
@@ -27,6 +24,7 @@ public class Claim_Type {
 		this.id = id;
 	}
 
+	@Column(name = "description")
 	public String getDescription() {
 		return description;
 	}

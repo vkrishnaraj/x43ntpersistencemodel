@@ -2,6 +2,7 @@ package aero.nettracer.persistence.model;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -12,26 +13,19 @@ import org.hibernate.annotations.Proxy;
 
 @Entity
 @Table(name = "deliver_servicelevel")
-public class Deliver_ServiceLevel implements Serializable {
+public class Deliver_ServiceLevel {
+
 	private int servicelevel_ID;
-	private String description;
 	private DeliverCompany delivercompany;
+	private String description;
 	private boolean active;
 	private String service_code;
 	private double defaultCost;
 	private String mapped_actual_service;
 	
-
-	public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(String desc) {
-		this.description = desc;
-	}
-
 	@Id
 	@GeneratedValue
+	@Column(name = "servicelevel_id")
 	public int getServicelevel_ID() {
 		return servicelevel_ID;
 	}
@@ -41,7 +35,7 @@ public class Deliver_ServiceLevel implements Serializable {
 	}
 
 	@ManyToOne
-	@JoinColumn(name = "delivercompany_ID")
+	@JoinColumn(name = "delivercompany_id", nullable = false)
 	public DeliverCompany getDelivercompany() {
 		return delivercompany;
 	}
@@ -50,6 +44,16 @@ public class Deliver_ServiceLevel implements Serializable {
 		this.delivercompany = delivercompany;
 	}
 
+	@Column(name = "description")
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String desc) {
+		this.description = desc;
+	}
+
+	@Column(name = "active")
 	public boolean isActive() {
 		return active;
 	}
@@ -58,6 +62,7 @@ public class Deliver_ServiceLevel implements Serializable {
 		this.active = active;
 	}
 
+	@Column(name = "service_code")
 	public String getService_code() {
 		return service_code;
 	}
@@ -66,6 +71,7 @@ public class Deliver_ServiceLevel implements Serializable {
 		this.service_code = service_code;
 	}
 
+	@Column(name = "defaultcost")
 	public double getDefaultCost() {
 		return defaultCost;
 	}

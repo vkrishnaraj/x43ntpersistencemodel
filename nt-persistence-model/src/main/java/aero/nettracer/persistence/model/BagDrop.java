@@ -9,6 +9,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 
 @Entity
@@ -40,6 +42,7 @@ public class BagDrop {
 	}
 
 	@Column(name = "createDate")
+	@Temporal(TemporalType.TIMESTAMP)
 	public Timestamp getCreateDate() {
 		return createDate;
 	}
@@ -49,6 +52,7 @@ public class BagDrop {
 	}
 
 	@Column(name = "lastUpdated")
+	@Temporal(TemporalType.TIMESTAMP)
 	public Timestamp getLastUpdated() {
 		return lastUpdated;
 	}
@@ -85,6 +89,7 @@ public class BagDrop {
 	}
 
 	@Column(name = "bagDropTime")
+	@Temporal(TemporalType.TIMESTAMP)
 	public Timestamp getBagDropTime() {
 		return bagDropTime;
 	}
@@ -94,6 +99,7 @@ public class BagDrop {
 	}
 
 	@Column(name = "schArrivalDate")
+	@Temporal(TemporalType.TIMESTAMP)
 	public Timestamp getSchArrivalDate() {
 		return schArrivalDate;
 	}
@@ -103,6 +109,7 @@ public class BagDrop {
 	}
 
 	@Column(name = "actArrivalDate")
+	@Temporal(TemporalType.TIMESTAMP)
 	public Timestamp getActArrivalDate() {
 		return actArrivalDate;
 	}
@@ -130,7 +137,7 @@ public class BagDrop {
 	}
 
 	@ManyToOne
-	@JoinColumn(name = "createagent_id", nullable = true)
+	@JoinColumn(name = "createagent_id")
 	public Agent getCreateAgent() {
 		return createAgent;
 	}

@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
+import aero.nettracer.persistence.util.DeliveryIntegrationType;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -30,13 +31,13 @@ public class BDO {
 	private int id;
 	private Incident incident;
 	private Agent agent;
-	private Date createDate;
-	private Time createTime;
-	private DeliverCompany deliverCompany;
-	private Deliver_ServiceLevel serviceLevel;
+	private Date createdate;
+	private Time createtime;
+	private DeliverCompany delivercompany;
+	private Deliver_ServiceLevel servicelevel;
 	private Station station = new Station();
-	private String companyCode;
-	private Date deliveryDate;
+	private String companycode_ID;
+	private Date deliverydate;
 	private DeliveryIntegrationType deliveryIntegrationType;
 	private String deliveryIntegrationId;
 	private int integrationDeliverCompanyId;
@@ -44,10 +45,10 @@ public class BDO {
 	private Timestamp lastDeliveryUpdate;
 	private DeliveryStatusType deliveryStatus;
 	private double origDelivCost;
-	private Date pickupDate;
-	private Time pickupTime;
+	private Date pickupdate;
+	private Time pickuptime;
 	private double distance;
-	private int pickupTimezoneId;
+	private int pickuptz_id;
 	private List<OHD> onhands;
 	private Set<BDO_Passenger> passengers;
 	private Set<Item> items;
@@ -85,42 +86,42 @@ public class BDO {
 
 	@Column(name = "createdate", updatable = false)
 	@Temporal(TemporalType.DATE)
-	public Date getCreateDate() {
-		return createDate;
+	public Date getCreatedate() {
+		return createdate;
 	}
 
-	public void setCreateDate(Date createDate) {
-		this.createDate = createDate;
+	public void setCreatedate(Date createdate) {
+		this.createdate = createdate;
 	}
 
 	@Column(name = "createtime", updatable = false)
 	@Temporal(TemporalType.TIME)
-	public Time getCreateTime() {
-		return createTime;
+	public Time getCreatetime() {
+		return createtime;
 	}
 
-	public void setCreateTime(Time createTime) {
-		this.createTime = createTime;
+	public void setCreatetime(Time createtime) {
+		this.createtime = createtime;
 	}
 
 	@ManyToOne
 	@JoinColumn(name = "delivercompany_id")
-	public DeliverCompany getDeliverCompany() {
-		return deliverCompany;
+	public DeliverCompany getDelivercompany() {
+		return delivercompany;
 	}
 
-	public void setDeliverCompany(DeliverCompany deliverCompany) {
-		this.deliverCompany = deliverCompany;
+	public void setDelivercompany(DeliverCompany delivercompany) {
+		this.delivercompany = delivercompany;
 	}
 
 	@ManyToOne
 	@JoinColumn(name = "servicelevel_id")
-	public Deliver_ServiceLevel getServiceLevel() {
-		return serviceLevel;
+	public Deliver_ServiceLevel getServicelevel() {
+		return servicelevel;
 	}
 
-	public void setServiceLevel(Deliver_ServiceLevel serviceLevel) {
-		this.serviceLevel = serviceLevel;
+	public void setServicelevel(Deliver_ServiceLevel servicelevel) {
+		this.servicelevel = servicelevel;
 	}
 
 	@ManyToOne
@@ -134,22 +135,22 @@ public class BDO {
 	}
 
 	@Column(name = "companycode_id")
-	public String getCompanyCode() {
-		return companyCode;
+	public String getCompanycode_ID() {
+		return companycode_ID;
 	}
 
-	public void setCompanyCode(String companyCode) {
-		this.companyCode = companyCode;
+	public void setCompanycode_ID(String companycode_ID) {
+		this.companycode_ID = companycode_ID;
 	}
 
 	@Column(name = "deliverydate")
 	@Temporal(value = TemporalType.DATE)
-	public Date getDeliveryDate() {
-		return deliveryDate;
+	public Date getDeliverydate() {
+		return deliverydate;
 	}
 
-	public void setDeliveryDate(Date deliveryDate) {
-		this.deliveryDate = deliveryDate;
+	public void setDeliverydate(Date deliverydate) {
+		this.deliverydate = deliverydate;
 	}
 
 	@Enumerated(EnumType.STRING)
@@ -219,22 +220,22 @@ public class BDO {
 
 	@Column(name = "pickupdate")
 	@Temporal(TemporalType.DATE)
-	public Date getPickupDate() {
-		return pickupDate;
+	public Date getPickupdate() {
+		return pickupdate;
 	}
 
-	public void setPickupDate(Date pickupDate) {
-		this.pickupDate = pickupDate;
+	public void setPickupdate(Date pickupdate) {
+		this.pickupdate = pickupdate;
 	}
 
 	@Column(name = "pickuptime")
 	@Temporal(TemporalType.TIME)
-	public Time getPickupTime() {
-		return pickupTime;
+	public Time getPickuptime() {
+		return pickuptime;
 	}
 
-	public void setPickupTime(Time pickupTime) {
-		this.pickupTime = pickupTime;
+	public void setPickuptime(Time pickuptime) {
+		this.pickuptime = pickuptime;
 	}
 
 	@Column(name = "distance")
@@ -247,12 +248,12 @@ public class BDO {
 	}
 
 	@Column(name = "pickuptz_id")
-	public int getPickupTimezoneId() {
-		return pickupTimezoneId;
+	public int getPickuptz_id() {
+		return pickuptz_id;
 	}
 
-	public void setPickupTimezoneId(int pickupTimezoneId) {
-		this.pickupTimezoneId = pickupTimezoneId;
+	public void setPickuptz_id(int pickuptz_id) {
+		this.pickuptz_id = pickuptz_id;
 	}
 
 	@ManyToMany(cascade = CascadeType.PERSIST)

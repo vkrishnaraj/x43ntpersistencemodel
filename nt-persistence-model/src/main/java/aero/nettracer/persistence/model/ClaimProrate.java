@@ -1,34 +1,27 @@
 package aero.nettracer.persistence.model;
 
-import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.ListIterator;
 import java.util.Set;
 
-import aero.nettracer.commons.constant.GenericConstants;
-import aero.nettracer.commons.utils.GenericDateUtils;
-import com.cci.utils.parser.ElementNode;
+import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Transient;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 import org.hibernate.annotations.OrderBy;
-import org.hibernate.annotations.Proxy;
 
 @Entity
-@Table(name = "ClaimProrate")
-public class ClaimProrate implements Serializable {
-	private int Claimprorate_ID;
-	private Date createdate;
+@Table(name = "claimprorate")
+public class ClaimProrate {
+
+	private int id;
 	private String companycode_ID;
+	private Date createdate;
 	private String file_reference;
 	private int pir_attached;
 	private int claim_attached;
@@ -45,162 +38,21 @@ public class ClaimProrate implements Serializable {
 	private String fax_number;
 	private double total_percentage;
 	private double total_share;
-	private Set prorate_itineraries;
 
-	public String toXML() {
-		StringBuffer sb = new StringBuffer();
-		sb.append("<claimprorate>");
-		sb.append("<Claimprorate_ID>" + Claimprorate_ID + "</Claimprorate_ID>");
-		sb.append("<createdate>" + createdate.toString() + "</createdate>");
-		sb.append("<companycode_ID>" + companycode_ID + "</companycode_ID>");
-		sb.append("<pir_attached>" + pir_attached + "</pir_attached>");
-		sb.append("<claim_attached>" + claim_attached + "</claim_attached>");
-		sb.append("<confirmpayment_attached>" + confirmpayment_attached + "</confirmpayment_attached>");
-		sb.append("<all_prorate>" + all_prorate + "</all_prorate>");
-		sb.append("<all_prorate_reason>" + all_prorate_reason + "</all_prorate_reason>");
-		sb.append("<remit>" + remit + "</remit>");
-		sb.append("<remit_amount>" + remit_amount + "</remit_amount>");
-		sb.append("<currency_ID>" + currency_ID + "</currency_ID>");
-		sb.append("<remit_to>" + remit_to + "</remit_to>");
-		sb.append("<clearing_bill>" + clearing_bill + "</clearing_bill>");
-		sb.append("<prorate_officer>" + prorate_officer + "</prorate_officer>");
-		sb.append("<sita_address>" + sita_address + "</sita_address>");
-		sb.append("<fax_number>" + fax_number + "</fax_number>");
-		sb.append("<total_percentage>" + total_percentage + "</total_percentage>");
-		sb.append("<total_share>" + total_share + "</total_share>");
-
-		sb.append("<prorate_itineraries>");
-		if (this.getProrate_itineraries() != null && this.getProrate_itineraries().size() > 0) {
-			for (Iterator i = this.getProrate_itineraries().iterator(); i.hasNext();) {
-				Prorate_Itinerary itinerary = (Prorate_Itinerary) i.next();
-				sb.append(itinerary.toXML());
-			}
-		}
-		sb.append("</prorate_itineraries>");
-		sb.append("</claimprorate>");
-		return sb.toString();
-
-	}
-
-	public static ClaimProrate XMLtoObject(ElementNode root) {
-		ClaimProrate obj = new ClaimProrate();
-
-		ElementNode child = null, grandchild = null, ggrandchild = null, gggrandchild = null;
-
-		Station st = new Station();
-		for (ListIterator i = root.get_children().listIterator(); i.hasNext();) {
-			child = (ElementNode) i.next();
-			if (child.getType().equals("Claimprorate_ID")) {
-				obj.setClaimprorate_ID(parseInt(child.getTextContents()));
-			} else if (child.getType().equals("createdate")) {
-				obj.setCreatedate(GenericDateUtils.convertToDate(child.getTextContents(),
-						GenericConstants.DB_DATEFORMAT, null));
-			} else if (child.getType().equals("companycode_ID")) {
-				obj.setCompanycode_ID(child.getTextContents());
-			} else if (child.getType().equals("pir_attached")) {
-				obj.setPir_attached(parseInt(child.getTextContents()));
-			} else if (child.getType().equals("claim_attached")) {
-				obj.setClaim_attached(parseInt(child.getTextContents()));
-			} else if (child.getType().equals("confirmpayment_attached")) {
-				obj.setConfirmpayment_attached(parseInt(child.getTextContents()));
-			} else if (child.getType().equals("all_prorate")) {
-				obj.setAll_prorate(parseInt(child.getTextContents()));
-			} else if (child.getType().equals("all_prorate_reason")) {
-				obj.setAll_prorate_reason(child.getTextContents());
-			} else if (child.getType().equals("remit")) {
-				obj.setRemit(parseInt(child.getTextContents()));
-			} else if (child.getType().equals("remit_amount")) {
-				obj.setRemit_amount(parseDouble(child.getTextContents()));
-			} else if (child.getType().equals("currency_ID")) {
-				obj.setCurrency_ID(child.getTextContents());
-			} else if (child.getType().equals("remit_to")) {
-				obj.setRemit_to(child.getTextContents());
-			} else if (child.getType().equals("clearing_bill")) {
-				obj.setClearing_bill(parseInt(child.getTextContents()));
-			} else if (child.getType().equals("prorate_officer")) {
-				obj.setProrate_officer(child.getTextContents());
-			} else if (child.getType().equals("sita_address")) {
-				obj.setSita_address(child.getTextContents());
-			} else if (child.getType().equals("fax_number")) {
-				obj.setFax_number(child.getTextContents());
-			} else if (child.getType().equals("total_percentage")) {
-				obj.setTotal_percentage(parseDouble(child.getTextContents()));
-			} else if (child.getType().equals("total_share")) {
-				obj.setTotal_share(parseDouble(child.getTextContents()));
-			} else if (child.getType().equals("prorate_itineraries")) {
-				ArrayList al = new ArrayList();
-				ArrayList c = (ArrayList)child.getChildren();
-				for (int z=0;z<c.size();z++) {
-					al.add(Prorate_Itinerary.XMLtoObject((ElementNode)c.get(z)));
-				}
-				obj.setProrate_itineraries(new HashSet(al));
-			}
-
-
-		}
-
-
-		return obj;
-	}
-
-	@OneToMany(mappedBy = "claimprorate", fetch = FetchType.EAGER)
-	@Cascade(CascadeType.ALL)
-	@OrderBy(clause = "prorate_itinerary_ID")
-	public Set<Prorate_Itinerary> getProrate_itineraries() {
-		return prorate_itineraries;
-	}
-
-	public void setProrate_itineraries(Set<Prorate_Itinerary> prorate_itineraries) {
-		this.prorate_itineraries = prorate_itineraries;
-	}
-
-	@Transient
-	public ArrayList getPi_list() {
-		return new ArrayList((prorate_itineraries != null ? prorate_itineraries : new HashSet()));
-	}
-
-	public int getAll_prorate() {
-		return all_prorate;
-	}
-
-	public void setAll_prorate(int all_prorate) {
-		this.all_prorate = all_prorate;
-	}
-
-	public String getAll_prorate_reason() {
-		return all_prorate_reason;
-	}
-
-	public void setAll_prorate_reason(String all_prorate_reason) {
-		this.all_prorate_reason = all_prorate_reason;
-	}
-
-	public int getClaim_attached() {
-		return claim_attached;
-	}
-
-	public void setClaim_attached(int claim_attached) {
-		this.claim_attached = claim_attached;
-	}
+	private Set<Prorate_Itinerary> prorate_itineraries;
 
 	@Id
 	@GeneratedValue
-	public int getClaimprorate_ID() {
-		return Claimprorate_ID;
+	@Column(name = "claimprorate_id")
+	public int getId() {
+		return id;
 	}
 
-	public void setClaimprorate_ID(int claimprorate_ID) {
-		Claimprorate_ID = claimprorate_ID;
+	public void setId(int id) {
+		this.id = id;
 	}
 
-	public int getClearing_bill() {
-		return clearing_bill;
-	}
-
-	public void setClearing_bill(int clearing_bill) {
-		this.clearing_bill = clearing_bill;
-	}
-
+	@Column(name = "companycode_id")
 	public String getCompanycode_ID() {
 		return companycode_ID;
 	}
@@ -209,14 +61,8 @@ public class ClaimProrate implements Serializable {
 		this.companycode_ID = companycode_ID;
 	}
 
-	public int getConfirmpayment_attached() {
-		return confirmpayment_attached;
-	}
-
-	public void setConfirmpayment_attached(int confirmpayment_attached) {
-		this.confirmpayment_attached = confirmpayment_attached;
-	}
-
+	@Column(name = "createdate")
+	@Temporal(TemporalType.DATE)
 	public Date getCreatedate() {
 		return createdate;
 	}
@@ -225,22 +71,7 @@ public class ClaimProrate implements Serializable {
 		this.createdate = createdate;
 	}
 
-	public String getCurrency_ID() {
-		return currency_ID;
-	}
-
-	public void setCurrency_ID(String currency_ID) {
-		this.currency_ID = currency_ID;
-	}
-
-	public String getFax_number() {
-		return fax_number;
-	}
-
-	public void setFax_number(String fax_number) {
-		this.fax_number = fax_number;
-	}
-
+	@Column(name = "file_reference")
 	public String getFile_reference() {
 		return file_reference;
 	}
@@ -249,6 +80,7 @@ public class ClaimProrate implements Serializable {
 		this.file_reference = file_reference;
 	}
 
+	@Column(name = "pir_attached")
 	public int getPir_attached() {
 		return pir_attached;
 	}
@@ -257,14 +89,43 @@ public class ClaimProrate implements Serializable {
 		this.pir_attached = pir_attached;
 	}
 
-	public String getProrate_officer() {
-		return prorate_officer;
+	@Column(name = "claim_attached")
+	public int getClaim_attached() {
+		return claim_attached;
 	}
 
-	public void setProrate_officer(String prorate_officer) {
-		this.prorate_officer = prorate_officer;
+	public void setClaim_attached(int claim_attached) {
+		this.claim_attached = claim_attached;
 	}
 
+	@Column(name = "confirmpayment_attached")
+	public int getConfirmpayment_attached() {
+		return confirmpayment_attached;
+	}
+
+	public void setConfirmpayment_attached(int confirmpayment_attached) {
+		this.confirmpayment_attached = confirmpayment_attached;
+	}
+
+	@Column(name = "all_prorate")
+	public int getAll_prorate() {
+		return all_prorate;
+	}
+
+	public void setAll_prorate(int all_prorate) {
+		this.all_prorate = all_prorate;
+	}
+
+	@Column(name = "all_prorate_reason")
+	public String getAll_prorate_reason() {
+		return all_prorate_reason;
+	}
+
+	public void setAll_prorate_reason(String all_prorate_reason) {
+		this.all_prorate_reason = all_prorate_reason;
+	}
+
+	@Column(name = "remit")
 	public int getRemit() {
 		return remit;
 	}
@@ -273,6 +134,7 @@ public class ClaimProrate implements Serializable {
 		this.remit = remit;
 	}
 
+	@Column(name = "remit_amount")
 	public double getRemit_amount() {
 		return remit_amount;
 	}
@@ -281,6 +143,16 @@ public class ClaimProrate implements Serializable {
 		this.remit_amount = remit_amount;
 	}
 
+	@Column(name = "currency_id")
+	public String getCurrency_ID() {
+		return currency_ID;
+	}
+
+	public void setCurrency_ID(String currency_ID) {
+		this.currency_ID = currency_ID;
+	}
+
+	@Column(name = "remit_to")
 	public String getRemit_to() {
 		return remit_to;
 	}
@@ -289,6 +161,25 @@ public class ClaimProrate implements Serializable {
 		this.remit_to = remit_to;
 	}
 
+	@Column(name = "clearing_bill")
+	public int getClearing_bill() {
+		return clearing_bill;
+	}
+
+	public void setClearing_bill(int clearing_bill) {
+		this.clearing_bill = clearing_bill;
+	}
+
+	@Column(name = "prorate_officer")
+	public String getProrate_officer() {
+		return prorate_officer;
+	}
+
+	public void setProrate_officer(String prorate_officer) {
+		this.prorate_officer = prorate_officer;
+	}
+
+	@Column(name = "sita_address")
 	public String getSita_address() {
 		return sita_address;
 	}
@@ -297,6 +188,16 @@ public class ClaimProrate implements Serializable {
 		this.sita_address = sita_address;
 	}
 
+	@Column(name = "fax_number")
+	public String getFax_number() {
+		return fax_number;
+	}
+
+	public void setFax_number(String fax_number) {
+		this.fax_number = fax_number;
+	}
+
+	@Column(name = "total_percentage")
 	public double getTotal_percentage() {
 		return total_percentage;
 	}
@@ -305,6 +206,7 @@ public class ClaimProrate implements Serializable {
 		this.total_percentage = total_percentage;
 	}
 
+	@Column(name = "total_share")
 	public double getTotal_share() {
 		return total_share;
 	}
@@ -313,19 +215,14 @@ public class ClaimProrate implements Serializable {
 		this.total_share = total_share;
 	}
 
-	public static int parseInt(String s) {
-		try {
-			return Integer.parseInt(s);
-		} catch (Exception e) {
-			return 0;
-		}
+	@OneToMany(mappedBy = "claimProrate")
+	@Cascade(CascadeType.ALL)
+	@OrderBy(clause = "prorate_itinerary_id")
+	public Set<Prorate_Itinerary> getProrate_itineraries() {
+		return prorate_itineraries;
 	}
 
-	public static double parseDouble(String s) {
-		try {
-			return Double.parseDouble(s);
-		} catch (Exception e) {
-			return 0;
-		}
+	public void setProrate_itineraries(Set<Prorate_Itinerary> prorate_itineraries) {
+		this.prorate_itineraries = prorate_itineraries;
 	}
 }

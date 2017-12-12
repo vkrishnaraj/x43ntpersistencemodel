@@ -1,8 +1,9 @@
 package aero.nettracer.persistence.model;
 
-import java.io.Serializable;
 import java.util.Set;
 
+import aero.nettracer.persistence.util.DeliveryIntegrationType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -13,58 +14,35 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import org.hibernate.annotations.OrderBy;
-import org.hibernate.annotations.Proxy;
 
 
 @Entity
 @Table(name = "delivercompany")
-public class DeliverCompany implements Serializable {
+public class DeliverCompany {
 
-	private int delivercompany_ID;
+	private int id;
 	private String name;
 	private String address;
-	private String phone;
-	private Set<Deliver_ServiceLevel> servicelevels;
+	private String customId;
 	private boolean active;
 	private Company company;
+	private String phone;
 	private DeliveryIntegrationType delivery_integration_type;
 	private String integration_key;
-
-
-	public String getIntegration_key() {
-		return integration_key;
-	}
-
-	public void setIntegration_key(String integration_key) {
-		this.integration_key = integration_key;
-	}
-
-	public String getAddress() {
-		return address;
-	}
-
-	public void setAddress(String address) {
-		this.address = address;
-	}
-
-	public String getPhone() {
-		return phone;
-	}
-
-	public void setPhone(String phone) {
-		this.phone = phone;
-	}
+	private Set<Deliver_ServiceLevel> servicelevels;
 
 	@Id
 	@GeneratedValue
-	public int getDelivercompany_ID() {
-		return delivercompany_ID;
+	@Column(name = "delivercompany_id")
+	public int getId() {
+		return id;
 	}
 
-	public void setDelivercompany_ID(int delivercompany_ID) {
-		this.delivercompany_ID = delivercompany_ID;
+	public void setId(int id) {
+		this.id = id;
 	}
 
+	@Column(name = "name")
 	public String getName() {
 		return name;
 	}
@@ -73,16 +51,25 @@ public class DeliverCompany implements Serializable {
 		this.name = name;
 	}
 
-	@OneToMany(mappedBy = "delivercompany")
-	@OrderBy(clause = "description")
-	public Set<Deliver_ServiceLevel> getServicelevels() {
-		return servicelevels;
+	@Column(name = "address")
+	public String getAddress() {
+		return address;
 	}
 
-	public void setServicelevels(Set<Deliver_ServiceLevel> servicelevels) {
-		this.servicelevels = servicelevels;
+	public void setAddress(String address) {
+		this.address = address;
 	}
-	
+
+	@Column(name = "custom_id")
+	public String getCustomId() {
+		return customId;
+	}
+
+	public void setCustomId(String customId) {
+		this.customId = customId;
+	}
+
+	@Column(name = "active")
 	public boolean isActive() {
 		return active;
 	}
@@ -100,19 +87,14 @@ public class DeliverCompany implements Serializable {
 	public void setCompany(Company company) {
 		this.company = company;
 	}
-	
-	public boolean equals(Object o) {
-		boolean match = false;
-		
-		try {
-			DeliverCompany obj = (DeliverCompany)o;
-			if (obj.getDelivercompany_ID() == this.getDelivercompany_ID()) {
-				match = true;
-			}		
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return match;
+
+	@Column(name = "phone")
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
 	}
 
 	@Enumerated(EnumType.STRING)
@@ -120,11 +102,29 @@ public class DeliverCompany implements Serializable {
 		return delivery_integration_type;
 	}
 
-	public void setDelivery_integration_type(
-			DeliveryIntegrationType delivery_integration_type) {
+	public void setDelivery_integration_type(DeliveryIntegrationType delivery_integration_type) {
 		this.delivery_integration_type = delivery_integration_type;
 	}
-	
+
+	@Column(name = "integration_key")
+	public String getIntegration_key() {
+		return integration_key;
+	}
+
+	public void setIntegration_key(String integration_key) {
+		this.integration_key = integration_key;
+	}
+
+	@OneToMany(mappedBy = "delivercompany")
+	@OrderBy(clause = "description")
+	public Set<Deliver_ServiceLevel> getServicelevels() {
+		return servicelevels;
+	}
+
+	public void setServicelevels(Set<Deliver_ServiceLevel> servicelevels) {
+		this.servicelevels = servicelevels;
+	}
+
 	public void setDelivery_integration_type(
 			int delivery_integration_type) {
 		DeliveryIntegrationType[] array = DeliveryIntegrationType.values();
@@ -134,16 +134,5 @@ public class DeliverCompany implements Serializable {
 			}
 		}
 	}
-
-	/*@Transient
-	public String getDeliveryIntegrationTypeString() {
-		if(delivery_integration_type!=null){
-			return DeliveryIntegrationTypeUtils.getIntegrationTypeString(delivery_integration_type);
-		} else {
-			return DeliveryIntegrationTypeUtils.getIntegrationTypeString(DeliveryIntegrationType.NONE);
-		}
-
-	}*/
-
 
 }

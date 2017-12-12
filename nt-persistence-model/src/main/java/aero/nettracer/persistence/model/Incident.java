@@ -5,6 +5,8 @@
 package aero.nettracer.persistence.model;
 
 import java.io.Serializable;
+import java.sql.Time;
+import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
@@ -33,6 +35,7 @@ import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -48,25 +51,20 @@ import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.Proxy;
 
 @Entity
-@Table(name = "Incident")
-public class Incident implements Serializable {
+@Table(name = "incident")
+public class Incident {
 
-	private static final long serialVersionUID = -1325304028074169696L;
-
-	@Version
-	private int version;
-
-	private String incidentId;
+	private String id;
+	private ItemType itemtype;
 	private Station stationcreated;
 	private Station stationassigned;
 	private Station faultstation;
+	private int loss_code;
 	private Agent agent;
 	private Agent agentassigned;
-	private Date createdate;
-	private Date createtime;
-	private Date closedate;
 	private String recordlocator;
 	private String manualreportnum;
+	private Status status;
 	private String ticketnumber;
 	private int reportmethod;
 	private String checkedlocation;
@@ -78,18 +76,368 @@ public class Incident implements Serializable {
 	private int tsachecked;
 	private int customcleared;
 	private int nonrevenue;
-	private ItemType itemtype;
+	private Timestamp lastupdated;
+	private Timestamp ohd_lasttraced;
+	private Date createdate;
+	private Time createtime;
+	private Timestamp closedate;
+	private int version;
+	private WorldTracerFile wtFile;
+	private Timestamp printedreceipt;
+	private String language;
+	private long checklist_version;
+	private Double overall_weight;
+	private boolean locked = false;
+	private long oc_claim_id;
+	private String revenueCode;
+	private boolean codeLocked = false;
+	private boolean stationLocked = false;
+	private int tracingStatus;
 	private DeliveryInstructions deliveryInstructions;
-	private Status status;
-	private int loss_code;
+	private Timestamp tracingStarted;
+	private Timestamp tracingComplete;
+	private Agent tracingAgent;
+	private String wtCompanyCode;
+	private String wtStationCode;
+	private Timestamp rxTimestamp;
+	private int courtesyReasonId;
+	private String courtesyDescription;
+	private int custCommId;
+	private int claimStatusId;
+	private int cbn;
+	private boolean paxCommEnabled = true;
+	private Timestamp paxview_login_date;
+	private Timestamp assignedDate;
+	private boolean prioritized;
+	private Date paxPplcEnabled;
 
-	private Date printedreceipt;
+	//Start
 
-	private Date lastupdated;
+	@Id
+	@GeneratedValue
+	@Column(name = "incident_id")
+	public String getId() {
+		return id;
+	}
 
-	private Date ohd_lasttraced;
+	public void setId(String id) {
+		this.id = id;
+	}
 
-	private WorldTracerFile wtFile; // world tracer id
+	@ManyToOne
+	@JoinColumn(name = "itemtype_id", nullable = false)
+	public ItemType getItemtype() {
+		return itemtype;
+	}
+
+	public void setItemtype(ItemType itemtype) {
+		this.itemtype = itemtype;
+	}
+
+	@ManyToOne
+	@JoinColumn(name = "stationcreated_id", nullable = false)
+	public Station getStationcreated() {
+		return stationcreated;
+	}
+
+	public void setStationcreated(Station stationcreated) {
+		this.stationcreated = stationcreated;
+	}
+
+	@ManyToOne
+	@JoinColumn(name = "stationassigned_id", nullable = false)
+	public Station getStationassigned() {
+		return stationassigned;
+	}
+
+	public void setStationassigned(Station stationassigned) {
+		this.stationassigned = stationassigned;
+	}
+
+	@ManyToOne
+	@JoinColumn(name = "faultstation_id")
+	public Station getFaultstation() {
+		return faultstation;
+	}
+
+	public void setFaultstation(Station faultstation) {
+		this.faultstation = faultstation;
+	}
+
+	@Column(name = "loss_code")
+	public int getLoss_code() {
+		return loss_code;
+	}
+
+	public void setLoss_code(int loss_code) {
+		this.loss_code = loss_code;
+	}
+
+	@ManyToOne
+	@JoinColumn(name = "agent_id", nullable = false)
+	public Agent getAgent() {
+		return agent;
+	}
+
+	public void setAgent(Agent agent) {
+		this.agent = agent;
+	}
+
+	@ManyToOne
+	@JoinColumn(name = "agentassigned_id")
+	public Agent getAgentassigned() {
+		return agentassigned;
+	}
+
+	public void setAgentassigned(Agent agentassigned) {
+		this.agentassigned = agentassigned;
+	}
+
+	@Column(name = "recordlocator")
+	public String getRecordlocator() {
+		return recordlocator;
+	}
+
+	public void setRecordlocator(String recordlocator) {
+		this.recordlocator = recordlocator;
+	}
+
+	@Column(name = "manualreportnum")
+	public String getManualreportnum() {
+		return manualreportnum;
+	}
+
+	public void setManualreportnum(String manualreportnum) {
+		this.manualreportnum = manualreportnum;
+	}
+
+	@ManyToOne
+	@JoinColumn(name = "status_id", nullable = false)
+	public Status getStatus() {
+		return status;
+	}
+
+	public void setStatus(Status status) {
+		this.status = status;
+	}
+
+	@Column(name = "ticketnumber")
+	public String getTicketnumber() {
+		return ticketnumber;
+	}
+
+	public void setTicketnumber(String ticketnumber) {
+		this.ticketnumber = ticketnumber;
+	}
+
+	@Column(name = "reportmethod")
+	public int getReportmethod() {
+		return reportmethod;
+	}
+
+	public void setReportmethod(int reportmethod) {
+		this.reportmethod = reportmethod;
+	}
+
+	@Column(name = "checkedlocation", columnDefinition = "char")
+	public String getCheckedlocation() {
+		return checkedlocation;
+	}
+
+	public void setCheckedlocation(String checkedlocation) {
+		this.checkedlocation = checkedlocation;
+	}
+
+	@Column(name = "numpassengers")
+	public int getNumpassengers() {
+		return numpassengers;
+	}
+
+	public void setNumpassengers(int numpassengers) {
+		this.numpassengers = numpassengers;
+	}
+
+	@Column(name = "numbagchecked")
+	public int getNumbagchecked() {
+		return numbagchecked;
+	}
+
+	public void setNumbagchecked(int numbagchecked) {
+		this.numbagchecked = numbagchecked;
+	}
+
+	@Column(name = "numbagreceived")
+	public int getNumbagreceived() {
+		return numbagreceived;
+	}
+
+	public void setNumbagreceived(int numbagreceived) {
+		this.numbagreceived = numbagreceived;
+	}
+
+	@Column(name = "voluntaryseparation")
+	public int getVoluntaryseparation() {
+		return voluntaryseparation;
+	}
+
+	public void setVoluntaryseparation(int voluntaryseparation) {
+		this.voluntaryseparation = voluntaryseparation;
+	}
+
+	@Column(name = "courtesyreport")
+	public int getCourtesyreport() {
+		return courtesyreport;
+	}
+
+	public void setCourtesyreport(int courtesyreport) {
+		this.courtesyreport = courtesyreport;
+	}
+
+	@Column(name = "tsachecked")
+	public int getTsachecked() {
+		return tsachecked;
+	}
+
+	public void setTsachecked(int tsachecked) {
+		this.tsachecked = tsachecked;
+	}
+
+	@Column(name = "customcleared")
+	public int getCustomcleared() {
+		return customcleared;
+	}
+
+	public void setCustomcleared(int customcleared) {
+		this.customcleared = customcleared;
+	}
+
+	@Column(name = "nonrevenue")
+	public int getNonrevenue() {
+		return nonrevenue;
+	}
+
+	public void setNonrevenue(int nonrevenue) {
+		this.nonrevenue = nonrevenue;
+	}
+
+	@Column(name = "lastupdated", insertable = false, updatable = false, nullable = false)
+	@Temporal(value = TemporalType.TIMESTAMP)
+	public Timestamp getLastupdated() {
+		return lastupdated;
+	}
+
+	public void setLastupdated(Timestamp lastupdated) {
+		this.lastupdated = lastupdated;
+	}
+
+	@Column(name = "ohd_lasttraced")
+	@Temporal(TemporalType.TIMESTAMP)
+	public Timestamp getOhd_lasttraced() {
+		return ohd_lasttraced;
+	}
+
+	public void setOhd_lasttraced(Timestamp ohd_lasttraced) {
+		this.ohd_lasttraced = ohd_lasttraced;
+	}
+
+	@Column(name = "createdate")
+	@Temporal(value = TemporalType.DATE)
+	public Date getCreatedate() {
+		return createdate;
+	}
+
+	public void setCreatedate(Date createdate) {
+		this.createdate = createdate;
+	}
+
+	@Column(name = "createtime")
+	@Temporal(value = TemporalType.TIME)
+	public Time getCreatetime() {
+		return createtime;
+	}
+
+	public void setCreatetime(Time createtime) {
+		this.createtime = createtime;
+	}
+
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "close_date")
+	public Timestamp getClosedate() {
+		return closedate;
+	}
+
+	public void setClosedate(Timestamp closedate) {
+		this.closedate = closedate;
+	}
+
+	@Column(name = "version")
+	@Version
+	public int getVersion() {
+		return version;
+	}
+
+	public void setVersion(int version) {
+		this.version = version;
+	}
+
+	@Embedded
+	public WorldTracerFile getWtFile() {
+		return wtFile;
+	}
+
+	public void setWtFile(WorldTracerFile wtFile) {
+		this.wtFile = wtFile;
+	}
+
+	@Column(name = "printedreceipt")
+	@Temporal(TemporalType.TIMESTAMP)
+	public Timestamp getPrintedreceipt() {
+		return printedreceipt;
+	}
+
+	public void setPrintedreceipt(Timestamp printedreceipt) {
+		this.printedreceipt = printedreceipt;
+	}
+
+	@Column(name = "language")
+	public String getLanguage() {
+		return language;
+	}
+
+	public void setLanguage(String language) {
+		this.language = language;
+	}
+
+	@Column(name = "checklist_version")
+	public long getChecklist_version() {
+		return checklist_version;
+	}
+
+	public void setChecklist_version(long checklist_version) {
+		this.checklist_version = checklist_version;
+	}
+
+	@Column(name = "overall_weight")
+	public Double getOverall_weight() {
+		return overall_weight;
+	}
+
+	public void setOverall_weight(Double overall_weight) {
+		this.overall_weight = roundToTwoDecimals(overall_weight);
+	}
+
+	@Column(name = "locked", nullable = false)
+	public boolean isLocked() {
+		return locked;
+	}
+
+	public void setLocked(boolean locked) {
+		this.locked = locked;
+	}
+
+	//End
+
+
 	private CrmFile crmFile;
 	private Set<Passenger> passengers;
 
@@ -97,7 +445,7 @@ public class Incident implements Serializable {
 	private Set<Articles> articles;
 	private Set<Remark> remarks;
 	private Set<Itinerary> itinerary;
-	private long oc_claim_id;
+
 	private Set<Claim> claims;
 
 	private Set<Incident_Claimcheck> claimchecks;
@@ -113,53 +461,47 @@ public class Incident implements Serializable {
 	private Set<ExpensePayout> expenses;
 	private List<ExpensePayout> expenselist;
 
-	private String language;
+
 
 	private IncidentControl incidentControl;
 
 	private Dispute dispute;
 
-	private boolean locked = false; // for dispute resolution process
-	private boolean codeLocked = false; // for dispute resolution process
-	private boolean stationLocked = false; // for dispute resolution process
 
-	private String revenueCode;
 
-	private int tracingStatus;
-	private Date tracingStarted;
-	private Date tracingComplete;
-	private Agent tracingAgent;
 
-	private Date rxTimestamp;
-	private int courtesyReasonId;
-	private String courtesyDescription;
-	private int custCommId;
-	private int claimStatusId;
+
+
+
+
+
+
+
+
 
 	private List<IssuanceItemIncident> issuanceItemIncidents;
 
 	private Set<IncidentActivity> activities;
 
-	private String wtStationCode;
-	private String wtCompanyCode;
+
+
 
 	private TwoDayTask twoDayTask;
 	private ThreeDayTask threeDayTask;
 	private FourDayTask fourDayTask;
 
-	private Double overall_weight;
+
 	private String overall_weight_unit;
-	private long checklist_version; // for auto checklist
+	 // for auto checklist
 
- 	private int cbn;
 
-    private boolean paxCommEnabled = true;
-	@Column(name = "paxview_login_date")
-	private Date paxview_login_date;
-	private Date assignedDate;
 
-	private boolean prioritized;
-	private Date paxPplcEnabled;
+
+
+
+
+
+
 
 	@Column(name = "tracing_status_id")
 	public int getTracingStatus() {
@@ -207,14 +549,6 @@ public class Incident implements Serializable {
 		this.revenueCode = revenueCode;
 	}
 
-	@Column(name = "locked", nullable = false)
-	public boolean isLocked() {
-		return locked;
-	}
-
-	public void setLocked(boolean locked) {
-		this.locked = locked;
-	}
 
 	@Column(name = "codeLocked", nullable = false, columnDefinition = "tinyint")
 	public boolean isCodeLocked() {
@@ -252,66 +586,12 @@ public class Incident implements Serializable {
 		this.incidentControl = value;
 	}
 
-	public Double getOverall_weight() {
-		return overall_weight;
-	}
-
-	public void setOverall_weight(Double overall_weight) {
-		this.overall_weight = roundToTwoDecimals(overall_weight);
-	}
-
 	public String getOverall_weight_unit() {
 		return overall_weight_unit;
 	}
 
 	public void setOverall_weight_unit(String overall_weight_unit) {
 		this.overall_weight_unit = overall_weight_unit;
-	}
-
-	public String getLanguage() {
-		return language;
-	}
-
-	public void setLanguage(String language) {
-		this.language = language;
-	}
-
-	public int getVersion() {
-		return version;
-	}
-
-	public void setVersion(int version) {
-		this.version = version;
-	}
-
-	@ManyToOne
-	@JoinColumn(name = "status_ID", nullable = false)
-	public Status getStatus() {
-		return status;
-	}
-
-	public void setStatus(Status status) {
-		this.status = status;
-	}
-
-	@ManyToOne
-	@JoinColumn(name = "itemType_ID", nullable = false)
-	public ItemType getItemtype() {
-		return itemtype;
-	}
-
-	public void setItemtype(ItemType itemtype) {
-		this.itemtype = itemtype;
-	}
-
-	@ManyToOne
-	@JoinColumn(name = "agent_ID", nullable = false)
-	public Agent getAgent() {
-		return agent;
-	}
-
-	public void setAgent(Agent agent) {
-		this.agent = agent;
 	}
 
 	@OneToOne
@@ -336,45 +616,13 @@ public class Incident implements Serializable {
 		this.expenses = expenses;
 	}
 
-	@ManyToOne
-	@JoinColumn(name = "agentassigned_ID", nullable = true)
-	public Agent getAgentassigned() {
-		return agentassigned;
-	}
 
-	public void setAgentassigned(Agent agentassigned) {
-		this.agentassigned = agentassigned;
-	}
 
-	@ManyToOne
-	@JoinColumn(name = "stationassigned_ID", nullable = false)
-	public Station getStationassigned() {
-		return stationassigned;
-	}
 
-	public void setStationassigned(Station stationassigned) {
-		this.stationassigned = stationassigned;
-	}
 
-	@ManyToOne
-	@JoinColumn(name = "stationcreated_ID", nullable = false)
-	public Station getStationcreated() {
-		return stationcreated;
-	}
 
-	public void setStationcreated(Station stationcreated) {
-		this.stationcreated = stationcreated;
-	}
 
-	@ManyToOne
-	@JoinColumn(name = "faultstation_ID", nullable = true)
-	public Station getFaultstation() {
-		return faultstation;
-	}
 
-	public void setFaultstation(Station faultstation) {
-		this.faultstation = faultstation;
-	}
 
 	@OneToMany(mappedBy = "incident", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@Fetch(FetchMode.SELECT)
@@ -442,51 +690,6 @@ public class Incident implements Serializable {
 		this.itinerary = itinerary;
 	}
 
-	@Column(columnDefinition = "char")
-	public String getCheckedlocation() {
-		return checkedlocation;
-	}
-
-	public void setCheckedlocation(String checkedlocation) {
-		this.checkedlocation = checkedlocation;
-	}
-
-	@Basic
-	public int getCourtesyreport() {
-		return courtesyreport;
-	}
-
-	public void setCourtesyreport(int courtesyreport) {
-		this.courtesyreport = courtesyreport;
-	}
-
-	@Temporal(value = TemporalType.DATE)
-	public Date getCreatedate() {
-		return createdate;
-	}
-
-	public void setCreatedate(Date createdate) {
-		this.createdate = createdate;
-	}
-
-	@Temporal(value = TemporalType.TIMESTAMP)
-	public Date getLastupdated() {
-		return lastupdated;
-	}
-
-	public void setLastupdated(Date lastupdated) {
-		this.lastupdated = lastupdated;
-	}
-
-	@Temporal(value = TemporalType.TIME)
-	public Date getCreatetime() {
-		return createtime;
-	}
-
-	public void setCreatetime(Date createtime) {
-		this.createtime = createtime;
-	}
-
 	@Transient
 	public String getDisplaydate() {
 		Date completedate = GenericDateUtils.convertToDate(getCreatedate().toString() + " " + getCreatetime().toString(), GenericConstants.DB_DATETIMEFORMAT,
@@ -514,15 +717,7 @@ public class Incident implements Serializable {
 		return getClosedate();
 	}
 
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "close_date")
-	public Date getClosedate() {
-		return closedate;
-	}
 
-	public void setClosedate(Date closedate) {
-		this.closedate = closedate;
-	}
 
 	@Transient
 	public String get_DATEFORMAT() {
@@ -561,105 +756,6 @@ public class Incident implements Serializable {
 		Incident_ID = incident_ID;
 	}
 
-	public int getNumbagchecked() {
-		return numbagchecked;
-	}
-
-	public void setNumbagchecked(int numbagchecked) {
-		this.numbagchecked = numbagchecked;
-	}
-
-	public int getNumbagreceived() {
-		return numbagreceived;
-	}
-
-	public void setNumbagreceived(int numbagreceived) {
-		this.numbagreceived = numbagreceived;
-	}
-
-	public int getNumpassengers() {
-		return numpassengers;
-	}
-
-	public void setNumpassengers(int numpassengers) {
-		this.numpassengers = numpassengers;
-	}
-
-	public int getReportmethod() {
-		return reportmethod;
-	}
-
-	public void setReportmethod(int reportmethod) {
-		this.reportmethod = reportmethod;
-	}
-
-	@Column(length = 14)
-	public String getTicketnumber() {
-		return ticketnumber;
-	}
-
-	public void setTicketnumber(String ticketnumber) {
-		this.ticketnumber = ticketnumber;
-	}
-
-	public int getTsachecked() {
-		return tsachecked;
-	}
-
-	public void setTsachecked(int tsachecked) {
-		this.tsachecked = tsachecked;
-	}
-
-	public int getCustomcleared() {
-		return customcleared;
-	}
-
-	public void setCustomcleared(int customcleared) {
-		this.customcleared = customcleared;
-	}
-
-	public int getVoluntaryseparation() {
-		return voluntaryseparation;
-	}
-
-	public void setVoluntaryseparation(int voluntaryseparation) {
-		this.voluntaryseparation = voluntaryseparation;
-	}
-
-	@Column(length = 20)
-	public String getManualreportnum() {
-		return manualreportnum;
-	}
-
-	public void setManualreportnum(String manualreportnum) {
-		this.manualreportnum = manualreportnum;
-	}
-
-	@Column(length = 10)
-	public String getRecordlocator() {
-		return recordlocator;
-	}
-
-	public void setRecordlocator(String recordlocator) {
-		this.recordlocator = recordlocator;
-	}
-
-	public int getNonrevenue() {
-		return nonrevenue;
-	}
-
-	public void setNonrevenue(int nonrevenue) {
-		this.nonrevenue = nonrevenue;
-	}
-
-	@Temporal(TemporalType.TIMESTAMP)
-	public Date getOhd_lasttraced() {
-		return ohd_lasttraced;
-	}
-
-	public void setOhd_lasttraced(Date ohd_lasttraced) {
-		this.ohd_lasttraced = ohd_lasttraced;
-	}
 
 	@OneToMany(mappedBy = "ntIncident", fetch = FetchType.EAGER)
 	@org.hibernate.annotations.OrderBy(clause = "claimdate")
@@ -684,23 +780,9 @@ public class Incident implements Serializable {
 		this.issuanceItemIncidents = issuanceItemIncidents;
 	}
 
-	@Basic
-	public int getLoss_code() {
-		return loss_code;
-	}
 
-	public void setLoss_code(int loss_code) {
-		this.loss_code = loss_code;
-	}
 
-	@Embedded
-	public WorldTracerFile getWtFile() {
-		return wtFile;
-	}
 
-	public void setWtFile(WorldTracerFile wtFile) {
-		this.wtFile = wtFile;
-	}
 
 	@Transient
 	public String getWt_id() {
@@ -781,15 +863,6 @@ public class Incident implements Serializable {
 		return (faultstation == null ? "" : faultstation.getStationcode());
 	}
 
-	@Temporal(TemporalType.TIMESTAMP)
-	public Date getPrintedreceipt() {
-		return printedreceipt;
-	}
-
-	public void setPrintedreceipt(Date printedreceipt) {
-		this.printedreceipt = printedreceipt;
-	}
-
 	@Transient
 	public String getRcreatedate() {
 		Date completedate = GenericDateUtils.convertToDate(getCreatedate().toString(), GenericConstants.DB_DATEFORMAT, null);
@@ -811,14 +884,6 @@ public class Incident implements Serializable {
 
 		return ret;
 	}*/
-
-	public long getChecklist_version() {
-		return checklist_version;
-	}
-
-	public void setChecklist_version(long checklist_version) {
-		this.checklist_version = checklist_version;
-	}
 
 	@Override
 	public int hashCode() {

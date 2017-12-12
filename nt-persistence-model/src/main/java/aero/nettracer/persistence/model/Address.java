@@ -18,28 +18,28 @@ public class Address {
 	private String address1;
 	private String address2;
 	private String city;
-	private String stateId;
+	private String state_ID;
 	private String province;
 	private String zip;
 	private String hotel;
-	private String homePhone;
-	private String workPhone;
+	private String homephone;
+	private String workphone;
 	private String mobile;
 	private String pager;
-	private String altPhone;
+	private String altphone;
 	private String email;
-	private int addressType;
+	private int addresstype;
 	private Passenger passenger;
-	private String countryCode;
+	private String countrycode_ID;
 	private Date valid_bdate;
 	private Date valid_edate;
 	private boolean permanent;
-	private String normalisedHomePhone;
-	private String normalisedWorkPhone;
-	private String normalisedMobilePhone;
-	private String normalisedPager;
-	private String normalisedAlternatePhone;
-	private String hotelPhone;
+	private String homephone_norm;
+	private String workphone_norm;
+	private String mobile_norm;
+	private String pager_norm;
+	private String altphone_norm;
+	private String hotelphone;
 
 	@Id
 	@GeneratedValue
@@ -80,12 +80,12 @@ public class Address {
 	}
 
 	@Column(name = "state_id")
-	public String getStateId() {
-		return stateId;
+	public String getState_ID() {
+		return state_ID;
 	}
 
-	public void setStateId(String stateId) {
-		this.stateId = stateId;
+	public void setState_ID(String state_ID) {
+		this.state_ID = state_ID;
 	}
 
 	@Column(name = "province")
@@ -116,21 +116,21 @@ public class Address {
 	}
 
 	@Column(name = "homephone")
-	public String getHomePhone() {
-		return homePhone;
+	public String getHomephone() {
+		return homephone;
 	}
 
-	public void setHomePhone(String homePhone) {
-		this.homePhone = homePhone;
+	public void setHomephone(String homephone) {
+		this.homephone = homephone;
 	}
 
 	@Column(name = "workphone")
-	public String getWorkPhone() {
-		return workPhone;
+	public String getWorkphone() {
+		return workphone;
 	}
 
-	public void setWorkPhone(String workPhone) {
-		this.workPhone = workPhone;
+	public void setWorkphone(String workphone) {
+		this.workphone = workphone;
 	}
 
 	@Column(name = "mobile")
@@ -152,12 +152,12 @@ public class Address {
 	}
 
 	@Column(name = "altphone")
-	public String getAltPhone() {
-		return altPhone;
+	public String getAltphone() {
+		return altphone;
 	}
 
-	public void setAltPhone(String altPhone) {
-		this.altPhone = altPhone;
+	public void setAltphone(String altphone) {
+		this.altphone = altphone;
 	}
 
 	@Column(name = "email")
@@ -170,12 +170,12 @@ public class Address {
 	}
 
 	@Column(name = "addresstype")
-	public int getAddressType() {
-		return addressType;
+	public int getAddresstype() {
+		return addresstype;
 	}
 
-	public void setAddressType(int addressType) {
-		this.addressType = addressType;
+	public void setAddresstype(int addresstype) {
+		this.addresstype = addresstype;
 	}
 
 	@ManyToOne
@@ -189,12 +189,12 @@ public class Address {
 	}
 
 	@Column(name = "countrycode_id")
-	public String getCountryCode() {
-		return countryCode;
+	public String getCountrycode_ID() {
+		return countrycode_ID;
 	}
 
-	public void setCountryCode(String countryCode) {
-		this.countryCode = countryCode;
+	public void setCountrycode_ID(String countrycode_ID) {
+		this.countrycode_ID = countrycode_ID;
 	}
 
 	@Column(name = "valid_bdate")
@@ -225,56 +225,56 @@ public class Address {
 	}
 
 	@Column(name = "homephone_norm")
-	public String getNormalisedHomePhone() {
-		return normalisedHomePhone;
+	public String getHomephone_norm() {
+		return homephone_norm;
 	}
 
-	public void setNormalisedHomePhone(String normalisedHomePhone) {
-		this.normalisedHomePhone = normalisedHomePhone;
+	public void setHomephone_norm(String homephone_norm) {
+		this.homephone_norm = homephone_norm;
 	}
 
 	@Column(name = "workphone_norm")
-	public String getNormalisedWorkPhone() {
-		return normalisedWorkPhone;
+	public String getWorkphone_norm() {
+		return workphone_norm;
 	}
 
-	public void setNormalisedWorkPhone(String normalisedWorkPhone) {
-		this.normalisedWorkPhone = normalisedWorkPhone;
+	public void setWorkphone_norm(String workphone_norm) {
+		this.workphone_norm = workphone_norm;
 	}
 
 	@Column(name = "mobile_norm")
-	public String getNormalisedMobilePhone() {
-		return normalisedMobilePhone;
+	public String getMobile_norm() {
+		return mobile_norm;
 	}
 
-	public void setNormalisedMobilePhone(String normalisedMobilePhone) {
-		this.normalisedMobilePhone = normalisedMobilePhone;
+	public void setMobile_norm(String mobile_norm) {
+		this.mobile_norm = mobile_norm;
 	}
 
 	@Column(name = "pager_norm")
-	public String getNormalisedPager() {
-		return normalisedPager;
+	public String getPager_norm() {
+		return pager_norm;
 	}
 
-	public void setNormalisedPager(String normalisedPager) {
-		this.normalisedPager = normalisedPager;
+	public void setPager_norm(String pager_norm) {
+		this.pager_norm = pager_norm;
 	}
 
 	@Column(name = "altphone_norm")
-	public String getNormalisedAlternatePhone() {
-		return normalisedAlternatePhone;
+	public String getAltphone_norm() {
+		return altphone_norm;
 	}
 
-	public void setNormalisedAlternatePhone(String normalisedAlternatePhone) {
-		this.normalisedAlternatePhone = normalisedAlternatePhone;
+	public void setAltphone_norm(String altphone_norm) {
+		this.altphone_norm = altphone_norm;
 	}
 
 	@Column(name = "hotelphone")
-	public String getHotelPhone() {
-		return hotelPhone;
+	public String getHotelphone() {
+		return hotelphone;
 	}
 
-	public void setHotelPhone(String hotelPhone) {
-		this.hotelPhone = hotelPhone;
+	public void setHotelphone(String hotelphone) {
+		this.hotelphone = hotelphone;
 	}
 }

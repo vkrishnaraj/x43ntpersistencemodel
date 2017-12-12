@@ -1,23 +1,26 @@
 package aero.nettracer.persistence.model;
 
-import org.hibernate.annotations.Proxy;
+import java.sql.Timestamp;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import java.util.Date;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 
 @Entity
 @Table(name = "currency_converter")
 public class Currency_Converter {
+
     private int id;
     private String convertFrom;
     private String convertTo;
     private double convertAmount;
     private double convertResult;
-    private Date convertDateTime;
+    private Timestamp convertDateTime;
 
     @Id
     @GeneratedValue
@@ -29,6 +32,7 @@ public class Currency_Converter {
         this.id = id;
     }
 
+    @Column(name = "convertFrom")
     public String getConvertFrom() {
         return convertFrom;
     }
@@ -37,6 +41,7 @@ public class Currency_Converter {
         this.convertFrom = convertFrom;
     }
 
+    @Column(name = "convertTo")
     public String getConvertTo() {
         return convertTo;
     }
@@ -45,6 +50,7 @@ public class Currency_Converter {
         this.convertTo = convertTo;
     }
 
+    @Column(name = "convertAmount")
     public double getConvertAmount() {
         return convertAmount;
     }
@@ -53,6 +59,7 @@ public class Currency_Converter {
         this.convertAmount = convertAmount;
     }
 
+    @Column(name = "convertResult")
     public double getConvertResult() {
         return convertResult;
     }
@@ -61,11 +68,13 @@ public class Currency_Converter {
         this.convertResult = convertResult;
     }
 
-    public Date getConvertDateTime() {
+    @Column(name = "convertDateTime")
+    @Temporal(TemporalType.TIMESTAMP)
+    public Timestamp getConvertDateTime() {
         return convertDateTime;
     }
 
-    public void setConvertDateTime(Date convertDateTime) {
+    public void setConvertDateTime(Timestamp convertDateTime) {
         this.convertDateTime = convertDateTime;
     }
 }

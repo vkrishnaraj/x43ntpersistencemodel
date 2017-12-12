@@ -7,8 +7,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 
 @Entity
 @Table(name = "bagcentral")
@@ -30,7 +28,6 @@ public class BagCentral {
 
 	@ManyToOne
 	@JoinColumn(name = "incident_id")
-	@Fetch(FetchMode.SELECT)
 	public Incident getIncident() {
 		return incident;
 	}

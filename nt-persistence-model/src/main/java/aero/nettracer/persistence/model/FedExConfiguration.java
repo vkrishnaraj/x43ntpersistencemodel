@@ -1,7 +1,5 @@
 package aero.nettracer.persistence.model;
 
-import java.io.Serializable;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,69 +9,31 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "fedex_configuration")
-public class FedExConfiguration implements Serializable {
+public class FedExConfiguration {
+
+    private int id;
+    private String stationCode;
+    private String stationCountryCode;
+    private String accountFor;
+    private int accountNumber;
+    private int meterNumber;
+    private String fedExKey;
+    private String fedExPassword;
+    private String senderName;
+    private String senderAddress1;
+    private String senderAddress2;
+    private String senderCity;
+    private String senderState;
+    private String senderProvince;
+    private String senderPostalCode;
+    private String senderCountryCode;
+    private String senderCountryName;
+    private String senderPhone;
+    private boolean allowSatDelivery;
+    private String labelFormat;
 
     @Id
     @GeneratedValue
-    private int id;
-
-    @Column(name = "station_code")
-    private String stationCode;
-
-    @Column(name = "station_country_code")
-    private String stationCountryCode;
-
-    @Column(name = "account_for")
-    private String accountFor;
-
-    @Column(name = "account_number")
-    private int accountNumber;
-
-    @Column(name = "meter_number")
-    private int meterNumber;
-
-    @Column(name = "fedex_key")
-    private String fedExKey;
-
-    @Column(name = "fedex_password")
-    private String fedExPassword;
-
-    @Column(name = "sender_name")
-    private String senderName;
-
-    @Column(name = "sender_address1")
-    private String senderAddress1;
-
-    @Column(name = "sender_address2")
-    private String senderAddress2;
-
-    @Column(name = "sender_city")
-    private String senderCity;
-
-    @Column(name = "sender_state")
-    private String senderState;
-
-    @Column(name = "sender_province")
-    private String senderProvince;
-
-    @Column(name = "sender_postal_code")
-    private String senderPostalCode;
-
-    @Column(name = "sender_country_code")
-    private String senderCountryCode;
-
-    @Column(name = "sender_country_name")
-    private String senderCountryName;
-
-    @Column(name = "sender_phone")
-    private String senderPhone;
-
-    @Column(name = "allow_Sat_delivery")
-    private boolean allowSatDelivery;
-
-    @Column(name = "print_label_format")
-    private String labelFormat;
-
     public int getId() {
         return id;
     }
@@ -82,6 +42,7 @@ public class FedExConfiguration implements Serializable {
         this.id = id;
     }
 
+    @Column(name = "station_code")
     public String getStationCode() {
         return stationCode;
     }
@@ -90,6 +51,7 @@ public class FedExConfiguration implements Serializable {
         this.stationCode = stationCode;
     }
 
+    @Column(name = "station_country_code")
     public String getStationCountryCode() {
         return stationCountryCode;
     }
@@ -98,6 +60,7 @@ public class FedExConfiguration implements Serializable {
         this.stationCountryCode = stationCountryCode;
     }
 
+    @Column(name = "account_number")
     public int getAccountNumber() {
         return accountNumber;
     }
@@ -106,6 +69,7 @@ public class FedExConfiguration implements Serializable {
         this.accountNumber = accountNumber;
     }
 
+    @Column(name = "meter_number")
     public int getMeterNumber() {
         return meterNumber;
     }
@@ -114,6 +78,7 @@ public class FedExConfiguration implements Serializable {
         this.meterNumber = meterNumber;
     }
 
+    @Column(name = "fedex_key")
     public String getFedExKey() {
         return fedExKey;
     }
@@ -122,6 +87,7 @@ public class FedExConfiguration implements Serializable {
         this.fedExKey = fedExKey;
     }
 
+    @Column(name = "fedex_password")
     public String getFedExPassword() {
         return fedExPassword;
     }
@@ -130,6 +96,7 @@ public class FedExConfiguration implements Serializable {
         this.fedExPassword = fedExPassword;
     }
 
+    @Column(name = "sender_name")
     public String getSenderName() {
         return senderName;
     }
@@ -138,6 +105,7 @@ public class FedExConfiguration implements Serializable {
         this.senderName = senderName;
     }
 
+    @Column(name = "sender_address1")
     public String getSenderAddress1() {
         return senderAddress1;
     }
@@ -146,6 +114,7 @@ public class FedExConfiguration implements Serializable {
         this.senderAddress1 = senderAddress1;
     }
 
+    @Column(name = "sender_address2")
     public String getSenderAddress2() {
         return senderAddress2;
     }
@@ -154,6 +123,7 @@ public class FedExConfiguration implements Serializable {
         this.senderAddress2 = senderAddress2;
     }
 
+    @Column(name = "sender_city")
     public String getSenderCity() {
         return senderCity;
     }
@@ -162,6 +132,7 @@ public class FedExConfiguration implements Serializable {
         this.senderCity = senderCity;
     }
 
+    @Column(name = "sender_state")
     public String getSenderState() {
         return senderState;
     }
@@ -170,6 +141,7 @@ public class FedExConfiguration implements Serializable {
         this.senderState = senderState;
     }
 
+    @Column(name = "sender_postal_code")
     public String getSenderPostalCode() {
         return senderPostalCode;
     }
@@ -178,6 +150,7 @@ public class FedExConfiguration implements Serializable {
         this.senderPostalCode = senderPostalCode;
     }
 
+    @Column(name = "sender_country_code")
     public String getSenderCountryCode() {
         return senderCountryCode;
     }
@@ -186,6 +159,7 @@ public class FedExConfiguration implements Serializable {
         this.senderCountryCode = senderCountryCode;
     }
 
+    @Column(name = "sender_country_name")
     public String getSenderCountryName() {
         return senderCountryName;
     }
@@ -194,6 +168,7 @@ public class FedExConfiguration implements Serializable {
         this.senderCountryName = senderCountryName;
     }
 
+    @Column(name = "sender_phone")
     public String getSenderPhone() {
         return senderPhone;
     }
@@ -202,6 +177,7 @@ public class FedExConfiguration implements Serializable {
         this.senderPhone = senderPhone;
     }
 
+    @Column(name = "account_for")
     public String getAccountFor() {
         return accountFor;
     }
@@ -210,6 +186,7 @@ public class FedExConfiguration implements Serializable {
         this.accountFor = accountFor;
     }
 
+    @Column(name = "sender_province")
     public String getSenderProvince() {
         return senderProvince;
     }
@@ -218,6 +195,7 @@ public class FedExConfiguration implements Serializable {
         this.senderProvince = senderProvince;
     }
 
+    @Column(name = "allow_sat_delivery")
     public boolean isAllowSatDelivery() {
         return allowSatDelivery;
     }
@@ -226,6 +204,7 @@ public class FedExConfiguration implements Serializable {
         this.allowSatDelivery = allowSatDelivery;
     }
 
+    @Column(name = "print_label_format")
     public String getLabelFormat() {
         return labelFormat;
     }

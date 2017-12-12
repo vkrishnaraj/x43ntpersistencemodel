@@ -17,8 +17,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 @Table(name = "checklist_version")
 @Cache(usage = CacheConcurrencyStrategy.READ_ONLY)
 public class ChecklistVersion {
-	private static final long serialVersionUID = 1L;
-	
+
 	private long id;
 	private boolean active;
 	private List<ChecklistTask> checklistTasks;
@@ -44,9 +43,7 @@ public class ChecklistVersion {
 		this.active = active;
 	}
 
-	@OneToMany(mappedBy="checklistVersion",
-            targetEntity=ChecklistTask.class,
-              cascade=CascadeType.ALL)
+	@OneToMany(mappedBy="checklistVersion", cascade=CascadeType.ALL)
     @OrderColumn(name="order_id")
 	public List<ChecklistTask> getChecklistTasks() {
 		return checklistTasks;
@@ -55,6 +52,5 @@ public class ChecklistVersion {
 	public void setChecklistTasks(List<ChecklistTask> checklistTasks) {
 		this.checklistTasks = checklistTasks;
 	}
-	
 
 }

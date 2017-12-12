@@ -1,8 +1,7 @@
 package aero.nettracer.persistence.model;
 
-import java.io.Serializable;
-
 import aero.nettracer.persistence.model.i8n.LocaleBasedObject;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -10,17 +9,28 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
-import org.hibernate.annotations.Proxy;
 
 @Entity
 @Table(name = "ExpenseType")
-public class ExpenseType extends LocaleBasedObject implements Serializable {
-	private int Expensetype_ID;
+public class ExpenseType extends LocaleBasedObject {
+
+	private int id;
 	private Company company;
 	public static final String MSG_KEY = "EXPENSETYPE_KEY_";
 
+	@Id
+	@GeneratedValue
+	@Column(name = "expensetype_id")
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
 	@ManyToOne
-	@JoinColumn(name = "companycode_ID")
+	@JoinColumn(name = "companycode_id")
 	public Company getCompany() {
 		return company;
 	}
@@ -29,18 +39,8 @@ public class ExpenseType extends LocaleBasedObject implements Serializable {
 		this.company = company;
 	}
 
-	@Id
-	@GeneratedValue
-	public int getExpensetype_ID() {
-		return Expensetype_ID;
-	}
-
-	public void setExpensetype_ID(int expensetype_ID) {
-		Expensetype_ID = expensetype_ID;
-	}
-
 	@Transient
 	public String getKey() {
-		return MSG_KEY + Expensetype_ID;
+		return MSG_KEY + id;
 	}
 }

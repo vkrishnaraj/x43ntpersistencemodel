@@ -1,7 +1,5 @@
 package aero.nettracer.persistence.model;
 
-import java.io.Serializable;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,13 +7,13 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "airlineMembership")
+@Table(name = "airlinemembership")
 public class AirlineMembership {
 
 	private int id;
-	private String companyCode;
-	private String membershipNumber;
-	private String membershipStatus;
+	private String companycode_ID;
+	private String membershipnum;
+	private String membershipstatus;
 
 	@Id
 	@GeneratedValue
@@ -29,29 +27,29 @@ public class AirlineMembership {
 	}
 
 	@Column(name = "companycode_id")
-	public String getCompanyCode() {
-		return companyCode;
+	public String getCompanycode_ID() {
+		return companycode_ID;
 	}
 
-	public void setCompanyCode(String companyCode) {
-		this.companyCode = companyCode;
+	public void setCompanycode_ID(String companycode_ID) {
+		this.companycode_ID = companycode_ID;
 	}
 
 	@Column(name = "membershipnum")
-	public String getMembershipNumber() {
-		return membershipNumber;
+	public String getMembershipnum() {
+		return membershipnum;
 	}
 
-	public void setMembershipNumber(String membershipNumber) {
-		this.membershipNumber = membershipNumber;
+	public void setMembershipnum(String membershipnum) {
+		this.membershipnum = membershipnum;
 	}
 
 	@Column(name = "membershipstatus")
-	public String getMembershipStatus() {
-		return membershipStatus;
+	public String getMembershipstatus() {
+		return membershipstatus;
 	}
 
-	public void setMembershipStatus(String membershipStatus) {
-		this.membershipStatus = membershipStatus;
+	public void setMembershipstatus(String membershipstatus) {
+		this.membershipstatus = membershipstatus;
 	}
 }

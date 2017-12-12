@@ -1,16 +1,11 @@
 package aero.nettracer.persistence.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.Proxy;
-
-/**
- * @author Sean Fine
- * Class representing Depreciation Category object
- */
 @Entity
 @Table(name = "depreciation_category")
 public class Depreciation_Category {
@@ -25,12 +20,12 @@ public class Depreciation_Category {
 	private double thirdYear;
 	private double eachYear;
 	private double maxDeprec;
+	private String companyCode;
 	private int orderNum;
 	private int categoryTypeNum;
 
-	private String companyCode;
-
-	@Id @GeneratedValue
+	@Id
+	@GeneratedValue
 	public int getId() {
 		return id;
 	}
@@ -39,6 +34,7 @@ public class Depreciation_Category {
 		this.id = id;
 	}
 
+	@Column(name = "name")
 	public String getName() {
 		return name;
 	}
@@ -47,6 +43,7 @@ public class Depreciation_Category {
 		this.name = name;
 	}
 
+	@Column(name = "calcMethod")
 	public int getCalcMethod() {
 		return calcMethod;
 	}
@@ -55,6 +52,7 @@ public class Depreciation_Category {
 		this.calcMethod = calcMethod;
 	}
 
+	@Column(name = "notCoveredCoc")
 	public boolean isNotCoveredCoc() {
 		return notCoveredCoc;
 	}
@@ -63,6 +61,7 @@ public class Depreciation_Category {
 		this.notCoveredCoc = notCoveredCoc;
 	}
 
+	@Column(name = "flatRate")
 	public double getFlatRate() {
 		return flatRate;
 	}
@@ -71,6 +70,7 @@ public class Depreciation_Category {
 		this.flatRate = flatRate;
 	}
 
+	@Column(name = "firstYear")
 	public double getFirstYear() {
 		return firstYear;
 	}
@@ -79,6 +79,7 @@ public class Depreciation_Category {
 		this.firstYear = firstYear;
 	}
 
+	@Column(name = "secondYear")
 	public double getSecondYear() {
 		return secondYear;
 	}
@@ -87,6 +88,7 @@ public class Depreciation_Category {
 		this.secondYear = secondYear;
 	}
 
+	@Column(name = "thirdYear")
 	public double getThirdYear() {
 		return thirdYear;
 	}
@@ -95,6 +97,7 @@ public class Depreciation_Category {
 		this.thirdYear = thirdYear;
 	}
 
+	@Column(name = "eachYear")
 	public double getEachYear() {
 		return eachYear;
 	}
@@ -103,6 +106,7 @@ public class Depreciation_Category {
 		this.eachYear = eachYear;
 	}
 
+	@Column(name = "maxDeprec")
 	public double getMaxDeprec() {
 		return maxDeprec;
 	}
@@ -111,6 +115,7 @@ public class Depreciation_Category {
 		this.maxDeprec = maxDeprec;
 	}
 
+	@Column(name = "companyCode")
 	public String getCompanyCode() {
 		return companyCode;
 	}
@@ -119,6 +124,7 @@ public class Depreciation_Category {
 		this.companyCode = companyCode;
 	}
 
+	@Column(name = "orderNum")
 	public int getOrderNum() {
 		return orderNum;
 	}
@@ -127,6 +133,7 @@ public class Depreciation_Category {
 		this.orderNum = orderNum;
 	}
 
+	@Column(name = "categoryTypeNum")
 	public int getCategoryTypeNum() {
 		return categoryTypeNum;
 	}

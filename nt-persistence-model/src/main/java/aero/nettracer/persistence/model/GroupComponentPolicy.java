@@ -6,29 +6,36 @@
  */
 package aero.nettracer.persistence.model;
 
-import java.io.Serializable;
 import java.util.Set;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.CascadeType;
-import org.hibernate.annotations.OrderBy;
-import org.hibernate.annotations.Proxy;
 
 @Entity
 @Table(name = "group_component_policy")
-public class GroupComponentPolicy implements Serializable {
-	private int policy_id;
+public class GroupComponentPolicy {
+
+	private int id;
 	private SystemComponent component;
-	private Set<SystemPermission> componentPermissions;
 	private UserGroup usergroup;
+	private Set<SystemPermission> componentPermissions;
+
+	@Id
+	@GeneratedValue
+	@Column(name = "policy_id")
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
 
 	@ManyToOne
 	@JoinColumn(name = "component_id")
@@ -38,15 +45,6 @@ public class GroupComponentPolicy implements Serializable {
 
 	public void setComponent(SystemComponent component) {
 		this.component = component;
-	}
-
-	@Transient
-	public Set<SystemPermission> getComponentPermissions() {
-		return componentPermissions;
-	}
-
-	public void setComponentPermissions(Set<SystemPermission> componentPermissions) {
-		this.componentPermissions = componentPermissions;
 	}
 
 	@ManyToOne
@@ -60,16 +58,13 @@ public class GroupComponentPolicy implements Serializable {
 		this.usergroup = usergroup;
 	}
 
-	@Id
-	@GeneratedValue
-	public int getPolicy_id() {
-		return policy_id;
+	@Transient
+	public Set<SystemPermission> getComponentPermissions() {
+		return componentPermissions;
 	}
 
-
-	public void setPolicy_id(int policy_id) {
-		this.policy_id = policy_id;
+	public void setComponentPermissions(Set<SystemPermission> componentPermissions) {
+		this.componentPermissions = componentPermissions;
 	}
-
 
 }

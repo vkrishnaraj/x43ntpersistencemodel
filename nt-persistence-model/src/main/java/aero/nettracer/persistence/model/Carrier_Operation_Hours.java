@@ -24,9 +24,9 @@ public class Carrier_Operation_Hours {
 
 	private int id;
 	private Station station;
-	private String dayOfWeek;
-	private Time startTime;
-	private Time endTime;
+	private String day_of_week;
+	private Time starttime;
+	private Time endtime;
 
 	@Id
 	@GeneratedValue
@@ -50,31 +50,31 @@ public class Carrier_Operation_Hours {
 	}
 
 	@Column(name = "day_of_week")
-	public String getDayOfWeek() {
-		return dayOfWeek;
+	public String getDay_of_week() {
+		return day_of_week;
 	}
 
-	public void setDayOfWeek(String dayOfWeek) {
-		this.dayOfWeek = dayOfWeek;
+	public void setDay_of_week(String day_of_week) {
+		this.day_of_week = day_of_week;
 	}
 
 	@Column(name = "starttime")
 	@Temporal(TemporalType.TIME)
-	public Time getStartTime() {
-		return startTime;
+	public Time getStarttime() {
+		return starttime;
 	}
 
-	public void setStartTime(Time startTime) {
-		this.startTime = startTime;
+	public void setStarttime(Time starttime) {
+		this.starttime = starttime;
 	}
 
 	@Column(name = "endtime")
 	@Temporal(TemporalType.TIME)
-	public Time getEndTime() {
-		return endTime;
+	public Time getEndtime() {
+		return endtime;
 	}
 
-	public void setEndTime(Time endTime) {
-		this.endTime = endTime;
+	public void setEndtime(Time endtime) {
+		this.endtime = endtime;
 	}
 }

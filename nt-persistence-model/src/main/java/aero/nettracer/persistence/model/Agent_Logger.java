@@ -1,6 +1,5 @@
 package aero.nettracer.persistence.model;
 
-import java.io.Serializable;
 import java.sql.Timestamp;
 
 import javax.persistence.Column;
@@ -16,10 +15,10 @@ import javax.persistence.TemporalType;
 public class Agent_Logger {
 
     private int id;
-    private int agentId;
-    private String companyCode;
-    private Timestamp  logInTime;
-    private Timestamp logOffTime;
+    private int agent_ID;
+    private String companycode_ID;
+    private Timestamp  log_in_time;
+    private Timestamp log_off_time;
     private boolean expired;
 
     @Id
@@ -34,41 +33,41 @@ public class Agent_Logger {
     }
 
     @Column(name="agent_id")
-    public int getAgentId() {
-        return agentId;
+    public int getAgent_ID() {
+        return agent_ID;
     }
 
-    public void setAgentId(int agentId) {
-        this.agentId = agentId;
+    public void setAgent_ID(int agent_ID) {
+        this.agent_ID = agent_ID;
     }
 
     @Column(name = "companycode_id")
-    public String getCompanyCode() {
-        return companyCode;
+    public String getCompanycode_ID() {
+        return companycode_ID;
     }
 
-    public void setCompanyCode(String companyCode) {
-        this.companyCode = companyCode;
+    public void setCompanycode_ID(String companycode_ID) {
+        this.companycode_ID = companycode_ID;
     }
 
     @Column(name = "log_in_time")
     @Temporal(TemporalType.TIMESTAMP)
-    public Timestamp getLogInTime() {
-        return logInTime;
+    public Timestamp getLog_in_time() {
+        return log_in_time;
     }
 
-    public void setLogInTime(Timestamp logInTime) {
-        this.logInTime = logInTime;
+    public void setLog_in_time(Timestamp log_in_time) {
+        this.log_in_time = log_in_time;
     }
 
     @Column(name = "log_off_time")
     @Temporal(TemporalType.TIMESTAMP)
-    public Timestamp getLogOffTime() {
-        return logOffTime;
+    public Timestamp getLog_off_time() {
+        return log_off_time;
     }
 
-    public void setLogOffTime(Timestamp logOffTime) {
-        this.logOffTime = logOffTime;
+    public void setLog_off_time(Timestamp log_off_time) {
+        this.log_off_time = log_off_time;
     }
 
     @Column(name = "expired")

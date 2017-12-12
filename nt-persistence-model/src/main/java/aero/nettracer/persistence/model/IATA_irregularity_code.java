@@ -1,21 +1,31 @@
 package aero.nettracer.persistence.model;
 
-import java.io.Serializable;
-
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import org.hibernate.annotations.Proxy;
 
 @Entity
 @Table(name = "irregularity_codes")
-public class IATA_irregularity_code implements Serializable {
+public class IATA_irregularity_code {
 
-	private int loss_code;
+	private int id;
 	private String locale;
 	private String description;
 
+	@Id
+	@GeneratedValue
+	@Column(name = "loss_code")
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	@Column(name = "locale")
 	public String getLocale() {
 		return locale;
 	}
@@ -24,6 +34,7 @@ public class IATA_irregularity_code implements Serializable {
 		this.locale = locale;
 	}
 
+	@Column(name = "description")
 	public String getDescription() {
 		return description;
 	}
@@ -32,13 +43,4 @@ public class IATA_irregularity_code implements Serializable {
 		this.description = description;
 	}
 
-	@Id
-	@GeneratedValue
-	public int getLoss_code() {
-		return loss_code;
-	}
-
-	public void setLoss_code(int loss_code) {
-		this.loss_code = loss_code;
-	}
 }

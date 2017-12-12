@@ -1,22 +1,14 @@
 package aero.nettracer.persistence.model;
 
-import org.hibernate.annotations.Proxy;
-
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import java.io.Serializable;
-
-/**
- * Created by thinkel on 7/6/2017.
- */
 
 @Entity
 @Table(name = "claim_questionnaire")
-public class Claim_Questionnaire implements Serializable {
-
-    private static final long serialVersionUID = 8259636336942271239L;
+public class Claim_Questionnaire {
 
     private long id;
     private boolean immediatelyReported;
@@ -32,6 +24,7 @@ public class Claim_Questionnaire implements Serializable {
 
     @Id
     @GeneratedValue
+    @Column(name = "id")
     public long getId() {
         return id;
     }
@@ -40,6 +33,7 @@ public class Claim_Questionnaire implements Serializable {
         this.id = id;
     }
 
+    @Column(name = "immediatelyreported")
     public boolean getImmediatelyReported() {
         return immediatelyReported;
     }
@@ -48,6 +42,7 @@ public class Claim_Questionnaire implements Serializable {
         this.immediatelyReported = immediatelyReported;
     }
 
+    @Column(name = "causeforreportdelay")
     public String getCauseForReportDelay() {
         return causeForReportDelay;
     }
@@ -56,6 +51,7 @@ public class Claim_Questionnaire implements Serializable {
         this.causeForReportDelay = causeForReportDelay;
     }
 
+    @Column(name = "reportingmethod")
     public String getReportingMethod() {
         return reportingMethod;
     }
@@ -64,6 +60,7 @@ public class Claim_Questionnaire implements Serializable {
         this.reportingMethod = reportingMethod;
     }
 
+    @Column(name = "interlinereported")
     public boolean getInterlineReported() {
         return interlineReported;
     }
@@ -72,6 +69,7 @@ public class Claim_Questionnaire implements Serializable {
         this.interlineReported = interlineReported;
     }
 
+    @Column(name = "recentlyreported")
     public boolean getRecentlyReported() {
         return recentlyReported;
     }
@@ -80,6 +78,7 @@ public class Claim_Questionnaire implements Serializable {
         this.recentlyReported = recentlyReported;
     }
 
+    @Column(name = "recentreportdescription")
     public String getRecentReportDescription() {
         return recentReportDescription;
     }
@@ -88,6 +87,7 @@ public class Claim_Questionnaire implements Serializable {
         this.recentReportDescription = recentReportDescription;
     }
 
+    @Column(name = "excessweightcharged")
     public boolean getExcessWeightCharged() {
         return excessWeightCharged;
     }
@@ -96,6 +96,7 @@ public class Claim_Questionnaire implements Serializable {
         this.excessWeightCharged = excessWeightCharged;
     }
 
+    @Column(name = "lastwitnesslocation")
     public String getLastWitnessLocation() {
         return lastWitnessLocation;
     }
@@ -104,6 +105,7 @@ public class Claim_Questionnaire implements Serializable {
         this.lastWitnessLocation = lastWitnessLocation;
     }
 
+    @Column(name = "customsinspectionwitnessed")
     public boolean getCustomsInspectionWitnessed() {
         return customsInspectionWitnessed;
     }
@@ -112,6 +114,7 @@ public class Claim_Questionnaire implements Serializable {
         this.customsInspectionWitnessed = customsInspectionWitnessed;
     }
 
+    @Column(name = "customsinspectionlocation")
     public String getCustomsInspectionLocation() {
         return customsInspectionLocation;
     }

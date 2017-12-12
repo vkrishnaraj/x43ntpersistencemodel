@@ -1,15 +1,11 @@
 package aero.nettracer.persistence.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import org.hibernate.annotations.Proxy;
 
-/**
- * @author Sean Fine
- * Class representing General Depreciation Rules object
- */
 @Entity
 @Table(name = "generaldepreciationrules")
 public class GeneralDepreciationRules {
@@ -26,7 +22,8 @@ public class GeneralDepreciationRules {
 
 	private String companyCode;
 
-	@Id @GeneratedValue
+	@Id
+	@GeneratedValue
 	public int getId() {
 		return id;
 	}
@@ -35,6 +32,7 @@ public class GeneralDepreciationRules {
 		this.id = id;
 	}
 
+	@Column(name = "lessTwentyDeprec")
 	public double getLessTwentyDeprec() {
 		return lessTwentyDeprec;
 	}
@@ -43,6 +41,7 @@ public class GeneralDepreciationRules {
 		this.lessTwentyDeprec = lessTwentyDeprec;
 	}
 
+	@Column(name = "twentyOnefiftyDeprec")
 	public double getTwentyOnefiftyDeprec() {
 		return twentyOnefiftyDeprec;
 	}
@@ -50,7 +49,8 @@ public class GeneralDepreciationRules {
 	public void setTwentyOnefiftyDeprec(double twentyOnefiftyDeprec) {
 		this.twentyOnefiftyDeprec = twentyOnefiftyDeprec;
 	}
-	
+
+	@Column(name = "onehundredToOnefiftyDeprec")
 	public double getOnehundredToOnefiftyDeprec() {
 		return onehundredToOnefiftyDeprec;
 	}
@@ -59,6 +59,7 @@ public class GeneralDepreciationRules {
 		this.onehundredToOnefiftyDeprec = onehundredToOnefiftyDeprec;
 	}
 
+	@Column(name = "onefiftyDeprec")
 	public double getOnefiftyDeprec() {
 		return onefiftyDeprec;
 	}
@@ -67,6 +68,7 @@ public class GeneralDepreciationRules {
 		this.onefiftyDeprec = onefiftyDeprec;
 	}
 
+	@Column(name = "noDates")
 	public int getNoDates() {
 		return noDates;
 	}
@@ -75,6 +77,7 @@ public class GeneralDepreciationRules {
 		this.noDates = noDates;
 	}
 
+	@Column(name = "companyCode")
 	public String getCompanyCode() {
 		return companyCode;
 	}
@@ -83,6 +86,7 @@ public class GeneralDepreciationRules {
 		this.companyCode = companyCode;
 	}
 
+	@Column(name = "generalDeprecRulesMinValue")
 	public double getGeneralDeprecRulesMinValue() {
 		return generalDeprecRulesMinValue;
 	}
@@ -91,6 +95,7 @@ public class GeneralDepreciationRules {
 		this.generalDeprecRulesMinValue = generalDeprecRulesMinValue;
 	}
 
+	@Column(name = "generalDeprecRulesMidValue")
 	public double getGeneralDeprecRulesMidValue() {
 		return generalDeprecRulesMidValue;
 	}
@@ -99,6 +104,7 @@ public class GeneralDepreciationRules {
 		this.generalDeprecRulesMidValue = generalDeprecRulesMidValue;
 	}
 
+	@Column(name = "generalDeprecRulesMaxValue")
 	public double getGeneralDeprecRulesMaxValue() {
 		return generalDeprecRulesMaxValue;
 	}

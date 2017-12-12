@@ -20,8 +20,8 @@ public class Billing {
 	private String companyCode;
 	private Station station;
 	private Incident incident;
-	private Timestamp createdOn;
-	private Timestamp lastUpdatedOn;
+	private Timestamp create_date_time;
+	private Timestamp status_change_time;
 	private Agent agent;
 
 	@Id
@@ -64,27 +64,24 @@ public class Billing {
 		this.incident = incident;
 	}
 
-	/**
-	 * @see Table description
-     */
 	@Column(name = "create_date_time", insertable = false, updatable = false)
 	@Temporal(TemporalType.TIMESTAMP)
-	public Timestamp getCreatedOn() {
-		return createdOn;
+	public Timestamp getCreate_date_time() {
+		return create_date_time;
 	}
 
-	public void setCreatedOn(Timestamp createdOn) {
-		this.createdOn = createdOn;
+	public void setCreate_date_time(Timestamp create_date_time) {
+		this.create_date_time = create_date_time;
 	}
 
 	@Column(name = "status_change_time")
 	@Temporal(TemporalType.TIMESTAMP)
-	public Timestamp getLastUpdatedOn() {
-		return lastUpdatedOn;
+	public Timestamp getStatus_change_time() {
+		return status_change_time;
 	}
 
-	public void setLastUpdatedOn(Timestamp lastUpdatedOn) {
-		this.lastUpdatedOn = lastUpdatedOn;
+	public void setStatus_change_time(Timestamp status_change_time) {
+		this.status_change_time = status_change_time;
 	}
 
 	@ManyToOne

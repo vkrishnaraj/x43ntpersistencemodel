@@ -25,11 +25,7 @@ public class ChecklistTask {
 	private String description;
 	private long orderId;
 	private ChecklistVersion checklistVersion;
-
-	//Mapped entites
 	private List<ChecklistTaskOption> checklistTaskOptions;
-
-	//Transient Fields
 	private IncidentChecklist snapshotData;
 
 	@Id
@@ -71,9 +67,7 @@ public class ChecklistTask {
 		this.checklistVersion = checklistVersion;
 	}
 
-	@OneToMany(mappedBy="checklistTask",
-			targetEntity=ChecklistTaskOption.class,
-			cascade=CascadeType.ALL)
+	@OneToMany(mappedBy="checklistTask", cascade=CascadeType.ALL)
 	@OrderColumn(name="order_id")
 	public List<ChecklistTaskOption> getChecklistTaskOptions() {
 		return checklistTaskOptions;

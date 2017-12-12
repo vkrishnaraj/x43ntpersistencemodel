@@ -1,39 +1,28 @@
 package aero.nettracer.persistence.model;
 
-import java.io.Serializable;
 import java.util.Date;
 import java.util.TimeZone;
 
-import aero.nettracer.commons.utils.GenericDateUtils;
 import javax.persistence.Embeddable;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.Transient;
 
 
 @Embeddable
-public class GeneralRemark implements Serializable{
+public class GeneralRemark {
 	
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 7624184475644182733L;
-	@ManyToOne
-	@JoinColumn(name = "agent_ID", nullable = false)
+
 	private Agent agent;
 	private String remarktext;
 	private Date remarkdate;
 	private int type;
 
-	@Transient
 	private String _DATEFORMAT;
-
-	@Transient
 	private String _TIMEFORMAT;
-
-	@Transient
 	private TimeZone _TIMEZONE;
 
+	@ManyToOne
+	@JoinColumn(name = "agent_ID", nullable = false)
 	public Agent getAgent() {
 		return agent;
 	}
@@ -54,11 +43,6 @@ public class GeneralRemark implements Serializable{
 		return remarkdate;
 	}
 
-	public String getDispcreatetime() {
-		return GenericDateUtils.formatDate(remarkdate, get_DATEFORMAT()
-				+ " " + get_TIMEFORMAT(), null, get_TIMEZONE());
-	}
-	
 	public void setRemarkdate(Date remarkdate) {
 		this.remarkdate = remarkdate;
 	}
