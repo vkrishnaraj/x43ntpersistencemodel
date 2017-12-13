@@ -87,6 +87,7 @@ public class Incident {
 	private String language;
 	private long checklist_version;
 	private Double overall_weight;
+	private String overall_weight_unit;
 	private boolean locked = false;
 	private long oc_claim_id;
 	private String revenueCode;
@@ -109,7 +110,7 @@ public class Incident {
 	private Timestamp paxview_login_date;
 	private Timestamp assignedDate;
 	private boolean prioritized;
-	private Date paxPplcEnabled;
+	private Timestamp paxPplcEnabled;
 
 	//Start
 
@@ -426,6 +427,15 @@ public class Incident {
 		this.overall_weight = roundToTwoDecimals(overall_weight);
 	}
 
+	@Column(name = "overall_weight_unit")
+	public String getOverall_weight_unit() {
+		return overall_weight_unit;
+	}
+
+	public void setOverall_weight_unit(String overall_weight_unit) {
+		this.overall_weight_unit = overall_weight_unit;
+	}
+
 	@Column(name = "locked", nullable = false)
 	public boolean isLocked() {
 		return locked;
@@ -434,6 +444,213 @@ public class Incident {
 	public void setLocked(boolean locked) {
 		this.locked = locked;
 	}
+
+	@Column(name = "oc_claim_id")
+	public long getOc_claim_id() {
+		return oc_claim_id;
+	}
+
+	public void setOc_claim_id(long oc_claim_id) {
+		this.oc_claim_id = oc_claim_id;
+	}
+
+	@Column(name = "revenue_code")
+	public String getRevenueCode() {
+		return revenueCode;
+	}
+
+	public void setRevenueCode(String revenueCode) {
+		this.revenueCode = revenueCode;
+	}
+
+	@Column(name = "codelocked", nullable = false, columnDefinition = "tinyint")
+	public boolean isCodeLocked() {
+		return codeLocked;
+	}
+
+	public void setCodeLocked(boolean locked) {
+		this.codeLocked = locked;
+	}
+
+	@Column(name = "stationlocked", nullable = false, columnDefinition = "tinyint")
+	public boolean isStationLocked() {
+		return stationLocked;
+	}
+
+	public void setStationLocked(boolean locked) {
+		this.stationLocked = locked;
+	}
+
+	@Column(name = "tracing_status_id")
+	public int getTracingStatus() {
+		return tracingStatus;
+	}
+
+	public void setTracingStatus(int tracingStatus) {
+		this.tracingStatus = tracingStatus;
+	}
+
+	@OneToOne
+	@JoinColumn(name = "deliveryinstructions_id", nullable = true)
+	public DeliveryInstructions getDeliveryInstructions() {
+		return deliveryInstructions;
+	}
+
+	public void setDeliveryInstructions(
+			DeliveryInstructions deliveryInstructions) {
+		this.deliveryInstructions = deliveryInstructions;
+	}
+
+	@Column(name = "tracingstarted")
+	@Temporal(value = TemporalType.TIMESTAMP)
+	public Timestamp getTracingStarted() {
+		return tracingStarted;
+	}
+
+	public void setTracingStarted(Timestamp tracingStarted) {
+		this.tracingStarted = tracingStarted;
+	}
+
+	@Column(name = "tracingcomplete")
+	@Temporal(value = TemporalType.TIMESTAMP)
+	public Timestamp getTracingComplete() {
+		return tracingComplete;
+	}
+
+	public void setTracingComplete(Timestamp tracingComplete) {
+		this.tracingComplete = tracingComplete;
+	}
+
+	@ManyToOne
+	@JoinColumn(name = "tracing_agent_id")
+	public Agent getTracingAgent() {
+		return tracingAgent;
+	}
+
+	public void setTracingAgent(Agent tracingAgent) {
+		this.tracingAgent = tracingAgent;
+	}
+
+	@Column(name = "wtcompanyid")
+	public String getWtCompanyCode() {
+		return wtCompanyCode;
+	}
+
+	public void setWtCompanyCode(String wtCompanyCode) {
+		this.wtCompanyCode = wtCompanyCode;
+	}
+
+	@Column(name = "wtstationid")
+	public String getWtStationCode() {
+		return wtStationCode;
+	}
+
+	public void setWtStationCode(String wtStationCode) {
+		this.wtStationCode = wtStationCode;
+	}
+
+	@Column(name = "rxtimestamp")
+	@Temporal(value = TemporalType.TIMESTAMP)
+	public Timestamp getRxTimestamp() {
+		return rxTimestamp;
+	}
+
+	public void setRxTimestamp(Timestamp rxTimestamp) {
+		this.rxTimestamp = rxTimestamp;
+	}
+
+	@Column(name = "courtesyreasonid")
+	public int getCourtesyReasonId() {
+		return courtesyReasonId;
+	}
+
+	public void setCourtesyReasonId(int courtesyReasonId) {
+		this.courtesyReasonId = courtesyReasonId;
+	}
+
+	@Column(name = "courtesydescription")
+	public String getCourtesyDescription() {
+		return courtesyDescription;
+	}
+
+	public void setCourtesyDescription(String courtesyDescription) {
+		this.courtesyDescription = courtesyDescription;
+	}
+
+	@Column(name = "custcommid", columnDefinition = "int(11) default 1301")
+	public int getCustCommId() {
+		return custCommId;
+	}
+
+	public void setCustCommId(int custCommId) {
+		this.custCommId = custCommId;
+	}
+
+	@Column(name = "claimstatus")
+	public int getClaimStatusId() {
+		return claimStatusId;
+	}
+
+	public void setClaimStatusId(int claimStatusId) {
+		this.claimStatusId = claimStatusId;
+	}
+
+	@Column(name = "cbn")
+	public int getCbn() {
+		return cbn;
+	}
+
+	public void setCbn(int cbn) {
+		this.cbn = cbn;
+	}
+
+	@Column(name = "pax_comm_enabled", nullable = false, columnDefinition = "bit")
+	public boolean isPaxCommEnabled() {
+		return this.paxCommEnabled;
+	}
+
+	public void setPaxCommEnabled(boolean isEnabled) {
+		this.paxCommEnabled = isEnabled;
+	}
+
+	@Column(name = "paxview_login_date")
+	public Timestamp getPaxview_login_date() {
+		return paxview_login_date;
+	}
+
+	public void setPaxview_login_date(Timestamp paxview_login_date) {
+		this.paxview_login_date = paxview_login_date;
+	}
+
+	@Column(name = "assigneddate")
+	@Temporal(value = TemporalType.TIMESTAMP)
+	public Timestamp getAssignedDate() {
+		return assignedDate;
+	}
+
+	public void setAssignedDate(Timestamp assignedDate) {
+		this.assignedDate = assignedDate;
+	}
+
+	@Column(name = "prioritized")
+	public boolean isPrioritized() {
+		return prioritized;
+	}
+
+	public void setPrioritized(boolean prioritized) {
+		this.prioritized = prioritized;
+	}
+
+	@Column(name = "paxpplcenabled")
+	@Temporal(value = TemporalType.TIMESTAMP)
+	public Timestamp getPaxPplcEnabled() {
+		return paxPplcEnabled;
+	}
+
+	public void setPaxPplcEnabled(Timestamp paxPplcEnabled) {
+		this.paxPplcEnabled = paxPplcEnabled;
+	}
+
 
 	//End
 
@@ -467,18 +684,6 @@ public class Incident {
 
 	private Dispute dispute;
 
-
-
-
-
-
-
-
-
-
-
-
-
 	private List<IssuanceItemIncident> issuanceItemIncidents;
 
 	private Set<IncidentActivity> activities;
@@ -489,84 +694,6 @@ public class Incident {
 	private TwoDayTask twoDayTask;
 	private ThreeDayTask threeDayTask;
 	private FourDayTask fourDayTask;
-
-
-	private String overall_weight_unit;
-	 // for auto checklist
-
-
-
-
-
-
-
-
-
-
-	@Column(name = "tracing_status_id")
-	public int getTracingStatus() {
-		return tracingStatus;
-	}
-
-	public void setTracingStatus(int tracingStatus) {
-		this.tracingStatus = tracingStatus;
-	}
-
-	@Temporal(value = TemporalType.TIMESTAMP)
-	public Date getTracingStarted() {
-		return tracingStarted;
-	}
-
-	public void setTracingStarted(Date tracingStarted) {
-		this.tracingStarted = tracingStarted;
-	}
-
-	@Temporal(value = TemporalType.TIMESTAMP)
-	public Date getTracingComplete() {
-		return tracingComplete;
-	}
-
-	public void setTracingComplete(Date tracingComplete) {
-		this.tracingComplete = tracingComplete;
-	}
-
-	@ManyToOne
-	@JoinColumn(name = "tracing_agent_ID")
-	public Agent getTracingAgent() {
-		return tracingAgent;
-	}
-
-	public void setTracingAgent(Agent tracingAgent) {
-		this.tracingAgent = tracingAgent;
-	}
-
-	@Column(name = "revenue_code", length = 16)
-	public String getRevenueCode() {
-		return revenueCode;
-	}
-
-	public void setRevenueCode(String revenueCode) {
-		this.revenueCode = revenueCode;
-	}
-
-
-	@Column(name = "codeLocked", nullable = false, columnDefinition = "tinyint")
-	public boolean isCodeLocked() {
-		return codeLocked;
-	}
-
-	public void setCodeLocked(boolean locked) {
-		this.codeLocked = locked;
-	}
-
-	@Column(name = "stationLocked", nullable = false, columnDefinition = "tinyint")
-	public boolean isStationLocked() {
-		return stationLocked;
-	}
-
-	public void setStationLocked(boolean locked) {
-		this.stationLocked = locked;
-	}
 
 	@OneToOne(mappedBy = "incident")
 	public Dispute getDispute() {
@@ -586,24 +713,9 @@ public class Incident {
 		this.incidentControl = value;
 	}
 
-	public String getOverall_weight_unit() {
-		return overall_weight_unit;
-	}
 
-	public void setOverall_weight_unit(String overall_weight_unit) {
-		this.overall_weight_unit = overall_weight_unit;
-	}
 
-	@OneToOne
-	@JoinColumn(name = "deliveryInstructions_ID", nullable = true)
-	public DeliveryInstructions getDeliveryInstructions() {
-		return deliveryInstructions;
-	}
 
-	public void setDeliveryInstructions(
-			DeliveryInstructions deliveryInstructions) {
-		this.deliveryInstructions = deliveryInstructions;
-	}
 
 	@OneToMany(mappedBy = "incident", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@org.hibernate.annotations.OrderBy(clause = "createdate")
@@ -922,77 +1034,6 @@ public class Incident {
 		return Double.valueOf(twoDForm.format(d));
 	}
 
-	@Basic
-	public long getOc_claim_id() {
-		return oc_claim_id;
-	}
-
-	public void setOc_claim_id(long oc_claim_id) {
-		this.oc_claim_id = oc_claim_id;
-	}
-
-	@Column(name = "wtStationId", length = 3)
-	public String getWtStationCode() {
-		return wtStationCode;
-	}
-
-	public void setWtStationCode(String wtStationCode) {
-		this.wtStationCode = wtStationCode;
-	}
-
-	@Column(name = "wtCompanyId", length = 3)
-	public String getWtCompanyCode() {
-		return wtCompanyCode;
-	}
-
-	public void setWtCompanyCode(String wtCompanyCode) {
-		this.wtCompanyCode = wtCompanyCode;
-	}
-
-	@Temporal(value = TemporalType.TIMESTAMP)
-	public Date getRxTimestamp() {
-		return rxTimestamp;
-	}
-
-	public void setRxTimestamp(Date rxTimestamp) {
-		this.rxTimestamp = rxTimestamp;
-	}
-
-	public int getCourtesyReasonId() {
-		return courtesyReasonId;
-	}
-
-	public void setCourtesyReasonId(int courtesyReasonId) {
-		this.courtesyReasonId = courtesyReasonId;
-	}
-
-	@Column(length = 100)
-	public String getCourtesyDescription() {
-		return courtesyDescription;
-	}
-
-	public void setCourtesyDescription(String courtesyDescription) {
-		this.courtesyDescription = courtesyDescription;
-	}
-
-	@Column(columnDefinition = "int(11) default 1301")
-	public int getCustCommId() {
-		return custCommId;
-	}
-
-	public void setCustCommId(int custCommId) {
-		this.custCommId = custCommId;
-	}
-
-	@Column(name = "claimStatus")
-	public int getClaimStatusId() {
-		return claimStatusId;
-	}
-
-	public void setClaimStatusId(int claimStatusId) {
-		this.claimStatusId = claimStatusId;
-	}
-
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "incident")
 	@org.hibernate.annotations.OrderBy(clause = "createDate")
 	@Fetch(FetchMode.SELECT)
@@ -1070,23 +1111,6 @@ public class Incident {
 		this.fourDayTask = fourDayTask;
 	}
 
-	public int getCbn() {
-		return cbn;
-	}
-
-	public void setCbn(int cbn) {
-		this.cbn = cbn;
-	}
-
-	@Column(name = "pax_comm_enabled", nullable = false, columnDefinition = "bit")
-	public boolean isPaxCommEnabled() {
-		return this.paxCommEnabled;
-	}
-
-	public void setPaxCommEnabled(boolean isEnabled) {
-		this.paxCommEnabled = isEnabled;
-	}
-
 	public void addPassenger(Passenger pasenger) {
 		this.getPassengers().add(pasenger);
 	}
@@ -1099,32 +1123,6 @@ public class Incident {
 		this.getItemlist().add(item);
 	}
 
-	public Date getPaxview_login_date() {
-		return paxview_login_date;
-	}
-
-	public void setPaxview_login_date(Date paxview_login_date) {
-		this.paxview_login_date = paxview_login_date;
-	}
-
-	@Temporal(value = TemporalType.TIMESTAMP)
-	public Date getAssignedDate() {
-		return assignedDate;
-	}
-
-	public void setAssignedDate(Date assignedDate) {
-		this.assignedDate = assignedDate;
-	}
-
-	@Temporal(value = TemporalType.TIMESTAMP)
-	public Date getPaxPplcEnabled() {
-		return paxPplcEnabled;
-	}
-
-	public void setPaxPplcEnabled(Date paxPplcEnabled) {
-		this.paxPplcEnabled = paxPplcEnabled;
-	}
-	
 	@Transient
 	public Map<String, Double> getBagFees()
 	{
@@ -1144,13 +1142,5 @@ public class Incident {
 			}
 		}
 			return fees;
-	}
-
-	public boolean isPrioritized() {
-		return prioritized;
-	}
-
-	public void setPrioritized(boolean prioritized) {
-		this.prioritized = prioritized;
 	}
 }
