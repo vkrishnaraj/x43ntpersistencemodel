@@ -1,7 +1,6 @@
 package aero.nettracer.persistence.model;
 
-import java.io.Serializable;
-import java.util.Date;
+import java.sql.Timestamp;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,23 +15,16 @@ import javax.persistence.Transient;
 
 @Entity
 @Table(name = "label")
-public class Label implements Serializable {
-	private static final long serialVersionUID = -8553022266983189284L;
+public class Label {
+
+	private long id;
+	private Agent agent;
+	private String text;
+	private Timestamp lastUpdate;
 
 	@Id
 	@GeneratedValue
-	private long id;
-
-	@Column(length = 100)
-	private String text;
-
-	@Temporal(value = TemporalType.TIMESTAMP)
-	private Date lastUpdate;
-
-	@ManyToOne
-	@JoinColumn(name = "agent_id", nullable = false)
-	private Agent agent;
-
+	@Column(name = "id")
 	public long getId() {
 		return id;
 	}
@@ -41,6 +33,7 @@ public class Label implements Serializable {
 		this.id = labelId;
 	}
 
+	@Column(name = "text")
 	public String getText() {
 		return text;
 	}
@@ -49,14 +42,18 @@ public class Label implements Serializable {
 		this.text = text;
 	}
 
-	public Date getLastUpdate() {
+	@Column(name = "lastupdate", insertable = false, updatable = false)
+	@Temporal(value = TemporalType.TIMESTAMP)
+	public Timestamp getLastUpdate() {
 		return lastUpdate;
 	}
 
-	public void setLastUpdate(Date lastUpdate) {
+	public void setLastUpdate(Timestamp lastUpdate) {
 		this.lastUpdate = lastUpdate;
 	}
 
+	@ManyToOne
+	@JoinColumn(name = "agent_id", nullable = false)
 	public Agent getAgent() {
 		return agent;
 	}

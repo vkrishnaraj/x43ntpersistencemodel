@@ -1,8 +1,6 @@
 
 package aero.nettracer.persistence.model;
 
-import java.io.Serializable;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,76 +9,62 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.Proxy;
-
 @Entity
 @Table(name = "links")
-public class Link implements Serializable {
+public class Link {
+
+	private int id;
+	private String description;
+	private String link_address;
+	private String image;
+	private Company company;
 
 	@Id
 	@GeneratedValue
-	private int id;
-	
-	@Column(length=100, nullable=false)
-	private String description;
-	
-	@Column(length=255, nullable=false)
-	private String link_address;
-	
-	@ManyToOne
-	@JoinColumn(name="companycode_id")
-	private Company company;
-	
-	@Column(length=50, nullable=false)
-	private String image;
+	@Column(name = "id")
+	public int getId() {
+		return id;
+	}
 
+	public void setId(int id) {
+		this.id = id;
+	}
 
+	@Column(name = "description", nullable=false)
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	@Column(name = "link_address", nullable=false)
 	public String getLink_address() {
 		return link_address;
 	}
-
 
 	public void setLink_address(String link_address) {
 		this.link_address = link_address;
 	}
 
-
-	public Company getCompany() {
-		return company;
-	}
-
-
-	public void setCompany(Company company) {
-		this.company = company;
-	}
-
-
+	@Column(name = "image", nullable=false)
 	public String getImage() {
 		return image;
 	}
-
 
 	public void setImage(String image) {
 		this.image = image;
 	}
 
-
-	public String getDescription() {
-		return description;
+	@ManyToOne
+	@JoinColumn(name="companycode_id")
+	public Company getCompany() {
+		return company;
 	}
 
-	
-	public void setDescription(String description) {
-		this.description = description;
+	public void setCompany(Company company) {
+		this.company = company;
 	}
 
-	
-	public int getId() {
-		return id;
-	}
-
-	
-	public void setId(int id) {
-		this.id = id;
-	}
 }

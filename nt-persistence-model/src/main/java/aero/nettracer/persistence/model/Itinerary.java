@@ -2,11 +2,8 @@ package aero.nettracer.persistence.model;
 
 import java.sql.Time;
 import java.util.Date;
-import java.util.ListIterator;
 
-import aero.nettracer.commons.constant.GenericConstants;
-import aero.nettracer.commons.utils.GenericDateUtils;
-import com.cci.utils.parser.ElementNode;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -15,7 +12,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.persistence.Transient;
 
 @Entity
 @Table(name = "itinerary")
@@ -38,48 +34,9 @@ public class Itinerary {
 	private String airline;
 	private String seatClass;
 
-	public String toXML() {
-		StringBuffer sb = new StringBuffer();
-		sb.append("<itinerary_leg>");
-		sb.append("<id>" + id + "</id>");
-		sb.append("<itinerarytype>" + itinerarytype + "</itinerarytype>");
-		sb.append("<from>" + legfrom + "</from>");
-		sb.append("<fromtype>" + legfrom_type + "</fromtype>");
-		sb.append("<to>" + legto + "</to>");
-		sb.append("<totype>" + legto_type + "</totype>");
-		sb.append("<departdate>" + (departdate == null ? "" : departdate.toString()) + "</departdate>");
-		sb.append("<arrivedate>" + (arrivedate == null ? "" : arrivedate.toString()) + "</arrivedate>");
-		sb.append("<airline>" + airline.toString() + "</airline>");
-		sb.append("<flightnum>" + flightnum.toString() + "</flightnum>");
-		sb.append("<schdeparttime>" + (schdeparttime == null ? "" : schdeparttime.toString()) + "</schdeparttime>");
-		sb.append("<scharrivetime>" + (scharrivetime == null ? "" : scharrivetime.toString()) + "</scharrivetime>");
-		sb.append("<actdeparttime>" + (actdeparttime == null ? "" : actdeparttime.toString()) + "</actdeparttime>");
-		sb.append("<actarrivetime>" + (actarrivetime == null ? "" : actarrivetime.toString()) + "</actarrivetime>");
-		sb.append("</itinerary_leg>");
-
-		return sb.toString();
-	}
-
-	@ManyToOne
-	@JoinColumn(name = "incident_ID")
-	public Incident getIncident() {
-		return incident;
-	}
-
-	public void setIncident(Incident incident) {
-		this.incident = incident;
-	}
-
-	public String getFlightnum() {
-		return flightnum;
-	}
-
-	public void setFlightnum(String flightnum) {
-		this.flightnum = (flightnum != null ? flightnum.toUpperCase() : flightnum);
-	}
-
 	@Id
 	@GeneratedValue
+	@Column(name = "itinerary_id")
 	public int getId() {
 		return id;
 	}
@@ -88,6 +45,7 @@ public class Itinerary {
 		this.id = id;
 	}
 
+	@Column(name = "itinerarytype")
 	public int getItinerarytype() {
 		return itinerarytype;
 	}
@@ -96,6 +54,7 @@ public class Itinerary {
 		this.itinerarytype = itinerarytype;
 	}
 
+	@Column(name = "legfrom")
 	public String getLegfrom() {
 		return legfrom;
 	}
@@ -104,6 +63,7 @@ public class Itinerary {
 		this.legfrom = (legfrom != null ? legfrom.toUpperCase() : legfrom);
 	}
 
+	@Column(name = "legto")
 	public String getLegto() {
 		return legto;
 	}
@@ -112,6 +72,7 @@ public class Itinerary {
 		this.legto = (legto != null ? legto.toUpperCase() : legto);
 	}
 
+	@Column(name = "legfrom_type")
 	public int getLegfrom_type() {
 		return legfrom_type;
 	}
@@ -120,6 +81,7 @@ public class Itinerary {
 		this.legfrom_type = legfrom_type;
 	}
 
+	@Column(name = "legto_type")
 	public int getLegto_type() {
 		return legto_type;
 	}
@@ -128,23 +90,7 @@ public class Itinerary {
 		this.legto_type = legto_type;
 	}
 
-	public String getAirline() {
-		return airline;
-	}
-
-	public void setAirline(String airline) {
-		this.airline = airline;
-	}
-
-	@Temporal(TemporalType.DATE)
-	public Date getArrivedate() {
-		return arrivedate;
-	}
-
-	public void setArrivedate(Date arrivedate) {
-		this.arrivedate = arrivedate;
-	}
-
+	@Column(name = "departdate")
 	@Temporal(TemporalType.DATE)
 	public Date getDepartdate() {
 		return departdate;
@@ -154,68 +100,85 @@ public class Itinerary {
 		this.departdate = departdate;
 	}
 
+	@Column(name = "arrivedate")
+	@Temporal(TemporalType.DATE)
+	public Date getArrivedate() {
+		return arrivedate;
+	}
+
+	public void setArrivedate(Date arrivedate) {
+		this.arrivedate = arrivedate;
+	}
+
+	@Column(name = "flightnum")
+	public String getFlightnum() {
+		return flightnum;
+	}
+
+	public void setFlightnum(String flightnum) {
+		this.flightnum = (flightnum != null ? flightnum.toUpperCase() : flightnum);
+	}
+
+	@Column(name = "schdeparttime")
 	@Temporal(TemporalType.TIME)
-	public Date getActarrivetime() {
-		return actarrivetime;
-	}
-
-	public void setActarrivetime(Date actarrivetime) {
-		this.actarrivetime = actarrivetime;
-	}
-
-	@Temporal(TemporalType.TIME)
-	public Date getActdeparttime() {
-		return actdeparttime;
-	}
-
-	public void setActdeparttime(Date actdeparttime) {
-		this.actdeparttime = actdeparttime;
-	}
-
-	@Temporal(TemporalType.TIME)
-	public Date getScharrivetime() {
-		return scharrivetime;
-	}
-
-	public void setScharrivetime(Date scharrivetime) {
-		this.scharrivetime = scharrivetime;
-	}
-
-	@Temporal(TemporalType.TIME)
-	public Date getSchdeparttime() {
+	public Time getSchdeparttime() {
 		return schdeparttime;
 	}
 
-	public void setSchdeparttime(Date schdeparttime) {
+	public void setSchdeparttime(Time schdeparttime) {
 		this.schdeparttime = schdeparttime;
 	}
 
-	@Transient
-	public int getLegToTypeDescription(){
-		return legto_type;
+	@Column(name = "scharrivetime")
+	@Temporal(TemporalType.TIME)
+	public Time getScharrivetime() {
+		return scharrivetime;
 	}
 
-	public void setLegToTypeDescription(int legto_type){
-		this.legto_type = legto_type;
+	public void setScharrivetime(Time scharrivetime) {
+		this.scharrivetime = scharrivetime;
 	}
 
-	@Transient
-	public int getLegFromTypeDescription(){
-		return legfrom_type;
+	@Column(name = "actdeparttime")
+	@Temporal(TemporalType.TIME)
+	public Time getActdeparttime() {
+		return actdeparttime;
 	}
 
-	public void setLegFromTypeDescription(int legfrom_type){
-		this.legfrom_type = legfrom_type;
+	public void setActdeparttime(Time actdeparttime) {
+		this.actdeparttime = actdeparttime;
 	}
 
-	public int getItineraryTypeDescription() {
-		return itinerarytype;
+	@Column(name = "actarrivetime")
+	@Temporal(TemporalType.TIME)
+	public Time getActarrivetime() {
+		return actarrivetime;
 	}
 
-	public void setItineraryTypeDescription(int itinerarytype) {
-		this.itinerarytype = itinerarytype;
+	public void setActarrivetime(Time actarrivetime) {
+		this.actarrivetime = actarrivetime;
 	}
 
+	@ManyToOne
+	@JoinColumn(name = "incident_id")
+	public Incident getIncident() {
+		return incident;
+	}
+
+	public void setIncident(Incident incident) {
+		this.incident = incident;
+	}
+
+	@Column(name = "airline")
+	public String getAirline() {
+		return airline;
+	}
+
+	public void setAirline(String airline) {
+		this.airline = airline;
+	}
+
+	@Column(name = "seatclass")
 	public String getSeatClass() {
 		return seatClass;
 	}
@@ -224,19 +187,4 @@ public class Itinerary {
 		this.seatClass = seatClass;
 	}
 
-	public static int parseInt(String s) {
-		try {
-			return Integer.parseInt(s);
-		} catch (Exception e) {
-			return 0;
-		}
-	}
-
-	public static double parseDouble(String s) {
-		try {
-			return Double.parseDouble(s);
-		} catch (Exception e) {
-			return 0;
-		}
-	}
 }

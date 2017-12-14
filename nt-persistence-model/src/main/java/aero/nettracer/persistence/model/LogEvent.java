@@ -1,28 +1,24 @@
 package aero.nettracer.persistence.model;
 
-import java.io.Serializable;
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.persistence.Transient;
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.CascadeType;
-import org.hibernate.annotations.Proxy;
 
 @Entity
-@Table(name = "Logs")
-public class LogEvent implements Serializable {
-	private int log_ID;
+@Table(name = "logs")
+public class LogEvent {
+
+	private int id;
 	private String loglevel;
 	private String message;
 	private String className;
@@ -30,16 +26,38 @@ public class LogEvent implements Serializable {
 	private String lineNumber;
 	private String methodName;
 	private String loggerName;
-	private Date logTime;
 	private Date logDate;
+	private Time logTime;
 	private String threadName;
 	private List<LogEventThrowable> loggingEventThrowableWrapper = new ArrayList();
 
-	public void addThrowableMessage(int position, String throwableMessage) {
-		LogEventThrowable letw = new LogEventThrowable();
-		letw.setT_position(position);
-		letw.setMessage(throwableMessage);
-		loggingEventThrowableWrapper.add(letw);
+	@Id
+	@GeneratedValue
+	@Column(name = "log_id")
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	@Column(name = "log_level")
+	public String getLoglevel() {
+		return loglevel;
+	}
+
+	public void setLoglevel(String loglevel) {
+		this.loglevel = loglevel;
+	}
+
+	@Column(name = "message")
+	public String getMessage() {
+		return message;
+	}
+
+	public void setMessage(String message) {
+		this.message = message;
 	}
 
 	@Column(name = "class_name")
@@ -60,15 +78,6 @@ public class LogEvent implements Serializable {
 		this.fileName = fileName;
 	}
 
-	@Column(name = "log_level")
-	public String getLoglevel() {
-		return loglevel;
-	}
-
-	public void setLoglevel(String loglevel) {
-		this.loglevel = loglevel;
-	}
-
 	@Column(name = "line_number")
 	public String getLineNumber() {
 		return lineNumber;
@@ -76,52 +85,6 @@ public class LogEvent implements Serializable {
 
 	public void setLineNumber(String lineNumber) {
 		this.lineNumber = lineNumber;
-	}
-
-	@Id
-	@GeneratedValue
-	public int getLog_ID() {
-		return log_ID;
-	}
-
-	public void setLog_ID(int log_ID) {
-		this.log_ID = log_ID;
-	}
-
-	@Column(name = "log_date")
-	public Date getLogDate() {
-		return logDate;
-	}
-
-	public void setLogDate(Date logDate) {
-		this.logDate = logDate;
-	}
-
-	@Column(name = "logger_name")
-	public String getLoggerName() {
-		return loggerName;
-	}
-
-	public void setLoggerName(String loggerName) {
-		this.loggerName = loggerName;
-	}
-
-	@OneToMany(mappedBy = "logevent", fetch = FetchType.LAZY)
-	@Cascade(CascadeType.ALL)
-	public List<LogEventThrowable> getLoggingEventThrowableWrapper() {
-		return loggingEventThrowableWrapper;
-	}
-
-	public void setLoggingEventThrowableWrapper(List<LogEventThrowable> loggingEventThrowableWrapper) {
-		this.loggingEventThrowableWrapper = loggingEventThrowableWrapper;
-	}
-
-	public String getMessage() {
-		return message;
-	}
-
-	public void setMessage(String message) {
-		this.message = message;
 	}
 
 	@Column(name = "method_name")
@@ -133,13 +96,32 @@ public class LogEvent implements Serializable {
 		this.methodName = methodName;
 	}
 
+	@Column(name = "logger_name")
+	public String getLoggerName() {
+		return loggerName;
+	}
+
+	public void setLoggerName(String loggerName) {
+		this.loggerName = loggerName;
+	}
+
+	@Column(name = "log_date")
+	@Temporal(TemporalType.DATE)
+	public Date getLogDate() {
+		return logDate;
+	}
+
+	public void setLogDate(Date logDate) {
+		this.logDate = logDate;
+	}
+
 	@Column(name = "log_time")
 	@Temporal(TemporalType.TIME)
-	public Date getLogTime() {
+	public Time getLogTime() {
 		return logTime;
 	}
 
-	public void setLogTime(Date logTime) {
+	public void setLogTime(Time logTime) {
 		this.logTime = logTime;
 	}
 
@@ -151,4 +133,21 @@ public class LogEvent implements Serializable {
 	public void setThreadName(String threadName) {
 		this.threadName = threadName;
 	}
+
+	@OneToMany(mappedBy = "logevent", cascade = javax.persistence.CascadeType.ALL)
+	public List<LogEventThrowable> getLoggingEventThrowableWrapper() {
+		return loggingEventThrowableWrapper;
+	}
+
+	public void setLoggingEventThrowableWrapper(List<LogEventThrowable> loggingEventThrowableWrapper) {
+		this.loggingEventThrowableWrapper = loggingEventThrowableWrapper;
+	}
+
+	public void addThrowableMessage(int position, String throwableMessage) {
+		LogEventThrowable letw = new LogEventThrowable();
+		letw.setT_position(position);
+		letw.setMessage(throwableMessage);
+		loggingEventThrowableWrapper.add(letw);
+	}
+
 }

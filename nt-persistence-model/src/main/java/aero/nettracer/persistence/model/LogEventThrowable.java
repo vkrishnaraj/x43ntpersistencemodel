@@ -1,33 +1,44 @@
 package aero.nettracer.persistence.model;
 
-import java.io.Serializable;
-
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import org.hibernate.annotations.Proxy;
 
 @Entity
-@Table(name = "LOGGER_THROWABLE")
-public class LogEventThrowable implements Serializable {
-	private int throwable_ID;
+@Table(name = "logger_throwable")
+public class LogEventThrowable {
+
+	private int id;
+	private LogEvent logevent;
 	private int t_position;
 	private String message;
-	private int log_ID;
-	
-	private LogEvent logevent;
 
-	public String getMessage() {
-		return message;
+	@Id
+	@GeneratedValue
+	@Column(name = "throwable_id")
+	public int getId() {
+		return id;
 	}
 
-	public void setMessage(String message) {
-		this.message = message;
+	public void setId(int id) {
+		this.id = id;
 	}
 
+	@ManyToOne
+	@JoinColumn(name = "log_id")
+	public LogEvent getLogevent() {
+		return logevent;
+	}
+
+	public void setLogevent(LogEvent logevent) {
+		this.logevent = logevent;
+	}
+
+	@Column(name = "t_position")
 	public int getT_position() {
 		return t_position;
 	}
@@ -36,23 +47,12 @@ public class LogEventThrowable implements Serializable {
 		this.t_position = t_position;
 	}
 
-	@Id
-	@GeneratedValue
-	public int getThrowable_ID() {
-		return throwable_ID;
+	@Column(name = "message")
+	public String getMessage() {
+		return message;
 	}
 
-	public void setThrowable_ID(int throwable_ID) {
-		this.throwable_ID = throwable_ID;
-	}
-
-	@ManyToOne
-	@JoinColumn(name = "log_ID")
-	public LogEvent getLogevent() {
-		return logevent;
-	}
-
-	public void setLogevent(LogEvent logevent) {
-		this.logevent = logevent;
+	public void setMessage(String message) {
+		this.message = message;
 	}
 }

@@ -1,7 +1,6 @@
 package aero.nettracer.persistence.model;
 
-import java.io.Serializable;
-
+import aero.nettracer.persistence.util.LzType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -13,54 +12,31 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
-import org.hibernate.annotations.Proxy;
-
 @Entity
 @Table(name = "lz")
-public class Lz implements Serializable {
+public class Lz {
 
-	private static final long serialVersionUID = 5515908229381309490L;
-	
-	@Id @GeneratedValue
-	@Column(name = "lz_id")
-	private int lz_ID;
-	
-	private boolean is_default;
-	private double percent_load;
-	
-	@ManyToOne(targetEntity = Station.class)
-	@JoinColumn(name="station_id")
-	@Fetch(FetchMode.SELECT)
+	private int id;
 	private Station station;
-
-	@Transient
+	private boolean is_default;
+	private LzType lz_type;
+	private double percent_load;
+	private String companyCode_ID;
 	private boolean isUsed;
 
-	@Column(nullable = false, length = 20)
-	private String companyCode_ID;
-
-	@Enumerated(EnumType.STRING)
-	@Column(nullable = false, length = 20)
-	private LzType lz_type;
-
-	public int getLz_ID() {
-		return lz_ID;
+	@Id
+	@GeneratedValue
+	@Column(name = "lz_id")
+	public int getId() {
+		return id;
 	}
 
-	public void setLz_ID(int lz_ID) {
-		this.lz_ID = lz_ID;
+	public void setId(int id) {
+		this.id = id;
 	}
 
-	public double getPercent_load() {
-		return percent_load;
-	}
-
-	public void setPercent_load(double percent) {
-		this.percent_load = percent;
-	}
-
+	@ManyToOne
+	@JoinColumn(name="station_id")
 	public Station getStation() {
 		return station;
 	}
@@ -69,6 +45,35 @@ public class Lz implements Serializable {
 		this.station = station;
 	}
 
+	@Column(name = "is_default")
+	public boolean isIs_default() {
+		return is_default;
+	}
+
+	public void setIs_default(boolean is_default) {
+		this.is_default = is_default;
+	}
+
+	@Enumerated(EnumType.STRING)
+	@Column(nullable = false, length = 20)
+	public LzType getLz_type() {
+		return lz_type;
+	}
+
+	public void setLz_type(LzType lz_type) {
+		this.lz_type = lz_type;
+	}
+
+	@Column(name = "percent_load")
+	public double getPercent_load() {
+		return percent_load;
+	}
+
+	public void setPercent_load(double percent) {
+		this.percent_load = percent;
+	}
+
+	@Column(name = "companycode_id", nullable = false)
 	public String getCompanyCode_ID() {
 		return companyCode_ID;
 	}
@@ -77,28 +82,13 @@ public class Lz implements Serializable {
 		this.companyCode_ID = companyCode_ID;
 	}
 
-	public boolean isIs_default() {
-		return is_default;
-	}
-
-	public void setIs_default(boolean is_default) {
-		this.is_default = is_default;
-	}
-	
-	public void setIsUsed(boolean isUsed) {
-		this.isUsed = isUsed;
-	}
-	
+	@Transient
 	public boolean isUsed() {
 		return isUsed;
 	}
-	
-	public LzType getLz_type() {
-		return lz_type;
-	}
 
-	public void setLz_type(LzType lz_type) {
-		this.lz_type = lz_type;
+	public void setIsUsed(boolean isUsed) {
+		this.isUsed = isUsed;
 	}
 
 	@Override
@@ -108,13 +98,13 @@ public class Lz implements Serializable {
 			return false;
 				
 		Lz b = (Lz) a;
-		if (this.lz_ID == b.getLz_ID())
+		if (this.id == b.getId())
 			return true;
 		return false;
 	}
 	
 	@Override
 	public int hashCode() {
-		return this.lz_ID;
+		return this.id;
 	}
 }

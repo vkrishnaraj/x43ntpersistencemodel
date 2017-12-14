@@ -1,7 +1,6 @@
 package aero.nettracer.persistence.model;
 
-import java.io.Serializable;
-import java.util.Date;
+import java.sql.Timestamp;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,23 +14,19 @@ import javax.persistence.TemporalType;
 import javax.persistence.UniqueConstraint;
 
 @Entity
-@Table(name = "GLOBAL_LOCK", 
-		uniqueConstraints = @UniqueConstraint(columnNames={"lockType", "lockKey"}))
-public class Lock implements Serializable {
-	
-	public static final long DEFAULT_DURATION = 5000L;
+@Table(name = "global_lock", uniqueConstraints = @UniqueConstraint(columnNames={"locktype", "lockkey"}))
+public class Lock {
 	
 	private long id;
-	private LockType lockType;
+	private Timestamp createDate;
+	private Timestamp expirationDate;
 	private String lockKey;
+	private LockType lockType;
 	private String owner;
-	private Date createDate;
-	private Date expirationDate;
-	
-	public Lock() {}
 
 	@Id
 	@GeneratedValue
+	@Column(name = "id")
 	public long getId() {
 		return id;
 	}
@@ -41,7 +36,7 @@ public class Lock implements Serializable {
 	}
 
 	@Enumerated(EnumType.STRING)
-	@Column(length = 20)
+	@Column(name = "locktype")
 	public LockType getLockType() {
 		return lockType;
 	}
@@ -50,7 +45,7 @@ public class Lock implements Serializable {
 		this.lockType = lockType;
 	}
 
-	@Column(length = 20)
+	@Column(name = "lockkey")
 	public String getLockKey() {
 		return lockKey;
 	}
@@ -59,7 +54,7 @@ public class Lock implements Serializable {
 		this.lockKey = lockKey;
 	}
 
-	@Column(length = 20)
+	@Column(name = "owner")
 	public String getOwner() {
 		return owner;
 	}
@@ -68,21 +63,22 @@ public class Lock implements Serializable {
 		this.owner = owner;
 	}
 
+	@Column(name = "createdate")
 	@Temporal(TemporalType.TIMESTAMP)
-	public Date getCreateDate() {
+	public Timestamp getCreateDate() {
 		return createDate;
 	}
 
-	public void setCreateDate(Date createDate) {
+	public void setCreateDate(Timestamp createDate) {
 		this.createDate = createDate;
 	}
 
 	@Temporal(TemporalType.TIMESTAMP)
-	public Date getExpirationDate() {
+	public Timestamp getExpirationDate() {
 		return expirationDate;
 	}
 
-	public void setExpirationDate(Date expirationDate) {
+	public void setExpirationDate(Timestamp expirationDate) {
 		this.expirationDate = expirationDate;
 	}
 	
