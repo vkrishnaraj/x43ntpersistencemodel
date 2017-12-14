@@ -6,13 +6,13 @@
  */
 package aero.nettracer.persistence.model;
 
-import java.io.Serializable;
+import java.sql.Time;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.Set;
-import java.util.TimeZone;
 import java.util.TreeSet;
 
 import aero.nettracer.commons.constant.GenericConstants;
@@ -22,7 +22,6 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -32,213 +31,106 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
-import org.hibernate.annotations.Proxy;
+import org.hibernate.annotations.OrderBy;
 
 
 @Entity
 @Table(name="ohd")
-public class OHD implements Serializable {
-	
-	private static final long serialVersionUID = -6651594161173132503L;
-	
-	
-	private String ohdId;
-	
-	
+public class OHD {
+
+	private String id;
 	private Station foundAtStation;
-
 	private Station holdingStation;
-
-	private String storage_location;
-
-	private Agent agent;
-
-	private Date foundtime;
-
-	private Date founddate;
-
-	private Date bagarrivedate;
-
-	private Date inventoryDate;
-
-	private Date warehouseSentDate;
-
-	private Date warehouseReceivedDate;
-
-
-	private String claimnum;
-
-	private String claimchecknum_leading;
-
-	private String claimchecknum_ticketingcode;
-
-	private String claimchecknum_carriercode;
-
-	private String claimchecknum_bagnumber;
-
-	private String color;
-
-	private String type;
-	private int ohd_type;
-	private String lastname;
-	private String firstname;
-	private String middlename;
-
 	private AirlineMembership membership;
-
 	private String record_locator;
+	private Agent agent;
+	private Date founddate;
+	private Time foundtime;
+	private String claimnum;
+	private String color;
+	private Date bagarrivedate;
+	private String type;
 	private int xdescelement_ID_1;
 	private int xdescelement_ID_2;
 	private int xdescelement_ID_3;
 	private int manufacturer_ID;
 	private String manufacturer_other;
-
+	private String storage_location;
+	private Timestamp close_date;
+	private Timestamp lastupdated;
 	private Status status;
-
+	private String firstname;
+	private String lastname;
+	private String middlename;
+	private int ohd_type;
 	private Status disposal_status;
-
-	private boolean earlyBag;
-
-	private String matched_incident;
-
-	private String externaldesc;
-
-	private int specialCondition;
-
-	private Set<OHD_Inventory> items;
-
-	private Set<Remark> remarks;
-
-	private Set<OHD_Passenger> passengers;
-
-	private Set<OHD_Photo> photos;
-
-	private Set<Task> tasks;
-
-	private Set<ControlLog> controlLog;
-
-	private Set<OHD_Itinerary> itinerary;
-
-	private Date close_date;
-
-	private Date lastupdated;
-
 	private WorldTracerFile wtFile;	// worldtracer id
-
-	private String _DATEFORMAT; // current login agent's date format
-
-	private String _TIMEFORMAT; // current login agent's time format
-
-	private TimeZone _TIMEZONE;
-
 	private int faultStation = 0;
-
 	private int loss_code = 0;
+	private boolean earlyBag;
+	private String matched_incident;
 	private boolean tagSentToWt;
 	private int tagSentToWtStationId;
+	private String claimchecknum_leading;
+	private String claimchecknum_ticketingcode;
+	private String claimchecknum_carriercode;
+	private String claimchecknum_bagnumber;
+	private Timestamp warehouseReceivedDate;
+	private Timestamp warehouseSentDate;
+	private String externaldesc;
 	private int creationMethod;
 	private String modifiedBy;
-
-	private Date modifiedDate;
-
+	private Timestamp modifiedDate;
 	private String posId;
-
 	private boolean lateCheckInd;
-	private int other;
+	private int specialCondition;
 	private boolean noAddFees;
-	private boolean formNoAddFees;
+	private int other;
+	private Timestamp inventoryDate;
 	private double weight;
-
+	private Set<OHD_Inventory> items;
+	private Set<Remark> remarks;
+	private Set<OHD_Passenger> passengers;
+	private Set<OHD_Photo> photos;
+	private Set<Task> tasks;
+	private Set<ControlLog> controlLog;
+	private Set<OHD_Itinerary> itinerary;
 	private BagTagExpediteTagMapping bagTagExpediteTagMapping;
+	private boolean formNoAddFees;
 
-	@Transient
-	public String getDisplaydate() {
-		Date completedate = GenericDateUtils.convertToDate(this.getFounddate().toString() + " "
-				+ this.getFoundtime().toString(), GenericConstants.DB_DATETIMEFORMAT, null);
-		return GenericDateUtils.formatDate(completedate, _DATEFORMAT + " " + _TIMEFORMAT, null, _TIMEZONE);
+
+	@Id
+	@Column(name = "ohd_id")
+	public String getId() {
+		return id;
 	}
 
-	@Transient
-	public Date getFullFoundDate() {
-		return GenericDateUtils.convertToDate(getFounddate().toString() + " " + getFoundtime().toString(), GenericConstants.DB_DATETIMEFORMAT,
-				null);
+	public void setId(String id) {
+		this.id = id;
 	}
 
-
-	public int getOhd_type() {
-		return ohd_type;
+	@ManyToOne
+	@JoinColumn(name="found_station_id")
+	public Station getFoundAtStation() {
+		return foundAtStation;
 	}
 
-	public void setOhd_type(int ohd_type) {
-		this.ohd_type = ohd_type;
+	public void setFoundAtStation(Station foundAtStation) {
+		this.foundAtStation = foundAtStation;
 	}
 
-	@Temporal(value = TemporalType.DATE)
-	public Date getBagarrivedate() {
-		return bagarrivedate;
+	@ManyToOne
+	@JoinColumn(name="holding_station_id")
+	public Station getHoldingStation() {
+		return holdingStation;
 	}
 
-	public void setBagarrivedate(Date bagarrivedate) {
-		this.bagarrivedate = bagarrivedate;
-	}
-
-	@Temporal(value = TemporalType.TIMESTAMP)
-	public Date getInventoryDate() {
-		return inventoryDate;
-	}
-
-	public void setInventoryDate(Date inventoryDate) {
-		this.inventoryDate = inventoryDate;
-	}
-
-	@Transient
-	public String getDispInventoryDate() {
-		return GenericDateUtils.formatDate(this.getInventoryDate(), _DATEFORMAT + " " + _TIMEFORMAT, null, _TIMEZONE);
-	}
-
-	@Temporal(value = TemporalType.DATE)
-	public Date getWarehouseSentDate() {
-		return warehouseSentDate;
-	}
-
-	public void setWarehouseSentDate(Date warehouseSentDate) {
-		this.warehouseSentDate = warehouseSentDate;
-	}
-
-	@Temporal(value = TemporalType.DATE)
-	public Date getWarehouseReceivedDate() {
-		return warehouseReceivedDate;
-	}
-
-	public void setWarehouseReceivedDate(Date warehouseReceivedDate) {
-		this.warehouseReceivedDate = warehouseReceivedDate;
-	}
-
-	@Temporal(value = TemporalType.TIMESTAMP)
-	public Date getLastupdated() {
-		return lastupdated;
-	}
-
-	public void setLastupdated(Date lastupdated) {
-		this.lastupdated = lastupdated;
-	}
-
-
-	@Fetch(FetchMode.SELECT)
-	@org.hibernate.annotations.OrderBy(clause="itinerarytype,itinerary_ID")
-	@OneToMany(mappedBy="ohd", cascade=CascadeType.ALL, fetch=FetchType.EAGER)
-	public Set<OHD_Itinerary> getItinerary() {
-		return itinerary;
-	}
-
-	public void setItinerary(Set<OHD_Itinerary> itinerary) {
-		this.itinerary = itinerary;
+	public void setHoldingStation(Station holdingStation) {
+		this.holdingStation = holdingStation;
 	}
 
 	@ManyToOne(cascade=CascadeType.ALL)
-	@JoinColumn(name="membership_ID")
+	@JoinColumn(name="membership_id")
 	public AirlineMembership getMembership() {
 		return membership;
 	}
@@ -247,6 +139,7 @@ public class OHD implements Serializable {
 		this.membership = membership;
 	}
 
+	@Column(name = "record_locator")
 	public String getRecord_locator() {
 		return record_locator;
 	}
@@ -255,20 +148,8 @@ public class OHD implements Serializable {
 		this.record_locator = record_locator;
 	}
 
-	@Fetch(FetchMode.SELECT)
-	@org.hibernate.annotations.OrderBy(clause="due_date_time")
-	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
-	@JoinColumn(name="file_ref_number")
-	public Set<Task> getTasks() {
-		return tasks;
-	}
-
-	public void setTasks(Set<Task> tasks) {
-		this.tasks = tasks;
-	}
-
 	@ManyToOne
-	@JoinColumn(name="agent_ID")
+	@JoinColumn(name="agent_id")
 	public Agent getAgent() {
 		return agent;
 	}
@@ -277,7 +158,27 @@ public class OHD implements Serializable {
 		this.agent = agent;
 	}
 
-	@Column(length = 13)
+	@Column(name = "founddate", nullable = false)
+	@Temporal(value = TemporalType.DATE)
+	public Date getFounddate() {
+		return founddate;
+	}
+
+	public void setFounddate(Date founddate) {
+		this.founddate = founddate;
+	}
+
+	@Column(name = "foundtime", nullable = false)
+	@Temporal(value = TemporalType.TIME)
+	public Time getFoundtime() {
+		return foundtime;
+	}
+
+	public void setFoundtime(Time foundtime) {
+		this.foundtime = foundtime;
+	}
+
+	@Column(name = "claimnum")
 	public String getClaimnum() {
 		return claimnum;
 	}
@@ -288,56 +189,119 @@ public class OHD implements Serializable {
 		this.claimnum = claimnum;
 	}
 
-	@Column(length = 1)
-	public String getClaimchecknum_leading() {
-		return claimchecknum_leading;
-	}
-
-	public void setClaimchecknum_leading(String claimchecknum_leading) {
-		this.claimchecknum_leading = claimchecknum_leading;
-	}
-
-	@Column(length = 50)
-	public String getExternaldesc() {
-		return externaldesc;
-	}
-
-	public void setExternaldesc(String externaldesc) {
-		this.externaldesc = externaldesc;
-	}
-
-	@Column(length = 1)
-	public String getClaimchecknum_ticketingcode() {
-		return claimchecknum_ticketingcode;
-	}
-
-	public void setClaimchecknum_ticketingcode(String claimchecknum_ticketingcode) {
-		this.claimchecknum_ticketingcode = claimchecknum_ticketingcode;
-	}
-
-	@Column(length = 2)
-	public String getClaimchecknum_carriercode() {
-		return claimchecknum_carriercode;
-	}
-
-	public void setClaimchecknum_carriercode(String claimchecknum_carriercode) {
-		this.claimchecknum_carriercode = claimchecknum_carriercode;
-	}
-
-	@Column(length = 6)
-	public String getClaimchecknum_bagnumber() {
-		return claimchecknum_bagnumber;
-	}
-
-	public void setClaimchecknum_bagnumber(String claimchecknum_bagnumber) {
-		this.claimchecknum_bagnumber = claimchecknum_bagnumber;
-	}
-
-	@Column(length = 2)
+	@Column(name = "color")
 	public String getColor() {
 		return color;
 	}
 
+	public void setColor(String color) {
+		this.color = color;
+	}
+
+	@Column(name = "bagarrivedate")
+	@Temporal(value = TemporalType.DATE)
+	public Date getBagarrivedate() {
+		return bagarrivedate;
+	}
+
+	public void setBagarrivedate(Date bagarrivedate) {
+		this.bagarrivedate = bagarrivedate;
+	}
+
+	@Column(name = "type")
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
+	@Column(name = "xdescelement_ID_1")
+	public int getXdescelement_ID_1() {
+		return xdescelement_ID_1;
+	}
+
+	public void setXdescelement_ID_1(int xdescelement_ID_1) {
+		this.xdescelement_ID_1 = xdescelement_ID_1;
+	}
+
+	@Column(name = "xdescelement_ID_2")
+	public int getXdescelement_ID_2() {
+		return xdescelement_ID_2;
+	}
+
+	public void setXdescelement_ID_2(int xdescelement_ID_2) {
+		this.xdescelement_ID_2 = xdescelement_ID_2;
+	}
+
+	@Column(name = "xdescelement_ID_3")
+	public int getXdescelement_ID_3() {
+		return xdescelement_ID_3;
+	}
+
+	public void setXdescelement_ID_3(int xdescelement_ID_3) {
+		this.xdescelement_ID_3 = xdescelement_ID_3;
+	}
+
+	@Column(name = "manufacturer_id")
+	public int getManufacturer_ID() {
+		return manufacturer_ID;
+	}
+
+	public void setManufacturer_ID(int manufacturer_ID) {
+		this.manufacturer_ID = manufacturer_ID;
+	}
+
+	@Column(name = "manufacturer_other")
+	public String getManufacturer_other() {
+		return manufacturer_other;
+	}
+
+	public void setManufacturer_other(String manufacturer_other) {
+		this.manufacturer_other = manufacturer_other;
+	}
+
+	@Column(name = "storage_location")
+	public String getStorage_location() {
+		return storage_location;
+	}
+
+	public void setStorage_location(String storage_location) {
+		this.storage_location = storage_location;
+	}
+
+	@Column(name = "close_date")
+	@Temporal(value = TemporalType.TIMESTAMP)
+	public Timestamp getClose_date() {
+		return close_date;
+	}
+
+	public void setClose_date(Timestamp close_date) {
+		this.close_date = close_date;
+	}
+
+	@Column(name = "lastupdated", insertable = false, updatable = false)
+	@Temporal(value = TemporalType.TIMESTAMP)
+	public Timestamp getLastupdated() {
+		return lastupdated;
+	}
+
+	public void setLastupdated(Timestamp lastupdated) {
+		this.lastupdated = lastupdated;
+	}
+
+	@ManyToOne
+	@JoinColumn(name="status_id")
+	public Status getStatus() {
+		return status;
+	}
+
+	public void setStatus(Status status) {
+		this.status = status;
+	}
+
+	@Column(name = "firstname")
 	public String getFirstname() {
 		return firstname;
 	}
@@ -346,6 +310,7 @@ public class OHD implements Serializable {
 		this.firstname = firstname;
 	}
 
+	@Column(name = "lastname")
 	public String getLastname() {
 		return lastname;
 	}
@@ -354,6 +319,7 @@ public class OHD implements Serializable {
 		this.lastname = lastname;
 	}
 
+	@Column(name = "middlename")
 	public String getMiddlename() {
 		return middlename;
 	}
@@ -362,50 +328,13 @@ public class OHD implements Serializable {
 		this.middlename = middlename;
 	}
 
-	public void setColor(String color) {
-		this.color = color;
+	@Column(name = "ohd_type")
+	public int getOhd_type() {
+		return ohd_type;
 	}
 
-	@Fetch(FetchMode.SELECT)
-	@org.hibernate.annotations.OrderBy(clause="OHD_Inventory_ID")
-	@OneToMany(mappedBy="ohd", cascade=CascadeType.ALL, fetch=FetchType.EAGER)
-	public Set<OHD_Inventory> getItems() {
-		return items;
-	}
-
-	public void setItems(Set<OHD_Inventory> items) {
-		this.items = items;
-	}
-
-	@Id
-	public String getOHD_ID() {
-		return OHD_ID;
-	}
-
-	public void setOHD_ID(String ohd_id) {
-		OHD_ID = ohd_id;
-	}
-
-	@Fetch(FetchMode.SELECT)
-	@org.hibernate.annotations.OrderBy(clause="createtime")
-	@OneToMany(mappedBy="ohd", cascade=CascadeType.ALL, fetch=FetchType.EAGER)
-	public Set<Remark> getRemarks() {
-		return remarks;
-	}
-
-	public void setRemarks(Set<Remark> remarks) {
-		this.remarks = remarks;
-	}
-
-	@ManyToOne
-	@JoinColumn(name="status_ID")
-	public Status getStatus() {
-		return status;
-	}
-
-
-	public void setStatus(Status status) {
-		this.status = status;
+	public void setOhd_type(int ohd_type) {
+		this.ohd_type = ohd_type;
 	}
 
 	@ManyToOne
@@ -418,53 +347,322 @@ public class OHD implements Serializable {
 		this.disposal_status = disposal_status;
 	}
 
-
-	public String getType() {
-		return type;
+	@Embedded
+	public WorldTracerFile getWtFile() {
+		return wtFile;
 	}
 
-	public void setType(String type) {
-		this.type = type;
+	public void setWtFile(WorldTracerFile wtFile) {
+		this.wtFile = wtFile;
 	}
 
-	public int getManufacturer_ID() {
-		return manufacturer_ID;
+	@Column(name="faultstation_id")
+	public int getFaultstation_ID() {
+		return faultStation;
 	}
 
-	public void setManufacturer_ID(int manufacturer_ID) {
-		this.manufacturer_ID = manufacturer_ID;
+	public void setFaultstation_ID(int faultStation) {
+		this.faultStation = faultStation;
 	}
 
-	public String getManufacturer_other() {
-		return manufacturer_other;
+	@Column(name = "loss_code")
+	public int getLoss_code() {
+		return loss_code;
 	}
 
-	public void setManufacturer_other(String manufacturer_other) {
-		this.manufacturer_other = manufacturer_other;
+	public void setLoss_code(int loss_code) {
+		this.loss_code = loss_code;
 	}
 
-	public int getXdescelement_ID_1() {
-		return xdescelement_ID_1;
+	@Column(name = "earlybag")
+	public boolean isEarlyBag() {
+		return earlyBag;
 	}
 
-	public void setXdescelement_ID_1(int xdescelement_ID_1) {
-		this.xdescelement_ID_1 = xdescelement_ID_1;
+	public void setEarlyBag(boolean earlyBag) {
+		this.earlyBag = earlyBag;
 	}
 
-	public int getXdescelement_ID_2() {
-		return xdescelement_ID_2;
+	@Column(name = "matched_incident")
+	public String getMatched_incident() {
+		return matched_incident;
 	}
 
-	public void setXdescelement_ID_2(int xdescelement_ID_2) {
-		this.xdescelement_ID_2 = xdescelement_ID_2;
+	public void setMatched_incident(String matchedIncident) {
+		this.matched_incident = matchedIncident;
 	}
 
-	public int getXdescelement_ID_3() {
-		return xdescelement_ID_3;
+	@Column(name = "tagSentToWt")
+	public boolean isTagSentToWt() {
+		return tagSentToWt;
 	}
 
-	public void setXdescelement_ID_3(int xdescelement_ID_3) {
-		this.xdescelement_ID_3 = xdescelement_ID_3;
+	public void setTagSentToWt(boolean tagSentToWt) {
+		this.tagSentToWt = tagSentToWt;
+	}
+
+	@Column(name = "tagsenttowtstationid")
+	public int getTagSentToWtStationId() {
+		return tagSentToWtStationId;
+	}
+
+	public void setTagSentToWtStationId(int tagSentToWtStationId) {
+		this.tagSentToWtStationId = tagSentToWtStationId;
+	}
+
+	@Column(name = "claimchecknum_leading")
+	public String getClaimchecknum_leading() {
+		return claimchecknum_leading;
+	}
+
+	public void setClaimchecknum_leading(String claimchecknum_leading) {
+		this.claimchecknum_leading = claimchecknum_leading;
+	}
+
+	@Column(name = "claimchecknum_ticketingcode")
+	public String getClaimchecknum_ticketingcode() {
+		return claimchecknum_ticketingcode;
+	}
+
+	public void setClaimchecknum_ticketingcode(String claimchecknum_ticketingcode) {
+		this.claimchecknum_ticketingcode = claimchecknum_ticketingcode;
+	}
+
+	@Column(name = "claimchecknum_carriercode")
+	public String getClaimchecknum_carriercode() {
+		return claimchecknum_carriercode;
+	}
+
+	public void setClaimchecknum_carriercode(String claimchecknum_carriercode) {
+		this.claimchecknum_carriercode = claimchecknum_carriercode;
+	}
+
+	@Column(name = "claimchecknum_bagnumber")
+	public String getClaimchecknum_bagnumber() {
+		return claimchecknum_bagnumber;
+	}
+
+	public void setClaimchecknum_bagnumber(String claimchecknum_bagnumber) {
+		this.claimchecknum_bagnumber = claimchecknum_bagnumber;
+	}
+
+	@Column(name = "warehouseReceivedDate")
+	@Temporal(value = TemporalType.TIMESTAMP)
+	public Timestamp getWarehouseReceivedDate() {
+		return warehouseReceivedDate;
+	}
+
+	public void setWarehouseReceivedDate(Timestamp warehouseReceivedDate) {
+		this.warehouseReceivedDate = warehouseReceivedDate;
+	}
+
+	@Temporal(value = TemporalType.TIMESTAMP)
+	public Timestamp getWarehouseSentDate() {
+		return warehouseSentDate;
+	}
+
+	public void setWarehouseSentDate(Timestamp warehouseSentDate) {
+		this.warehouseSentDate = warehouseSentDate;
+	}
+
+	@Column(name = "externaldesc")
+	public String getExternaldesc() {
+		return externaldesc;
+	}
+
+	public void setExternaldesc(String externaldesc) {
+		this.externaldesc = externaldesc;
+	}
+
+	@Column(name = "creationmethod")
+	public int getCreationMethod() {
+		return creationMethod;
+	}
+
+	public void setCreationMethod(int creationMethod) {
+		this.creationMethod = creationMethod;
+	}
+
+	@Column(name = "modifiedby")
+	public String getModifiedBy() {
+		return modifiedBy;
+	}
+
+	public void setModifiedBy(String modifiedBy) {
+		this.modifiedBy = modifiedBy;
+	}
+
+	@Column(name = "modifieddate")
+	@Temporal(value = TemporalType.TIMESTAMP)
+	public Timestamp getModifiedDate() {
+		return modifiedDate;
+	}
+
+	public void setModifiedDate(Timestamp modifiedDate) {
+		this.modifiedDate = modifiedDate;
+	}
+
+	@Column(name = "posId")
+	public String getPosId() {
+		return posId;
+	}
+
+	public void setPosId(String posId) {
+		this.posId = posId;
+	}
+
+	@Column(name = "latecheckind")
+	public boolean getLateCheckInd() {
+		return lateCheckInd;
+	}
+
+	public void setLateCheckInd(boolean lateCheckInd) {
+		this.lateCheckInd = lateCheckInd;
+	}
+
+	@Column(name = "specialcondition")
+	public int getSpecialCondition() {
+		return specialCondition;
+	}
+
+	public void setSpecialCondition(int specialCondition) {
+		this.specialCondition = specialCondition;
+	}
+
+	@Column(name = "noaddfees")
+	public boolean isNoAddFees() {
+		return noAddFees;
+	}
+
+	public void setNoAddFees(boolean noAddFees) {
+		this.noAddFees = noAddFees;
+	}
+
+	@Column(name = "other")
+	public int getOther() {
+		return other;
+	}
+
+	public void setOther(int other) {
+		this.other = other;
+	}
+
+	@Temporal(value = TemporalType.TIMESTAMP)
+	public Timestamp getInventoryDate() {
+		return inventoryDate;
+	}
+
+	public void setInventoryDate(Timestamp inventoryDate) {
+		this.inventoryDate = inventoryDate;
+	}
+
+	@Column(name = "weight")
+	public double getWeight() {
+		return weight;
+	}
+
+	public void setWeight(double weight) {
+		this.weight = weight;
+	}
+
+	@OrderBy(clause="ohd_inventory_id")
+	@OneToMany(mappedBy="ohd", cascade=CascadeType.ALL)
+	public Set<OHD_Inventory> getItems() {
+		return items;
+	}
+
+	public void setItems(Set<OHD_Inventory> items) {
+		this.items = items;
+	}
+
+	@OrderBy(clause="createtime")
+	@OneToMany(mappedBy="ohd", cascade=CascadeType.ALL)
+	public Set<Remark> getRemarks() {
+		return remarks;
+	}
+
+	public void setRemarks(Set<Remark> remarks) {
+		this.remarks = remarks;
+	}
+
+	@OneToMany(mappedBy="ohd", cascade=CascadeType.ALL)
+	public Set<OHD_Passenger> getPassengers() {
+		if (passengers == null || passengers.size() == 0) {
+			return passengers;
+		}
+		TreeSet<OHD_Passenger> sorted = new TreeSet<>(new OnHandPassengerIdComparator());
+		sorted.addAll(passengers);
+		return sorted;
+	}
+
+	public void setPassengers(Set<OHD_Passenger> passengers) {
+		this.passengers = passengers;
+	}
+
+	@OrderBy(clause="Photo_ID")
+	@OneToMany(mappedBy="ohd", cascade=CascadeType.ALL)
+	public Set<OHD_Photo> getPhotos() {
+		return photos;
+	}
+
+	public void setPhotos(Set<OHD_Photo> photos) {
+		this.photos = photos;
+	}
+
+	@OrderBy(clause="due_date_time")
+	@OneToMany(cascade=CascadeType.ALL)
+	@JoinColumn(name="file_ref_number")
+	public Set<Task> getTasks() {
+		return tasks;
+	}
+
+	public void setTasks(Set<Task> tasks) {
+		this.tasks = tasks;
+	}
+
+	@OrderBy(clause="control_id")
+	@OneToMany(mappedBy="ohd", cascade=CascadeType.ALL)
+	public Set<ControlLog> getControlLog() {
+		return controlLog;
+	}
+
+	public void setControlLog(Set<ControlLog> controlLog) {
+		this.controlLog = controlLog;
+	}
+
+	@OrderBy(clause="itinerarytype,itinerary_id")
+	@OneToMany(mappedBy="ohd", cascade=CascadeType.ALL)
+	public Set<OHD_Itinerary> getItinerary() {
+		return itinerary;
+	}
+
+	public void setItinerary(Set<OHD_Itinerary> itinerary) {
+		this.itinerary = itinerary;
+	}
+
+
+	@OneToOne(mappedBy = "ohd", cascade = CascadeType.ALL)
+	public BagTagExpediteTagMapping getBagTagExpediteTagMapping() {
+		return bagTagExpediteTagMapping;
+	}
+
+	public void setBagTagExpediteTagMapping(BagTagExpediteTagMapping bagTagExpediteTagMapping) {
+		this.bagTagExpediteTagMapping = bagTagExpediteTagMapping;
+	}
+
+	@Transient
+	public boolean isFormNoAddFees() {
+		return formNoAddFees;
+	}
+
+	public void setFormNoAddFees(boolean formNoAddFees) {
+		this.formNoAddFees = formNoAddFees;
+	}
+
+	@Transient
+	public Date getFullFoundDate() {
+		return GenericDateUtils.convertToDate(getFounddate().toString() + " " + getFoundtime().toString(), GenericConstants.DB_DATETIMEFORMAT,
+				null);
 	}
 
 	@Transient
@@ -480,88 +678,10 @@ public class OHD implements Serializable {
 		}
 	}
 
-	@ManyToOne
-	@JoinColumn(name="found_station_ID")
-	public Station getFoundAtStation() {
-		return foundAtStation;
-	}
-
-	public void setFoundAtStation(Station foundAtStation) {
-		this.foundAtStation = foundAtStation;
-	}
-
-	@Temporal(value = TemporalType.TIME)
-	public Date getFoundtime() {
-		return foundtime;
-	}
-
-	public void setFoundtime(Date foundtime) {
-		this.foundtime = foundtime;
-	}
-
 	class OnHandPassengerIdComparator implements Comparator<OHD_Passenger> {
 		public int compare(OHD_Passenger p1, OHD_Passenger p2) {
 			return Long.compare(p1.getSortId(), p2.getSortId());
 		}
-	}
-
-	@Fetch(FetchMode.SELECT)
-//	@org.hibernate.annotations.OrderBy(clause="passenger_id")
-	@OneToMany(mappedBy="ohd", cascade=CascadeType.ALL, fetch=FetchType.EAGER)
-	public Set<OHD_Passenger> getPassengers() {
-		if (passengers == null || passengers.size() == 0) {
-			return passengers;
-		}
-
-		TreeSet<OHD_Passenger> sorted = new TreeSet<OHD_Passenger>(new OnHandPassengerIdComparator());
-		sorted.addAll(passengers);
-		return sorted;
-	}
-
-	public void setPassengers(Set<OHD_Passenger> passengers) {
-		this.passengers = passengers;
-	}
-
-
-	@Fetch(FetchMode.SELECT)
-	@org.hibernate.annotations.OrderBy(clause="Photo_ID")
-	@OneToMany(mappedBy="ohd", cascade=CascadeType.ALL, fetch=FetchType.EAGER)
-	public Set<OHD_Photo> getPhotos() {
-		return photos;
-	}
-
-	public void setPhotos(Set<OHD_Photo> photos) {
-		this.photos = photos;
-	}
-
-	@Fetch(FetchMode.SELECT)
-	@org.hibernate.annotations.OrderBy(clause="control_id")
-	@OneToMany(mappedBy="ohd", cascade=CascadeType.ALL, fetch=FetchType.EAGER)
-	public Set<ControlLog> getControlLog() {
-		return controlLog;
-	}
-
-	public void setControlLog(Set<ControlLog> controlLog) {
-		this.controlLog = controlLog;
-	}
-
-	@ManyToOne
-	@JoinColumn(name="holding_station_ID")
-	public Station getHoldingStation() {
-		return holdingStation;
-	}
-
-	public void setHoldingStation(Station holdingStation) {
-		this.holdingStation = holdingStation;
-	}
-
-	@Temporal(value = TemporalType.DATE)
-	public Date getFounddate() {
-		return founddate;
-	}
-
-	public void setFounddate(Date founddate) {
-		this.founddate = founddate;
 	}
 
 	@Transient
@@ -576,89 +696,11 @@ public class OHD implements Serializable {
 	}
 
 	@Transient
-	public String get_DATEFORMAT() {
-		return _DATEFORMAT;
-	}
-
-	public void set_DATEFORMAT(String _dateformat) {
-		_DATEFORMAT = _dateformat;
-	}
-
-	@Transient
-	public String get_TIMEFORMAT() {
-		return _TIMEFORMAT;
-	}
-
-	public void set_TIMEFORMAT(String _timeformat) {
-		_TIMEFORMAT = _timeformat;
-	}
-
-	@Transient
-	public TimeZone get_TIMEZONE() {
-		return _TIMEZONE;
-	}
-
-	public void set_TIMEZONE(TimeZone _timezone) {
-		_TIMEZONE = _timezone;
-	}
-
-	public String getStorage_location() {
-		return storage_location;
-	}
-
-	public void setStorage_location(String storage_location) {
-		this.storage_location = storage_location;
-	}
-
-	@Temporal(value = TemporalType.TIMESTAMP)
-	public Date getClose_date() {
-		return close_date;
-	}
-
-	public void setClose_date(Date close_date) {
-		this.close_date = close_date;
-	}
-
-	@Embedded
-	public WorldTracerFile getWtFile() {
-		return wtFile;
-	}
-
-	public void setWtFile(WorldTracerFile wtFile) {
-		this.wtFile = wtFile;
-	}
-
-	@Transient
 	public String getWt_id() {
 		if(wtFile != null) {
 			return wtFile.getWt_id();
 		}
 		return null;
-	}
-
-	@Column(name="faultstation_ID")
-	public int getFaultstation_ID() {
-		return faultStation;
-	}
-
-	public void setFaultstation_ID(int faultStation) {
-		this.faultStation = faultStation;
-	}
-
-	public int getLoss_code() {
-		return loss_code;
-	}
-
-	public void setLoss_code(int loss_code) {
-		this.loss_code = loss_code;
-	}
-
-	public boolean isEarlyBag() {
-		return earlyBag;
-	}
-
-	public void setEarlyBag(boolean earlyBag) {
-		this.earlyBag = earlyBag;
 	}
 
 
@@ -668,72 +710,6 @@ public class OHD implements Serializable {
 		else return val + " ";
 	}
 
-	@Column(length = 13)
-	public String getMatched_incident() {
-		return matched_incident;
-	}
-
-	public void setMatched_incident(String matchedIncident) {
-		this.matched_incident = matchedIncident;
-	}
-
-	public boolean isTagSentToWt() {
-  	return tagSentToWt;
-  }
-
-	public void setTagSentToWt(boolean tagSentToWt) {
-  	this.tagSentToWt = tagSentToWt;
-  }
-
-	public int getTagSentToWtStationId() {
-  	return tagSentToWtStationId;
-  }
-
-	public void setTagSentToWtStationId(int tagSentToWtStationId) {
-  	this.tagSentToWtStationId = tagSentToWtStationId;
-  }
-
-	public int getCreationMethod() {
-		return creationMethod;
-	}
-
-	public void setCreationMethod(int creationMethod) {
-		this.creationMethod = creationMethod;
-	}
-
-	public String getModifiedBy() {
-		return modifiedBy;
-	}
-
-	public void setModifiedBy(String modifiedBy) {
-		this.modifiedBy = modifiedBy;
-	}
-
-	@Temporal(value = TemporalType.TIMESTAMP)
-	public Date getModifiedDate() {
-		return modifiedDate;
-	}
-
-	public void setModifiedDate(Date modifiedDate) {
-		this.modifiedDate = modifiedDate;
-	}
-
-	@Column(length = 32)
-	public String getPosId() {
-		return posId;
-	}
-
-	public void setPosId(String posId) {
-		this.posId = posId;
-	}
-
-	public boolean getLateCheckInd() {
-		return lateCheckInd;
-	}
-
-	public void setLateCheckInd(boolean lateCheckInd) {
-		this.lateCheckInd = lateCheckInd;
-	}
 
 	@Transient
 	public String getDispDestination() {
@@ -741,68 +717,6 @@ public class OHD implements Serializable {
 		Object[] items = itinerary.toArray();
 		OHD_Itinerary itinerary = (OHD_Itinerary) items[items.length - 1];
 		return itinerary.getLegto() != null ? itinerary.getLegto() : "";
-	}
-
-	@Transient
-	public String getDispModifiedDate() {
-		String modDate = GenericDateUtils.formatDate(this.getModifiedDate(), _DATEFORMAT + " " + _TIMEFORMAT, null, _TIMEZONE);
-		return modDate != null ? modDate.substring(0, modDate.lastIndexOf(' ')) : "";
-	}
-
-	@Transient
-	public String getDispModifiedTime() {
-		String modTime = GenericDateUtils.formatDate(this.getModifiedDate(), _DATEFORMAT + " " + _TIMEFORMAT, null, _TIMEZONE);
-		return modTime != null ? modTime.substring(modTime.lastIndexOf(' '), modTime.length()) : "";
-	}
-
-	public int getOther() {
-		return other;
-	}
-
-	public void setOther(int other) {
-		this.other = other;
-	}
-
-	public boolean isNoAddFees() {
-		return noAddFees;
-	}
-
-	public void setNoAddFees(boolean noAddFees) {
-		this.noAddFees = noAddFees;
-	}
-
-	@Transient
-	public boolean isFormNoAddFees() {
-		return formNoAddFees;
-	}
-
-	public void setFormNoAddFees(boolean formNoAddFees) {
-		this.formNoAddFees = formNoAddFees;
-	}
-
-	public int getSpecialCondition() {
-		return specialCondition;
-	}
-
-	public void setSpecialCondition(int specialCondition) {
-		this.specialCondition = specialCondition;
-	}
-
-	public double getWeight() {
-		return weight;
-	}
-
-	public void setWeight(double weight) {
-		this.weight = weight;
-	}
-
-	@OneToOne(mappedBy = "ohd", cascade = CascadeType.ALL)
-	public BagTagExpediteTagMapping getBagTagExpediteTagMapping() {
-		return bagTagExpediteTagMapping;
-	}
-
-	public void setBagTagExpediteTagMapping(BagTagExpediteTagMapping bagTagExpediteTagMapping) {
-		this.bagTagExpediteTagMapping = bagTagExpediteTagMapping;
 	}
 
 	@Transient
@@ -837,7 +751,7 @@ public class OHD implements Serializable {
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
 		builder.append("OHD [OHD_ID=");
-		builder.append(OHD_ID);
+		builder.append(id);
 		builder.append(", foundAtStation=");
 		builder.append(foundAtStation);
 		builder.append(", holdingStation=");
@@ -926,12 +840,6 @@ public class OHD implements Serializable {
 		builder.append(lastupdated);
 		builder.append(", wtFile=");
 		builder.append(wtFile);
-		builder.append(", _DATEFORMAT=");
-		builder.append(_DATEFORMAT);
-		builder.append(", _TIMEFORMAT=");
-		builder.append(_TIMEFORMAT);
-		builder.append(", _TIMEZONE=");
-		builder.append(_TIMEZONE);
 		builder.append(", faultStation=");
 		builder.append(faultStation);
 		builder.append(", loss_code=");
@@ -1002,58 +910,6 @@ public class OHD implements Serializable {
 
 	public void setTagSentToWtStationCompanyCode(int tagSentToWtStationId) {
 		//do nothing
-	}
-	
-	/**
-	 * If the founddate and foundtime attributes are not null, returns the combined date and time elements of the respective attributes into a
-	 * single Date object.  
-	 * 
-	 * This method is marked as Deprecated and is only intended to be used by Dozer currently defined in the mapping ntcore/src/main/resources/dozer/dozerBeanMappingOnHand.xml
-	 * for the following reason:
-	 * 
-	 * Since the foundtime by default is stored into database using the GMT time generated by com.bagnet.nettracer.tracing.utils.DateUtils.  However, the manner of which
-	 * com.bagnet.nettracer.tracing.utils.DateUtils converts to GMT involves changing the Date itself by applying local timezone offset.  This is incorrect, however,
-	 * since the legacy code and all legacy data is currently storing the time in the manner, retrieving the date we must use DateUtils.convertGMTDateToLocalTime to reverse the
-	 * change done by the conversation to GMT.  To properly fix this issue will require extensive refactoring of our legacy code, however, this method was implement during a 
-	 * code freeze period to fix a specific problem with a Dozer mapper.
-	 * 
-	 * @return
-	 */
-	@Transient
-	@Deprecated
-	public Date getFullFoundDateTime(){
-		if(founddate != null && foundtime != null){
-			return GenericDateUtils.convertGMTDateToLocalTime(GenericDateUtils.combineDateTime(founddate, foundtime));
-		} else {
-			return null;
-		}
-	}
-	
-	/**
-	 * Sets the provide Date object to the founddate and foundtime attributes.
-	 * 
-	 * This method is marked as Deprecated and is only intended to be used by Dozer currently defined in the mapping ntcore/src/main/resources/dozer/dozerBeanMappingOnHand.xml
-	 * for the following reason:
-	 * 
-	 * Since the foundtime by default is stored into database using the GMT time generated by com.bagnet.nettracer.tracing.utils.DateUtils.  However, the manner of which
-	 * com.bagnet.nettracer.tracing.utils.DateUtils converts to GMT involves changing the Date itself by applying local timezone offset.  This is incorrect, however,
-	 * since the legacy code and all legacy data is currently storing the time in the manner, this method will also use com.bagnet.nettracer.tracing.utils.DateUtils.convertToGMTDate
-	 * Otherwise the DateTime that is set from dozerBeanMappingOnHand.xml will be persisted in an inconsistant manner as compared to the rest of the application.  
-	 * To properly fix this issue will require extensive refactoring of our legacy code, however, this method was implement during a 
-	 * code freeze period to fix a specific problem with a Dozer mapper.
-	 * 
-	 * @param dateTime
-	 */
-	@Transient
-	@Deprecated
-	public void setFullFoundDateTime(Date dateTime){
-		if(dateTime != null){
-			founddate = GenericDateUtils.convertToGMTDate(dateTime);
-			foundtime = GenericDateUtils.convertToGMTDate(dateTime);
-		} else {
-			founddate = null;
-			foundtime = null;
-		}
 	}
 
 }

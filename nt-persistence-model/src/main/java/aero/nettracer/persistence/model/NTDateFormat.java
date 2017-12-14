@@ -1,29 +1,30 @@
 package aero.nettracer.persistence.model;
 
-import java.io.Serializable;
-
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import org.hibernate.annotations.Proxy;
 
 @Entity
 @Table(name = "dateformat")
-public class NTDateFormat implements Serializable {
-	private int dateFormatId;
+public class NTDateFormat {
+
+	private int id;
 	private String format;
 
 	@Id
 	@GeneratedValue
-	public int getDateformat_ID() {
-		return Dateformat_ID;
+	@Column(name = "dateformat_id")
+	public int getId() {
+		return id;
 	}
 
-	public void setDateformat_ID(int dateformat_ID) {
-		Dateformat_ID = dateformat_ID;
+	public void setId(int id) {
+		this.id = id;
 	}
 
+	@Column(name = "format")
 	public String getFormat() {
 		return format;
 	}

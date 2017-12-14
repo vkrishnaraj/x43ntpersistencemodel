@@ -7,28 +7,26 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import org.hibernate.annotations.Proxy;
 
 @Entity
 @Table(name = "timeformat")
 public class NTTimeFormat implements Serializable {
-	private int timeFormatId;
+
+	private int id;
 	private String format;
 
 	@Id
 	@GeneratedValue
-	@Column(name = "timeformat_id", length = 11)
-	public int getTimeFormatId() {
-		return timeFormatId;
+	@Column(name = "timeformat_id")
+	public int getId() {
+		return id;
 	}
 
-	public void setTimeFormatId(int timeFormatId) {
-		this.timeFormatId = timeFormatId;
+	public void setId(int id) {
+		this.id = id;
 	}
 
-
-
-
+	@Column(name = "format")
 	public String getFormat() {
 		return format;
 	}

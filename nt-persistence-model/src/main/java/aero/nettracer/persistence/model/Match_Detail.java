@@ -1,8 +1,7 @@
 package aero.nettracer.persistence.model;
 
-import java.io.Serializable;
-
 import aero.nettracer.commons.utils.CommonsUtils;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -10,41 +9,28 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
-import org.hibernate.annotations.Proxy;
 
 @Entity
-@Table(name = "Match_Detail")
-public class Match_Detail implements Serializable {
+@Table(name = "match_detail")
+public class Match_Detail {
 
-	private int Matchdetail_ID;
+	private int id;
+	private Match match;
 	private String item;
 	private String mbr_info;
 	private String ohd_info;
 	private double percentage;
-	
-	private Match match;
 
-	@Transient
-	public String getReportPercentage() {
-		return "" + percentage;
-	}
-
-	public String getItem() {
-		return item;
-	}
-
-	public void setItem(String item) {
-		this.item = item;
-	}
 
 	@Id
 	@GeneratedValue
-	public int getMatchdetail_ID() {
-		return Matchdetail_ID;
+	@Column(name = "Matchdetail_ID")
+	public int getId() {
+		return id;
 	}
 
-	public void setMatchdetail_ID(int matchdetail_ID) {
-		Matchdetail_ID = matchdetail_ID;
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	@ManyToOne
@@ -56,15 +42,17 @@ public class Match_Detail implements Serializable {
 	public void setMatch(Match match) {
 		this.match = match;
 	}
-	
-	public double getPercentage() {
-		return percentage;
+
+	@Column(name = "item")
+	public String getItem() {
+		return item;
 	}
 
-	public void setPercentage(double percentage) {
-		this.percentage = percentage;
+	public void setItem(String item) {
+		this.item = item;
 	}
 
+	@Column(name = "mbr_info")
 	public String getMbr_info() {
 		return mbr_info;
 	}
@@ -73,12 +61,27 @@ public class Match_Detail implements Serializable {
 		this.mbr_info = mbr_info;
 	}
 
+	@Column(name = "ohd_info")
 	public String getOhd_info() {
 		return ohd_info;
 	}
 
 	public void setOhd_info(String ohd_info) {
 		this.ohd_info = ohd_info;
+	}
+
+	@Column(name = "percentage")
+	public double getPercentage() {
+		return percentage;
+	}
+
+	public void setPercentage(double percentage) {
+		this.percentage = percentage;
+	}
+
+	@Transient
+	public String getReportPercentage() {
+		return "" + percentage;
 	}
 
 	@Transient

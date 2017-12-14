@@ -6,4 +6,6 @@ alter table item drop column categorytype_ID;
 alter table item drop column keycontents;
 alter table item drop column oversize;
 alter table item drop column overweight;
-
+alter table ohd drop column wt_status;
+alter table ohd drop column oversize;
+alter table ohd drop column overweight;
