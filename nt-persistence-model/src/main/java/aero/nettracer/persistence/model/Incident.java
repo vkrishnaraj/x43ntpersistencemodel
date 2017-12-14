@@ -4,23 +4,16 @@
  */
 package aero.nettracer.persistence.model;
 
-import java.io.Serializable;
 import java.sql.Time;
 import java.sql.Timestamp;
-import java.text.DateFormat;
 import java.text.DecimalFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.TimeZone;
 
-import aero.nettracer.commons.constant.GenericConstants;
-import aero.nettracer.commons.utils.GenericDateUtils;
 import aero.nettracer.persistence.model.communications.IncidentActivity;
 import aero.nettracer.persistence.model.dr.Dispute;
 import aero.nettracer.persistence.model.issuance.IssuanceItemIncident;
@@ -29,7 +22,6 @@ import aero.nettracer.persistence.model.taskmanager.ThreeDayTask;
 import aero.nettracer.persistence.model.taskmanager.TwoDayTask;
 import aero.nettracer.persistence.util.ReportMethod;
 import aero.nettracer.persistence.util.TracingStatus;
-import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
@@ -41,6 +33,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.OrderColumn;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -48,7 +41,7 @@ import javax.persistence.Transient;
 import javax.persistence.Version;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
-import org.hibernate.annotations.Proxy;
+import org.hibernate.annotations.OrderBy;
 
 @Entity
 @Table(name = "incident")
@@ -111,6 +104,22 @@ public class Incident {
 	private Timestamp assignedDate;
 	private boolean prioritized;
 	private Timestamp paxPplcEnabled;
+	private CrmFile crmFile;
+	private Dispute dispute;
+	private IncidentControl incidentControl;
+	private Set<ExpensePayout> expenses;
+	private Set<Incident_Claimcheck> claimchecks;
+	private List<Item> itemlist;
+	private Set<Articles> articles;
+	private Set<Passenger> passengers;
+	private Set<Remark> remarks;
+	private Set<Itinerary> itinerary;
+	private Set<Claim> claims;
+	private List<IssuanceItemIncident> issuanceItemIncidents;
+	private Set<IncidentActivity> activities;
+	private TwoDayTask twoDayTask;
+	private ThreeDayTask threeDayTask;
+	private FourDayTask fourDayTask;
 
 	//Start
 
@@ -651,49 +660,14 @@ public class Incident {
 		this.paxPplcEnabled = paxPplcEnabled;
 	}
 
+	@OneToOne(mappedBy = "incident")
+	public CrmFile getCrmFile() {
+		return crmFile;
+	}
 
-	//End
-
-
-	private CrmFile crmFile;
-	private Set<Passenger> passengers;
-
-	private List<Item> itemlist;
-	private Set<Articles> articles;
-	private Set<Remark> remarks;
-	private Set<Itinerary> itinerary;
-
-	private Set<Claim> claims;
-
-	private Set<Incident_Claimcheck> claimchecks;
-
-	private List<Itinerary> itinerary_list; // for displaying to the search incident page
-	private List<Incident_Claimcheck> claimcheck_list; // for display to the search incident page
-	private List<Passenger> passenger_list; // for displaying to the search incident page
-
-	private String _DATEFORMAT; // current login agent's date format
-	private String _TIMEFORMAT; // current login agent's time format
-	private TimeZone _TIMEZONE;
-
-	private Set<ExpensePayout> expenses;
-	private List<ExpensePayout> expenselist;
-
-
-
-	private IncidentControl incidentControl;
-
-	private Dispute dispute;
-
-	private List<IssuanceItemIncident> issuanceItemIncidents;
-
-	private Set<IncidentActivity> activities;
-
-
-
-
-	private TwoDayTask twoDayTask;
-	private ThreeDayTask threeDayTask;
-	private FourDayTask fourDayTask;
+	public void setCrmFile(CrmFile crmFile) {
+		this.crmFile = crmFile;
+	}
 
 	@OneToOne(mappedBy = "incident")
 	public Dispute getDispute() {
@@ -713,13 +687,8 @@ public class Incident {
 		this.incidentControl = value;
 	}
 
-
-
-
-
-	@OneToMany(mappedBy = "incident", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "incident", cascade = CascadeType.ALL)
 	@org.hibernate.annotations.OrderBy(clause = "createdate")
-	@Fetch(FetchMode.SELECT)
 	public Set<ExpensePayout> getExpenses() {
 		return expenses;
 	}
@@ -727,14 +696,6 @@ public class Incident {
 	public void setExpenses(Set<ExpensePayout> expenses) {
 		this.expenses = expenses;
 	}
-
-
-
-
-
-
-
-
 
 	@OneToMany(mappedBy = "incident", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@Fetch(FetchMode.SELECT)
@@ -744,12 +705,10 @@ public class Incident {
 
 	public void setClaimchecks(Set<Incident_Claimcheck> claimchecks) {
 		this.claimchecks = claimchecks;
-
 	}
 
-	@OneToMany(mappedBy = "incident", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	@org.hibernate.annotations.IndexColumn(name = "bagnumber")
-	@Fetch(FetchMode.SELECT)
+	@OneToMany(mappedBy = "incident", cascade = CascadeType.ALL)
+	@OrderColumn(name = "bagnumber")
 	public List<Item> getItemlist() {
 		return itemlist;
 	}
@@ -758,9 +717,8 @@ public class Incident {
 		this.itemlist = itemlist;
 	}
 
-	@OneToMany(mappedBy = "incident", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	@org.hibernate.annotations.OrderBy(clause = "articles_ID DESC")
-	@Fetch(FetchMode.SELECT)
+	@OneToMany(mappedBy = "incident", cascade = CascadeType.ALL)
+	@OrderBy(clause = "articles_id desc")
 	public Set<Articles> getArticles() {
 		return articles;
 	}
@@ -769,9 +727,8 @@ public class Incident {
 		this.articles = articles;
 	}
 
-	@OneToMany(mappedBy = "incident", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	@org.hibernate.annotations.OrderBy(clause = "passenger_id")
-	@Fetch(FetchMode.SELECT)
+	@OneToMany(mappedBy = "incident", cascade = CascadeType.ALL)
+	@OrderBy(clause = "passenger_id")
 	public Set<Passenger> getPassengers() {
 		return passengers;
 	}
@@ -780,9 +737,8 @@ public class Incident {
 		this.passengers = passengers;
 	}
 
-	@OneToMany(mappedBy = "incident", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	@org.hibernate.annotations.OrderBy(clause = "createtime")
-	@Fetch(FetchMode.SELECT)
+	@OneToMany(mappedBy = "incident", cascade = CascadeType.ALL)
+	@OrderBy(clause = "createtime")
 	public Set<Remark> getRemarks() {
 		return remarks;
 	}
@@ -791,9 +747,8 @@ public class Incident {
 		this.remarks = remarks;
 	}
 
-	@OneToMany(mappedBy = "incident", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	@org.hibernate.annotations.OrderBy(clause = "itinerary_ID")
-	@Fetch(FetchMode.SELECT)
+	@OneToMany(mappedBy = "incident", cascade = CascadeType.ALL)
+	@OrderBy(clause = "itinerary_id")
 	public Set<Itinerary> getItinerary() {
 		return itinerary;
 	}
@@ -802,76 +757,8 @@ public class Incident {
 		this.itinerary = itinerary;
 	}
 
-	@Transient
-	public String getDisplaydate() {
-		Date completedate = GenericDateUtils.convertToDate(getCreatedate().toString() + " " + getCreatetime().toString(), GenericConstants.DB_DATETIMEFORMAT,
-				null);
-		return GenericDateUtils.formatDate(completedate, _DATEFORMAT + " " + _TIMEFORMAT, null, _TIMEZONE);
-	}
-
-	@Transient
-	public Date getFullCreateDate() {
-		if (getCreatedate() == null || getCreatetime() == null) {
-			return null;
-		} else {
-			DateFormat dateFormat = new SimpleDateFormat(GenericConstants.DB_DATEFORMAT);
-			String dateString = dateFormat.format(getCreatedate());
-			DateFormat timeFormat = new SimpleDateFormat(GenericConstants.DB_TIMEFORMAT);
-			String timeString = timeFormat.format(getCreatetime());
-
-			return GenericDateUtils.convertToDate(dateString + " " + timeString, GenericConstants.DB_DATETIMEFORMAT,
-					null);
-		}
-	}
-
-	@Transient
-	public Date getFullCloseDate() {
-		return getClosedate();
-	}
-
-
-
-	@Transient
-	public String get_DATEFORMAT() {
-		return _DATEFORMAT;
-	}
-
-	public void set_DATEFORMAT(String _dateformat) {
-		_DATEFORMAT = _dateformat;
-	}
-
-	@Transient
-	public String get_TIMEFORMAT() {
-		return _TIMEFORMAT;
-	}
-
-	public void set_TIMEFORMAT(String _timeformat) {
-		_TIMEFORMAT = _timeformat;
-	}
-
-	@Transient
-	public TimeZone get_TIMEZONE() {
-		return _TIMEZONE;
-	}
-
-	public void set_TIMEZONE(TimeZone _timezone) {
-		_TIMEZONE = _timezone;
-	}
-
-	@Id
-	@Column(name = "Incident_ID", length = 13)
-	public String getIncident_ID() {
-		return Incident_ID;
-	}
-
-	public void setIncident_ID(String incident_ID) {
-		Incident_ID = incident_ID;
-	}
-
-
 	@OneToMany(mappedBy = "ntIncident", fetch = FetchType.EAGER)
 	@org.hibernate.annotations.OrderBy(clause = "claimdate")
-	@Fetch(FetchMode.SELECT)
 	public Set<Claim> getClaims() {
 		return claims;
 	}
@@ -880,21 +767,57 @@ public class Incident {
 		this.claims = claims;
 	}
 
-	@OneToMany(mappedBy = "incident", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	@org.hibernate.annotations.OrderBy(clause = "issuedate")
-	@Fetch(FetchMode.SELECT)
+	@OneToMany(mappedBy = "incident", cascade = CascadeType.ALL)
+	@OrderBy(clause = "issuedate")
 	public List<IssuanceItemIncident> getIssuanceItemIncidents() {
 		return issuanceItemIncidents;
 	}
 
-	public void setIssuanceItemIncidents(
-			List<IssuanceItemIncident> issuanceItemIncidents) {
+	public void setIssuanceItemIncidents(List<IssuanceItemIncident> issuanceItemIncidents) {
 		this.issuanceItemIncidents = issuanceItemIncidents;
 	}
 
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "incident")
+	@OrderBy(clause = "createdate")
+	public Set<IncidentActivity> getActivities() {
+		return activities;
+	}
 
+	public void setActivities(Set<IncidentActivity> activities) {
+		this.activities = activities;
+	}
 
+	@OneToOne(mappedBy = "incident")
+	public TwoDayTask getTwoDayTask() {
+		return twoDayTask;
+	}
 
+	public void setTwoDayTask(TwoDayTask twoDayTask) {
+		this.twoDayTask = twoDayTask;
+	}
+
+	@OneToOne(mappedBy = "incident")
+	public ThreeDayTask getThreeDayTask() {
+		return threeDayTask;
+	}
+
+	public void setThreeDayTask(ThreeDayTask threeDayTask) {
+		this.threeDayTask = threeDayTask;
+	}
+
+	@OneToOne(mappedBy = "incident")
+	public FourDayTask getFourDayTask() {
+		return fourDayTask;
+	}
+
+	public void setFourDayTask(FourDayTask fourDayTask) {
+		this.fourDayTask = fourDayTask;
+	}
+
+	@Transient
+	public List<Itinerary> getItinerary_list() {
+		return (itinerary == null ? new ArrayList<Itinerary>() : new ArrayList<Itinerary>(itinerary));
+	}
 
 	@Transient
 	public String getWt_id() {
@@ -905,55 +828,24 @@ public class Incident {
 	}
 
 	@Transient
-	public List<Itinerary> getItinerary_list() {
-		return (itinerary == null ? new ArrayList<Itinerary>()
-				: new ArrayList<Itinerary>(itinerary));
-	}
-
-	public void setItinerary_list(List<Itinerary> itinList) {
-		this.itinerary_list = itinList;
-	}
-
-	@Transient
 	public List<Incident_Claimcheck> getClaimcheck_list() {
-		return claimchecks != null ? new ArrayList<Incident_Claimcheck>(
-				claimchecks) : new ArrayList<Incident_Claimcheck>();
-	}
-
-	public void setClaimcheck_list(List<Incident_Claimcheck> cc_list) {
-		this.claimcheck_list = cc_list;
+		return claimchecks != null ? new ArrayList<Incident_Claimcheck>(claimchecks) : new ArrayList<Incident_Claimcheck>();
 	}
 
 	@Transient
 	public List<ExpensePayout> getExpenselist() {
-		return expenses != null ? new ArrayList<ExpensePayout>(expenses)
-				: new ArrayList<ExpensePayout>();
-	}
-
-	public void setExpenselist(List<ExpensePayout> expenselist) {
-		this.expenses = new LinkedHashSet<ExpensePayout>(expenselist);
+		return expenses != null ? new ArrayList<ExpensePayout>(expenses) : new ArrayList<ExpensePayout>();
 	}
 
 	@Transient
 	public List<Passenger> getPassenger_list() {
-		return passengers != null ? new ArrayList<Passenger>(passengers)
-				: new ArrayList<Passenger>();
-	}
-
-	public void setPassenger_list(List<Passenger> paxList) {
-		this.passenger_list = paxList;
+		return passengers != null ? new ArrayList<Passenger>(passengers) : new ArrayList<Passenger>();
 	}
 
 	@Transient
 	public int getItemtype_ID() {
 		return itemtype.getItemType_ID();
 	}
-
-	//NTFIXME
-	/*@Transient
-	public String getTypedesc() {
-		return itemtype.getDescription();
-	}*/
 
 	@Transient
 	public String getStationcode() {
@@ -975,32 +867,14 @@ public class Incident {
 		return (faultstation == null ? "" : faultstation.getStationcode());
 	}
 
-	@Transient
-	public String getRcreatedate() {
-		Date completedate = GenericDateUtils.convertToDate(getCreatedate().toString(), GenericConstants.DB_DATEFORMAT, null);
-		return GenericDateUtils.formatDate(completedate, _DATEFORMAT, null, _TIMEZONE);
-	}
+	//End
 
-	@Transient
-	public String getRcreatetime() {
-		Date completedate = GenericDateUtils.convertToDate(getCreatetime().toString(), GenericConstants.DB_TIMEFORMAT, null);
-		return GenericDateUtils.formatDate(completedate, _TIMEFORMAT, null, _TIMEZONE);
-	}
 
-	/*@Transient
-	public Station getDispStationAssigned() {
-		Station ret = null;
-
-		if (this.getStationassigned() != null)
-			ret = StationBMO.getStation("" + this.getStationassigned().getStation_ID());
-
-		return ret;
-	}*/
 
 	@Override
 	public int hashCode() {
 		int result = 23;
-		result = 37 * result + (Incident_ID == null ? 0 : Incident_ID.hashCode());
+		result = 37 * result + (id == null ? 0 : id.hashCode());
 		return result;
 	}
 
@@ -1013,36 +887,18 @@ public class Incident {
 		if (!(otherObject instanceof Incident))
 			return false;
 
-		if (Incident_ID == null)
+		if (id == null)
 			return false;
 
 		Incident o = (Incident) otherObject;
-		return Incident_ID.equals(o.getIncident_ID());
+		return id.equals(o.getId());
 	}
 
-	@OneToOne(mappedBy = "incident")
-	public CrmFile getCrmFile() {
-		return crmFile;
-	}
 
-	public void setCrmFile(CrmFile crmFile) {
-		this.crmFile = crmFile;
-	}
 
 	private Double roundToTwoDecimals(Double d) {
 		DecimalFormat twoDForm = new DecimalFormat("#.##");
 		return Double.valueOf(twoDForm.format(d));
-	}
-
-	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "incident")
-	@org.hibernate.annotations.OrderBy(clause = "createDate")
-	@Fetch(FetchMode.SELECT)
-	public Set<IncidentActivity> getActivities() {
-		return activities;
-	}
-
-	public void setActivities(Set<IncidentActivity> activities) {
-		this.activities = activities;
 	}
 
 	@Transient
@@ -1056,19 +912,17 @@ public class Incident {
 				+ "createdate=%s, createtime=%s, closedate=%s, recordlocator=%s, manualreportnum=%s, ticketnumber=%s, reportmethod=%s, checkedlocation=%s, "
 				+ "numpassengers=%s, numbagchecked=%s, numbagreceived=%s, voluntaryseparation=%s, courtesyreport=%s, tsachecked=%s, customcleared=%s, "
 				+ "nonrevenue=%s, itemtype=%s, deliveryInstructions=%s, status=%s, loss_code=%s, printedreceipt=%s, lastupdated=%s, ohd_lasttraced=%s, "
-				+ "wtFile=%s, crmFile=%s, passengers=%s, itemlist=%s, articles=%s, remarks=%s, itinerary=%s, oc_claim_id=%s, claims=%s, claimchecks=%s, "
-				+ "itinerary_list=%s, claimcheck_list=%s, passenger_list=%s, _DATEFORMAT=%s, _TIMEFORMAT=%s, _TIMEZONE=%s, expenses=%s, expenselist=%s, "
+				+ "wtFile=%s, crmFile=%s, passengers=%s, articles=%s, remarks=%s, itinerary=%s, oc_claim_id=%s, claims=%s, claimchecks=%s, "
 				+ "language=%s, incidentControl=%s, dispute=%s, locked=%s, codeLocked=%s, stationLocked=%s, revenueCode=%s, tracingStatus=%s, "
 				+ "tracingStarted=%s, tracingComplete=%s, tracingAgent=%s, rxTimestamp=%s, courtesyReasonId=%s, courtesyDescription=%s, custCommId=%s, "
 				+ "claimStatusId=%s, issuanceItemIncidents=%s, activities=%s, wtStationCode=%s, wtCompanyCode=%s, overall_weight=%s, overall_weight_unit=%s, "
 				+ "checklist_version=%s]",
-				version, Incident_ID, stationcreated, stationassigned, faultstation, agent, agentassigned, 
+				version, id, stationcreated, stationassigned, faultstation, agent, agentassigned,
 				createdate, createtime, closedate, recordlocator, manualreportnum, ticketnumber, reportmethod, checkedlocation,
 				numpassengers, numbagchecked, numbagreceived, voluntaryseparation, courtesyreport, tsachecked, customcleared, 
 				nonrevenue, itemtype, deliveryInstructions, status, loss_code, printedreceipt, lastupdated, ohd_lasttraced, 
-				wtFile, crmFile, passengers, itemlist, articles, remarks, itinerary, oc_claim_id, claims, claimchecks, 
-				itinerary_list, claimcheck_list, passenger_list, _DATEFORMAT, _TIMEFORMAT, _TIMEZONE, expenses, expenselist, 
-				language, incidentControl, dispute, locked, codeLocked, stationLocked, revenueCode, tracingStatus, 
+				wtFile, crmFile, passengers, articles, remarks, itinerary, oc_claim_id, claims, claimchecks,
+				expenses, language, incidentControl, dispute, locked, codeLocked, stationLocked, revenueCode, tracingStatus,
 				tracingStarted, tracingComplete, tracingAgent, rxTimestamp, courtesyReasonId, courtesyDescription, custCommId, 
 				claimStatusId, issuanceItemIncidents, activities, wtStationCode, wtCompanyCode, overall_weight, overall_weight_unit, 
 				checklist_version);
@@ -1082,33 +936,6 @@ public class Incident {
 	@Transient
 	public String getReportMethodDescription() {
 		return ReportMethod.getDescriptionByKey(reportmethod);
-	}
-
-	@OneToOne(mappedBy = "incident", fetch = FetchType.LAZY)
-	public TwoDayTask getTwoDayTask() {
-		return twoDayTask;
-	}
-
-	public void setTwoDayTask(TwoDayTask twoDayTask) {
-		this.twoDayTask = twoDayTask;
-	}
-
-	@OneToOne(mappedBy = "incident", fetch = FetchType.LAZY)
-	public ThreeDayTask getThreeDayTask() {
-		return threeDayTask;
-	}
-
-	public void setThreeDayTask(ThreeDayTask threeDayTask) {
-		this.threeDayTask = threeDayTask;
-	}
-
-	@OneToOne(mappedBy = "incident", fetch = FetchType.LAZY)
-	public FourDayTask getFourDayTask() {
-		return fourDayTask;
-	}
-
-	public void setFourDayTask(FourDayTask fourDayTask) {
-		this.fourDayTask = fourDayTask;
 	}
 
 	public void addPassenger(Passenger pasenger) {

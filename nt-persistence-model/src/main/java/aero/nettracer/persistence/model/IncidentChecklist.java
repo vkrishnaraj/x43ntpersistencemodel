@@ -9,10 +9,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-//for auto checklist feature
 @Entity
-@Table(name = "INCIDENT_CHECKLIST")
+@Table(name = "incident_checklist")
 public class IncidentChecklist {
+
 	private long id;
 	private Incident incident;
 	private ChecklistTask checklistTask;
@@ -30,7 +30,7 @@ public class IncidentChecklist {
 	}
 
 	@ManyToOne(targetEntity = Incident.class)
-	@JoinColumn(name = "Incident_ID", nullable = false)
+	@JoinColumn(name = "incident_id", nullable = false)
 	public Incident getIncident() {
 		return incident;
 	}
@@ -38,18 +38,18 @@ public class IncidentChecklist {
 		this.incident = incident;
 	}
 
-	@ManyToOne(targetEntity = ChecklistTask.class)
-	@JoinColumn(name = "Task_ID", nullable = false)
-
+	@ManyToOne
+	@JoinColumn(name = "task_id", nullable = false)
 	public ChecklistTask getChecklistTask() {
 		return checklistTask;
 	}
+
 	public void setChecklistTask(ChecklistTask checklistTask) {
 		this.checklistTask = checklistTask;
 	}
 
-	@ManyToOne(targetEntity = ChecklistTaskOption.class)
-	@JoinColumn(name = "Option_ID", nullable = false)
+	@ManyToOne
+	@JoinColumn(name = "option_id", nullable = false)
 	public ChecklistTaskOption getChecklistTaskOption() {
 		return checklistTaskOption;
 	}
@@ -57,11 +57,12 @@ public class IncidentChecklist {
 		this.checklistTaskOption = checklistTaskOption;
 	}
 
-	@ManyToOne(targetEntity = Agent.class)
-	@JoinColumn(name = "agent_Agent_ID", nullable = true)
+	@ManyToOne
+	@JoinColumn(name = "agent_agent_id")
 	public Agent getAgent() {
 		return agent;
 	}
+
 	public void setAgent(Agent agent) {
 		this.agent = agent;
 	}
@@ -77,7 +78,7 @@ public class IncidentChecklist {
 		String result;
 		StringBuffer mySb = new StringBuffer();
 		mySb.append("id=" + id);
-		mySb.append("incident_id=" + incident.getIncident_ID());
+		mySb.append("incident_id=" + incident.getId());
 		mySb.append("checklistTask_id=" + checklistTask.getId());
 		result = "" + mySb.toString();
 		return result;

@@ -1,16 +1,18 @@
 package aero.nettracer.persistence.model;
 
-import org.hibernate.annotations.Proxy;
-
-import javax.persistence.*;
 import java.io.Serializable;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
 @Table(name = "incident_group")
 public class IncidentGroup implements Serializable {
 
-
-	private int incidentGroupId;
+	private int id;
 	private String name;
 	private String joiningCondition;
 	private String whereClause;
@@ -20,12 +22,12 @@ public class IncidentGroup implements Serializable {
 	@Id
 	@GeneratedValue
 	@Column(name="incident_group_id")
-	public int getIncidentGroupId() {
-		return incidentGroupId;
+	public int getId() {
+		return id;
 	}
 
-	public void setIncidentGroupId(int incidentGroupId) {
-		this.incidentGroupId = incidentGroupId;
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	@Column(name="name", nullable = false)

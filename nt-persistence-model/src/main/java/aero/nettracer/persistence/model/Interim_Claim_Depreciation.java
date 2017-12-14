@@ -1,15 +1,12 @@
 package aero.nettracer.persistence.model;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import aero.nettracer.commons.utils.GenericDateUtils;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -19,15 +16,16 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
-import org.hibernate.annotations.Proxy;
+import org.hibernate.annotations.OrderBy;
 
 @Entity
 @Table(name = "interim_claim_depreciation")
 public class Interim_Claim_Depreciation {
+
     private int id;
+    private Claim claim;
     private Date dateCalculate;
+    private Claim_Type claimType;
     private double totalWeight;
     private double maxLiablity;
     private String weightMetric;
@@ -36,15 +34,11 @@ public class Interim_Claim_Depreciation {
     private double additionalDepreciation;
     private double totalApprovedPayout;
     private double finalApprovedPayout;
-
-    private Claim_Type claimType;
-    private Claim claim;
-
     private List<Interim_Depreciation_Item> interimitemlist=new ArrayList<Interim_Depreciation_Item>();
 
-    private String _DATEFORMAT; // current login agent's date format
-
-    @Id @GeneratedValue(strategy=GenerationType.AUTO) @Column(name="id")
+    @Id
+    @GeneratedValue(strategy=GenerationType.AUTO)
+    @Column(name="id")
     public int getId() {
         return id;
     }
@@ -53,7 +47,7 @@ public class Interim_Claim_Depreciation {
         this.id = id;
     }
 
-    @OneToOne(targetEntity =  Claim.class)
+    @OneToOne
     @JoinColumn(name="claim_id")
     public Claim getClaim() {
         return claim;
@@ -63,6 +57,7 @@ public class Interim_Claim_Depreciation {
         this.claim = claim;
     }
 
+    @Column(name = "datecalculate")
     public Date getDateCalculate() {
         return dateCalculate;
     }
@@ -72,8 +67,7 @@ public class Interim_Claim_Depreciation {
     }
 
     @ManyToOne
-    @JoinColumn(name = "claimType_id", nullable = true)
-    @Fetch(FetchMode.SELECT)
+    @JoinColumn(name = "claimType_id")
     public Claim_Type getClaimType() {
         return claimType;
     }
@@ -82,30 +76,80 @@ public class Interim_Claim_Depreciation {
         this.claimType = claimType;
     }
 
-    @Transient
-    public int getClaimTypeId() {
-        if(claimType!=null)
-            return claimType.getId();
-        else
-            return 0;
+    @Column(name = "totalweight")
+    public double getTotalWeight() {
+        return totalWeight;
     }
-    //NTFIXME
-    /*public void setClaimTypeId(int claimTypeId) {
-        if(claimTypeId!=0){
-            Claim_Type type= ClaimBMO.getClaimTypeById(claimTypeId);
-            if(type!=null){
-                this.claimType=type;
-            } else {
-                this.claimType=new Claim_Type();
-                this.claimType.setId(claimTypeId);
-            }
-        } else {
-            this.claimType=null;
-        }
-    }*/
 
-    @OneToMany(mappedBy = "interimClaimDepreciation", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @org.hibernate.annotations.OrderBy(clause = "id")
+    public void setTotalWeight(double totalWeight) {
+        this.totalWeight = totalWeight;
+    }
+
+    @Column(name = "maxliablity")
+    public double getMaxLiablity() {
+        return maxLiablity;
+    }
+
+    public void setMaxLiablity(double maxLiablity) {
+        this.maxLiablity = maxLiablity;
+    }
+
+    @Column(name = "weightmetric")
+    public String getWeightMetric() {
+        return weightMetric;
+    }
+
+    public void setWeightMetric(String weightMetric) {
+        this.weightMetric = weightMetric;
+    }
+
+    @Column(name = "currency")
+    public String getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(String currency) {
+        this.currency = currency;
+    }
+
+    @Column(name = "totalclaimed")
+    public double getTotalClaimed() {
+        return totalClaimed;
+    }
+
+    public void setTotalClaimed(double totalClaimed) {
+        this.totalClaimed = totalClaimed;
+    }
+
+    @Column(name = "additionaldepreciation")
+    public double getAdditionalDepreciation() {
+        return additionalDepreciation;
+    }
+
+    public void setAdditionalDepreciation(double additionalDepreciation) {
+        this.additionalDepreciation = additionalDepreciation;
+    }
+
+    @Column(name = "totalapprovedpayout")
+    public double getTotalApprovedPayout() {
+        return totalApprovedPayout;
+    }
+
+    public void setTotalApprovedPayout(double totalApprovedPayout) {
+        this.totalApprovedPayout = totalApprovedPayout;
+    }
+
+    @Column(name = "finalapprovedpayout")
+    public double getFinalApprovedPayout() {
+        return finalApprovedPayout;
+    }
+
+    public void setFinalApprovedPayout(double finalApprovedPayout) {
+        this.finalApprovedPayout = finalApprovedPayout;
+    }
+
+    @OneToMany(mappedBy = "interimClaimDepreciation", cascade = CascadeType.ALL)
+    @OrderBy(clause = "id")
     public List<Interim_Depreciation_Item> getInterimitemlist() {
         return interimitemlist;
     }
@@ -115,100 +159,11 @@ public class Interim_Claim_Depreciation {
     }
 
     @Transient
-    public String get_DATEFORMAT() {
-        return _DATEFORMAT;
-    }
-
-    @Transient
-    public void set_DATEFORMAT(String _DATEFORMAT) {
-        this._DATEFORMAT = _DATEFORMAT;
-    }
-
-    @Transient
-    public void setDispDateCalculate(String s) {
-        setDateCalculate(GenericDateUtils.convertToDate(s, _DATEFORMAT, null));
-    }
-
-    @Transient
-    public String getDispDateCalculate() {
-        return GenericDateUtils.formatDate(getDateCalculate(), _DATEFORMAT, null, null);
-    }
-
-    public String getWeightMetric() {
-        return weightMetric;
-    }
-
-    public void setWeightMetric(String weightMetric) {
-        this.weightMetric = weightMetric;
-    }
-
-    public double getTotalWeight() {
-        return totalWeight;
-    }
-
-    public void setTotalWeight(double totalWeight) {
-        this.totalWeight = totalWeight;
-    }
-
-    public double getMaxLiablity() {
-        return maxLiablity;
-    }
-
-    public void setMaxLiablity(double maxLiablity) {
-        this.maxLiablity = maxLiablity;
-    }
-
-    public String getCurrency() {
-        return currency;
-    }
-
-    public void setCurrency(String currency) {
-        this.currency = currency;
-    }
-
-    public double getTotalClaimed() {
-        return totalClaimed;
-    }
-
-    public void setTotalClaimed(double totalClaimed) {
-        this.totalClaimed = totalClaimed;
-    }
-
-    public double getAdditionalDepreciation() {
-        return additionalDepreciation;
-    }
-
-    public void setAdditionalDepreciation(double additionalDepreciation) {
-        this.additionalDepreciation = additionalDepreciation;
-    }
-
-    public double getTotalApprovedPayout() {
-        return totalApprovedPayout;
-    }
-
-    public void setTotalApprovedPayout(double totalApprovedPayout) {
-        this.totalApprovedPayout = totalApprovedPayout;
-    }
-
-    @Transient
-    public String getDispTotalApprovedPayout() {
-
-        DecimalFormat format = (DecimalFormat) java.text.NumberFormat
-                .getInstance();
-        format.applyPattern("##0.00");
-        format.setMinimumFractionDigits(2);
-        return format.format(totalApprovedPayout);
-    }
-
-    @Transient
-    public void setDispTotalApprovedPayout(String totalApprovedPayout) {
-        double tap=0;
-        try{
-            tap=Double.valueOf(totalApprovedPayout);
-        } catch (Exception e) {
-
-        }
-        setTotalApprovedPayout(tap);
+    public int getClaimTypeId() {
+        if(claimType!=null)
+            return claimType.getId();
+        else
+            return 0;
     }
 
     @Transient
@@ -231,11 +186,4 @@ public class Interim_Claim_Depreciation {
         return tv;
     }
 
-    public double getFinalApprovedPayout() {
-        return finalApprovedPayout;
-    }
-
-    public void setFinalApprovedPayout(double finalApprovedPayout) {
-        this.finalApprovedPayout = finalApprovedPayout;
-    }
 }

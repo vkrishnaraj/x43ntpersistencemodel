@@ -1,8 +1,6 @@
 package aero.nettracer.persistence.model;
 
-import java.io.Serializable;
-
-import aero.nettracer.commons.utils.CommonsUtils;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -10,36 +8,33 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
-import org.hibernate.annotations.Proxy;
 
 @Entity
-@Table(name = "Incident_Claimcheck")
-public class Incident_Claimcheck implements Serializable {
+@Table(name = "incident_claimcheck")
+public class Incident_Claimcheck {
 
-	private static final long serialVersionUID = -7863821205236377195L;
-	private int claimcheck_ID;
+	private int id;
+	private Incident incident;
 	private String claimchecknum="";
+	private String OHD_ID="";
 	private String claimchecknum_leading;
 	private String claimchecknum_ticketingcode;
 	private String claimchecknum_carriercode;
 	private String claimchecknum_bagnumber;
-	private String OHD_ID="";
 	private String tempOHD_ID="";
-	private Incident incident;
-	
 
 	@Id
 	@GeneratedValue
-	public int getClaimcheck_ID() {
-		return claimcheck_ID;
+	public int getId() {
+		return id;
 	}
 
-	public void setClaimcheck_ID(int claimcheck_ID) {
-		this.claimcheck_ID = claimcheck_ID;
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	@ManyToOne
-	@JoinColumn(name = "incident_ID")
+	@JoinColumn(name = "incident_id")
 	public Incident getIncident() {
 		return incident;
 	}
@@ -48,16 +43,27 @@ public class Incident_Claimcheck implements Serializable {
 		this.incident = incident;
 	}
 
+	@Column(name = "claimchecknum")
 	public String getClaimchecknum() {
 		return claimchecknum;
 	}
 
-	public void setClaimchecknum(String claimchecknum) {
+	/*public void setClaimchecknum(String claimchecknum) {
 		if (claimchecknum != null)
 			claimchecknum = CommonsUtils.removeSpaces(claimchecknum);
 		this.claimchecknum = claimchecknum;
+	}*/
+
+	@Column(name = "ohd_id")
+	public String getOHD_ID() {
+		return OHD_ID;
 	}
-	
+
+	public void setOHD_ID(String ohd_id) {
+		OHD_ID = ohd_id;
+	}
+
+	@Column(name = "claimchecknum_leading")
 	public String getClaimchecknum_leading() {
 		return claimchecknum_leading;
 	}
@@ -66,6 +72,7 @@ public class Incident_Claimcheck implements Serializable {
 		this.claimchecknum_leading = claimchecknum_leading;
 	}
 
+	@Column(name = "claimchecknum_ticketingcode")
 	public String getClaimchecknum_ticketingcode() {
 		return claimchecknum_ticketingcode;
 	}
@@ -74,6 +81,7 @@ public class Incident_Claimcheck implements Serializable {
 		this.claimchecknum_ticketingcode = claimchecknum_ticketingcode;
 	}
 
+	@Column(name = "claimchecknum_carriercode")
 	public String getClaimchecknum_carriercode() {
 		return claimchecknum_carriercode;
 	}
@@ -82,20 +90,13 @@ public class Incident_Claimcheck implements Serializable {
 		this.claimchecknum_carriercode = claimchecknum_carriercode;
 	}
 
+	@Column(name = "claimchecknum_bagnumber")
 	public String getClaimchecknum_bagnumber() {
 		return claimchecknum_bagnumber;
 	}
 
 	public void setClaimchecknum_bagnumber(String claimchecknum_bagnumber) {
 		this.claimchecknum_bagnumber = claimchecknum_bagnumber;
-	}
-
-	public String getOHD_ID() {
-		return OHD_ID;
-	}
-
-	public void setOHD_ID(String ohd_id) {
-		OHD_ID = ohd_id;
 	}
 
 	@Transient

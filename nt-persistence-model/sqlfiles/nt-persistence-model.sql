@@ -2,3 +2,8 @@
 alter table agent drop column exclude_from_autoload;
 alter table agent drop column subcompany_id;
 alter table bdo drop column delivery_comments;
+alter table item drop column categorytype_ID;
+alter table item drop column keycontents;
+alter table item drop column oversize;
+alter table item drop column overweight;
+

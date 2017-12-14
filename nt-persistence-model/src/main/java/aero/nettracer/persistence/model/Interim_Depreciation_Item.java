@@ -2,23 +2,19 @@ package aero.nettracer.persistence.model;
 
 import java.util.Date;
 
-import aero.nettracer.commons.utils.CommonsConstants;
-import aero.nettracer.commons.utils.GenericDateUtils;
 import aero.nettracer.persistence.model.fraudservice.Attachment;
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
+import org.apache.commons.lang3.math.NumberUtils;
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
-import org.hibernate.annotations.Proxy;
 
 @Entity
 @Table(name = "interim_depreciation_item")
@@ -34,7 +30,7 @@ public class Interim_Depreciation_Item {
     private double calcValue;
     private double claimValue;
     private boolean paid;
-
+    private Interim_Claim_Depreciation interimClaimDepreciation;
     private String item;
     private int quantity;
     private String manufacturer;
@@ -43,10 +39,6 @@ public class Interim_Depreciation_Item {
     private String gender;
     private String purchaseLocation;
     private Attachment receipt = new Attachment();
-
-    private Interim_Claim_Depreciation interimClaimDepreciation;
-
-    private String _DATEFORMAT; // current login agent's date format
 
     @Id
     @GeneratedValue
@@ -58,110 +50,7 @@ public class Interim_Depreciation_Item {
         this.id = id;
     }
 
-    @ManyToOne
-    @JoinColumn(name = "interim_claim_depreciation_id", nullable = false)
-    @Fetch(FetchMode.SELECT)
-    public Interim_Claim_Depreciation getInterimClaimDepreciation() {
-        return interimClaimDepreciation;
-    }
-
-    public void setInterimClaimDepreciation(Interim_Claim_Depreciation interimClaimDepreciation) {
-        this.interimClaimDepreciation = interimClaimDepreciation;
-    }
-
-    public double getClaimValue() {
-        return claimValue;
-    }
-
-    public void setClaimValue(double claimValue) {
-        this.claimValue = claimValue;
-    }
-
-    public double getCalcValue() {
-        return calcValue;
-    }
-
-    public void setCalcValue(double calcValue) {
-        this.calcValue = calcValue;
-    }
-
-    public boolean isNotCoveredCoc() {
-        return notCoveredCoc;
-    }
-
-    public void setNotCoveredCoc(boolean notCoveredCoc) {
-        this.notCoveredCoc = notCoveredCoc;
-    }
-
-    public int getProofOwnership() {
-        return proofOwnership;
-    }
-
-    public void setProofOwnership(int proofOwnership) {
-        this.proofOwnership = proofOwnership;
-    }
-
-    @Transient
-    public void setProofOwnership(String proofOwnership) {
-        int p=0;
-        try{
-            p=Integer.valueOf(proofOwnership);
-        } catch (Exception e){
-
-        }
-        setProofOwnership(p);
-    }
-
-    @ManyToOne
-    @JoinColumn(name = "category_id", nullable = true)
-    @NotFound(action= NotFoundAction.IGNORE)
-    @Fetch(FetchMode.SELECT)
-    public Depreciation_Category getCategory() {
-        return category;
-    }
-
-    public void setCategory(Depreciation_Category category) {
-        this.category = category;
-    }
-
-    @Transient
-    public int getCategoryId() {
-        if(category!=null)
-            return category.getId();
-        else
-            return 0;
-    }
-
-    /*public void setCategoryId(int categoryId) {
-        if(categoryId!=0){
-            Depreciation_Category cat= CategoryBMO.getDepreciationCategory(categoryId);
-            if(cat!=null){
-                this.category=cat;
-            } else {
-                this.category=new Depreciation_Category();
-                this.category.setId(categoryId);
-            }
-        } else {
-            this.category=null;
-        }
-    }*/
-
-    public Date getDatePurchase() {
-        return datePurchase;
-    }
-
-    public void setDatePurchase(Date datePurchase) {
-        this.datePurchase = datePurchase;
-    }
-
-    public double getAmountClaimed() {
-        return amountClaimed;
-    }
-
-    public void setAmountClaimed(double amountClaimed) {
-        this.amountClaimed = amountClaimed;
-    }
-
+    @Column(name = "description")
     public String getDescription() {
         return description;
     }
@@ -170,6 +59,91 @@ public class Interim_Depreciation_Item {
         this.description = description;
     }
 
+    @Column(name = "amountclaimed")
+    public double getAmountClaimed() {
+        return amountClaimed;
+    }
+
+    public void setAmountClaimed(double amountClaimed) {
+        this.amountClaimed = amountClaimed;
+    }
+
+    @Column(name = "datepurchase")
+    public Date getDatePurchase() {
+        return datePurchase;
+    }
+
+    public void setDatePurchase(Date datePurchase) {
+        this.datePurchase = datePurchase;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    @NotFound(action= NotFoundAction.IGNORE)
+    public Depreciation_Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Depreciation_Category category) {
+        this.category = category;
+    }
+
+    @Column(name = "proofownership")
+    public int getProofOwnership() {
+        return proofOwnership;
+    }
+
+    public void setProofOwnership(int proofOwnership) {
+        this.proofOwnership = proofOwnership;
+    }
+
+    @Column(name = "notcoveredcoc")
+    public boolean isNotCoveredCoc() {
+        return notCoveredCoc;
+    }
+
+    public void setNotCoveredCoc(boolean notCoveredCoc) {
+        this.notCoveredCoc = notCoveredCoc;
+    }
+
+    @Column(name = "calcvalue")
+    public double getCalcValue() {
+        return calcValue;
+    }
+
+    public void setCalcValue(double calcValue) {
+        this.calcValue = calcValue;
+    }
+
+    @Column(name = "claimvalue")
+    public double getClaimValue() {
+        return claimValue;
+    }
+
+    public void setClaimValue(double claimValue) {
+        this.claimValue = claimValue;
+    }
+
+    @Column(name = "paid")
+    public boolean isPaid() {
+        return paid;
+    }
+
+    public void setPaid(boolean paid) {
+        this.paid = paid;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "interim_claim_depreciation_id", nullable = false)
+    public Interim_Claim_Depreciation getInterimClaimDepreciation() {
+        return interimClaimDepreciation;
+    }
+
+    public void setInterimClaimDepreciation(Interim_Claim_Depreciation interimClaimDepreciation) {
+        this.interimClaimDepreciation = interimClaimDepreciation;
+    }
+
+    @Column(name = "item")
     public String getItem() {
         return item;
     }
@@ -178,6 +152,7 @@ public class Interim_Depreciation_Item {
         this.item = item;
     }
 
+    @Column(name = "quantity")
     public int getQuantity() {
         return quantity;
     }
@@ -186,6 +161,7 @@ public class Interim_Depreciation_Item {
         this.quantity = quantity;
     }
 
+    @Column(name = "manufacturer")
     public String getManufacturer() {
         return manufacturer;
     }
@@ -194,6 +170,7 @@ public class Interim_Depreciation_Item {
         this.manufacturer = manufacturer;
     }
 
+    @Column(name = "color")
     public String getColor() {
         return color;
     }
@@ -202,6 +179,7 @@ public class Interim_Depreciation_Item {
         this.color = color;
     }
 
+    @Column(name = "size")
     public String getSize() {
         return size;
     }
@@ -210,6 +188,7 @@ public class Interim_Depreciation_Item {
         this.size = size;
     }
 
+    @Column(name = "gender")
     public String getGender() {
         return gender;
     }
@@ -218,6 +197,7 @@ public class Interim_Depreciation_Item {
         this.gender = gender;
     }
 
+    @Column(name = "purchaselocation")
     public String getPurchaseLocation() {
         return purchaseLocation;
     }
@@ -226,10 +206,9 @@ public class Interim_Depreciation_Item {
         this.purchaseLocation = purchaseLocation;
     }
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "receipt_id", nullable = false)
     @NotFound(action = NotFoundAction.IGNORE)
-    @Fetch(FetchMode.SELECT)
     public Attachment getReceipt() {
         return receipt;
     }
@@ -239,23 +218,11 @@ public class Interim_Depreciation_Item {
     }
 
     @Transient
-    public String get_DATEFORMAT() {
-        return _DATEFORMAT;
-    }
-
-    @Transient
-    public void set_DATEFORMAT(String _DATEFORMAT) {
-        this._DATEFORMAT = _DATEFORMAT;
-    }
-
-    @Transient
-    public void setDispDatePurchase(String s) {
-        setDatePurchase(GenericDateUtils.convertToDate(s, _DATEFORMAT, null));
-    }
-
-    @Transient
-    public String getDispDatePurchase() {
-        return GenericDateUtils.formatDate(getDatePurchase(), _DATEFORMAT, null, null);
+    public int getCategoryId() {
+        if(category!=null)
+            return category.getId();
+        else
+            return 0;
     }
 
     @Transient
@@ -288,18 +255,7 @@ public class Interim_Depreciation_Item {
     }
 
     @Transient
-    public String getDateCalc() {
-        if(getInterimClaimDepreciation()!=null && getInterimClaimDepreciation().getDispDateCalculate()!=null
-                && getInterimClaimDepreciation().getDispDateCalculate().length()>0){
-            return getInterimClaimDepreciation().getDispDateCalculate();
-        } else {
-            return "";
-        }
-    }
-
-    @Transient
     public String getCurrency() {
-
         if(getInterimClaimDepreciation()!=null && getInterimClaimDepreciation().getCurrency()!=null && getInterimClaimDepreciation().getCurrency().length()>0){
             return getInterimClaimDepreciation().getCurrency();
         } else {
@@ -307,15 +263,15 @@ public class Interim_Depreciation_Item {
         }
     }
 
-    @Transient
+    //Enble once this module is made dependent on commons
+    /*@Transient
     public String getApprovedTotal() {
-
         if(getInterimClaimDepreciation()!=null){
             return CommonsConstants.DECIMALFORMAT.format(getInterimClaimDepreciation().getTotalApprovedPayout());
         } else {
             return "";
         }
-    }
+    }*/
 
     @Transient
     public String getCategoryName() {
@@ -347,7 +303,8 @@ public class Interim_Depreciation_Item {
     }
 
 
-    @Transient
+    //Enable the below methods once this model is dependent on commons
+    /*@Transient
     public String getClaimTotal() {
         if(getInterimClaimDepreciation()!=null){
             return CommonsConstants.DECIMALFORMAT.format(getInterimClaimDepreciation().getTotalClaim());
@@ -391,40 +348,30 @@ public class Interim_Depreciation_Item {
             return "0.00";
     }
 
+     @Transient
+    public String getDepamount(){
+        return CommonsConstants.DECIMALFORMAT.format(getAmountClaimed()-getClaimValue());
+    }
+
     @Transient
-    public void setDispAmountClaimed(String amountClaimed){
-        double ac=0;
-        try{
-            ac=Double.valueOf(amountClaimed);
-        } catch (Exception e) {
+    public String getPercent(){
+        double divisor = getAmountClaimed()!=0?getAmountClaimed():1;
+        return CommonsConstants.DECIMALFORMAT.format(((getAmountClaimed()-getClaimValue())/divisor)*100)+"%";
+    }*/
 
-        }
-        setAmountClaimed(ac);
-
+    @Transient
+    public void setDispAmountClaimed(String amountClaimed) {
+        setAmountClaimed(NumberUtils.isNumber(amountClaimed)?Double.parseDouble(amountClaimed):0);
     }
 
     @Transient
     public void setDispCalcValue(String calcValue){
-        double cv=0;
-        try{
-            cv=Double.valueOf(calcValue);
-        } catch (Exception e) {
-
-        }
-        setCalcValue(cv);
-
+        setCalcValue(NumberUtils.isNumber(calcValue)?Double.parseDouble(calcValue):0);
     }
 
     @Transient
-    public void setDispClaimValue(String claimValue){
-        double cv=0;
-        try{
-            cv=Double.valueOf(claimValue);
-        } catch (Exception e) {
-
-        }
-        setClaimValue(cv);
-
+    public void setDispClaimValue(String claimValue) {
+        setClaimValue(NumberUtils.isNumber(claimValue)?Double.parseDouble(claimValue):0);
     }
 
     @Transient
@@ -436,22 +383,4 @@ public class Interim_Depreciation_Item {
         }
     }
 
-    @Transient
-    public String getDepamount(){
-        return CommonsConstants.DECIMALFORMAT.format(getAmountClaimed()-getClaimValue());
-    }
-
-    @Transient
-    public String getPercent(){
-        double divisor = getAmountClaimed()!=0?getAmountClaimed():1;
-        return CommonsConstants.DECIMALFORMAT.format(((getAmountClaimed()-getClaimValue())/divisor)*100)+"%";
-    }
-
-    public boolean isPaid() {
-        return paid;
-    }
-
-    public void setPaid(boolean paid) {
-        this.paid = paid;
-    }
 }

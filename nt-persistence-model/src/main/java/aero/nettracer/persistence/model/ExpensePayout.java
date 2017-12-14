@@ -23,6 +23,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import org.hibernate.annotations.OrderBy;
 
 @Entity
@@ -34,7 +35,7 @@ public class ExpensePayout {
 	private String paycode;
 	private int mileageamt;
 	private double voucheramt;
-	private Currency currency;
+	private java.util.Currency currency;
 	private String draft;
 	private Date draftreqdate;
 	private Date draftpaiddate;
@@ -131,11 +132,11 @@ public class ExpensePayout {
 	}
 
 	@Column(name = "currency_id")
-	public Currency getCurrency() {
+	public java.util.Currency getCurrency() {
 		return currency;
 	}
 
-	public void setCurrency(Currency currency) {
+	public void setCurrency(java.util.Currency currency) {
 		this.currency = currency;
 	}
 
@@ -554,6 +555,11 @@ public class ExpensePayout {
 
 	public void setRemarks(Set<Remark> remarks) {
 		this.remarks = remarks;
+	}
+
+	@Transient
+	public String getCurrency_ID() {
+		return currency.getCurrencyCode();
 	}
 
 	//NTFIXME - Make this new db model dependent on commons before enabling the below code

@@ -7,7 +7,6 @@
 package aero.nettracer.persistence.model;
 
 
-import java.io.Serializable;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -37,73 +36,164 @@ import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
-import org.hibernate.annotations.Proxy;
 
 @Entity
 @Table(name="item")
-public class Item implements Serializable {
+public class Item {
 
-	private static final long serialVersionUID = 5712336990487032404L;
-	
-	
-	private int item_ID;
-	
-	private int bagnumber;
-	private int itemtype_ID;
-	
+	private int id;
 	private Status status;
-
+	private int bagnumber;
+	private Incident incident;
+	private int itemtype_ID;
+	private String OHD_ID;
 	private String claimchecknum;
-
-	private String claimchecknum_leading;
-
-	private String claimchecknum_ticketingcode;
-
-	private String claimchecknum_carriercode;
-
-	private String claimchecknum_bagnumber;
-
 	private String color;
-
 	private String bagtype;
-
-	private int childRestraint;
-
 	private int xdescelement_ID_1;
 	private int xdescelement_ID_2;
 	private int xdescelement_ID_3;
 	private int manufacturer_ID;
 	private String manufacturer_other;
 	private int lvlofdamage;
-
 	private String damage;
-	private boolean damageEditable;
-
 	private Resolution resolution;
-
 	private String resolutiondesc;
-
 	private double cost;
-
 	private String drafts;
-
 	private String currency_ID;
-
 	private String fnameonbag;
 	private String mnameonbag;
 	private String lnameonbag;
-
-	private String arrivedonflightnum;
-
 	private String arrivedonairline_ID;
-
-	private String externaldesc;
-
 	private Date arrivedondate;
-
+	private String arrivedonflightnum;
+	private int wt_bag_selected;
 	private Date purchaseDate;
+	private double bag_weight;
+	private String bag_weight_unit;
+	private int replacementBagIssued;
+	private String claimchecknum_leading;
+	private String claimchecknum_ticketingcode;
+	private String claimchecknum_carriercode;
+	private String claimchecknum_bagnumber;
+	private int childRestraint;
+	private String externaldesc;
+	private String posId;
+	private String expediteTagNum;
+	private int specialCondition;
+	private boolean noAddFees;
+	private int other;
+	private int assistDeviceType;
+	private String assistDeviceCheck;
+	private int lossCode;
+	private Station faultStation;
 
-	private Incident incident;
+	//Start
+	@Id
+	@GeneratedValue
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	@ManyToOne
+	@JoinColumn(name="status_id" )
+	public Status getStatus() {
+		return status;
+	}
+
+	public void setStatus(Status status) {
+		this.status = status;
+	}
+
+	public int getBagnumber() {
+		return bagnumber;
+	}
+
+	public void setBagnumber(int bagnumber) {
+		this.bagnumber = bagnumber;
+	}
+
+	@ManyToOne
+	@JoinColumn(name="incident_id", nullable = false)
+	public Incident getIncident() {
+		return incident;
+	}
+
+	public void setIncident(Incident incident) {
+		this.incident = incident;
+	}
+
+	@Column(name = "itemtype_id")
+	public int getItemtype_ID() {
+		return itemtype_ID;
+	}
+
+	public void setItemtype_ID(int itemtype_ID) {
+		this.itemtype_ID = itemtype_ID;
+	}
+
+	@Column(name = "ohd_id")
+	public String getOHD_ID() {
+		return OHD_ID;
+	}
+
+	public void setOHD_ID(String ohd_id) {
+		OHD_ID = ohd_id;
+	}
+
+	@Column(name = "claimchecknum")
+	public String getClaimchecknum() {
+		return claimchecknum;
+	}
+
+
+	public void setClaimchecknum(String claimchecknum) {
+		if (claimchecknum != null)
+			claimchecknum = CommonsUtils.removeSpaces(claimchecknum);
+		this.claimchecknum = claimchecknum;
+	}
+
+	//End
+
+
+
+
+
+
+
+
+
+
+
+
+	private boolean damageEditable;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 	private BDO bdo;
 
@@ -120,7 +210,7 @@ public class Item implements Serializable {
 
 	private List<Item_Inventory> inventorylist;
 
-	private String OHD_ID;
+
 
 	private String tempOHD_ID;
 
@@ -128,26 +218,26 @@ public class Item implements Serializable {
 
 	private String locale;
 
-	private int wt_bag_selected;
+
 
 	private boolean isItemOrBdoCanceled;
 
-	private int replacementBagIssued;
 
-	private String posId;
 
-	private String expediteTagNum;
 
-	private int specialCondition;
-	private int other;
-	private boolean noAddFees;
 
-	private int assistDeviceType;
-	private String assistDeviceCheck;
 
-	private int lossCode;
 
-	private Station faultStation;
+
+
+
+
+
+
+
+
+
+
 
 	private boolean bdoChosen = false;
 
@@ -171,8 +261,7 @@ public class Item implements Serializable {
 		this.bag_weight_unit = bag_weight_unit;
 	}
 
-	private double bag_weight;
-	private String bag_weight_unit;
+
 
 	public int getWt_bag_selected() {
 		return wt_bag_selected;
@@ -276,16 +365,6 @@ public class Item implements Serializable {
 		return ret;
 	}*/
 
-	@ManyToOne
-	@JoinColumn(name="incident_ID", nullable = false)
-	public Incident getIncident() {
-		return incident;
-	}
-
-	public void setIncident(Incident incident) {
-		this.incident = incident;
-	}
-
 	@Transient
 	public BDO getBdo() {
 		if (item_bdo == null || item_bdo.size() == 0) {
@@ -336,28 +415,9 @@ public class Item implements Serializable {
 		this.photolist = photolist;
 	}
 
-	@Fetch(FetchMode.SELECT)
-	@ManyToOne
-	@JoinColumn(name="status_ID" )
-	public Status getStatus() {
-		return status;
-	}
-
-	public void setStatus(Status status) {
-		this.status = status;
-	}
-
 	@Column(length=3)
 	public String getCurrency_ID() {
 		return currency_ID;
-	}
-
-	public String getOHD_ID() {
-		return OHD_ID;
-	}
-
-	public void setOHD_ID(String ohd_id) {
-		OHD_ID = ohd_id;
 	}
 
 	@Transient
@@ -380,22 +440,6 @@ public class Item implements Serializable {
 
 	public void setCurrency_ID(String currency_ID) {
 		this.currency_ID = currency_ID;
-	}
-
-	public int getItemtype_ID() {
-		return itemtype_ID;
-	}
-
-	public void setItemtype_ID(int itemtype_ID) {
-		this.itemtype_ID = itemtype_ID;
-	}
-
-	public int getBagnumber() {
-		return bagnumber;
-	}
-
-	public void setBagnumber(int bagnumber) {
-		this.bagnumber = bagnumber;
 	}
 
 	@Fetch(FetchMode.SELECT)
@@ -454,16 +498,6 @@ public class Item implements Serializable {
 
 	public void setDrafts(String drafts) {
 		this.drafts = drafts;
-	}
-
-	@Id
-	@GeneratedValue
-	public int getItem_ID() {
-		return item_ID;
-	}
-
-	public void setItem_ID(int item_ID) {
-		this.item_ID = item_ID;
 	}
 
 	@Fetch(FetchMode.SELECT)
@@ -562,20 +596,6 @@ public class Item implements Serializable {
 		this.arrivedonflightnum = arrivedonflightnum;
 	}
 	
-	@Column(length = 13)
-	public String getClaimchecknum() {
-		return claimchecknum;
-	}
-
-
-	public void setClaimchecknum(String claimchecknum) {
-		if (claimchecknum != null)
-			claimchecknum = CommonsUtils.removeSpaces(claimchecknum);
-		this.claimchecknum = claimchecknum;
-		//NTFIXME
-		//setClaimSearchParams(claimchecknum);
-	}
-
 	//NTFIXME
 	/*@Transient
 	private void setClaimSearchParams(String claimchecknum) {
@@ -940,7 +960,7 @@ public class Item implements Serializable {
 	 */
 	/*@Transient
 	public long countBdos(){
-		return BDOUtils.findBDOByItemCount(getItem_ID());
+		return BDOUtils.findBDOByItemCount(getId());
 	}*/
 	
 	/**

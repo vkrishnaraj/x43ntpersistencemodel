@@ -1,22 +1,32 @@
 package aero.nettracer.persistence.model;
 
-import java.io.Serializable;
-
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Transient;
-import org.hibernate.annotations.Proxy;
 
 @Entity
-@Table(name = "Incident_Assoc")
-public class Incident_Assoc implements Serializable {
-	private int ID;
+@Table(name = "incident_assoc")
+public class Incident_Assoc {
+
+	private int id;
 	private String assoc_ID;
 	private String incident_ID;
 	private int itemtype_ID;
 
+	@Id
+	@GeneratedValue
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	@Column(name = "assoc_id")
 	public String getAssoc_ID() {
 		return assoc_ID;
 	}
@@ -25,16 +35,7 @@ public class Incident_Assoc implements Serializable {
 		this.assoc_ID = assoc_ID;
 	}
 
-	@Id
-	@GeneratedValue
-	public int getID() {
-		return ID;
-	}
-
-	public void setID(int id) {
-		ID = id;
-	}
-
+	@Column(name = "incident_id")
 	public String getIncident_ID() {
 		return incident_ID;
 	}
@@ -43,6 +44,7 @@ public class Incident_Assoc implements Serializable {
 		this.incident_ID = incident_ID;
 	}
 
+	@Column(name = "itemtype_ID")
 	public int getItemtype_ID() {
 		return itemtype_ID;
 	}

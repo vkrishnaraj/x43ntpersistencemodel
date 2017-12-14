@@ -1,51 +1,54 @@
 package aero.nettracer.persistence.model;
 
-import java.util.Date;
+import java.sql.Timestamp;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
-
-//for westjet incidents assigned to station within
-//last 24 hours and related features
 @Entity
-@Table(name = "INCIDENT_CONTROL")
+@Table(name = "incident_control")
 
 public class IncidentControl {
+
 	private long id;
 	private Incident incident;
-	private Date assignedDate;
+	private Timestamp assignedDate;
 	
 	@Id
 	@GeneratedValue
 	public long getId() {
 		return id;
 	}
+
 	public void setId(long id) {
 		this.id = id;
 	}
 	
-	@OneToOne(targetEntity = Incident.class)
-	@JoinColumn(name = "Incident_ID", nullable = false)
-	@Fetch(FetchMode.SELECT)
+	@OneToOne
+	@JoinColumn(name = "incident_id", nullable = false)
 	public Incident getIncident() {
 		return incident;
 	}
+
 	public void setIncident(Incident incident) {
 		this.incident = incident;
 	}
-	public Date getAssignedDate() {
+
+	@Column(name = "assigneddate")
+	@Temporal(TemporalType.TIMESTAMP)
+	public Timestamp getAssignedDate() {
 		return assignedDate;
 	}
-	public void setAssignedDate(Date assignedDate) {
+
+	public void setAssignedDate(Timestamp assignedDate) {
 		this.assignedDate = assignedDate;
 	}
 
-	
 }
