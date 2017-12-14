@@ -1,5 +1,7 @@
 package aero.nettracer.persistence.model.claims;
 
+import java.sql.Time;
+import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 
@@ -20,643 +22,369 @@ import javax.persistence.Table;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.IndexColumn;
-import org.hibernate.annotations.Proxy;
 
 @Entity
 @Table(name = "z_b6_audit_claim_settlement")
 public class AuditClaimSettlement {
 
+
+	private long id;
+	private String address1;
+	private String address2;
+	private String businessphone;
+	private String city;
+	private String claimagent;
+	private long claimsettlementid;
+	private String claimtype;
+	private String comments;
+	private String countrycode_id;
+	private Timestamp datestatuschange;
+	private Timestamp datetakeover;
+	private Timestamp depreciationcomplete;
+	private Timestamp depreciationdue;
+	private String email;
+	private String fax;
+	private Timestamp firstcontact;
+	private String firstname;
+	private String homephone;
+	private String language;
+	private String lastname;
+	private String membership;
+	private String mobilephone;
+	private String newcomment;
+	private Timestamp offerdue;
+	private Timestamp offersent;
+	private String offersentvia;
+	private String pager;
+	private Timestamp pplcdue;
+	private Timestamp pplcreceived;
+	private Timestamp pplcsent;
+	private String pplcvia;
+	private String province;
+	private String reason_modified;
+	private Timestamp releasedue;
+	private Timestamp revisitrequested;
+	private String revisitedby;
+	private int salutation;
+	private Timestamp secondcontact;
+	private String state_id;
+	private Timestamp time_modified;
+	private boolean verifyaddress;
+	private boolean verifybagcolor;
+	private boolean verifybrand;
+	private boolean verifycontents;
+	private boolean verifyemail;
+	private boolean verifyfraudcc;
+	private boolean verifyfraudname;
+	private boolean verifyfraudphone;
+	private boolean verifyphone;
+	private boolean verifytrace1;
+	private boolean verifytrace2;
+	private boolean verifytrace3;
+	private String zip;
+	private Incident incident;
+	private Agent modifyingagent;
+	private double overall_weight;
+	private List<AuditClaimSettlementBag> auditbaglist;
+
+
 	@Id
 	@GeneratedValue
-	private long auditClaimSettlementId;
-	
-	private long claimSettlementId;
-	
+	@Column(name = "auditClaimSettlementId")
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
+
 	@Column(name = "address1", length = 40)
-	private String address1;
-
-	@Column(name = "address2", length = 40)
-	private String address2;
-
-	@OneToMany(mappedBy = "auditClaimSettlement", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	@IndexColumn(name = "position")
-	@Fetch(FetchMode.SELECT)
-	private List<AuditClaimSettlementBag> auditBagList;
-
-	@Column(length = 25)
-	private String businessPhone;
-
-	@Column(length = 50)
-	private String city;
-
-	@Column(length = 25)
-	private String claimAgent;
-
-	@Column(length = 25)
-	private String claimType;
-
-	@Basic
-	private String comments;
-
-	@Column(length = 2)
-	private String countryCode_ID;
-
-	@Basic
-	private Date dateStatusChange;
-
-	@Basic
-	private Date dateTakeover;
-
-	@Basic
-	private Date depreciationComplete;
-
-	@Basic
-	private Date depreciationDue;
-
-	@Column(length = 50)
-	private String email;
-
-	@Column(length = 25)
-	private String fax;
-
-	@Basic
-	private Date firstContact;
-
-	@Column(length = 20)
-	private String firstName;
-
-	@Column(length = 25)
-	private String homePhone;
-
-	@ManyToOne(targetEntity = Incident.class)
-	@JoinColumn(name = "incident_id", nullable = false)
-	private Incident incident;
-
-	@Column(length = 25)
-	private String language;
-
-	@Column(length = 20)
-	private String lastName;
-
-	@Column(length = 20)
-	private String membership;
-
-	@Column(length = 25)
-	private String mobilePhone;
-
-	@Basic
-	private String newComment;
-
-	@Basic
-	private Date offerDue;
-
-	@Basic
-	private Date offerSent;
-
-	@Column(length = 20)
-	private String offerSentVia;
-
-	@Column(length = 25)
-	private String pager;
-
-	@Basic
-	private Date pplcDue;
-
-	@Basic
-	private Date pplcReceived;
-
-	@Column(name = "pplcSent")
-	private Date pplcSent;
-
-	@Column(length = 20)
-	private String pplcVia;
-
-	@Column(length = 100)
-	private String province;
-
-	@Basic
-	private Date releaseDue;
-
-	@Column(length = 20)
-	private String revisitedBy;
-
-	@Column(name = "revisitRequested")
-	private Date revisitRequested;
-
-	@Basic
-	private int salutation;
-
-	@Column(name = "secondContact")
-	private Date secondContact;
-
-	@Column(length = 2)
-	private String state_ID;
-
-	@Basic
-	private boolean verifyAddress;
-
-	@Basic
-	private boolean verifyBagColor;
-
-	@Basic
-	private boolean verifyBrand;
-
-	@Basic
-	private boolean verifyContents;
-
-	@Basic
-	private boolean verifyEmail;
-
-	@Basic
-	private boolean verifyFraudCC;
-
-	@Basic
-	private boolean verifyFraudName;
-
-	@Basic
-	private boolean verifyFraudPhone;
-
-	@Basic
-	private boolean verifyPhone;
-
-	@Basic
-	private boolean verifyTrace1;
-
-	@Basic
-	private boolean verifyTrace2;
-
-	@Basic
-	private boolean verifyTrace3;
-
-	@Column(length = 11)
-	private String zip;
-
-
-	@ManyToOne(targetEntity = Agent.class)
-	@JoinColumn(name = "modifyingAgent", nullable = false)
-	private Agent modifyingAgent;
-	
-	private Date time_modified;
-	
-	private String reason_modified;
-	
-	@Basic
-	private double overall_weight;
-
-	public double getOverall_weight() {
-		return overall_weight;
-	}
-
-	public void setOverall_weight(double overall_weight) {
-		this.overall_weight = overall_weight;
-	}
-
 	public String getAddress1() {
 		return address1;
-	}
-
-	public String getAddress2() {
-		return address2;
-	}
-
-	public String getBusinessPhone() {
-		return businessPhone;
-	}
-
-	public String getCity() {
-		return city;
-	}
-
-	public String getClaimAgent() {
-		return claimAgent;
-	}
-
-	public String getClaimType() {
-		return claimType;
-	}
-
-	public String getComments() {
-		return comments;
-	}
-
-	public String getCountryCode_ID() {
-		return countryCode_ID;
-	}
-
-	public Date getDateStatusChange() {
-		return dateStatusChange;
-	}
-
-	public Date getDateTakeover() {
-		return dateTakeover;
-	}
-
-	public Date getDepreciationComplete() {
-		return depreciationComplete;
-	}
-
-	public Date getDepreciationDue() {
-		return depreciationDue;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public String getFax() {
-		return fax;
-	}
-
-	public Date getFirstContact() {
-		return firstContact;
-	}
-
-	public String getFirstName() {
-		return firstName;
-	}
-
-	public String getHomePhone() {
-		return homePhone;
-	}
-
-	public Incident getIncident() {
-		return incident;
-	}
-
-	public String getLanguage() {
-		return language;
-	}
-
-	public String getLastName() {
-		return lastName;
-	}
-
-	public String getMembership() {
-		return membership;
-	}
-
-	public String getMobilePhone() {
-		return mobilePhone;
-	}
-
-	public String getNewComment() {
-		return newComment;
-	}
-
-	public Date getOfferDue() {
-		return offerDue;
-	}
-
-	public Date getOfferSent() {
-		return offerSent;
-	}
-
-	public String getOfferSentVia() {
-		return offerSentVia;
-	}
-
-	public String getPager() {
-		return pager;
-	}
-
-	public Date getPplcDue() {
-		return pplcDue;
-	}
-
-	public Date getPplcReceived() {
-		return pplcReceived;
-	}
-
-	public Date getPplcSent() {
-		return pplcSent;
-	}
-
-	public String getPplcVia() {
-		return pplcVia;
-	}
-
-	public String getProvince() {
-		return province;
-	}
-
-	public Date getReleaseDue() {
-		return releaseDue;
-	}
-
-	public String getRevisitedBy() {
-		return revisitedBy;
-	}
-
-	public Date getRevisitRequested() {
-		return revisitRequested;
-	}
-
-	public Date getSecondContact() {
-		return secondContact;
-	}
-
-	public String getState_ID() {
-		return state_ID;
-	}
-
-	public String getZip() {
-		return zip;
-	}
-
-	public boolean isVerifyAddress() {
-		return verifyAddress;
-	}
-
-	public boolean isVerifyBagColor() {
-		return verifyBagColor;
-	}
-
-	public boolean isVerifyBrand() {
-		return verifyBrand;
-	}
-
-	public boolean isVerifyContents() {
-		return verifyContents;
-	}
-
-	public boolean isVerifyEmail() {
-		return verifyEmail;
-	}
-
-	public boolean isVerifyFraudCC() {
-		return verifyFraudCC;
-	}
-
-	public boolean isVerifyFraudName() {
-		return verifyFraudName;
-	}
-
-	public boolean isVerifyFraudPhone() {
-		return verifyFraudPhone;
-	}
-
-	public boolean isVerifyPhone() {
-		return verifyPhone;
-	}
-
-	public boolean isVerifyTrace1() {
-		return verifyTrace1;
-	}
-
-	public boolean isVerifyTrace2() {
-		return verifyTrace2;
-	}
-
-	public boolean isVerifyTrace3() {
-		return verifyTrace3;
 	}
 
 	public void setAddress1(String address1) {
 		this.address1 = address1;
 	}
 
+	@Column(name = "address2", length = 40)
+	public String getAddress2() {
+		return address2;
+	}
+
 	public void setAddress2(String address2) {
 		this.address2 = address2;
 	}
 
-	public void setBusinessPhone(String businessPhone) {
-		this.businessPhone = businessPhone;
+	@Column(name = "businessphone", length = 25)
+	public String getBusinessphone() {
+		return businessphone;
+	}
+
+	public void setBusinessphone(String businessphone) {
+		this.businessphone = businessphone;
+	}
+
+	@Column(length = 50)
+	public String getCity() {
+		return city;
 	}
 
 	public void setCity(String city) {
 		this.city = city;
 	}
 
-	public void setClaimAgent(String claimAgent) {
-		this.claimAgent = claimAgent;
+	@Column(name = "claimagent", length = 25)
+	public String getClaimagent() {
+		return claimagent;
 	}
 
-	public void setClaimType(String claimType) {
-		this.claimType = claimType;
+	public void setClaimagent(String claimagent) {
+		this.claimagent = claimagent;
+	}
+
+	@Column(name = "claimsettlementid")
+	public long getClaimsettlementid() {
+		return claimsettlementid;
+	}
+
+	public void setClaimsettlementid(long claimsettlementid) {
+		this.claimsettlementid = claimsettlementid;
+	}
+
+	@Column(length = 25)
+	public String getClaimtype() {
+		return claimtype;
+	}
+
+	public void setClaimtype(String claimtype) {
+		this.claimtype = claimtype;
+	}
+
+	@Basic
+	public String getComments() {
+		return comments;
 	}
 
 	public void setComments(String comments) {
 		this.comments = comments;
 	}
 
-	public void setCountryCode_ID(String countryCode_ID) {
-		this.countryCode_ID = countryCode_ID;
+	@Column(length = 2)
+	public String getCountrycode_id() {
+		return countrycode_id;
 	}
 
-	public void setDateStatusChange(Date dateStatusChange) {
-		this.dateStatusChange = dateStatusChange;
+	public void setCountrycode_id(String countrycode_id) {
+		this.countrycode_id = countrycode_id;
 	}
 
-	public void setDateTakeover(Date dateTakeover) {
-		this.dateTakeover = dateTakeover;
+	@Basic
+	public Timestamp getDatestatuschange() {
+		return datestatuschange;
 	}
 
-	public void setDepreciationComplete(Date depreciationComplete) {
-		this.depreciationComplete = depreciationComplete;
+	public void setDatestatuschange(Timestamp dateStatusChange) {
+		this.datestatuschange = dateStatusChange;
 	}
 
-	public void setDepreciationDue(Date depreciationDue) {
-		this.depreciationDue = depreciationDue;
+	@Basic
+	public Timestamp getDatetakeover() {
+		return datetakeover;
+	}
+
+	public void setDatetakeover(Timestamp dateTakeover) {
+		this.datetakeover = dateTakeover;
+	}
+
+	@Basic
+	public Timestamp getDepreciationcomplete() {
+		return depreciationcomplete;
+	}
+
+	public void setDepreciationcomplete(Timestamp depreciationComplete) {
+		this.depreciationcomplete = depreciationComplete;
+	}
+
+	@Basic
+	public Timestamp getDepreciationdue() {
+		return depreciationdue;
+	}
+
+	public void setDepreciationdue(Timestamp depreciationdue) {
+		this.depreciationdue = depreciationdue;
+	}
+
+	@Column(length = 50)
+	public String getEmail() {
+		return email;
 	}
 
 	public void setEmail(String email) {
 		this.email = email;
 	}
 
+	@Column(length = 25)
+	public String getFax() {
+		return fax;
+	}
+
 	public void setFax(String fax) {
 		this.fax = fax;
 	}
 
-	public void setFirstContact(Date firstContact) {
-		this.firstContact = firstContact;
+	@Basic
+	public Timestamp getFirstcontact() {
+		return firstcontact;
 	}
 
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
+	public void setFirstcontact(Timestamp firstContact) {
+		this.firstcontact = firstContact;
 	}
 
-	public void setHomePhone(String homePhone) {
-		this.homePhone = homePhone;
+	@Column(length = 20)
+	public String getFirstname() {
+		return firstname;
 	}
 
-	public void setIncident(Incident incident) {
-		this.incident = incident;
+	public void setFirstname(String firstName) {
+		this.firstname = firstName;
+	}
+
+	@Column(length = 25)
+	public String getHomephone() {
+		return homephone;
+	}
+
+	public void setHomephone(String homePhone) {
+		this.homephone = homePhone;
+	}
+
+	@Column(length = 25)
+	public String getLanguage() {
+		return language;
 	}
 
 	public void setLanguage(String language) {
 		this.language = language;
 	}
 
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
+	@Column(length = 20)
+	public String getLastname() {
+		return lastname;
+	}
+
+	public void setLastname(String lastName) {
+		this.lastname = lastName;
+	}
+
+	@Column(length = 20)
+	public String getMembership() {
+		return membership;
 	}
 
 	public void setMembership(String membership) {
 		this.membership = membership;
 	}
 
-	public void setMobilePhone(String mobilePhone) {
-		this.mobilePhone = mobilePhone;
+	@Column(length = 25)
+	public String getMobilephone() {
+		return mobilephone;
 	}
 
-	public void setNewComment(String newComment) {
-		this.newComment = newComment;
+	public void setMobilephone(String mobilePhone) {
+		this.mobilephone = mobilePhone;
 	}
 
-	public void setOfferDue(Date offerDue) {
-		this.offerDue = offerDue;
+	@Basic
+	public String getNewcomment() {
+		return newcomment;
 	}
 
-	public void setOfferSent(Date offerSent) {
-		this.offerSent = offerSent;
+	public void setNewcomment(String newComment) {
+		this.newcomment = newComment;
 	}
 
-	public void setOfferSentVia(String offerSentVia) {
-		this.offerSentVia = offerSentVia;
+	@Basic
+	public Timestamp getOfferdue() {
+		return offerdue;
+	}
+
+	public void setOfferdue(Timestamp offerDue) {
+		this.offerdue = offerDue;
+	}
+
+	@Basic
+	public Timestamp getOffersent() {
+		return offersent;
+	}
+
+	public void setOffersent(Timestamp offerSent) {
+		this.offersent = offerSent;
+	}
+
+	@Column(length = 20)
+	public String getOffersentvia() {
+		return offersentvia;
+	}
+
+	public void setOffersentvia(String offerSentVia) {
+		this.offersentvia = offerSentVia;
+	}
+
+	@Column(length = 25)
+	public String getPager() {
+		return pager;
 	}
 
 	public void setPager(String pager) {
 		this.pager = pager;
 	}
 
-	public void setPplcDue(Date pplcDue) {
-		this.pplcDue = pplcDue;
+	@Basic
+	public Timestamp getPplcdue() {
+		return pplcdue;
 	}
 
-	public void setPplcReceived(Date pplcReceived) {
-		this.pplcReceived = pplcReceived;
+	public void setPplcdue(Timestamp pplcDue) {
+		this.pplcdue = pplcDue;
 	}
 
-	public void setPplcSent(Date pplcSent) {
-		this.pplcSent = pplcSent;
+	@Basic
+	public Timestamp getPplcreceived() {
+		return pplcreceived;
 	}
 
-	public void setPplcVia(String pplcVia) {
-		this.pplcVia = pplcVia;
+	public void setPplcreceived(Timestamp pplcReceived) {
+		this.pplcreceived = pplcReceived;
+	}
+
+	@Column(name = "pplcSent")
+	public Timestamp getPplcsent() {
+		return pplcsent;
+	}
+
+	public void setPplcsent(Timestamp pplcSent) {
+		this.pplcsent = pplcSent;
+	}
+
+	@Column(length = 20)
+	public String getPplcvia() {
+		return pplcvia;
+	}
+
+	public void setPplcvia(String pplcVia) {
+		this.pplcvia = pplcVia;
+	}
+
+	@Column(length = 100)
+	public String getProvince() {
+		return province;
 	}
 
 	public void setProvince(String province) {
 		this.province = province;
-	}
-
-	public void setReleaseDue(Date releaseDue) {
-		this.releaseDue = releaseDue;
-	}
-
-	public void setRevisitedBy(String revisitedBy) {
-		this.revisitedBy = revisitedBy;
-	}
-
-	public void setRevisitRequested(Date revisitRequested) {
-		this.revisitRequested = revisitRequested;
-	}
-
-	public void setSecondContact(Date secondContact) {
-		this.secondContact = secondContact;
-	}
-
-	public void setState_ID(String state_ID) {
-		this.state_ID = state_ID;
-	}
-	
-	public void setVerifyAddress(boolean verifyAddress) {
-		this.verifyAddress = verifyAddress;
-	}
-
-	public void setVerifyBagColor(boolean verifyBagColor) {
-		this.verifyBagColor = verifyBagColor;
-	}
-
-	public void setVerifyBrand(boolean verifyBrand) {
-		this.verifyBrand = verifyBrand;
-	}
-
-	public void setVerifyContents(boolean verifyContents) {
-		this.verifyContents = verifyContents;
-	}
-
-	public void setVerifyEmail(boolean verifyEmail) {
-		this.verifyEmail = verifyEmail;
-	}
-
-	public void setVerifyFraudCC(boolean verifyFraudCC) {
-		this.verifyFraudCC = verifyFraudCC;
-	}
-
-	public void setVerifyFraudName(boolean verifyFraudName) {
-		this.verifyFraudName = verifyFraudName;
-	}
-
-	public void setVerifyFraudPhone(boolean verifyFraudPhone) {
-		this.verifyFraudPhone = verifyFraudPhone;
-	}
-
-	public void setVerifyPhone(boolean verifyPhone) {
-		this.verifyPhone = verifyPhone;
-	}
-
-	public void setVerifyTrace1(boolean verifyTrace1) {
-		this.verifyTrace1 = verifyTrace1;
-	}
-
-	public void setVerifyTrace2(boolean verifyTrace2) {
-		this.verifyTrace2 = verifyTrace2;
-	}
-
-	public void setVerifyTrace3(boolean verifyTrace3) {
-		this.verifyTrace3 = verifyTrace3;
-	}
-
-	public void setZip(String zip) {
-		this.zip = zip;
-	}
-
-	public int getSalutation() {
-		return salutation;
-	}
-
-	public void setSalutation(int salutation) {
-		this.salutation = salutation;
-	}
-
-	public long getClaimSettlementId() {
-		return claimSettlementId;
-	}
-
-	public void setClaimSettlementId(long auditClaimSettlementId) {
-		this.claimSettlementId = auditClaimSettlementId;
-	}
-
-	public List<AuditClaimSettlementBag> getAuditBagList() {
-		return auditBagList;
-	}
-
-	public void setAuditBagList(List<AuditClaimSettlementBag> auditBagList) {
-		this.auditBagList = auditBagList;
-	}
-
-	public long getAuditClaimSettlementId() {
-		return auditClaimSettlementId;
-	}
-
-	public void setAuditClaimSettlementId(long auditClaimSettlementId) {
-		this.auditClaimSettlementId = auditClaimSettlementId;
-	}
-
-	public Agent getModifyingAgent() {
-		return modifyingAgent;
-	}
-
-	public void setModifyingAgent(Agent modifyingAgent) {
-		this.modifyingAgent = modifyingAgent;
-	}
-
-	public Date getTime_modified() {
-		return time_modified;
-	}
-
-	public void setTime_modified(Date time_modified) {
-		this.time_modified = time_modified;
 	}
 
 	public String getReason_modified() {
@@ -665,6 +393,225 @@ public class AuditClaimSettlement {
 
 	public void setReason_modified(String reason_modified) {
 		this.reason_modified = reason_modified;
+	}
+
+	@Basic
+	public Timestamp getReleasedue() {
+		return releasedue;
+	}
+
+	public void setReleasedue(Timestamp releaseDue) {
+		this.releasedue = releaseDue;
+	}
+
+	@Column(name = "revisitrequested")
+	public Timestamp getRevisitrequested() {
+		return revisitrequested;
+	}
+
+	public void setRevisitrequested(Timestamp revisitRequested) {
+		this.revisitrequested = revisitRequested;
+	}
+
+	@Column(length = 20)
+	public String getRevisitedby() {
+		return revisitedby;
+	}
+
+	public void setRevisitedby(String revisitedBy) {
+		this.revisitedby = revisitedBy;
+	}
+
+	@Basic
+	public int getSalutation() {
+		return salutation;
+	}
+
+	public void setSalutation(int salutation) {
+		this.salutation = salutation;
+	}
+
+	@Column(name = "secondContact")
+	public Timestamp getSecondcontact() {
+		return secondcontact;
+	}
+
+	public void setSecondcontact(Timestamp secondContact) {
+		this.secondcontact = secondContact;
+	}
+
+	@Column(length = 2)
+	public String getState_id() {
+		return state_id;
+	}
+
+	public void setState_id(String state_ID) {
+		this.state_id = state_ID;
+	}
+
+	public Timestamp getTime_modified() {
+		return time_modified;
+	}
+
+	public void setTime_modified(Timestamp time_modified) {
+		this.time_modified = time_modified;
+	}
+
+	@Basic
+	public boolean isVerifyaddress() {
+		return verifyaddress;
+	}
+
+	public void setVerifyaddress(boolean verifyAddress) {
+		this.verifyaddress = verifyAddress;
+	}
+
+	@Basic
+	public boolean isVerifybagcolor() {
+		return verifybagcolor;
+	}
+
+	public void setVerifyBagColor(boolean verifyBagColor) {
+		this.verifybagcolor = verifyBagColor;
+	}
+
+	@Basic
+	public boolean isVerifybrand() {
+		return verifybrand;
+	}
+
+	public void setVerifybrand(boolean verifybrand) {
+		this.verifybrand = verifybrand;
+	}
+
+	@Basic
+	public boolean isVerifycontents() {
+		return verifycontents;
+	}
+
+	public void setVerifycontents(boolean verifyContents) {
+		this.verifycontents = verifyContents;
+	}
+
+	@Basic
+	public boolean isVerifyemail() {
+		return verifyemail;
+	}
+
+	public void setVerifyemail(boolean verifyEmail) {
+		this.verifyemail = verifyEmail;
+	}
+
+	@Basic
+	public boolean isVerifyfraudcc() {
+		return verifyfraudcc;
+	}
+
+	public void setVerifyfraudcc(boolean verifyFraudCC) {
+		this.verifyfraudcc = verifyFraudCC;
+	}
+
+	@Basic
+	public boolean isVerifyfraudname() {
+		return verifyfraudname;
+	}
+
+	public void setVerifyfraudname(boolean verifyFraudName) {
+		this.verifyfraudname = verifyFraudName;
+	}
+
+	@Basic
+	public boolean isVerifyfraudphone() {
+		return verifyfraudphone;
+	}
+
+	public void setVerifyfraudphone(boolean verifyFraudPhone) {
+		this.verifyfraudphone = verifyFraudPhone;
+	}
+
+	@Basic
+	public boolean isVerifyphone() {
+		return verifyphone;
+	}
+
+	public void setVerifyphone(boolean verifyPhone) {
+		this.verifyphone = verifyPhone;
+	}
+
+	@Basic
+	public boolean isVerifytrace1() {
+		return verifytrace1;
+	}
+
+	public void setVerifytrace1(boolean verifyTrace1) {
+		this.verifytrace1 = verifyTrace1;
+	}
+
+	@Basic
+	public boolean isVerifytrace2() {
+		return verifytrace2;
+	}
+
+	public void setVerifytrace2(boolean verifyTrace2) {
+		this.verifytrace2 = verifyTrace2;
+	}
+
+	@Basic
+	public boolean isVerifytrace3() {
+		return verifytrace3;
+	}
+
+	public void setVerifytrace3(boolean verifytrace3) {
+		this.verifytrace3 = verifytrace3;
+	}
+
+	@Column(length = 11)
+	public String getZip() {
+		return zip;
+	}
+
+	public void setZip(String zip) {
+		this.zip = zip;
+	}
+
+	@ManyToOne(targetEntity = Incident.class)
+	@JoinColumn(name = "incident_id", nullable = false)
+	public Incident getIncident() {
+		return incident;
+	}
+
+	public void setIncident(Incident incident) {
+		this.incident = incident;
+	}
+
+	@ManyToOne(targetEntity = Agent.class)
+	@JoinColumn(name = "modifyingAgent", nullable = false)
+	public Agent getModifyingagent() {
+		return modifyingagent;
+	}
+
+	public void setModifyingagent(Agent modifyingAgent) {
+		this.modifyingagent = modifyingAgent;
+	}
+
+	@Basic
+	public double getOverall_weight() {
+		return overall_weight;
+	}
+
+	public void setOverall_weight(double overall_weight) {
+		this.overall_weight = overall_weight;
+	}
+
+	@OneToMany(mappedBy = "auditClaimSettlement", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@IndexColumn(name = "position")
+	@Fetch(FetchMode.SELECT)
+	public List<AuditClaimSettlementBag> getAuditbaglist() {
+		return auditbaglist;
+	}
+
+	public void setAuditbaglist(List<AuditClaimSettlementBag> auditBagList) {
+		this.auditbaglist = auditBagList;
 	}
 
 }

@@ -1,13 +1,6 @@
 package aero.nettracer.persistence.model.claims;
 
-import javax.persistence.Basic;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-import javax.persistence.Transient;
+import javax.persistence.*;
 
 import org.hibernate.annotations.Proxy;
 
@@ -15,34 +8,36 @@ import org.hibernate.annotations.Proxy;
 @Table(name = "z_b6_claim_settlement_inventory")
 public class SettlementBagInventory {
 
+
+	private long id;
+	private int categorytype_id;
+	private String description;
+	private ClaimSettlementBag claimsettlementbag;
+	private int position;
+	private boolean flaggedforremoval;
+
+
 	@Id
 	@GeneratedValue
-	private long inventoryId;
-
-	@Basic
-	private int position;
-	
-	@Transient
-	private boolean flaggedForRemoval;
-
-	@ManyToOne(targetEntity = ClaimSettlementBag.class)
-	@JoinColumn(name = "bagId", nullable = false)
-	private ClaimSettlementBag claimSettlementBag;
-
-	@Basic
-	private int categoryType_ID;
-
-	@Basic
-	private String description;
-
-	public long getInventoryId() {
-		return inventoryId;
+	@Column(name="inventoryId")
+	public long getId() {
+		return id;
 	}
 
-	public void setInventoryId(long inventoryId) {
-		this.inventoryId = inventoryId;
+	public void setId(long id) {
+		this.id = id;
 	}
 
+	@Basic
+	public int getCategorytype_id() {
+		return categorytype_id;
+	}
+
+	public void setCategorytype_id(int categorytype_id) {
+		this.categorytype_id = categorytype_id;
+	}
+
+	@Basic
 	public String getDescription() {
 		return description;
 	}
@@ -51,22 +46,17 @@ public class SettlementBagInventory {
 		this.description = description;
 	}
 
-	public int getCategoryType_ID() {
-		return categoryType_ID;
+	@ManyToOne(targetEntity = ClaimSettlementBag.class)
+	@JoinColumn(name = "bagId", nullable = false)
+	public ClaimSettlementBag getClaimsettlementbag() {
+		return claimsettlementbag;
 	}
 
-	public void setCategoryType_ID(int categoryType_ID) {
-		this.categoryType_ID = categoryType_ID;
+	public void setClaimsettlementbag(ClaimSettlementBag claimsettlementbag) {
+		this.claimsettlementbag = claimsettlementbag;
 	}
 
-	public ClaimSettlementBag getClaimSettlementBag() {
-		return claimSettlementBag;
-	}
-
-	public void setClaimSettlementBag(ClaimSettlementBag claimSettlementBag) {
-		this.claimSettlementBag = claimSettlementBag;
-	}
-
+	@Basic
 	public int getPosition() {
 		return position;
 	}
@@ -75,11 +65,12 @@ public class SettlementBagInventory {
 		this.position = position;
 	}
 
-	public boolean isFlaggedForRemoval() {
-		return flaggedForRemoval;
+	@Transient
+	public boolean isFlaggedforremoval() {
+		return flaggedforremoval;
 	}
 
-	public void setFlaggedForRemoval(boolean flaggedForRemoval) {
-		this.flaggedForRemoval = flaggedForRemoval;
+	public void setFlaggedforremoval(boolean flaggedforremoval) {
+		this.flaggedforremoval = flaggedforremoval;
 	}
 }

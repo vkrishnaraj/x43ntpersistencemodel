@@ -23,31 +23,28 @@ import org.hibernate.annotations.Proxy;
 @Table(name = "z_b6_audit_claim_settlement_bag")
 public class AuditClaimSettlementBag {
 
+
+	private long id;
+	private String color;
+	private String manufacturer;
+	private int position;
+	private String type;
+	private AuditClaimSettlement auditclaimsettlement;
+	private List<AuditSettlementBagInventory> auditinventory;
+
+
 	@Id
 	@GeneratedValue
-	private long auditBagId;
+	@Column(name = "auditBagId")
+	public long getId() {
+		return id;
+	}
 
-	@Basic
-	private int position;
+	public void setId(long id) {
+		this.id = id;
+	}
 
 	@Column(length = 2)
-	private String color;
-
-	@Column(length = 2)
-	private String type;
-
-	@Column(length = 100)
-	private String manufacturer;
-
-	@ManyToOne(targetEntity = AuditClaimSettlement.class)
-	@JoinColumn(name = "auditClaimSettlementId", nullable = false)
-	private AuditClaimSettlement auditClaimSettlement;
-
-	@OneToMany(mappedBy = "auditClaimSettlementBag", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	@IndexColumn(name = "position")
-	@Fetch(FetchMode.SELECT)
-	private List<AuditSettlementBagInventory> auditInventory;
-
 	public String getColor() {
 		return color;
 	}
@@ -56,14 +53,7 @@ public class AuditClaimSettlementBag {
 		this.color = color;
 	}
 
-	public String getType() {
-		return type;
-	}
-
-	public void setType(String type) {
-		this.type = type;
-	}
-
+	@Column(length = 100)
 	public String getManufacturer() {
 		return manufacturer;
 	}
@@ -72,14 +62,7 @@ public class AuditClaimSettlementBag {
 		this.manufacturer = manufacturer;
 	}
 
-	public long getAuditBagId() {
-		return auditBagId;
-	}
-
-	public void setAuditBagId(long auditBagId) {
-		this.auditBagId = auditBagId;
-	}
-
+	@Basic
 	public int getPosition() {
 		return position;
 	}
@@ -88,19 +71,33 @@ public class AuditClaimSettlementBag {
 		this.position = position;
 	}
 
-	public AuditClaimSettlement getAuditClaimSettlement() {
-		return auditClaimSettlement;
+	@Column(length = 2)
+	public String getType() {
+		return type;
 	}
 
-	public void setAuditClaimSettlement(AuditClaimSettlement auditClaimSettlement) {
-		this.auditClaimSettlement = auditClaimSettlement;
+	public void setType(String type) {
+		this.type = type;
 	}
 
-	public List<AuditSettlementBagInventory> getAuditInventory() {
-		return auditInventory;
+	@ManyToOne(targetEntity = AuditClaimSettlement.class)
+	@JoinColumn(name = "auditClaimSettlementId", nullable = false)
+	public AuditClaimSettlement getAuditclaimsettlement() {
+		return auditclaimsettlement;
 	}
 
-	public void setAuditInventory(List<AuditSettlementBagInventory> auditInventory) {
-		this.auditInventory = auditInventory;
+	public void setAuditclaimsettlement(AuditClaimSettlement auditclaimsettlement) {
+		this.auditclaimsettlement = auditclaimsettlement;
+	}
+
+	@OneToMany(mappedBy = "auditClaimSettlementBag", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@IndexColumn(name = "position")
+	@Fetch(FetchMode.SELECT)
+	public List<AuditSettlementBagInventory> getAuditinventory() {
+		return auditinventory;
+	}
+
+	public void setAuditinventory(List<AuditSettlementBagInventory> auditinventory) {
+		this.auditinventory = auditinventory;
 	}
 }

@@ -11,62 +11,75 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Column;
-import java.util.Date;
+import java.sql.Timestamp;
 
 @Entity
 @Table(name="bagbuzz")
 public class BagBuzz {
+
+	private long id;
+	private Timestamp created_timestamp;
+	private String data;
+	private String description;
+	private Status status;
+	private Category category;
+
 	@Id
 	@GeneratedValue
-	public long getBagbuzz_id() {
-		return bagbuzz_id;
+	@Column(name = "bagbuzz_id")
+	public long getId() {
+		return id;
 	}
-	public void setBagbuzz_id(long bagbuzzId) {
-		bagbuzz_id = bagbuzzId;
+
+	public void setId(long id) {
+		id = id;
 	}
-	@Column(length=30)
-	public String getDescription() {
-		return description;
+
+	@Temporal(value = TemporalType.TIMESTAMP)
+	public Timestamp getCreated_timestamp() {
+		return created_timestamp;
 	}
-	public void setDescription(String description) {
-		this.description = description;
+
+	public void setCreated_timestamp(Timestamp createdTimestamp) {
+		created_timestamp = createdTimestamp;
 	}
 
 	public String getData() {
 		return data;
 	}
+
 	public void setData(String data) {
 		this.data = data;
 	}
-	@ManyToOne
-	@JoinColumn(name = "status_ID", nullable = false)
-	public Status getStatus() {
-		return status;
+
+	@Column(length=30)
+	public String getDescription() {
+		return description;
 	}
-	public void setStatus(Status status) {
-		this.status = status;
-	}
-	@Temporal(TemporalType.TIMESTAMP)
-	public Date getCreated_timestamp() {
-		return created_timestamp;
-	}
-	public void setCreated_timestamp(Date createdTimestamp) {
-		created_timestamp = createdTimestamp;
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 	@ManyToOne
-	@JoinColumn(name = "category_ID", nullable = false)
+	@JoinColumn(name = "status_id", nullable = false)
+	public Status getStatus() {
+		return status;
+	}
+
+	public void setStatus(Status status) {
+		this.status = status;
+	}
+
+	@ManyToOne
+	@JoinColumn(name = "category_id", nullable = false)
 	public Category getCategory() {
 		return category;
 	}
+
 	public void setCategory(Category category) {
 		this.category = category;
 	}
 
-	long bagbuzz_id;
-	String description;
-	String data;
-	Status status;
-	Date created_timestamp;
-	Category category;
+
 }

@@ -15,34 +15,34 @@ import org.hibernate.annotations.Proxy;
 @Table(name = "z_b6_audit_claim_settlement_inventory")
 public class AuditSettlementBagInventory {
 
+
+	private long id;
+	private int categorytype_id;
+	private String description;
+	private int position;
+	private AuditClaimSettlementBag auditclaimsettlementbag;
+	private boolean flaggedforremoval;
+
 	@Id
 	@GeneratedValue
-	private long auditInventoryId;
-
-	@Basic
-	private int position;
-
-	@Transient
-	private boolean flaggedForRemoval;
-
-	@ManyToOne(targetEntity = AuditClaimSettlementBag.class)
-	@JoinColumn(name = "auditBagId", nullable = false)
-	private AuditClaimSettlementBag auditClaimSettlementBag;
-
-	@Basic
-	private int categoryType_ID;
-
-	@Basic
-	private String description;
-
-	public long getAuditInventoryId() {
-		return auditInventoryId;
+	public long getId() {
+		return id;
 	}
 
-	public void setAuditInventoryId(long auditInventoryId) {
-		this.auditInventoryId = auditInventoryId;
+	public void setId(long id) {
+		this.id = id;
 	}
 
+	@Basic
+	public int getCategorytype_id() {
+		return categorytype_id;
+	}
+
+	public void setCategorytype_id(int categorytype_id) {
+		this.categorytype_id = categorytype_id;
+	}
+
+	@Basic
 	public String getDescription() {
 		return description;
 	}
@@ -51,14 +51,7 @@ public class AuditSettlementBagInventory {
 		this.description = description;
 	}
 
-	public int getCategoryType_ID() {
-		return categoryType_ID;
-	}
-
-	public void setCategoryType_ID(int categoryType_ID) {
-		this.categoryType_ID = categoryType_ID;
-	}
-
+	@Basic
 	public int getPosition() {
 		return position;
 	}
@@ -67,20 +60,25 @@ public class AuditSettlementBagInventory {
 		this.position = position;
 	}
 
-	public boolean isFlaggedForRemoval() {
-		return flaggedForRemoval;
+	@ManyToOne(targetEntity = AuditClaimSettlementBag.class)
+	@JoinColumn(name = "auditBagId", nullable = false)
+	public AuditClaimSettlementBag getAuditclaimsettlementbag() {
+		return auditclaimsettlementbag;
 	}
 
-	public void setFlaggedForRemoval(boolean flaggedForRemoval) {
-		this.flaggedForRemoval = flaggedForRemoval;
+	public void setAuditclaimsettlementbag(
+			AuditClaimSettlementBag auditclaimsettlementbag) {
+		this.auditclaimsettlementbag = auditclaimsettlementbag;
 	}
 
-	public AuditClaimSettlementBag getAuditClaimSettlementBag() {
-		return auditClaimSettlementBag;
+	@Transient
+	public boolean isFlaggedforremoval() {
+		return flaggedforremoval;
 	}
 
-	public void setAuditClaimSettlementBag(
-			AuditClaimSettlementBag auditClaimSettlementBag) {
-		this.auditClaimSettlementBag = auditClaimSettlementBag;
+	public void setFlaggedforremoval(boolean flaggedforremoval) {
+		this.flaggedforremoval = flaggedforremoval;
 	}
+
+
 }

@@ -23,31 +23,28 @@ import org.hibernate.annotations.Proxy;
 @Table(name = "z_b6_claim_settlement_bag")
 public class ClaimSettlementBag {
 
-	@Id
-	@GeneratedValue
-	private long bagId;
-	
-	@Basic
-	private int position;
 
-	@Column(length = 2)
+	private long id;
 	private String color;
-
-	@Column(length = 2)
-	private String type;
-
-	@Column(length = 100)
 	private String manufacturer;
-
-	@ManyToOne(targetEntity = ClaimSettlement.class)
-	@JoinColumn(name = "claimSettlementId", nullable = false)
-	private ClaimSettlement claimSettlement;
-
-	@OneToMany(mappedBy = "claimSettlementBag", cascade=CascadeType.ALL, fetch=FetchType.EAGER)
-	@IndexColumn(name="position")
-	@Fetch(FetchMode.SELECT)
+	private String type;
+	private ClaimSettlement claimsettlement;
+	private int position;
 	private List<SettlementBagInventory> inventory;
 
+
+	@Id
+	@GeneratedValue
+	@Column(name = "bagId")
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
+
+	@Column(length = 2)
 	public String getColor() {
 		return color;
 	}
@@ -56,14 +53,7 @@ public class ClaimSettlementBag {
 		this.color = color;
 	}
 
-	public String getType() {
-		return type;
-	}
-
-	public void setType(String type) {
-		this.type = type;
-	}
-
+	@Column(length = 100)
 	public String getManufacturer() {
 		return manufacturer;
 	}
@@ -72,22 +62,37 @@ public class ClaimSettlementBag {
 		this.manufacturer = manufacturer;
 	}
 
-	public ClaimSettlement getClaimSettlement() {
-		return claimSettlement;
+	@Column(length = 2)
+	public String getType() {
+		return type;
 	}
 
-	public void setClaimSettlement(ClaimSettlement claimSettlement) {
-		this.claimSettlement = claimSettlement;
+	public void setType(String type) {
+		this.type = type;
 	}
 
-	public long getBagId() {
-		return bagId;
+	@ManyToOne(targetEntity = ClaimSettlement.class)
+	@JoinColumn(name = "claimSettlementId", nullable = false)
+	public ClaimSettlement getClaimsettlement() {
+		return claimsettlement;
 	}
 
-	public void setBagId(long bagId) {
-		this.bagId = bagId;
+	public void setClaimsettlement(ClaimSettlement claimsettlement) {
+		this.claimsettlement = claimsettlement;
 	}
 
+	@Basic
+	public int getPosition() {
+		return position;
+	}
+
+	public void setPosition(int position) {
+		this.position = position;
+	}
+
+	@OneToMany(mappedBy = "claimSettlementBag", cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+	@IndexColumn(name="position")
+	@Fetch(FetchMode.SELECT)
 	public List<SettlementBagInventory> getInventory() {
 		return inventory;
 	}
@@ -96,11 +101,4 @@ public class ClaimSettlementBag {
 		this.inventory = inventory;
 	}
 
-	public int getPosition() {
-		return position;
-	}
-
-	public void setPosition(int position) {
-		this.position = position;
-	}
 }
