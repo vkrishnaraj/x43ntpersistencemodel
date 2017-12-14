@@ -56,11 +56,11 @@ public class Incident_Assoc {
 	@Transient
 	public ItemType getItemTypeObject(){
 		ItemType itemType = new ItemType();
-		itemType.setItemType_ID(itemtype_ID);
+		itemType.setId(itemtype_ID);
 		return itemType;
 	}
 
 	public void setItemTypeObject(ItemType itemType){
-		itemtype_ID = itemType.getItemType_ID();
+		itemtype_ID = itemType.getId();
 	}
 }

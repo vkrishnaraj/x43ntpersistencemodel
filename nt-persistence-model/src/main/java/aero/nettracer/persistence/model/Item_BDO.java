@@ -1,16 +1,13 @@
 package aero.nettracer.persistence.model;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
-import org.hibernate.annotations.Proxy;
 
 @Entity
 @Table(name = "item_bdo")
@@ -21,7 +18,9 @@ public class Item_BDO {
 	private BDO bdo;
 	private Item item;
 
-	@Id @GeneratedValue
+	@Id
+	@GeneratedValue
+	@Column(name = "id")
 	public long getId() {
 		return id;
 	}
@@ -30,6 +29,7 @@ public class Item_BDO {
 		this.id = id;
 	}
 
+	@Column(name = "canceled")
 	public boolean isCanceled() {
 		return canceled;
 	}
@@ -38,9 +38,8 @@ public class Item_BDO {
 		this.canceled = canceled;
 	}
 
-	@ManyToOne(targetEntity = BDO.class)
+	@ManyToOne
 	@JoinColumn(name = "bdo_ID", nullable = false)
-	@Fetch(FetchMode.SELECT)
 	public BDO getBdo() {
 		return bdo;
 	}
@@ -49,9 +48,8 @@ public class Item_BDO {
 		this.bdo = bdo;
 	}
 
-
-	@ManyToOne(targetEntity = Item.class, cascade=CascadeType.ALL)
-	@JoinColumn(name = "item_ID", nullable = false)
+	@ManyToOne(cascade=CascadeType.ALL)
+	@JoinColumn(name = "item_id", nullable = false)
 	public Item getItem() {
 		return item;
 	}

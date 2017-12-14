@@ -1,5 +1,7 @@
 package aero.nettracer.persistence.model;
 
+import static aero.nettracer.commons.utils.CommonsConstants.DECIMALFORMAT;
+
 import java.util.Date;
 
 import aero.nettracer.persistence.model.fraudservice.Attachment;
@@ -263,15 +265,14 @@ public class Interim_Depreciation_Item {
         }
     }
 
-    //Enble once this module is made dependent on commons
-    /*@Transient
+    @Transient
     public String getApprovedTotal() {
         if(getInterimClaimDepreciation()!=null){
-            return CommonsConstants.DECIMALFORMAT.format(getInterimClaimDepreciation().getTotalApprovedPayout());
+            return DECIMALFORMAT.format(getInterimClaimDepreciation().getTotalApprovedPayout());
         } else {
             return "";
         }
-    }*/
+    }
 
     @Transient
     public String getCategoryName() {
@@ -303,11 +304,10 @@ public class Interim_Depreciation_Item {
     }
 
 
-    //Enable the below methods once this model is dependent on commons
-    /*@Transient
+    @Transient
     public String getClaimTotal() {
         if(getInterimClaimDepreciation()!=null){
-            return CommonsConstants.DECIMALFORMAT.format(getInterimClaimDepreciation().getTotalClaim());
+            return DECIMALFORMAT.format(getInterimClaimDepreciation().getTotalClaim());
         } else {
             return "0.00";
         }
@@ -317,7 +317,7 @@ public class Interim_Depreciation_Item {
     public String getValueTotal() {
 
         if(getInterimClaimDepreciation()!=null){
-            return CommonsConstants.DECIMALFORMAT.format(getInterimClaimDepreciation().getTotalValue());
+            return DECIMALFORMAT.format(getInterimClaimDepreciation().getTotalValue());
         } else
             return "0.00";
     }
@@ -325,7 +325,7 @@ public class Interim_Depreciation_Item {
     @Transient
     public String getDispClaimValue() {
         if(getClaimValue()!=0){
-            return CommonsConstants.DECIMALFORMAT.format(getClaimValue());
+            return DECIMALFORMAT.format(getClaimValue());
         } else {
             return "0.00";
         }
@@ -334,7 +334,7 @@ public class Interim_Depreciation_Item {
     @Transient
     public String getDispCalcValue() {
         if(getCalcValue()!=0){
-            return CommonsConstants.DECIMALFORMAT.format(getCalcValue());
+            return DECIMALFORMAT.format(getCalcValue());
         } else
             return "0.00";
 
@@ -343,21 +343,21 @@ public class Interim_Depreciation_Item {
     @Transient
     public String getDispAmountClaimed() {
         if(getAmountClaimed()!=0){
-            return CommonsConstants.DECIMALFORMAT.format(getAmountClaimed());
+            return DECIMALFORMAT.format(getAmountClaimed());
         }else
             return "0.00";
     }
 
      @Transient
     public String getDepamount(){
-        return CommonsConstants.DECIMALFORMAT.format(getAmountClaimed()-getClaimValue());
+        return DECIMALFORMAT.format(getAmountClaimed()-getClaimValue());
     }
 
     @Transient
     public String getPercent(){
         double divisor = getAmountClaimed()!=0?getAmountClaimed():1;
-        return CommonsConstants.DECIMALFORMAT.format(((getAmountClaimed()-getClaimValue())/divisor)*100)+"%";
-    }*/
+        return DECIMALFORMAT.format(((getAmountClaimed()-getClaimValue())/divisor)*100)+"%";
+    }
 
     @Transient
     public void setDispAmountClaimed(String amountClaimed) {

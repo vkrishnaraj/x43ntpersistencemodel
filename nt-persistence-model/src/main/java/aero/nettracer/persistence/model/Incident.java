@@ -844,7 +844,7 @@ public class Incident {
 
 	@Transient
 	public int getItemtype_ID() {
-		return itemtype.getItemType_ID();
+		return itemtype.getId();
 	}
 
 	@Transient

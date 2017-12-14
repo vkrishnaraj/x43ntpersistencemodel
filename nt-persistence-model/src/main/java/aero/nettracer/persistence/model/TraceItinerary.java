@@ -13,7 +13,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import org.hibernate.annotations.Proxy;
 
 @Entity
 @Table(name = "Itinerary")
@@ -64,7 +63,7 @@ public class TraceItinerary implements Serializable {
 		for (ListIterator i = root.get_children().listIterator(); i.hasNext();) {
 			child = (ElementNode) i.next();
 			if (child.getType().equals("Itinerary_ID")) {
-				obj.setItinerary_ID(parseInt(child.getTextContents()));
+				obj.setId(parseInt(child.getTextContents()));
 			} else if (child.getType().equals("itinerarytype")) {
 				obj.setItinerarytype(parseInt(child.getTextContents()));
 			} else if (child.getType().equals("from")) {
