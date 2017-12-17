@@ -1,24 +1,31 @@
 package aero.nettracer.persistence.model;
 
-import java.io.Serializable;
-
-import aero.nettracer.persistence.model.i8n.LocaleBasedObject;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Transient;
-import org.hibernate.annotations.Proxy;
 
 @Entity
-@Table(name = "OHD_CategoryType")
-public class OHD_CategoryType extends LocaleBasedObject implements Serializable {
-	private int OHD_CategoryType_ID;
+@Table(name = "ohd_categorytype")
+public class OHD_CategoryType {
+
+	private int id;
 	private String categoryKey;
 	private String wtCategory;
-	private String MSG_KEY = "CATEGORY_";	
+	private String MSG_KEY = "CATEGORY_";
 
+	@Id
+	@GeneratedValue
+	@Column(name = "ohd_categorytype_id")
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int categoryType_ID) {
+		id = categoryType_ID;
+	}
 
 	@Column(name = "categorytype")
 	public String getCategoryKey() {
@@ -27,16 +34,6 @@ public class OHD_CategoryType extends LocaleBasedObject implements Serializable 
 
 	public void setCategoryKey(String categoryKey) {
 		this.categoryKey = categoryKey;
-	}
-
-	@Id
-	@GeneratedValue
-	public int getOHD_CategoryType_ID() {
-		return OHD_CategoryType_ID;
-	}
-
-	public void setOHD_CategoryType_ID(int categoryType_ID) {
-		OHD_CategoryType_ID = categoryType_ID;
 	}
 
 	@Column(name = "wt_category")
@@ -53,5 +50,4 @@ public class OHD_CategoryType extends LocaleBasedObject implements Serializable 
 		return MSG_KEY + getCategoryKey();
 	}
 
-	
 }

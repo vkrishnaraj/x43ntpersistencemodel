@@ -1,9 +1,3 @@
-/*
- * Created on Jul 13, 2004
- *
- * TODO To change the template for this generated file go to
- * Window - Preferences - Java - Code Style - Code Templates
- */
 package aero.nettracer.persistence.model;
 
 import java.io.Serializable;
@@ -21,7 +15,7 @@ import org.hibernate.annotations.Proxy;
 
 @Entity
 @Table(name = "ohd_log_itinerary")
-public class OHD_Log_Itinerary implements Serializable {
+public class OHD_Log_Itinerary {
 	private int itinerary_ID;
 	private int itinerarytype;
 	private String legfrom;

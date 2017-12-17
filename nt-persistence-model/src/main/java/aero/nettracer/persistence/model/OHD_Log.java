@@ -1,137 +1,54 @@
 package aero.nettracer.persistence.model;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Set;
-import java.util.TimeZone;
+import org.hibernate.annotations.OrderBy;
 
-import aero.nettracer.commons.utils.GenericDateUtils;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.persistence.Transient;
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.CascadeType;
-import org.hibernate.annotations.OrderBy;
-import org.hibernate.annotations.Proxy;
+import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
 @Entity
-@Table(name = "OHD_Log")
-public class OHD_Log implements Serializable {
+@Table(name = "ohd_log")
+public class OHD_Log {
 
-	private static final long serialVersionUID = -1754832116819197388L;
-	private int OHDLog_ID;
+	private int id;
 	private String expeditenum;
 	private String message;
 	private Agent forwarding_agent;
-	private OHD ohd;
 	private int destStationCode;
+	private OHD ohd;
 	private int ohd_request_id;
-	private Date forward_time;
-	private Set<OHD_Log_Itinerary> itinerary;
+	private Timestamp forward_time;
 	private int log_status;
 	private ProactiveNotification pcn;
-
-	private String _DATEFORMAT;
-	private String _TIMEFORMAT;
-	private TimeZone _TIMEZONE;
-
+	private Set<OHD_Log_Itinerary> itinerary;
 	private String destStation;
 	private String destCompany;
 
-	@Transient
-	public List<OHD_Log_Itinerary> getItinerarylist() {
-		if (itinerary == null || itinerary.size() < 1)
-			return null;
-
-		return new ArrayList<OHD_Log_Itinerary>(itinerary);
+	@Id
+	@GeneratedValue
+	@Column(name = "ohdlog_id")
+	public int getId() {
+		return id;
 	}
 
-	@Transient
-	public String get_DATEFORMAT() {
-		return _DATEFORMAT;
+	public void setId(int id) {
+		this.id = id;
 	}
 
-	public void set_DATEFORMAT(String _dateformat) {
-		_DATEFORMAT = _dateformat;
-	}
-
-	@Transient
-	public String get_TIMEFORMAT() {
-		return _TIMEFORMAT;
-	}
-
-	public void set_TIMEFORMAT(String _timeformat) {
-		_TIMEFORMAT = _timeformat;
-	}
-
-	@Transient
-	public TimeZone get_TIMEZONE() {
-		return _TIMEZONE;
-	}
-
-	public void set_TIMEZONE(TimeZone _timezone) {
-		_TIMEZONE = _timezone;
-	}
-
-	@Transient
-	public String getDestCompany() {
-		return destCompany;
-	}
-
-	@Transient
-	public String getDestStation() {
-		return destStation;
-	}
-
-	public void setDestStation(String destStation) {
-		this.destStation = destStation;
-	}
-
-	public void setDestCompany(String destCompany) {
-		this.destCompany = destCompany;
-	}
-
-	@Transient
-	public String getDispForwardTime() {
-		return GenericDateUtils.formatDate(this.getForward_time(), _DATEFORMAT + " "
-				+ _TIMEFORMAT, null, _TIMEZONE);
-	}
-
-	@OneToMany(mappedBy = "log", fetch = FetchType.EAGER)
-	@Cascade(CascadeType.ALL)
-	@OrderBy(clause = "itinerarytype,departdate,schdeparttime")
-	public Set<OHD_Log_Itinerary> getItinerary() {
-		return itinerary;
-	}
-
-	public void setItinerary(Set<OHD_Log_Itinerary> itinerary) {
-		this.itinerary = itinerary;
-	}
-
-	public int getDestStationCode() {
-		return destStationCode;
-	}
-
-	public void setDestStationCode(int destStationCode) {
-		this.destStationCode = destStationCode;
-	}
-
-	public int getOhd_request_id() {
-		return ohd_request_id;
-	}
-
-	public void setOhd_request_id(int ohd_request_id) {
-		this.ohd_request_id = ohd_request_id;
-	}
-
+	@Column(name = "expeditenum")
 	public String getExpeditenum() {
 		return expeditenum;
 	}
@@ -140,12 +57,13 @@ public class OHD_Log implements Serializable {
 		this.expeditenum = expeditenum;
 	}
 
-	public Date getForward_time() {
-		return forward_time;
+	@Column(name = "message")
+	public String getMessage() {
+		return message;
 	}
 
-	public void setForward_time(Date forward_time) {
-		this.forward_time = forward_time;
+	public void setMessage(String message) {
+		this.message = message;
 	}
 
 	@ManyToOne
@@ -158,22 +76,13 @@ public class OHD_Log implements Serializable {
 		this.forwarding_agent = forwarding_agent;
 	}
 
-	public String getMessage() {
-		return message;
+	@Column(name = "deststationcode")
+	public int getDestStationCode() {
+		return destStationCode;
 	}
 
-	public void setMessage(String message) {
-		this.message = message;
-	}
-
-	@Id
-	@GeneratedValue
-	public int getOHDLog_ID() {
-		return OHDLog_ID;
-	}
-
-	public void setOHDLog_ID(int log_ID) {
-		OHDLog_ID = log_ID;
+	public void setDestStationCode(int destStationCode) {
+		this.destStationCode = destStationCode;
 	}
 
 	@ManyToOne
@@ -186,6 +95,26 @@ public class OHD_Log implements Serializable {
 		this.ohd = ohd;
 	}
 
+	@Column(name = "ohd_request_id")
+	public int getOhd_request_id() {
+		return ohd_request_id;
+	}
+
+	public void setOhd_request_id(int ohd_request_id) {
+		this.ohd_request_id = ohd_request_id;
+	}
+
+	@Column(name = "forward_time")
+	@Temporal(TemporalType.TIMESTAMP)
+	public Timestamp getForward_time() {
+		return forward_time;
+	}
+
+	public void setForward_time(Timestamp forward_time) {
+		this.forward_time = forward_time;
+	}
+
+	@Column(name = "log_status")
 	public int getLog_status() {
 		return log_status;
 	}
@@ -202,6 +131,42 @@ public class OHD_Log implements Serializable {
 
 	public void setPcn(ProactiveNotification pcn) {
 		this.pcn = pcn;
+	}
+
+	@OneToMany(mappedBy = "log", cascade = CascadeType.ALL)
+	@OrderBy(clause = "itinerarytype,departdate,schdeparttime")
+	public Set<OHD_Log_Itinerary> getItinerary() {
+		return itinerary;
+	}
+
+	public void setItinerary(Set<OHD_Log_Itinerary> itinerary) {
+		this.itinerary = itinerary;
+	}
+
+	@Transient
+	public String getDestStation() {
+		return destStation;
+	}
+
+	public void setDestStation(String destStation) {
+		this.destStation = destStation;
+	}
+
+	@Transient
+	public String getDestCompany() {
+		return destCompany;
+	}
+
+	public void setDestCompany(String destCompany) {
+		this.destCompany = destCompany;
+	}
+
+	@Transient
+	public List<OHD_Log_Itinerary> getItinerarylist() {
+		if (itinerary == null || itinerary.size() < 1)
+			return null;
+
+		return new ArrayList<OHD_Log_Itinerary>(itinerary);
 	}
 
 	@Transient

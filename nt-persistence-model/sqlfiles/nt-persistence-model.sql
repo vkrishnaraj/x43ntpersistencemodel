@@ -9,3 +9,4 @@ alter table item drop column overweight;
 alter table ohd drop column wt_status;
 alter table ohd drop column oversize;
 alter table ohd drop column overweight;
+alter table ohd_inventory drop COLUMN ohd_itemtype_id;
