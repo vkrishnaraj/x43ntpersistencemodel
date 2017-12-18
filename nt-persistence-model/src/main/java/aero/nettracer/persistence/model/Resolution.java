@@ -1,34 +1,43 @@
 package aero.nettracer.persistence.model;
 
-
-import java.io.Serializable;
-
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import org.hibernate.annotations.Proxy;
 
 @Entity
-@Table(name="Resolution")
-public class Resolution implements Serializable {
-	private int Resolution_ID;
+@Table(name="resolution")
+public class Resolution {
+
+	private int id;
 	private String status;
 	private String locale;
 	private Company company;
 
-	@ManyToOne
-	@JoinColumn(name = "companycode_ID")
-	public Company getCompany() {
-		return company;
+	@Id
+	@GeneratedValue
+	@Column(name = "resolution_id")
+	public int getId() {
+		return id;
 	}
 
-	public void setCompany(Company company) {
-		this.company = company;
+	public void setId(int id) {
+		this.id = id;
 	}
 
+	@Column(name = "status")
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	@Column(name = "locale")
 	public String getLocale() {
 		return locale;
 	}
@@ -37,21 +46,14 @@ public class Resolution implements Serializable {
 		this.locale = locale;
 	}
 
-	@Id
-	@GeneratedValue
-	public int getResolution_ID() {
-		return Resolution_ID;
+	@ManyToOne
+	@JoinColumn(name = "companycode_id")
+	public Company getCompany() {
+		return company;
 	}
 
-	public void setResolution_ID(int resolution_ID) {
-		Resolution_ID = resolution_ID;
+	public void setCompany(Company company) {
+		this.company = company;
 	}
 
-	public String getStatus() {
-		return status;
-	}
-
-	public void setStatus(String status) {
-		this.status = status;
-	}
 }

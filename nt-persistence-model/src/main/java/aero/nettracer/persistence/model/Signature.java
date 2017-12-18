@@ -1,27 +1,26 @@
 package aero.nettracer.persistence.model;
 
-import org.hibernate.annotations.Proxy;
-
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import java.io.Serializable;
-import java.util.Date;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import java.sql.Timestamp;
 
 @Entity
 @Table(name = "signature")
-public class Signature implements Serializable {
+public class Signature {
 
-    private static final long serialVersionUID = -5003171901046200074L;
-    
     private long id;
     private boolean acknowledgment;
     private String full_name;
-    private Date date;
+    private Timestamp createdate;
 
     @Id
     @GeneratedValue
+    @Column(name = "id")
     public long getId() {
         return id;
     }
@@ -30,6 +29,7 @@ public class Signature implements Serializable {
         this.id = id;
     }
 
+    @Column(name = "acknowledgment")
     public boolean getAcknowledgment() {
         return acknowledgment;
     }
@@ -38,6 +38,7 @@ public class Signature implements Serializable {
         this.acknowledgment = acknowledgment;
     }
 
+    @Column(name = "full_name")
     public String getFull_name() {
         return full_name;
     }
@@ -46,11 +47,13 @@ public class Signature implements Serializable {
         this.full_name = full_name;
     }
 
-    public Date getDate() {
-        return date;
+    @Column(name = "createdate")
+    @Temporal(TemporalType.TIMESTAMP)
+    public Timestamp getCreatedate() {
+        return createdate;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setCreatedate(Timestamp createdate) {
+        this.createdate = createdate;
     }
 }

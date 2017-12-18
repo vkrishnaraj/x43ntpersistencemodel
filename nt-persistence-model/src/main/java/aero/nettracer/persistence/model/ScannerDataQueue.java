@@ -1,6 +1,7 @@
 package aero.nettracer.persistence.model;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
 import java.util.Date;
 
 import aero.nettracer.commons.utils.CommonsUtils;
@@ -13,24 +14,20 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import org.hibernate.annotations.Proxy;
 
-/**
- * Created by armel on 4/25/2017.
- */
+import aero.nettracer.persistence.util.ScanStatus;
+import org.hibernate.annotations.Proxy;
 
 @Entity
 @Table(name="scanner_data_queue")
-public class ScannerDataQueue implements Serializable {
-
-   public enum  ScanStatus {DONE, FAIL, PENDING}
+public class ScannerDataQueue  {
 
     private long id;
     private String incident_id;
     private String bagTagNumber;
-    private Date incidentCreateDateTime;
-    private Date createDate = CommonsUtils.getGMTDate();
-    private Date scannedDateTime;
+    private Timestamp incidentCreateDateTime;
+    private Timestamp createDate;
+    private Timestamp scannedDateTime;
     private ScanStatus scanStatus = ScanStatus.PENDING;
     private String errorMessage;
 
@@ -64,36 +61,36 @@ public class ScannerDataQueue implements Serializable {
 
     @Column(name = "incident_create_dateTime" , nullable = false)
     @Temporal(value = TemporalType.TIMESTAMP)
-    public Date getIncidentCreateDateTime() {
+    public Timestamp getIncidentCreateDateTime() {
         return incidentCreateDateTime;
     }
 
-    public void setIncidentCreateDateTime(Date incidentCreateDateTime) {
+    public void setIncidentCreateDateTime(Timestamp incidentCreateDateTime) {
         this.incidentCreateDateTime = incidentCreateDateTime;
     }
 
     @Temporal(value = TemporalType.TIMESTAMP)
     @Column(name = "create_date")
-    public Date getCreateDate() {
+    public Timestamp getCreateDate() {
         return createDate;
     }
 
-    public void setCreateDate(Date createDate) {
+    public void setCreateDate(Timestamp createDate) {
         this.createDate = createDate;
     }
 
     @Temporal(value = TemporalType.TIMESTAMP)
     @Column(name="scanned_dateTime")
-    public Date getScannedDateTime() {
+    public Timestamp getScannedDateTime() {
         return scannedDateTime;
     }
 
-    public void setScannedDateTime(Date scannedDateTime) {
+    public void setScannedDateTime(Timestamp scannedDateTime) {
         this.scannedDateTime = scannedDateTime;
     }
 
     @Enumerated(EnumType.STRING)
-    @Column(name="scan_status", length = 20)
+    @Column(name="scan_status")
     public ScanStatus getScanStatus() {
         return scanStatus;
     }

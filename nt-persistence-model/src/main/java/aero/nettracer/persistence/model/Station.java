@@ -1,13 +1,14 @@
 package aero.nettracer.persistence.model;
 
-import java.io.Serializable;
-import java.util.Set;
+import org.apache.commons.lang3.StringUtils;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.hibernate.annotations.OrderBy;
 
 import javax.persistence.Cacheable;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -16,45 +17,34 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
-import org.apache.commons.lang.StringUtils;
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
-import org.hibernate.annotations.Proxy;
+import java.util.Set;
 
 @Entity
 @Table(name = "station")
 @Cacheable
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-public class Station implements Serializable {
+public class Station {
 
-	private static final long serialVersionUID = -8920424497356057481L;
-	
-	@Id @GeneratedValue
-	private int stationId;
-	
-	@ManyToOne(targetEntity = Company.class)
-	@JoinColumn(name="companycode_ID")
-	@Fetch(FetchMode.SELECT)
-	private Company company;
-	
-	@ManyToOne(targetEntity = Region.class)
-	@JoinColumn(name="region_id")
-	@Fetch(FetchMode.SELECT)
-	private Region region;
-	
-	private int lz_ID;
-	private int lz_lf_ID;
+	private int id;
 	private String stationcode;
+	private Company company;
 	private String stationdesc;
 	private String address1;
 	private String address2;
 	private String city;
 	private String state_ID;
 	private String province;
-	private String countrycode_ID;
+	private CountryCode countryCode;
 	private String zip;
+	private boolean lfHoldForPickUp;
+	private String lf_ship_from_addr1;
+	private String lf_ship_from_addr2;
+	private String lf_ship_from_city;
+	private String lf_ship_from_state_ID;
+	private String lf_ship_from_province;
+	private String lf_ship_from_countrycode_ID;
+	private String lf_ship_from_zip;
+	private String lf_ship_from_phone;
 	private String phone;
 	private String airport_location;
 	private String operation_hours;
@@ -64,195 +54,42 @@ public class Station implements Serializable {
 	private double goal;
 	private boolean active;
 	private boolean visible;
+	private int lz_ID;
+	private int lz_lf_ID;
 	private String wt_stationcode;
 	private String email_language;
 	private int priority;
-	private String lf_ship_from_addr1;
-	private String lf_ship_from_addr2;
-	private String lf_ship_from_city;
-	private String lf_ship_from_state_ID;
-	private String lf_ship_from_province;
-	private String lf_ship_from_countrycode_ID;
-	private String lf_ship_from_zip;
-	private String lf_ship_from_phone;
+	private Region region;
 	private String timezone;
 	private int fault_station_visibility;
-	private String contactName;
-
 	private boolean lockWithAssingnTo;
-
+	private String contactName;
 	private boolean auto_load_unassigned;
-
-	@Column(name="lf_hold_for_pickup")
-	private boolean lfHoldForPickUp;
-
-	@OneToOne
-	@JoinColumn(name="countrycode_ID", referencedColumnName="CountryCode_ID", updatable = false, insertable = false)
-	private CountryCode countryCode;
-
-	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "station")
-	@org.hibernate.annotations.OrderBy(clause="id")
-	@Fetch(FetchMode.SELECT)
+	private String countrycode_ID;
 	private Set<Carrier_Operation_Hours> carrierHours;
-
-	@Transient
 	private long currentRegionId;
-	@Transient
 	private double currentGoal;
-	@Transient
 	private String stationinfo;
-
-	public Set<Carrier_Operation_Hours> getCarrierHours() {
-		return carrierHours;
-	}
-
-	public void setCarrierHours(Set<Carrier_Operation_Hours> carrierHours) {
-		this.carrierHours = carrierHours;
-	}
 
 	public Station() { }
 
-	public Station(int station_ID) {
-		this.station_ID = station_ID;
+	public Station(int id) {
+		this.id = id;
 	}
 
-	public int getStation_ID() {
-		return station_ID;
+
+	@Id
+	@GeneratedValue
+	@Column(name = "station_id")
+	public int getId() {
+		return id;
 	}
 
-	public void setStation_ID(int station_ID) {
-		this.station_ID = station_ID;
+	public void setId(int id) {
+		this.id = id;
 	}
 
-	public String getWt_stationcode() {
-		return wt_stationcode;
-	}
-
-	public void setWt_stationcode(String wt_stationcode) {
-		this.wt_stationcode = wt_stationcode;
-	}
-
-	public int getLz_ID() {
-		return lz_ID;
-	}
-
-	public void setLz_ID(int lz_id) {
-		this.lz_ID = lz_id;
-	}
-
-	public int getLz_lf_ID() {
-		return lz_lf_ID;
-	}
-
-	public void setLz_lf_ID(int lz_lf_id) {
-		this.lz_lf_ID = lz_lf_id;
-	}
-
-	public String getCountrycode_ID() {
-		//return (countrycode_ID == null || countrycode_ID.length() ==  0 ? PropertyBMO.getValue(PropertyBMO.PROPERTY_DEFAULT_COUNTRY) : countrycode_ID);
-		return countrycode_ID;
-	}
-
-	public void setCountrycode_ID(String countrycode_ID) {
-		this.countrycode_ID = countrycode_ID;
-	}
-
-	public String getLfShipFromProvince() {
-		return lf_ship_from_province;
-	}
-
-	public void setLfShipFromProvince(String lf_ship_from_province) {
-		this.lf_ship_from_province = lf_ship_from_province;
-	}
-
-	public String getProvince() {
-		return province;
-	}
-
-	public void setProvince(String province) {
-		this.province = province;
-	}
-
-	public String getState_ID() {
-		return state_ID;
-	}
-
-	public void setState_ID(String state_ID) {
-		this.state_ID = state_ID;
-	}
-
-	public String getAirport_location() {
-		return airport_location;
-	}
-
-	public void setAirport_location(String airport_location) {
-		this.airport_location = airport_location;
-	}
-
-	public String getOperation_hours() {
-		return operation_hours;
-	}
-
-	public void setOperation_hours(String operation_hours) {
-		this.operation_hours = operation_hours;
-	}
-
-	public String getAddress1() {
-		return address1;
-	}
-
-	public void setAddress1(String address1) {
-		this.address1 = address1;
-	}
-
-	public String getAddress2() {
-		return address2;
-	}
-
-	public void setAddress2(String address2) {
-		this.address2 = address2;
-	}
-
-	public String getCity() {
-		return city;
-	}
-
-	public void setCity(String city) {
-		this.city = city;
-	}
-
-	public String getPhone() {
-		return phone;
-	}
-
-	public void setPhone(String phone) {
-		this.phone = phone;
-	}
-
-	public String getAssociated_airport() {
-		return associated_airport;
-	}
-
-	public void setAssociated_airport(String associated_airport) {
-		this.associated_airport = associated_airport;
-	}
-
-	public String getZip() {
-		return zip;
-	}
-
-	public void setZip(String zip) {
-		this.zip = zip;
-	}
-
-	public Company getCompany() {
-		return company;
-	}
-
-	public void setCompany(Company company) {
-		this.company = company;
-	}
-
+	@Column(name = "stationcode")
 	public String getStationcode() {
 		return stationcode;
 	}
@@ -261,6 +98,17 @@ public class Station implements Serializable {
 		this.stationcode = stationcode;
 	}
 
+	@ManyToOne
+	@JoinColumn(name="companycode_id")
+	public Company getCompany() {
+		return company;
+	}
+
+	public void setCompany(Company company) {
+		this.company = company;
+	}
+
+	@Column(name = ")")
 	public String getStationdesc() {
 		return stationdesc;
 	}
@@ -269,12 +117,188 @@ public class Station implements Serializable {
 		this.stationdesc = stationdesc;
 	}
 
-	public String getStationinfo() {
-		String moreInfo = (StringUtils.isBlank(this.state_ID)? "" : ", " + this.state_ID)
-						+ (StringUtils.isBlank(this.stationcode)? "" : " - " + this.stationcode);
-		return this.stationdesc + moreInfo;
+	@Column(name = "address1")
+	public String getAddress1() {
+		return address1;
 	}
 
+	public void setAddress1(String address1) {
+		this.address1 = address1;
+	}
+
+	@Column(name = "address2")
+	public String getAddress2() {
+		return address2;
+	}
+
+	public void setAddress2(String address2) {
+		this.address2 = address2;
+	}
+
+	@Column(name = "city")
+	public String getCity() {
+		return city;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
+	}
+
+	@Column(name = "state_id")
+	public String getState_ID() {
+		return state_ID;
+	}
+
+	public void setState_ID(String state_ID) {
+		this.state_ID = state_ID;
+	}
+
+	@Column(name = "province")
+	public String getProvince() {
+		return province;
+	}
+
+	public void setProvince(String province) {
+		this.province = province;
+	}
+
+	@OneToOne
+	@JoinColumn(name="countrycode_ID", referencedColumnName="CountryCode_ID", updatable = false, insertable = false)
+	public CountryCode getCountryCode() {
+		return countryCode;
+	}
+
+	public void setCountryCode(CountryCode countryCode) {
+		this.countryCode = countryCode;
+	}
+
+	@Column(name = "zip")
+	public String getZip() {
+		return zip;
+	}
+
+	public void setZip(String zip) {
+		this.zip = zip;
+	}
+
+	@Column(name = "lf_hold_for_pickup")
+	public boolean isLfHoldForPickUp() {
+		return lfHoldForPickUp;
+	}
+
+	public void setLfHoldForPickUp(boolean lfHoldForPickUp) {
+		this.lfHoldForPickUp = lfHoldForPickUp;
+	}
+
+	@Column(name = "lf_ship_from_addr1")
+	public String getLfShipFromAddress1() {
+		return lf_ship_from_addr1;
+	}
+
+	public void setLfShipFromAddress1(String lf_ship_from_addr1) {
+		this.lf_ship_from_addr1 = lf_ship_from_addr1;
+	}
+
+	@Column(name = "lf_ship_from_addr2")
+	public String getLfShipFromAddress2() {
+		return lf_ship_from_addr2;
+	}
+
+	public void setLfShipFromAddress2(String lf_ship_from_addr2) {
+		this.lf_ship_from_addr2 = lf_ship_from_addr2;
+	}
+
+	@Column(name = "lf_ship_from_city")
+	public String getLfShipFromCity() {
+		return lf_ship_from_city;
+	}
+
+	public void setLfShipFromCity(String lf_ship_from_city) {
+		this.lf_ship_from_city = lf_ship_from_city;
+	}
+
+	@Column(name = "lf_ship_from_state_id")
+	public String getLfShipFromStateId() {
+		return lf_ship_from_state_ID;
+	}
+
+	public void setLfShipFromStateId(String lf_ship_from_state_ID) {
+		this.lf_ship_from_state_ID = lf_ship_from_state_ID;
+	}
+
+	@Column(name = "lf_ship_from_province")
+	public String getLfShipFromProvince() {
+		return lf_ship_from_province;
+	}
+
+	public void setLfShipFromProvince(String lf_ship_from_province) {
+		this.lf_ship_from_province = lf_ship_from_province;
+	}
+
+	@Column(name = "lf_ship_from_countrycode_id")
+	public String getLfShipFromCountryCodeId() {
+		return lf_ship_from_countrycode_ID;
+	}
+
+	public void setLfShipFromCountryCodeId(String lf_ship_from_countrycode_ID) {
+		this.lf_ship_from_countrycode_ID = lf_ship_from_countrycode_ID;
+	}
+
+	@Column(name = "lf_ship_from_zip")
+	public String getLfShipFromZip() {
+		return lf_ship_from_zip;
+	}
+
+	public void setLfShipFromZip(String lf_ship_from_zip) {
+		this.lf_ship_from_zip = lf_ship_from_zip;
+	}
+
+	@Column(name = "lf_ship_from_phone")
+	public String getLfShipFromPhone() {
+		return lf_ship_from_phone;
+	}
+
+	public void setLfShipFromPhone(String lf_ship_from_phone) {
+		this.lf_ship_from_phone = lf_ship_from_phone;
+	}
+
+	@Column(name = "phone")
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+
+	@Column(name = "airport_location")
+	public String getAirport_location() {
+		return airport_location;
+	}
+
+	public void setAirport_location(String airport_location) {
+		this.airport_location = airport_location;
+	}
+
+	@Column(name = "operation_hours")
+	public String getOperation_hours() {
+		return operation_hours;
+	}
+
+	public void setOperation_hours(String operation_hours) {
+		this.operation_hours = operation_hours;
+	}
+
+	@Column(name = "associated_airport")
+	public String getAssociated_airport() {
+		return associated_airport;
+	}
+
+	public void setAssociated_airport(String associated_airport) {
+		this.associated_airport = associated_airport;
+	}
+
+	@Column(name = "station_region")
 	public String getStation_region() {
 		return station_region;
 	}
@@ -283,6 +307,7 @@ public class Station implements Serializable {
 		this.station_region = station_region;
 	}
 
+	@Column(name = "station_region_mgr")
 	public String getStation_region_mgr() {
 		return station_region_mgr;
 	}
@@ -291,6 +316,7 @@ public class Station implements Serializable {
 		this.station_region_mgr = station_region_mgr;
 	}
 
+	@Column(name = "goal")
 	public double getGoal() {
 		return goal;
 	}
@@ -299,6 +325,7 @@ public class Station implements Serializable {
 		this.goal = goal;
 	}
 
+	@Column(name = "active")
 	public boolean isActive() {
 		return active;
 	}
@@ -307,6 +334,7 @@ public class Station implements Serializable {
 		this.active = active;
 	}
 
+	@Column(name = "visible")
 	public boolean isVisible() {
 		return visible;
 	}
@@ -315,28 +343,34 @@ public class Station implements Serializable {
 		this.visible = visible;
 	}
 
-	public String toString() {
-		StringBuffer sb = new StringBuffer(200);
-		sb.append("Station ID=" + this.getStation_ID() + " station code=" + this.getStationcode()
-				+ " station desc=" + this.getStationdesc());
-		return sb.toString();
+	@Column(name = "lz_id")
+	public int getLz_ID() {
+		return lz_ID;
 	}
 
-	public String toXML() {
-		StringBuffer sb = new StringBuffer();
-		sb.append("<station>");
-		sb.append("<Station_ID>" + station_ID + "</Station_ID>");
-		sb.append("<companycode>" + this.getCompany().getCompanyCode_ID() + "</companycode>");
-		sb.append("<stationcode>" + this.getStationcode() + "</stationcode>");
-		sb.append("</station>");
-
-		return sb.toString();
+	public void setLz_ID(int lz_id) {
+		this.lz_ID = lz_id;
 	}
 
-	public boolean isThisOhdLz() {
-		return (this.station_ID == this.getCompany().getVariable().getOhd_lz());
+	@Column(name = "lz_lf_id")
+	public int getLz_lf_ID() {
+		return lz_lf_ID;
 	}
 
+	public void setLz_lf_ID(int lz_lf_id) {
+		this.lz_lf_ID = lz_lf_id;
+	}
+
+	@Column(name = "wt_stationcode")
+	public String getWt_stationcode() {
+		return wt_stationcode;
+	}
+
+	public void setWt_stationcode(String wt_stationcode) {
+		this.wt_stationcode = wt_stationcode;
+	}
+
+	@Column(name = "email_language")
 	public String getEmailLanguage() {
 		return email_language;
 	}
@@ -345,6 +379,7 @@ public class Station implements Serializable {
 		this.email_language = email_language;
 	}
 
+	@Column(name = "priority")
 	public int getPriority() {
 		return priority;
 	}
@@ -353,28 +388,103 @@ public class Station implements Serializable {
 		this.priority = priority;
 	}
 
+	@ManyToOne
+	@JoinColumn(name="region_id")
+	public Region getRegion() {
+		return region;
+	}
+
 	public void setRegion(Region region) {
 		this.region = region;
 	}
 
-	public Region getRegion() {
-		return region;
+	@Column(name = "timezone")
+	public String getTimezone() {
+		return timezone;
+	}
+
+	public void setTimezone(String timezone) {
+		this.timezone = timezone;
+	}
+
+	@Column(name = "fault_station_visibility")
+	public int getFaultStationVisibility() {
+		return fault_station_visibility;
+	}
+
+	public void setFaultStationVisibility(int fault_station_visibility) {
+		this.fault_station_visibility = fault_station_visibility;
+	}
+
+	@Column(name = "lockwithassingnto")
+	public boolean isLockWithAssingnTo() {
+		return lockWithAssingnTo;
+	}
+
+	public void setLockWithAssingnTo(boolean lockWithAssingnTo) {
+		this.lockWithAssingnTo = lockWithAssingnTo;
+	}
+
+	@Column(name = "contactname")
+	public String getContactName() {
+		return contactName;
+	}
+
+	public void setContactName(String contactName) {
+		this.contactName = contactName;
+	}
+
+	@Column(name = "auto_load_unassigned")
+	public boolean isAuto_load_unassigned() {
+		return auto_load_unassigned;
+	}
+
+	public void setAuto_load_unassigned(boolean auto_load_unassigned) {
+		this.auto_load_unassigned = auto_load_unassigned;
+	}
+
+	@Column(name = "countrycode_id")
+	public String getCountrycode_ID() {
+		return countrycode_ID;
+	}
+
+	public void setCountrycode_ID(String countrycode_ID) {
+		this.countrycode_ID = countrycode_ID;
+	}
+
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "station")
+	@OrderBy(clause="id")
+	public Set<Carrier_Operation_Hours> getCarrierHours() {
+		return carrierHours;
+	}
+
+	public void setCarrierHours(Set<Carrier_Operation_Hours> carrierHours) {
+		this.carrierHours = carrierHours;
+	}
+
+	@Column(name = "currentregionid")
+	public long getCurrentRegionId() {
+		return currentRegionId;
 	}
 
 	public void setCurrentRegionId(long currentRegionId) {
 		this.currentRegionId = currentRegionId;
 	}
 
-	public long getCurrentRegionId() {
-		return currentRegionId;
+	@Transient
+	public double getCurrentGoal() {
+		return currentGoal;
 	}
 
 	public void setCurrentGoal(double currentGoal) {
 		this.currentGoal = currentGoal;
 	}
 
-	public double getCurrentGoal() {
-		return currentGoal;
+	@Transient
+	public String getStationinfo() {
+		String moreInfo = (StringUtils.isBlank(this.state_ID)? "" : ", " + this.state_ID)
+				+ (StringUtils.isBlank(this.stationcode)? "" : " - " + this.stationcode);
+		return this.stationdesc + moreInfo;
 	}
 
 	@Transient
@@ -387,126 +497,8 @@ public class Station implements Serializable {
 		return lz_ID;
 	}
 
-	public String getLfShipFromAddress1() {
-		return lf_ship_from_addr1;
+	public boolean isThisOhdLz() {
+		return (this.id == this.getCompany().getVariable().getOhd_lz());
 	}
 
-	public void setLfShipFromAddress1(String lf_ship_from_addr1) {
-		this.lf_ship_from_addr1 = lf_ship_from_addr1;
-	}
-
-	public String getLfShipFromAddress2() {
-		return lf_ship_from_addr2;
-	}
-
-	public void setLfShipFromAddress2(String lf_ship_from_addr2) {
-		this.lf_ship_from_addr2 = lf_ship_from_addr2;
-	}
-
-	public String getLfShipFromCity() {
-		return lf_ship_from_city;
-	}
-
-	public void setLfShipFromCity(String lf_ship_from_city) {
-		this.lf_ship_from_city = lf_ship_from_city;
-	}
-
-	public String getLfShipFromStateId() {
-		return lf_ship_from_state_ID;
-	}
-
-	public void setLfShipFromStateId(String lf_ship_from_state_ID) {
-		this.lf_ship_from_state_ID = lf_ship_from_state_ID;
-	}
-
-	public String getLfShipFromCountryCodeId() {
-		return lf_ship_from_countrycode_ID;
-	}
-
-	public void setLfShipFromCountryCodeId(String lf_ship_from_countrycode_ID) {
-		this.lf_ship_from_countrycode_ID = lf_ship_from_countrycode_ID;
-	}
-
-	public String getLfShipFromZip() {
-		return lf_ship_from_zip;
-	}
-
-	public void setLfShipFromZip(String lf_ship_from_zip) {
-		this.lf_ship_from_zip = lf_ship_from_zip;
-	}
-
-	public String getLfShipFromPhone() {
-		return lf_ship_from_phone;
-	}
-
-	public void setLfShipFromPhone(String lf_ship_from_phone) {
-		this.lf_ship_from_phone = lf_ship_from_phone;
-	}
-
-	public String getTimezone() {
-		return timezone;
-	}
-
-	public void setTimezone(String timezone) {
-		this.timezone = timezone;
-	}
-
-	public boolean isLfHoldForPickUp() {
-		return lfHoldForPickUp;
-	}
-
-	public void setLfHoldForPickUp(boolean lfHoldForPickUp) {
-		this.lfHoldForPickUp = lfHoldForPickUp;
-	}
-
-	public int getFaultStationVisibility() {
-		return fault_station_visibility;
-	}
-
-	public void setFaultStationVisibility(int fault_station_visibility) {
-		this.fault_station_visibility = fault_station_visibility;
-	}
-
-	public boolean isLockWithAssingnTo() {
-		return lockWithAssingnTo;
-	}
-
-	public void setLockWithAssingnTo(boolean lockWithAssingnTo) {
-		this.lockWithAssingnTo = lockWithAssingnTo;
-	}
-
-	//NTFIXME
-	/*@Transient
-	public static Station getMappedObject(TypeStation foundStation) {
-		if(foundStation == null) {
-			return null;
-		}
-		Station station = new Station();
-		station.setStationcode(foundStation.getStationCode());
-		return station;
-	}*/
-
-	public CountryCode getCountryCode() {
-		return countryCode;
-	}
-
-	public void setCountryCode(CountryCode countryCode) {
-		this.countryCode = countryCode;
-	}
-
-	public String getContactName() {
-		return contactName;
-	}
-
-	public void setContactName(String contactName) {
-		this.contactName = contactName;
-	}
-
-	public boolean isAuto_load_unassigned() {
-		return auto_load_unassigned;
-	}
-
-	public void setAuto_load_unassigned(boolean auto_load_unassigned) {
-		this.auto_load_unassigned = auto_load_unassigned;
-	}
 }

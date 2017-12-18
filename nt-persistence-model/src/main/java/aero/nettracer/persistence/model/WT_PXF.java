@@ -1,8 +1,9 @@
 package aero.nettracer.persistence.model;
 
-import java.io.Serializable;
-
 import aero.nettracer.persistence.model.wtq.WorldTracerQueue;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,11 +11,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.CascadeType;
-import org.hibernate.annotations.Proxy;
-
 
 @Entity
 @Table(name = "wtq_pxf")

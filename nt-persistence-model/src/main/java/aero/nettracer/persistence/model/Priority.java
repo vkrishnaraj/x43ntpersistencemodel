@@ -1,32 +1,42 @@
 package aero.nettracer.persistence.model;
 
-import java.io.Serializable;
-
-import aero.nettracer.persistence.model.i8n.LocaleBasedObject;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Transient;
-import org.hibernate.annotations.Proxy;
 
 @Entity
 @Table(name = "priority")
-public class Priority extends LocaleBasedObject implements Serializable {
+public class Priority {
 
-	private int priority_ID;
+	private int id;
+	private String description;
 	private String MSG_KEY = "PRIORITY_KEY_";
 
 	@Id
-	public int getPriority_ID() {
-		return priority_ID;
+	@GeneratedValue
+	@Column(name = "priority_id")
+	public int getId() {
+		return id;
 	}
 
-	public void setPriority_ID(int priority_ID) {
-		this.priority_ID = priority_ID;
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	@Column(name = "description")
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 	@Transient
 	public String getKey() {
-		return MSG_KEY + priority_ID;
+		return MSG_KEY + id;
 	}
 }

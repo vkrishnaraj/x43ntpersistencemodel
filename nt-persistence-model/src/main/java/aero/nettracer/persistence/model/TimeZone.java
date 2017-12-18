@@ -6,22 +6,23 @@
  */
 package aero.nettracer.persistence.model;
 
-import java.io.Serializable;
+import org.hibernate.annotations.Immutable;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import org.hibernate.annotations.Immutable;
-import org.hibernate.annotations.Proxy;
 
 @Entity
 @Immutable
-public class TimeZone implements Serializable {
-	private int id;
-	private String timezone;
-	private String description;
-	private String locale;
+public class TimeZone {
 
+	private String locale;
+	private String description;
+	private String timezone;
+	private int id;
+
+	@Column(name = "locale")
 	public String getLocale() {
 		return locale;
 	}
@@ -30,16 +31,16 @@ public class TimeZone implements Serializable {
 		this.locale = locale;
 	}
 
-	@Id
-	@GeneratedValue
-	public int getId() {
-		return id;
+	@Column(name = "description")
+	public String getDescription() {
+		return description;
 	}
 
-	public void setId(int id) {
-		this.id = id;
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
+	@Column(name = "timezone")
 	public String getTimezone() {
 		return timezone;
 	}
@@ -48,11 +49,15 @@ public class TimeZone implements Serializable {
 		this.timezone = timezone;
 	}
 
-	public String getDescription() {
-		return description;
+	@Id
+	@GeneratedValue
+	@Column(name = "id")
+	public int getId() {
+		return id;
 	}
 
-	public void setDescription(String description) {
-		this.description = description;
+	public void setId(int id) {
+		this.id = id;
 	}
+
 }

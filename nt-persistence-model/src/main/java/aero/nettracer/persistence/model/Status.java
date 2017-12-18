@@ -1,48 +1,49 @@
-/*
- * Created on Jul 14, 2004
- *
- * TODO To change the template for this generated file go to
- * Window - Preferences - Java - Code Style - Code Templates
- */
 package aero.nettracer.persistence.model;
 
-import java.io.Serializable;
-
-import aero.nettracer.persistence.model.i8n.LocaleBasedObject;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Transient;
-import org.hibernate.annotations.Proxy;
 
 @Entity
-@Table(name = "Status")
-public class Status extends LocaleBasedObject implements Serializable {
+@Table(name = "status")
+public class Status {
 	
-	private static final long serialVersionUID = -5115842004692528313L;
-	
-	private static String MSG_KEY = "STATUS_KEY_"; 
-	private int Status_ID;
-	private int table_ID;
+	private static String MSG_KEY = "STATUS_KEY_";
+
+	private int id;
 	private String description;
+	private int table_ID;
 
 	public Status() { }
 
-	public Status(int statusId) {
-		this.Status_ID = statusId;
+	public Status(int id) {
+		this.id = id;
 	}
 	
 	@Id
 	@GeneratedValue
-	public int getStatus_ID() {
-		return Status_ID;
+	@Column(name = "status_id")
+	public int getId() {
+		return id;
 	}
 
-	public void setStatus_ID(int status_ID) {
-		Status_ID = status_ID;
+	public void setId(int id) {
+		this.id = id;
 	}
 
+	@Column(name = "description")
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	@Column(name = "table_id")
 	public int getTable_ID() {
 		return table_ID;
 	}
@@ -53,19 +54,11 @@ public class Status extends LocaleBasedObject implements Serializable {
 
 	@Transient
 	public String getKey() {
-		return MSG_KEY + Status_ID;
+		return MSG_KEY + id;
 	}
 	
 	public static String getKey(int id) {
 		return MSG_KEY + id;
-	}
-
-	public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
 	}
 
 }

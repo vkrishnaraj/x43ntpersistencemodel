@@ -18,6 +18,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name = "agent")
@@ -387,5 +388,10 @@ public class Agent {
 
 	public void setLoad_unassigned(boolean load_unassigned) {
 		this.load_unassigned = load_unassigned;
+	}
+
+	@Transient
+	public String getStationCode() {
+		return station.getStationcode();
 	}
 }

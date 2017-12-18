@@ -1,14 +1,13 @@
 package aero.nettracer.persistence.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.Proxy;
-
 @Entity
-@Table(name = "UsergroupNameMap")
+@Table(name = "usergroupnamemap")
 public class UsergroupNameMap {
 
 	private long id;
@@ -16,7 +15,9 @@ public class UsergroupNameMap {
 	private String ntName;
 	private int ntGroupId;
 
-	@Id @GeneratedValue
+	@Id
+	@GeneratedValue
+	@Column(name = "id")
 	public long getId() {
 		return id;
 	}
@@ -25,6 +26,7 @@ public class UsergroupNameMap {
 		this.id = id;
 	}
 
+	@Column(name = "ldapname")
 	public String getLdapName() {
 		return ldapName;
 	}
@@ -33,6 +35,7 @@ public class UsergroupNameMap {
 		this.ldapName = ldapName;
 	}
 
+	@Column(name = "ntname")
 	public String getNtName() {
 		return ntName;
 	}
@@ -41,6 +44,7 @@ public class UsergroupNameMap {
 		this.ntName = ntName;
 	}
 
+	@Column(name = "ntGroupId")
 	public int getNtGroupId() {
 		return ntGroupId;
 	}
@@ -48,6 +52,5 @@ public class UsergroupNameMap {
 	public void setNtGroupId(int ntGroupId) {
 		this.ntGroupId = ntGroupId;
 	}
-
 
 }

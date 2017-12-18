@@ -6,26 +6,40 @@
  */
 package aero.nettracer.persistence.model;
 
-import java.io.Serializable;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import java.util.Set;
-
-import javax.persistence.*;
-
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.CascadeType;
-import org.hibernate.annotations.Proxy;
 
 @Entity
 @Table(name = "work_shift")
-public class Work_Shift implements Serializable {
+public class Work_Shift {
 
-	private int shiftId;
+	private int id;
 	private String shift_code;
 	private String shift_description;
 	private Company company;
 	private String locale;
 	private Set<Agent> agents;
 
+	@Id
+	@GeneratedValue
+	@Column(name = "shift_id")
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	@Column(name = "shift_code")
 	public String getShift_code() {
 		return shift_code;
 	}
@@ -34,14 +48,13 @@ public class Work_Shift implements Serializable {
 		this.shift_code = shift_code;
 	}
 
-	@OneToMany(mappedBy = "shift", fetch = FetchType.EAGER)
-	@Cascade(CascadeType.ALL)
-	public Set<Agent> getAgents() {
-		return agents;
+	@Column(name = "shift_description")
+	public String getShift_description() {
+		return shift_description;
 	}
 
-	public void setAgents(Set<Agent> agents) {
-		this.agents = agents;
+	public void setShift_description(String shift_description) {
+		this.shift_description = shift_description;
 	}
 
 	@ManyToOne
@@ -54,6 +67,7 @@ public class Work_Shift implements Serializable {
 		this.company = company;
 	}
 
+	@Column(name = "locale")
 	public String getLocale() {
 		return locale;
 	}
@@ -62,21 +76,13 @@ public class Work_Shift implements Serializable {
 		this.locale = locale;
 	}
 
-	public String getShift_description() {
-		return shift_description;
+	@OneToMany(mappedBy = "shift", cascade = CascadeType.ALL)
+	public Set<Agent> getAgents() {
+		return agents;
 	}
 
-	public void setShift_description(String shift_description) {
-		this.shift_description = shift_description;
+	public void setAgents(Set<Agent> agents) {
+		this.agents = agents;
 	}
 
-	@Id
-	@GeneratedValue
-	public int getShift_id() {
-		return shift_id;
-	}
-
-	public void setShift_id(int shift_id) {
-		this.shift_id = shift_id;
-	}
 }

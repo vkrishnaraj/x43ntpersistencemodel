@@ -1,19 +1,29 @@
 package aero.nettracer.persistence.model;
 
-import java.io.Serializable;
-
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import org.hibernate.annotations.Proxy;
 
 @Entity
-@Table(name = "State")
-public class State implements Serializable {
-	private String State_ID;
+@Table(name = "state")
+public class State {
+
+	private String id;
 	private String state;
 	private String countrycode_ID;
 
+	@Id
+	@Column(name = "state_id")
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	@Column(name = "state")
 	public String getState() {
 		return state;
 	}
@@ -22,15 +32,7 @@ public class State implements Serializable {
 		this.state = state;
 	}
 
-	@Id
-	public String getState_ID() {
-		return State_ID;
-	}
-
-	public void setState_ID(String state_ID) {
-		State_ID = state_ID;
-	}
-
+	@Column(name = "countrycode_id")
 	public String getCountrycode_ID() {
 		return countrycode_ID;
 	}

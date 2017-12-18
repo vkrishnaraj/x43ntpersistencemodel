@@ -4,7 +4,6 @@ import aero.nettracer.persistence.model.fraudservice.FsClaim;
 import javax.persistence.CascadeType;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Transient;
@@ -60,7 +59,7 @@ public class Claim extends FsClaim {
 	}
 
 	public void setStatus(Status status) {
-		super.setStatusId(status.getStatus_ID());
+		super.setStatusId(status.getId());
 		this.status = status;
 	}
 
@@ -86,12 +85,12 @@ public class Claim extends FsClaim {
 	
 	@Transient
 	public int getStatusId() {
-		return status.getStatus_ID();
+		return status.getId();
 	}
 	
 	public void setStatusId(int statusId) {
 		super.setStatusId(statusId);
-		status.setStatus_ID(statusId);
+		status.setId(statusId);
 	}
 	
 	public int getFraudStatusId() {

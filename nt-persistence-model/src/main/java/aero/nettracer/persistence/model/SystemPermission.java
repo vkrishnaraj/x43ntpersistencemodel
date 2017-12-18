@@ -1,38 +1,31 @@
 package aero.nettracer.persistence.model;
 
-import java.io.Serializable;
-
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import org.hibernate.annotations.Proxy;
 
 @Entity
-@Table(name = "Permission")
-public class SystemPermission implements Serializable {
-	private int permission_id;
+@Table(name = "permission")
+public class SystemPermission {
+
+	private int id;
 	private String permission_name;
 	private String permission_desc;
 
-	public String getPermission_desc() {
-		return permission_desc;
-	}
-
-	public void setPermission_desc(String permission_desc) {
-		this.permission_desc = permission_desc;
-	}
-
 	@Id
 	@GeneratedValue
-	public int getPermission_id() {
-		return permission_id;
+	@Column(name = "permission_id")
+	public int getId() {
+		return id;
 	}
 
-	public void setPermission_id(int permission_id) {
-		this.permission_id = permission_id;
+	public void setId(int id) {
+		this.id = id;
 	}
 
+	@Column(name = "permission_name")
 	public String getPermission_name() {
 		return permission_name;
 	}
@@ -41,11 +34,13 @@ public class SystemPermission implements Serializable {
 		this.permission_name = permission_name;
 	}
 
-
-	public String toString() {
-		StringBuffer sb = new StringBuffer(200);
-		sb.append("SystemPermission ID=" + this.getPermission_id() + " Name="
-				+ this.getPermission_name() + " Description=" + this.getPermission_desc());
-		return sb.toString();
+	@Column(name = "permission_desc")
+	public String getPermission_desc() {
+		return permission_desc;
 	}
+
+	public void setPermission_desc(String permission_desc) {
+		this.permission_desc = permission_desc;
+	}
+
 }

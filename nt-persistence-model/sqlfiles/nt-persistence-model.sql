@@ -10,3 +10,31 @@ alter table ohd drop column wt_status;
 alter table ohd drop column oversize;
 alter table ohd drop column overweight;
 alter table ohd_inventory drop COLUMN ohd_itemtype_id;
+alter table proactivenotification drop column membershipairline;
+alter table proactivenotification drop column membershipNumber;
+alter table table1 rename rule;
+
+alter table signature change column 'date' 'createdate' datetime;
+
+CREATE TABLE IF NOT EXISTS `scanner_data_queue` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `incident_id` varchar(13) NOT NULL,
+  `bag_tag_number` varchar(14) NOT NULL,
+  `incident_create_dateTime` datetime NOT NULL,
+  `create_date` datetime NOT NULL,
+  `scanned_dateTime` datetime DEFAULT NULL,
+  `scan_status` varchar(20) NOT NULL,
+  `error_message` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `idx_key` (`bag_tag_number`,`incident_create_dateTime`,`scan_status`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=363 DEFAULT CHARSET=utf8;
+
+alter table scanner_data change column 'datetime' 'createdate' datetime;
+drop table if exists special_flag;
+drop table if exists wt_fwd_log_itinerary;
+drop table if exists wt_fwd_log;
+
+
+
+
+

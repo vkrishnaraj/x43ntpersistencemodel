@@ -1,17 +1,14 @@
 package aero.nettracer.persistence.model;
 
-import java.io.Serializable;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import org.hibernate.annotations.Proxy;
 
 @Entity
-@Table(name = "TABLE1")
-public class Rule implements Serializable {
+@Table(name = "rule")
+public class Rule {
 
 	private int id;
 	private String ruleName;
@@ -32,6 +29,7 @@ public class Rule implements Serializable {
 
 	@Id
 	@GeneratedValue
+	@Column(name = "id")
 	public int getId() {
 		return id;
 	}
@@ -40,7 +38,7 @@ public class Rule implements Serializable {
 		this.id = id;
 	}
 
-	@Column(name = "rn")
+	@Column(name = "rn", nullable = false)
 	public String getRuleName() {
 		return ruleName;
 	}
@@ -49,6 +47,7 @@ public class Rule implements Serializable {
 		this.ruleName = ruleName;
 	}
 
+	@Column(name = "gtsv", nullable = false)
 	public double getGtsv() {
 		return gtsv;
 	}
@@ -57,7 +56,7 @@ public class Rule implements Serializable {
 		this.gtsv = gtsv;
 	}
 
-	@Column(name = "minlen")
+	@Column(name = "minlen", nullable = false)
 	public int getMinLength() {
 		return minLength;
 	}
@@ -66,7 +65,7 @@ public class Rule implements Serializable {
 		this.minLength = minLength;
 	}
 
-	@Column(name = "maxlen")
+	@Column(name = "maxlen", nullable = false)
 	public int getMaxLength() {
 		return maxLength;
 	}
@@ -75,6 +74,7 @@ public class Rule implements Serializable {
 		this.maxLength = maxLength;
 	}
 
+	@Column(name = "v10", nullable = false)
 	public double getV10() {
 		return v10;
 	}
@@ -83,6 +83,7 @@ public class Rule implements Serializable {
 		this.v10 = v10;
 	}
 
+	@Column(name = "v9", nullable = false)
 	public double getV9() {
 		return v9;
 	}
@@ -91,6 +92,7 @@ public class Rule implements Serializable {
 		this.v9 = v9;
 	}
 
+	@Column(name = "v8", nullable = false)
 	public double getV8() {
 		return v8;
 	}
@@ -99,6 +101,7 @@ public class Rule implements Serializable {
 		this.v8 = v8;
 	}
 
+	@Column(name = "v7", nullable = false)
 	public double getV7() {
 		return v7;
 	}
@@ -107,6 +110,7 @@ public class Rule implements Serializable {
 		this.v7 = v7;
 	}
 
+	@Column(name = "v6", nullable = false)
 	public double getV6() {
 		return v6;
 	}
@@ -115,6 +119,7 @@ public class Rule implements Serializable {
 		this.v6 = v6;
 	}
 
+	@Column(name = "v5", nullable = false)
 	public double getV5() {
 		return v5;
 	}
@@ -123,6 +128,7 @@ public class Rule implements Serializable {
 		this.v5 = v5;
 	}
 
+	@Column(name = "v4", nullable = false)
 	public double getV4() {
 		return v4;
 	}
@@ -131,6 +137,7 @@ public class Rule implements Serializable {
 		this.v4 = v4;
 	}
 
+	@Column(name = "v3", nullable = false)
 	public double getV3() {
 		return v3;
 	}
@@ -139,6 +146,7 @@ public class Rule implements Serializable {
 		this.v3 = v3;
 	}
 
+	@Column(name = "v2", nullable = false)
 	public double getV2() {
 		return v2;
 	}
@@ -147,6 +155,7 @@ public class Rule implements Serializable {
 		this.v2 = v2;
 	}
 
+	@Column(name = "v1", nullable = false)
 	public double getV1() {
 		return v1;
 	}
@@ -155,6 +164,7 @@ public class Rule implements Serializable {
 		this.v1 = v1;
 	}
 
+	@Column(name = "v0", nullable = false)
 	public double getV0() {
 		return v0;
 	}

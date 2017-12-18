@@ -1,16 +1,14 @@
 package aero.nettracer.persistence.model;
 
-import java.io.Serializable;
-
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import org.hibernate.annotations.Proxy;
 
 @Entity
 @Table(name = "properties")
-public class Property implements Serializable {
+public class Property {
 
 	private int id;
 	private String keyStr;
@@ -18,6 +16,7 @@ public class Property implements Serializable {
 
 	@Id
 	@GeneratedValue
+	@Column(name = "id")
 	public int getId() {
 		return id;
 	}
@@ -26,7 +25,7 @@ public class Property implements Serializable {
 		this.id = id;
 	}
 
-
+	@Column(name = "keystr")
 	public String getKeyStr() {
 		return keyStr;
 	}
@@ -35,6 +34,7 @@ public class Property implements Serializable {
 		this.keyStr = keyStr;
 	}
 
+	@Column(name = "valuestr")
 	public String getValueStr() {
 		return valueStr;
 	}

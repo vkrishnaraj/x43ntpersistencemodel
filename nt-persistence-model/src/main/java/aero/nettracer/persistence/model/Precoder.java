@@ -1,8 +1,5 @@
 package aero.nettracer.persistence.model;
 
-import java.util.Date;
-
-import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -13,11 +10,13 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import java.util.Date;
 
 @Entity
 @Table(name="precoder")
 public class Precoder {
-	long precoder_id;
+
+	long id;
 	Incident incident;
 	Date createdate;
 	int losscode;
@@ -26,34 +25,40 @@ public class Precoder {
 	
 	@Id
 	@GeneratedValue
-	public long getPrecoder_id() {
-		return precoder_id;
+	@Column(name = "precoder_id")
+	public long getId() {
+		return id;
 	}
-	public void setPrecoder_id(long precoder_id) {
-		this.precoder_id = precoder_id;
+
+	public void setId(long id) {
+		this.id = id;
 	}
 	
-	@OneToOne(targetEntity = Incident.class)
-	@JoinColumn(name = "Incident_ID")
+	@OneToOne
+	@JoinColumn(name = "incident_id")
 	public Incident getIncident() {
 		return incident;
 	}
+
 	public void setIncident(Incident incident) {
 		this.incident = incident;
 	}
-	
+
+	@Column(name = "createdate")
 	@Temporal(value = TemporalType.DATE)
 	public Date getCreatedate() {
 		return createdate;
 	}
+
 	public void setCreatedate(Date createdate) {
 		this.createdate = createdate;
 	}
 	
-	@Basic
+	@Column(name = "losscode")
 	public int getLosscode() {
 		return losscode;
 	}
+
 	public void setLosscode(int losscode) {
 		this.losscode = losscode;
 	}
@@ -63,14 +68,16 @@ public class Precoder {
 	public Station getFaultStation() {
 		return faultStation;
 	}
+
 	public void setFaultStation(Station faultStation) {
 		this.faultStation = faultStation;
 	}
 	
-	@Column(length = 10)
+	@Column(name = "remark")
 	public String getRemark() {
 		return remark;
 	}
+
 	public void setRemark(String remark) {
 		this.remark = remark;
 	}

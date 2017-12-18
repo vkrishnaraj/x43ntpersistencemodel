@@ -1,21 +1,14 @@
 package aero.nettracer.persistence.model;
 
-import java.io.Serializable;
-
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 
-/**
- * @author noah
- */
 @Embeddable
-
-public class WorldTracerFile implements Serializable{
+public class WorldTracerFile {
 
 	private WTStatus wt_status;
-	
 	private String wt_id;
 	
 	public WorldTracerFile() {}
@@ -30,10 +23,6 @@ public class WorldTracerFile implements Serializable{
 		this.wt_status = wtStatus;
 	}
 
-	/**
-	 * 
-	 * @hibernate.property type="worldTracerStatus"
-	 */
 	@Enumerated(EnumType.STRING)
 	public WTStatus getWt_status() {
 		return wt_status;
@@ -42,12 +31,7 @@ public class WorldTracerFile implements Serializable{
 		this.wt_status = wt_status;
 	}
 	
-	/**
-	 * @return Returns the numpassengers.
-	 * 
-	 * @hibernate.property type="string"
-	 */
-	@Column(length = 15)
+	@Column(name = "wt_id")
 	public String getWt_id() {
 		return wt_id;
 	}
@@ -79,11 +63,9 @@ public class WorldTracerFile implements Serializable{
 	
 	@Override
 	public String toString() {
-		// TODO Auto-generated method stub
 		return String.format("%s:%s", wt_id, wt_status);
 	}
-	
-	
+
 	public static enum WTStatus {
 		ACTIVE, SUSPENDED, CLOSED
 	}

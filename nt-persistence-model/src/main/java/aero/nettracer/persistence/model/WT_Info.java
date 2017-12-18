@@ -1,24 +1,22 @@
 package aero.nettracer.persistence.model;
 
-import java.io.Serializable;
-import java.util.Date;
-
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import org.hibernate.annotations.Proxy;
-
+import java.sql.Timestamp;
 
 @Entity
 @Table(name = "wt_info")
-public class WT_Info implements Serializable {
+public class WT_Info {
+
 	private int id;
 	private String requestContext;
 	private String responseContext;
-	private Date wt_info_date;
+	private Timestamp wt_info_date;
 
 	@Id
 	@GeneratedValue
@@ -30,6 +28,7 @@ public class WT_Info implements Serializable {
 		this.id = id;
 	}
 
+	@Column(name = "requestcontext")
 	public String getRequestContext() {
 		return requestContext;
 	}
@@ -38,6 +37,7 @@ public class WT_Info implements Serializable {
 		this.requestContext = requestContext;
 	}
 
+	@Column(name = "responsecontext")
 	public String getResponseContext() {
 		return responseContext;
 	}
@@ -46,12 +46,14 @@ public class WT_Info implements Serializable {
 		this.responseContext = responseContext;
 	}
 
+	@Column(name = "wt_info_date")
 	@Temporal(TemporalType.TIMESTAMP)
-	public Date getWt_info_date() {
+	public Timestamp getWt_info_date() {
 		return wt_info_date;
 	}
 
-	public void setWt_info_date(Date wt_info_date) {
+	public void setWt_info_date(Timestamp wt_info_date) {
 		this.wt_info_date = wt_info_date;
 	}
+
 }

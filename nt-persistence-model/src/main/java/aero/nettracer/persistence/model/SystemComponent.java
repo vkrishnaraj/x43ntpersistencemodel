@@ -1,55 +1,53 @@
-/*
- * Created on Jul 20, 2004
- *
- * TODO To change the template for this generated file go to
- * Window - Preferences - Java - Code Style - Code Templates
- */
 package aero.nettracer.persistence.model;
 
-import java.io.Serializable;
-
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import org.hibernate.annotations.Proxy;
 
 @Entity
-@Table(name = "SystemComponents")
-public class SystemComponent implements Serializable {
-	private int component_ID;
+@Table(name = "systemcomponents")
+public class SystemComponent {
+
+	private int id;
 	private String component_Name;
 	private String component_Desc;
 	private SystemComponent parent;
 	private String component_action_link;
-	private int sort_order;
 	private int display;
+	private int sort_order;
 	private int sort_group;
 
-	public int getDisplay() {
-		return display;
+	@Id
+	@GeneratedValue
+	@Column(name = "component_id")
+	public int getId() {
+		return id;
 	}
 
-	public void setDisplay(int display) {
-		this.display = display;
+	public void setId(int id) {
+		this.id = id;
 	}
 
-	public int getSort_order() {
-		return sort_order;
+	@Column(name = "component_name")
+	public String getComponent_Name() {
+		return component_Name;
 	}
 
-	public void setSort_order(int sort_order) {
-		this.sort_order = sort_order;
+	public void setComponent_Name(String component_Name) {
+		this.component_Name = component_Name;
 	}
 
-	public String getComponent_action_link() {
-		return component_action_link;
+	@Column(name = "component_desc")
+	public String getComponent_Desc() {
+		return component_Desc;
 	}
 
-	public void setComponent_action_link(String component_action_link) {
-		this.component_action_link = component_action_link;
+	public void setComponent_Desc(String component_Desc) {
+		this.component_Desc = component_Desc;
 	}
 
 	@ManyToOne
@@ -62,43 +60,34 @@ public class SystemComponent implements Serializable {
 		this.parent = parent;
 	}
 
-	public String getComponent_Desc() {
-		return component_Desc;
+	@Column(name = "component_action_link")
+	public String getComponent_action_link() {
+		return component_action_link;
 	}
 
-	public void setComponent_Desc(String component_Desc) {
-		this.component_Desc = component_Desc;
+	public void setComponent_action_link(String component_action_link) {
+		this.component_action_link = component_action_link;
 	}
 
-	@Id
-	@GeneratedValue
-	public int getComponent_ID() {
-		return component_ID;
+	@Column(name = "display")
+	public int getDisplay() {
+		return display;
 	}
 
-
-	public void setComponent_ID(int component_ID) {
-		this.component_ID = component_ID;
+	public void setDisplay(int display) {
+		this.display = display;
 	}
 
-	public String getComponent_Name() {
-		return component_Name;
+	@Column(name = "sort_order")
+	public int getSort_order() {
+		return sort_order;
 	}
 
-
-	public void setComponent_Name(String component_Name) {
-		this.component_Name = component_Name;
+	public void setSort_order(int sort_order) {
+		this.sort_order = sort_order;
 	}
 
-
-	public String toString() {
-		StringBuffer sb = new StringBuffer(200);
-		sb.append("Component ID=" + this.getComponent_ID() + " Name=" + this.getComponent_Name()
-				+ " Desc=" + this.getComponent_Desc() + " Component Link="
-				+ this.getComponent_action_link() + " parent=" + this.getParent().getComponent_ID());
-		return sb.toString();
-	}
-	
+	@Column(name = "sort_group")
 	public int getSort_group() {
 		return sort_group;
 	}

@@ -1,13 +1,8 @@
 package aero.nettracer.persistence.model;
 
-import java.util.Date;
-import java.util.Set;
-
-import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -15,121 +10,46 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.persistence.Transient;
-
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
-import org.hibernate.annotations.Proxy;
+import java.sql.Timestamp;
+import java.util.Set;
 
 @Entity
-@Table(name = "proactiveNotification")
+@Table(name = "proactivenotification")
 public class ProactiveNotification {
 
 	public static final int STATUS_OPEN = 81;
 	public static final int STATUS_CLOSED = 82;
 	
-	@Id
-	@GeneratedValue
-	private long pcn_id;
-
-	@ManyToOne
-	@JoinColumn(name = "status_ID", nullable = false)
-	private Status status;
-
-	@ManyToOne
-	@JoinColumn(name = "destinationStation_ID", nullable = false)
-	private Station destinationStation;
-
-	@ManyToOne
-	@JoinColumn(name = "incident_ID", nullable = true)
-	private Incident incident;
-
-	@OneToMany(mappedBy = "pcn", cascade = CascadeType.ALL, fetch=FetchType.EAGER)
-	@Fetch(FetchMode.SELECT)
-	private Set<OHD_Log> ohd_logs;
-
-	@OneToOne
-	@JoinColumn(name = "oia_ID", nullable = true)
-	private OnlineIncidentAuthorization oia;
-
-	@Column(length = 40)
-	private String name;
-
-	@Column(length = 6)
+	private long id;
 	private String locator;
-
-	@Column(length = 2)
 	private String missedFlightAirline;
-
-	@Basic
-	private String missedFlightNumber;
-
-	@Basic
-	private Date missedFlightDate;
-
-	@Basic
+	private Timestamp missedFlightDate;
 	private String missedFlightDestination;
-
-	@Column(length = 2)
+	private String missedFlightNumber;
+	private String name;
+	private Station destinationStation;
+	private Incident incident;
+	private Status status;
 	private int passIndex;
-
-	@Basic
-	private String membershipNumber;
-
-	@Basic
-	private String membershipAirline;
-
-	@Transient
+	private OnlineIncidentAuthorization oia;
+	private Set<OHD_Log> ohd_logs;
 	private boolean finalFlightsMatch;
 
-	public OnlineIncidentAuthorization getOia() {
-		return oia;
+	@Id
+	@GeneratedValue
+	@Column(name = "id")
+	public long getId() {
+		return id;
 	}
 
-	public void setOia(OnlineIncidentAuthorization oia) {
-		this.oia = oia;
+	public void setId(long id) {
+		this.id = id;
 	}
 
-	public int getPassIndex() {
-		return passIndex;
-	}
-
-	public void setPassIndex(int passIndex) {
-		this.passIndex = passIndex;
-	}
-
-	public Status getStatus() {
-		return status;
-	}
-
-	public void setStatus(Status status) {
-		this.status = status;
-	}
-
-	public Incident getIncident() {
-		return incident;
-	}
-
-	public void setIncident(Incident incident) {
-		this.incident = incident;
-	}
-
-	public Set<OHD_Log> getOhd_logs() {
-		return ohd_logs;
-	}
-
-	public void setOhd_logs(Set<OHD_Log> ohd_log) {
-		this.ohd_logs = ohd_log;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
+	@Column(name = "locator")
 	public String getLocator() {
 		return locator;
 	}
@@ -138,6 +58,7 @@ public class ProactiveNotification {
 		this.locator = locator;
 	}
 
+	@Column(name = "missedflightairline")
 	public String getMissedFlightAirline() {
 		return missedFlightAirline;
 	}
@@ -146,12 +67,108 @@ public class ProactiveNotification {
 		this.missedFlightAirline = missedFlightAirline;
 	}
 
-	public Date getMissedFlightDate() {
+	@Column(name = "missedflightdate")
+	@Temporal(TemporalType.TIMESTAMP)
+	public Timestamp getMissedFlightDate() {
 		return missedFlightDate;
 	}
 
-	public void setMissedFlightDate(Date missedFlightDate) {
+	public void setMissedFlightDate(Timestamp missedFlightDate) {
 		this.missedFlightDate = missedFlightDate;
+	}
+
+	@Column(name = "missedflightdestination")
+	public String getMissedFlightDestination() {
+		return missedFlightDestination;
+	}
+
+	public void setMissedFlightDestination(String missedFlightDestination) {
+		this.missedFlightDestination = missedFlightDestination;
+	}
+
+	@Column(name = "missedflightnumber")
+	public String getMissedFlightNumber() {
+		return missedFlightNumber;
+	}
+
+	public void setMissedFlightNumber(String missedFlightNumber) {
+		this.missedFlightNumber = missedFlightNumber;
+	}
+
+	@Column(name = "name")
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	@ManyToOne
+	@JoinColumn(name = "destinationstation_id", nullable = false)
+	public Station getDestinationStation() {
+		return destinationStation;
+	}
+
+	public void setDestinationStation(Station destinationStation) {
+		this.destinationStation = destinationStation;
+	}
+
+	@ManyToOne
+	@JoinColumn(name = "incident_id")
+	public Incident getIncident() {
+		return incident;
+	}
+
+	public void setIncident(Incident incident) {
+		this.incident = incident;
+	}
+
+	@ManyToOne
+	@JoinColumn(name = "status_id", nullable = false)
+	public Status getStatus() {
+		return status;
+	}
+
+	public void setStatus(Status status) {
+		this.status = status;
+	}
+
+	@Column(name = "passindex")
+	public int getPassIndex() {
+		return passIndex;
+	}
+
+	public void setPassIndex(int passIndex) {
+		this.passIndex = passIndex;
+	}
+
+	@OneToOne
+	@JoinColumn(name = "oia_id")
+	public OnlineIncidentAuthorization getOia() {
+		return oia;
+	}
+
+	public void setOia(OnlineIncidentAuthorization oia) {
+		this.oia = oia;
+	}
+
+	@OneToMany(mappedBy = "pcn", cascade = CascadeType.ALL)
+	public Set<OHD_Log> getOhd_logs() {
+		return ohd_logs;
+	}
+
+	public void setOhd_logs(Set<OHD_Log> ohd_log) {
+		this.ohd_logs = ohd_log;
+	}
+
+	@Transient
+	public boolean isFinalFlightsMatch() {
+		return finalFlightsMatch;
+	}
+
+	public void setFinalFlightsMatch(boolean finalFlightsMatch) {
+		this.finalFlightsMatch = finalFlightsMatch;
 	}
 
 	public static int getSTATUS_OPEN() {
@@ -162,43 +179,4 @@ public class ProactiveNotification {
 		return STATUS_CLOSED;
 	}
 
-	public long getPcn_id() {
-		return pcn_id;
-	}
-
-	public void setPcn_id(long pcn_id) {
-		this.pcn_id = pcn_id;
-	}
-
-	public Station getDestinationStation() {
-		return destinationStation;
-	}
-
-	public void setDestinationStation(Station destinationStation) {
-		this.destinationStation = destinationStation;
-	}
-
-	public boolean isFinalFlightsMatch() {
-		return finalFlightsMatch;
-	}
-
-	public void setFinalFlightsMatch(boolean finalFlightsMatch) {
-		this.finalFlightsMatch = finalFlightsMatch;
-	}
-
-	public void setMissedFlightNumber(String missedFlightNumber) {
-		this.missedFlightNumber = missedFlightNumber;
-	}
-
-	public String getMissedFlightNumber() {
-		return missedFlightNumber;
-	}
-
-	public String getMissedFlightDestination() {
-		return missedFlightDestination;
-	}
-
-	public void setMissedFlightDestination(String missedFlightDestination) {
-		this.missedFlightDestination = missedFlightDestination;
-	}
 }
