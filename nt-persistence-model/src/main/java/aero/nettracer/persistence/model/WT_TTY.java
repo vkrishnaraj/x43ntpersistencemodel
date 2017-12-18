@@ -1,8 +1,5 @@
 package aero.nettracer.persistence.model;
 
-import java.util.Date;
-import java.util.TimeZone;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,7 +9,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.persistence.Transient;
+import java.sql.Timestamp;
 
 @Entity
 @Table(name = "wt_tty")
@@ -36,7 +33,7 @@ public class WT_TTY {
 	public int tty_status;
 	public int tty_station_id;
 	public Agent tty_agent;
-	public Date send_time;
+	public Timestamp send_time;
 	public String text;
 
 	@Id
@@ -185,16 +182,7 @@ public class WT_TTY {
 		this.tty_status = tty_status;
 	}
 
-	public String getText() {
-		return text;
-	}
-
-	public void setText(String text) {
-		this.text = text;
-	}
-
-
-
+	@Column(name = "tty_station_id")
 	public int getTty_station_id() {
 		return tty_station_id;
 	}
@@ -213,13 +201,23 @@ public class WT_TTY {
 		this.tty_agent = tty_agent;
 	}
 
+	@Column(name = "send_time", insertable = false, updatable = false)
 	@Temporal(TemporalType.TIMESTAMP)
-	public Date getSend_time() {
+	public Timestamp getSend_time() {
 		return send_time;
 	}
 
-	public void setSend_time(Date send_time) {
+	public void setSend_time(Timestamp send_time) {
 		this.send_time = send_time;
+	}
+
+	@Column(name = "text", columnDefinition = "text")
+	public String getText() {
+		return text;
+	}
+
+	public void setText(String text) {
+		this.text = text;
 	}
 
 }

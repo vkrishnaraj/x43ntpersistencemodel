@@ -1,16 +1,11 @@
 package aero.nettracer.persistence.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.Proxy;
-
-/**
- * @author Sean Fine
- * Class representing WTCompany object
- */
 @Entity
 @Table(name = "wtcompany")
 public class WTCompany {
@@ -20,7 +15,9 @@ public class WTCompany {
 	private String company_id;
 	private String companyName;
 	
-	@Id @GeneratedValue
+	@Id
+	@GeneratedValue
+	@Column(name = "id")
 	public long getId() {
 		return id;
 	}
@@ -29,6 +26,7 @@ public class WTCompany {
 		this.id = id;
 	}
 
+	@Column(name = "wtcompanycode")
 	public String getWtCompanyCode() {
 		return wtCompanyCode;
 	}
@@ -37,6 +35,7 @@ public class WTCompany {
 		this.wtCompanyCode = wtCompanyCode;
 	}
 
+	@Column(name = "company_id")
 	public String getCompany_id() {
 		return company_id;
 	}
@@ -45,6 +44,7 @@ public class WTCompany {
 		this.company_id = company_id;
 	}
 
+	@Column(name = "companyname")
 	public String getCompanyName() {
 		return companyName;
 	}

@@ -1,33 +1,34 @@
 package aero.nettracer.persistence.model;
 
-import java.io.Serializable;
-
-import aero.nettracer.persistence.model.i8n.LocaleBasedObject;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Transient;
-import org.hibernate.annotations.Proxy;
 
 @Entity
-@Table(name = "XDescElement")
-public class XDescElement extends LocaleBasedObject implements Serializable {
-	private int XDesc_ID;
+@Table(name = "xdescelement")
+public class XDescElement {
+
+	private int id;
 	private String code;
+	private String description;
 
 	private String MSG_KEY = "DESCELEMENT_";
 
 	@Id
 	@GeneratedValue
-	public int getXDesc_ID() {
-		return XDesc_ID;
+	@Column(name = "xdesc_id")
+	public int getId() {
+		return id;
 	}
 
-	public void setXDesc_ID(int desc_ID) {
-		XDesc_ID = desc_ID;
+	public void setId(int desc_ID) {
+		id = desc_ID;
 	}
 
+	@Column(name = "code")
 	public String getCode() {
 		return code;
 	}
@@ -36,8 +37,18 @@ public class XDescElement extends LocaleBasedObject implements Serializable {
 		this.code = code;
 	}
 
+	@Column(name = "description")
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
 	@Transient
 	public String getKey() {
 		return MSG_KEY + code;
 	}
+
 }
