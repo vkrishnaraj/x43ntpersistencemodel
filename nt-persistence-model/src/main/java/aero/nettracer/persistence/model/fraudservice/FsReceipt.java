@@ -1,53 +1,31 @@
 package aero.nettracer.persistence.model.fraudservice;
 
-import java.io.Serializable;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
-
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
-import org.hibernate.annotations.Proxy;
+import javax.persistence.Table;
 
 @Entity
-public class FsReceipt implements Serializable {
+@Table(name = "fsreceipt")
+public class FsReceipt {
 
-	private static final long serialVersionUID = -3328176366384823064L;
+	private long id;
+	private int ccExpMonth;
+	private int ccExpYear;
+	private String ccLastFour;
+	private String ccType;
+	private String company;
+	private FsClaim claim;
+	private FsAddress address;
+	private Phone phone;
 
 	@Id
 	@GeneratedValue
-	private long id;
-	private String company;
-	@Column(length = 2)
-	private String ccType;
-	@Column(length = 4)
-	private String ccLastFour;
-	@Column(length = 2)
-	private int ccExpMonth;
-	@Column(length = 2)
-	private int ccExpYear;
-	
-	@ManyToOne(targetEntity = FsClaim.class)
-	@Fetch(FetchMode.SELECT)
-	private FsClaim claim;
-	
-	@OneToOne(mappedBy = "receipt", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	@Cascade(value = org.hibernate.annotations.CascadeType.DELETE_ORPHAN)
-	@Fetch(FetchMode.SELECT)
-	private FsAddress address;
-	
-	@OneToOne(mappedBy = "receipt", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	@Cascade(value = org.hibernate.annotations.CascadeType.DELETE_ORPHAN)
-	@Fetch(FetchMode.SELECT)
-	private Phone phone;
-
+	@Column(name = "id")
 	public long getId() {
 		return id;
 	}
@@ -56,30 +34,7 @@ public class FsReceipt implements Serializable {
 		this.id = id;
 	}
 
-	public String getCompany() {
-		return company;
-	}
-
-	public void setCompany(String company) {
-		this.company = company;
-	}
-	
-	public String getCcType() {
-		return ccType;
-	}
-
-	public void setCcType(String ccType) {
-		this.ccType = ccType;
-	}
-
-	public String getCcLastFour() {
-		return ccLastFour;
-	}
-
-	public void setCcLastFour(String ccLastFour) {
-		this.ccLastFour = ccLastFour;
-	}
-
+	@Column(name = "ccexpmonth")
 	public int getCcExpMonth() {
 		return ccExpMonth;
 	}
@@ -88,6 +43,7 @@ public class FsReceipt implements Serializable {
 		this.ccExpMonth = ccExpMonth;
 	}
 
+	@Column(name = "ccexpyear")
 	public int getCcExpYear() {
 		return ccExpYear;
 	}
@@ -96,6 +52,43 @@ public class FsReceipt implements Serializable {
 		this.ccExpYear = ccExpYear;
 	}
 
+	@Column(name = "cclastfour")
+	public String getCcLastFour() {
+		return ccLastFour;
+	}
+
+	public void setCcLastFour(String ccLastFour) {
+		this.ccLastFour = ccLastFour;
+	}
+
+	@Column(name = "cctype")
+	public String getCcType() {
+		return ccType;
+	}
+
+	public void setCcType(String ccType) {
+		this.ccType = ccType;
+	}
+
+	@Column(name = "company")
+	public String getCompany() {
+		return company;
+	}
+
+	public void setCompany(String company) {
+		this.company = company;
+	}
+
+	@ManyToOne
+	public FsClaim getClaim() {
+		return claim;
+	}
+
+	public void setClaim(FsClaim claim) {
+		this.claim = claim;
+	}
+
+	@OneToOne(mappedBy = "receipt", cascade = CascadeType.ALL, orphanRemoval = true)
 	public FsAddress getAddress() {
 		return address;
 	}
@@ -104,6 +97,7 @@ public class FsReceipt implements Serializable {
 		this.address = address;
 	}
 
+	@OneToOne(mappedBy = "receipt", cascade = CascadeType.ALL, orphanRemoval = true)
 	public Phone getPhone() {
 		return phone;
 	}
@@ -112,16 +106,4 @@ public class FsReceipt implements Serializable {
 		this.phone = phone;
 	}
 
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
-
-	public FsClaim getClaim() {
-		return claim;
-	}
-
-	public void setClaim(FsClaim claim) {
-		this.claim = claim;
-	}
-	
 }

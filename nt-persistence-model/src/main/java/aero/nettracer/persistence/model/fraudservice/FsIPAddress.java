@@ -1,30 +1,22 @@
 package aero.nettracer.persistence.model.fraudservice;
 
-import java.io.Serializable;
-
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
-import org.hibernate.annotations.Proxy;
-
 @Entity
-public class FsIPAddress implements Serializable {
-	private static final long serialVersionUID = 1L;
+public class FsIPAddress {
 
-	@Id
-	@GeneratedValue
 	private long id;
 	private String ipAddress;
+	private FsClaim claim;
 	private String association;
 	
-	@ManyToOne(targetEntity = FsClaim.class)
-	@Fetch(FetchMode.SELECT)
-	private FsClaim claim;
-
+	@Id
+	@GeneratedValue
 	public long getId() {
 		return id;
 	}
@@ -33,6 +25,7 @@ public class FsIPAddress implements Serializable {
 		this.id = id;
 	}
 
+	@Column(name = "ipaddress")
 	public String getIpAddress() {
 		return ipAddress;
 	}
@@ -41,6 +34,8 @@ public class FsIPAddress implements Serializable {
 		this.ipAddress = ipAddress;
 	}
 
+	@ManyToOne
+	@JoinColumn(name = "claim_id")
 	public FsClaim getClaim() {
 		return claim;
 	}
@@ -49,6 +44,7 @@ public class FsIPAddress implements Serializable {
 		this.claim = claim;
 	}
 
+	@Column(name = "association")
 	public void setAssociation(String association) {
 		this.association = association;
 	}

@@ -1,101 +1,160 @@
 package aero.nettracer.persistence.model.fraudservice;
 
-import java.io.Serializable;
+import aero.nettracer.commons.utils.GenericStringUtils;
+import org.apache.commons.codec.language.DoubleMetaphone;
+import org.apache.commons.codec.language.Soundex;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.persistence.Transient;
+import java.sql.Timestamp;
 import java.util.Comparator;
-import java.util.Date;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.Set;
 import java.util.TreeSet;
 
-import aero.nettracer.commons.utils.GenericDateUtils;
-import aero.nettracer.commons.utils.GenericStringUtils;
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Transient;
-import org.apache.commons.codec.language.DoubleMetaphone;
-import org.apache.commons.codec.language.Soundex;
-import org.apache.log4j.Logger;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
-import org.hibernate.annotations.Proxy;
-
 @Entity
-public class Person implements Serializable {
+@Table(name = "person")
+public class Person {
 
-	private static final long serialVersionUID = 1L;
-	private static final Logger logger = Logger.getLogger(Person.class);
-
-	@Id
-	@GeneratedValue
 	private long id;
-
-	// @OneToOne(targetEntity = aero.nettracer.legacy.persistence.model.fraudservice.Claim.class)
-	@ManyToOne(targetEntity = FsClaim.class)
-	private FsClaim claim;
-
-	// @OneToOne(targetEntity = aero.nettracer.legacy.persistence.model.fraudservice.Incident.class)
-	@ManyToOne(targetEntity = FsIncident.class)
-	private FsIncident incident;
-
-	// @OneToOne(targetEntity = aero.nettracer.legacy.persistence.model.fraudservice.Reservation.class)
-	@ManyToOne(targetEntity = Reservation.class)
-	private Reservation reservation;
-	private boolean whiteListed;
 	private boolean ccContact;
-	private String firstName;
-	private String middleName;
-	private String lastName;
-	private Date dateOfBirth;
-	private String firstNameSoundex;
-	private String lastNameSoundex;
-	private String firstNameDmp;
-	private String lastNameDmp;
-	private String socialSecurity;
-	private String driversLicenseNumber;
-	private String driversLicenseState;
-	private String driversLicenseProvince;
-	private String driversLicenseCountry;
-	private String passportIssuer;
-	private String passportNumber;
-	private String emailAddress;
+	private Timestamp dateOfBirth;
 	private String description;
+	private String driversLicenseCountry;
+	private String driversLicenseState;
+	private String driversLicenseNumber;
+	private String emailAddress;
 	private String ffAirline;
 	private String ffNumber;
-
-	@Transient
-	private Person parent;
-
-	@Transient
-	private String dateFormat;
-
-	@OneToMany(mappedBy = "person", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	//@org.hibernate.annotations.OrderBy(clause = "id")
-	@Fetch(FetchMode.SELECT)
+	private String firstName;
+	private String firstNameDmp;
+	private String firstNameSoundex;
+	private String lastName;
+	private String lastNameDmp;
+	private String lastNameSoundex;
+	private String middleName;
+	private String passportIssuer;
+	private String passportNumber;
+	private String socialSecurity;
+	private boolean whiteListed;
+	private FsClaim claim;
+	private FsIncident incident;
+	private Reservation reservation;
+	private String driversLicenseProvince;
 	private Set<Phone> phones;
-
-	@OneToMany(mappedBy = "person", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	//@org.hibernate.annotations.OrderBy(clause = "id")
-	@Fetch(FetchMode.SELECT)
 	private Set<FsAddress> addresses;
-
-	@Transient
+	private Person parent;
 	private long sortId;
+
 	public Person() {
 		this.sortId = System.nanoTime();
 	}
-	public long getSortId() {
-		return this.sortId;
-	}
-	public void setSortId(long sortId ) {
-		this.sortId = sortId;
+
+	@Id
+	@GeneratedValue
+	@Column(name = "id")
+	public long getId() {
+		return id;
 	}
 
+	public void setId(long id) {
+		this.id = id;
+	}
+
+	@Column(name = "cccontact")
+	public boolean isCcContact() {
+		return ccContact;
+	}
+
+	public void setCcContact(boolean ccContact) {
+		this.ccContact = ccContact;
+	}
+
+	@Column(name = "dateofbirth")
+	@Temporal(TemporalType.TIMESTAMP)
+	public Timestamp getDateOfBirth() {
+		return dateOfBirth;
+	}
+
+	public void setDateOfBirth(Timestamp dateOfBirth) {
+		this.dateOfBirth = dateOfBirth;
+	}
+
+	@Column(name = "description")
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	@Column(name = "driverslicensecountry")
+	public String getDriversLicenseCountry() {
+		return driversLicenseCountry;
+	}
+
+	public void setDriversLicenseCountry(String driversLicenseCountry) {
+		this.driversLicenseCountry = driversLicenseCountry;
+	}
+
+	@Column(name = "driverslicensestate")
+	public String getDriversLicenseState() {
+		return driversLicenseState;
+	}
+
+	public void setDriversLicenseState(String driversLicenseState) {
+		this.driversLicenseState = driversLicenseState;
+	}
+
+	@Column(name = "driverslicensenumber")
+	public String getDriversLicenseNumber() {
+		return this.driversLicenseNumber;
+	}
+
+	public void setTransferDriversLicenseNumber(String driversLicenseNumber) {
+		this.driversLicenseNumber = driversLicenseNumber;
+	}
+
+	@Column(name = "emailaddress")
+	public String getEmailAddress() {
+		return emailAddress;
+	}
+
+	public void setEmailAddress(String emailAddress) {
+		this.emailAddress = emailAddress;
+	}
+
+	@Column(name = "ffairline")
+	public String getFfAirline() {
+		return ffAirline;
+	}
+
+	public void setFfAirline(String ffAirline) {
+		this.ffAirline = ffAirline;
+	}
+
+	@Column(name = "ffnumber")
+	public String getFfNumber() {
+		return ffNumber;
+	}
+
+	public void setFfNumber(String ffNumber) {
+		this.ffNumber = ffNumber;
+	}
+
+	@Column(name = "firstname")
 	public String getFirstName() {
 		return firstName;
 	}
@@ -109,6 +168,25 @@ public class Person implements Serializable {
 		}
 	}
 
+	@Column(name = "firstnamedmp")
+	public String getFirstNameDmp() {
+		return firstNameDmp;
+	}
+
+	public void setFirstNameDmp(String firstNameDmp) {
+		this.firstNameDmp = firstNameDmp;
+	}
+
+	@Column(name = "firstnamesoundex")
+	public String getFirstNameSoundex() {
+		return firstNameSoundex;
+	}
+
+	public void setFirstNameSoundex(String firstNameSoundex) {
+		this.firstNameSoundex = firstNameSoundex;
+	}
+
+	@Column(name = "lastname")
 	public String getLastName() {
 		return lastName;
 	}
@@ -122,68 +200,7 @@ public class Person implements Serializable {
 		}
 	}
 
-	public String getRedactedSocialSecurity() {
-		String toReturn = "";
-		if (socialSecurity != null && !socialSecurity.isEmpty()) {
-			toReturn = "*********";
-		}
-		return toReturn;
-	}
-
-	public String getSocialSecurity() {
-		return this.socialSecurity;
-	}
-
-	//NTFIXME
-	/*public void setRedactedSocialSecurity(String socialSecurity) {
-		//Remeber to Encrypt using method in NTCoreUtils
-		this.setSocialSecurity(socialSecurity);
-	}*/
-
-	public void setSocialSecurity(String socialSecurity) {
-		this.socialSecurity = socialSecurity;
-	}
-
-	public String getEmailAddress() {
-		return emailAddress;
-	}
-
-	public void setEmailAddress(String emailAddress) {
-		this.emailAddress = emailAddress;
-	}
-
-	public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
-	}
-
-	public String getFirstNameSoundex() {
-		return firstNameSoundex;
-	}
-
-	public void setFirstNameSoundex(String firstNameSoundex) {
-		this.firstNameSoundex = firstNameSoundex;
-	}
-
-	public String getLastNameSoundex() {
-		return lastNameSoundex;
-	}
-
-	public void setLastNameSoundex(String lastNameSoundex) {
-		this.lastNameSoundex = lastNameSoundex;
-	}
-
-	public String getFirstNameDmp() {
-		return firstNameDmp;
-	}
-
-	public void setFirstNameDmp(String firstNameDmp) {
-		this.firstNameDmp = firstNameDmp;
-	}
-
+	@Column(name = "lastnamedmp")
 	public String getLastNameDmp() {
 		return lastNameDmp;
 	}
@@ -192,6 +209,100 @@ public class Person implements Serializable {
 		this.lastNameDmp = lastNameDmp;
 	}
 
+	@Column(name = "lastnamesoundex")
+	public String getLastNameSoundex() {
+		return lastNameSoundex;
+	}
+
+	public void setLastNameSoundex(String lastNameSoundex) {
+		this.lastNameSoundex = lastNameSoundex;
+	}
+
+	@Column(name = "middlename")
+	public String getMiddleName() {
+		return middleName;
+	}
+
+	public void setMiddleName(String middleName) {
+		this.middleName = middleName;
+	}
+
+	@Column(name = "passportissuer")
+	public String getPassportIssuer() {
+		return passportIssuer;
+	}
+
+	public void setPassportIssuer(String passportIssuer) {
+		this.passportIssuer = passportIssuer;
+	}
+
+	@Column(name = "passportnumber")
+	public String getPassportNumber() {
+		return this.passportNumber;
+	}
+
+	public void setPassportNumber(String passportNumber) {
+		this.passportNumber = passportNumber;
+	}
+
+	@Column(name = "socialsecurity")
+	public String getSocialSecurity() {
+		return this.socialSecurity;
+	}
+
+	public void setSocialSecurity(String socialSecurity) {
+		this.socialSecurity = socialSecurity;
+	}
+
+	@Column(name = "whitelisted")
+	public boolean isWhiteListed() {
+		return whiteListed;
+	}
+
+	public void setWhiteListed(boolean whiteListed) {
+		this.whiteListed = whiteListed;
+	}
+
+	@ManyToOne
+	@JoinColumn(name = "claim_id")
+	public FsClaim getClaim() {
+		return claim;
+	}
+
+	public void setClaim(FsClaim claim) {
+		this.claim = claim;
+	}
+
+	@ManyToOne
+	@JoinColumn(name = "incident_id")
+	public FsIncident getIncident() {
+		return incident;
+	}
+
+	public void setIncident(FsIncident incident) {
+		this.incident = incident;
+	}
+
+	@ManyToOne
+	@JoinColumn(name = "reservation_id")
+	public Reservation getReservation() {
+		return reservation;
+	}
+
+	public void setReservation(Reservation reservation) {
+		this.reservation = reservation;
+	}
+
+	@Column(name = "driverslicenseprovince")
+	public String getDriversLicenseProvince() {
+		return driversLicenseProvince;
+	}
+
+	public void setDriversLicenseProvince(String driversLicenseProvince) {
+		this.driversLicenseProvince = driversLicenseProvince;
+	}
+
+	@OneToMany(mappedBy = "person", cascade = CascadeType.ALL)
 	public Set<Phone> getPhones() {
 		if (phones == null) {
 			return new LinkedHashSet<>();
@@ -211,6 +322,7 @@ public class Person implements Serializable {
 		this.phones = phones;
 	}
 
+	@OneToMany(mappedBy = "person", cascade = CascadeType.ALL)
 	public Set<FsAddress> getAddresses() {
 		if (addresses == null) {
 			addresses = new LinkedHashSet<>();
@@ -231,89 +343,40 @@ public class Person implements Serializable {
 		this.addresses = addresses;
 	}
 
-	public long getId() {
-		return id;
+	@Transient
+	public Person getParent() {
+		return parent;
 	}
 
-	public void setId(long id) {
-		this.id = id;
+	public void setParent(Person parent) {
+		this.parent = parent;
 	}
 
-	public FsClaim getClaim() {
-		return claim;
+	@Transient
+	public long getSortId() {
+		return this.sortId;
 	}
 
-	public void setClaim(FsClaim claim) {
-		this.claim = claim;
+	public void setSortId(long sortId ) {
+		this.sortId = sortId;
 	}
 
-	public FsIncident getIncident() {
-		return incident;
+	@Transient
+	public String getRedactedSocialSecurity() {
+		String toReturn = "";
+		if (socialSecurity != null && !socialSecurity.isEmpty()) {
+			toReturn = "*********";
+		}
+		return toReturn;
 	}
 
-	public void setIncident(FsIncident incident) {
-		this.incident = incident;
-	}
-
-	public Reservation getReservation() {
-		return reservation;
-	}
-
-	public void setReservation(Reservation reservation) {
-		this.reservation = reservation;
-	}
-
-	public boolean isWhiteListed() {
-		return whiteListed;
-	}
-
-	public void setWhiteListed(boolean whiteListed) {
-		this.whiteListed = whiteListed;
-	}
-
-	public String getMiddleName() {
-		return middleName;
-	}
-
-	public void setMiddleName(String middleName) {
-		this.middleName = middleName;
-	}
-
-	public String getDriversLicenseState() {
-		return driversLicenseState;
-	}
-
-	public void setDriversLicenseState(String driversLicenseState) {
-		this.driversLicenseState = driversLicenseState;
-	}
-
+	@Transient
 	public String getRedactedDriversLicenseNumber() {
 		String toReturn = "";
 		if (driversLicenseNumber != null && !driversLicenseNumber.isEmpty()) {
 			toReturn = "*********";
 		}
 		return toReturn;
-	}
-
-	public String getDriversLicenseProvince() {
-		return driversLicenseProvince;
-	}
-
-	public void setDriversLicenseProvince(String driversLicenseProvince) {
-		this.driversLicenseProvince = driversLicenseProvince;
-	}
-
-	public String getDriversLicenseNumber() {
-		return this.driversLicenseNumber;
-	}
-
-	//NTFIXME
-	/*public void setRedactedDriversLicenseNumber(String driversLicenseNumber) {
-		setDriversLicenseNumber(driversLicenseNumber);
-	}*/
-
-	public void setTransferDriversLicenseNumber(String driversLicenseNumber) {
-		this.driversLicenseNumber = driversLicenseNumber;
 	}
 
 	public void setDriversLicenseNumber(String driversLicenseNumber) {
@@ -324,14 +387,7 @@ public class Person implements Serializable {
 		}
 	}
 
-	public String getPassportIssuer() {
-		return passportIssuer;
-	}
-
-	public void setPassportIssuer(String passportIssuer) {
-		this.passportIssuer = passportIssuer;
-	}
-
+	@Transient
 	public String getRedactedPassportNumber() {
 		String toReturn = "";
 		if (passportNumber != null && !passportNumber.isEmpty()) {
@@ -340,84 +396,7 @@ public class Person implements Serializable {
 		return toReturn;
 	}
 
-	public String getPassportNumber() {
-		return this.passportNumber;
-	}
-
-	//NTFIXME
-	/*public void setRedactedPassportNumber(String passportNumber) {
-		setPassportNumber(passportNumber);
-	}*/
-
-	//NTFIXME
-	public void setPassportNumber(String passportNumber) {
-		this.passportNumber = passportNumber;
-	}
-
-	public String getFfAirline() {
-		return ffAirline;
-	}
-
-	public void setFfAirline(String ffAirline) {
-		this.ffAirline = ffAirline;
-	}
-
-	public String getFfNumber() {
-		return ffNumber;
-	}
-
-	public void setFfNumber(String ffNumber) {
-		this.ffNumber = ffNumber;
-	}
-
-	public boolean isCcContact() {
-		return ccContact;
-	}
-
-	public void setCcContact(boolean ccContact) {
-		this.ccContact = ccContact;
-	}
-
-	public Date getDateOfBirth() {
-		return dateOfBirth;
-	}
-
-	public void setDateOfBirth(Date dateOfBirth) {
-		this.dateOfBirth = dateOfBirth;
-	}
-
-	public String getDisDateOfBirth() {
-		return GenericDateUtils.formatDate(dateOfBirth, dateFormat, "", null);
-	}
-
-	public String getDisDateOfBirth(String _DATEFORMAT) {
-		return GenericDateUtils.formatDate(dateOfBirth, _DATEFORMAT, "", null);
-	}
-
-	public void setDisDateOfBirth(String dateOfBirth) {
-		setDateOfBirth(GenericDateUtils.convertToDate(dateOfBirth, dateFormat, null));
-	}
-
-	public void setDisDateOfBirth(String dateOfBirth, String _DATEFORMAT) {
-		setDateOfBirth(GenericDateUtils.convertToDate(dateOfBirth, _DATEFORMAT, null));
-	}
-
-	public void setParent(Person parent) {
-		this.parent = parent;
-	}
-
-	public Person getParent() {
-		return parent;
-	}
-
-	public String getDriversLicenseCountry() {
-		return driversLicenseCountry;
-	}
-
-	public void setDriversLicenseCountry(String driversLicenseCountry) {
-		this.driversLicenseCountry = driversLicenseCountry;
-	}
-
+	@Transient
 	public String getDriversLicenseIssuer() {
 		if (this.driversLicenseState != null
 				&& this.driversLicenseState.length() > 0) {
@@ -459,13 +438,6 @@ public class Person implements Serializable {
 		}
 	}
 
-	public String getDateFormat() {
-		return dateFormat;
-	}
-
-	public void setDateFormat(String dateFormat) {
-		this.dateFormat = dateFormat;
-	}
 
 	// START PHONE STUFF HERE!!
 	@Transient

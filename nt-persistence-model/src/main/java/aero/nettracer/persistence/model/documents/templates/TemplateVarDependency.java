@@ -1,27 +1,23 @@
 package aero.nettracer.persistence.model.documents.templates;
 
-import java.util.List;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.util.List;
 
 @Entity
 @Table(name = "template_var_dependency")
 public class TemplateVarDependency {
-	
-	@Id
-	@GeneratedValue
-	private long id;
-	
-	@Column(nullable = false)
-	private String associatedClass;
 
-	@Column(nullable = false)
+	private long id;
+	private String associatedClass;
 	private String dependentClass;
 
+	@Id
+	@GeneratedValue
+	@Column(name = "id")
 	public long getId() {
 		return id;
 	}
@@ -30,6 +26,7 @@ public class TemplateVarDependency {
 		this.id = id;
 	}
 
+	@Column(name = "associatedclass", nullable = false)
 	public String getAssociatedClass() {
 		return associatedClass;
 	}
@@ -38,6 +35,7 @@ public class TemplateVarDependency {
 		this.associatedClass = associatedClass;
 	}
 
+	@Column(name = "dependentclass", nullable = false)
 	public String getDependentClass() {
 		return dependentClass;
 	}

@@ -40,6 +40,10 @@ alter table z_b6_claim_settlement drop column auditVOOffered;
 alter table z_b6_claim_settlement drop column totalpaid;
 alter table z_b6_claim_settlement drop column totalPaidCertif;
 alter table z_b6_claim_settlement drop column totalPaidVouchers;
+alter table fsclaim drop column claimprorate_id;
+alter table fsclaim drop column ntincident_incident_id;
+alter table fsclaim drop column signature_id;
+alter table fsclaim drop column questionnaire_id;
 
 
 

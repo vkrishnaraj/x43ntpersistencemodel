@@ -1,74 +1,40 @@
 package aero.nettracer.persistence.model.fraudservice;
 
-import java.io.Serializable;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Set;
-
 import aero.nettracer.commons.utils.CommonsConstants;
-import aero.nettracer.legacy.persistence.model.fraudservice.detection.AccessRequest.RequestStatus;
+import aero.nettracer.persistence.model.fraudservice.detection.AccessRequest.RequestStatus;
+
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.persistence.Transient;
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
-import org.hibernate.annotations.Proxy;
+import java.sql.Timestamp;
+import java.util.HashMap;
+import java.util.Set;
 
 @Entity
-@Table(name="FsFile")
-public class File implements Serializable {
+@Table(name="fsfile")
+public class File {
 
-	private static final long serialVersionUID = 1L;
-
-	@Transient
-	HashMap<Long, Double> matchingFiles = null;
-
-	public HashMap<Long, Double> getMatchingFiles() {
-		return matchingFiles;
-	}
-
-	public void setMatchingFiles(HashMap<Long, Double> matchingFiles) {
-		this.matchingFiles = matchingFiles;
-	}
-
-	private int statusId;
-	private int fraudstatusId;
-	
-	@Transient
-	Set<Person> personCache = null;
-	@Transient
-	Set<FsAddress> addressCache = null;
-	@Transient
-	Set<Phone> phoneCache = null;
-
-	@Transient
-	private RequestStatus requestStatus;
-
-	@Id
-	@GeneratedValue
 	private long id;
-
-	private long swapId;
-
-	@OneToMany(mappedBy = "file", cascade = CascadeType.ALL, fetch=FetchType.EAGER)
-	@org.hibernate.annotations.OrderBy(clause = "claimdate")
-	@Fetch(FetchMode.SELECT)
-	@Cascade(value = org.hibernate.annotations.CascadeType.DELETE_ORPHAN)
+	private int statusId;
+	private String companyCode;
+	private Timestamp createDate;
+	private int fraudstatusId;
 	private Set<FsClaim> claims;
-
-	@OneToOne(targetEntity = FsIncident.class, cascade = CascadeType.ALL, mappedBy = "file")
 	private FsIncident incident;
-
-	private String validatingCompanycode;
-
-	private Date createDate;
+	private HashMap<Long, Double> matchingFiles = null;
+	private Set<Person> personCache = null;
+	private Set<FsAddress> addressCache = null;
+	private Set<Phone> phoneCache = null;
+	private RequestStatus requestStatus;
 
 	public File() {
 	}
@@ -77,14 +43,9 @@ public class File implements Serializable {
 		this.id = id;
 	}
 
-	public Date getCreateDate() {
-		return createDate;
-	}
-
-	public void setCreateDate(Date createDate) {
-		this.createDate = createDate;
-	}
-
+	@Id
+	@GeneratedValue
+	@Column(name = "id")
 	public long getId() {
 		return id;
 	}
@@ -93,60 +54,7 @@ public class File implements Serializable {
 		this.id = id;
 	}
 
-	public Set<FsClaim> getClaims() {
-		return claims;
-	}
-
-	public void setClaims(Set<FsClaim> claims) {
-		this.claims = claims;
-	}
-
-	public FsIncident getIncident() {
-		return incident;
-	}
-
-	public void setIncident(FsIncident incident) {
-		this.incident = incident;
-	}
-
-	public void setSwapId(long swapId) {
-		this.swapId = swapId;
-	}
-
-	public long getSwapId() {
-		return swapId;
-	}
-
-	public Set<Person> getPersonCache() {
-		return personCache;
-	}
-
-	public void setPersonCache(Set<Person> personCache) {
-		this.personCache = personCache;
-	}
-
-	public Set<FsAddress> getAddressCache() {
-		return addressCache;
-	}
-
-	public void setAddressCache(Set<FsAddress> addressCache) {
-		this.addressCache = addressCache;
-	}
-
-	public Set<Phone> getPhoneCache() {
-		return phoneCache;
-	}
-
-	public void setPhoneCache(Set<Phone> phoneCache) {
-		this.phoneCache = phoneCache;
-	}
-
-	public void resetCache() {
-		this.addressCache = null;
-		this.phoneCache = null;
-		this.personCache = null;
-	}
-
+	@Column(name = "statusid")
 	public int getStatusId() {
 		return statusId;
 	}
@@ -155,6 +63,26 @@ public class File implements Serializable {
 		this.statusId = statusId;
 	}
 
+	@Column(name = "company_code")
+	public String getCompanyCode() {
+		return companyCode;
+	}
+
+	public void setCompanyCode(String companyCode) {
+		this.companyCode = companyCode;
+	}
+
+	@Column(name = "createdate")
+	@Temporal(TemporalType.TIMESTAMP)
+	public Timestamp getCreateDate() {
+		return createDate;
+	}
+
+	public void setCreateDate(Timestamp createDate) {
+		this.createDate = createDate;
+	}
+
+	@Column(name = "fraudstatusid")
 	public int getFraudStatusId() {
 		return fraudstatusId;
 	}
@@ -163,6 +91,71 @@ public class File implements Serializable {
 		this.fraudstatusId = fraudstatusId;
 	}
 
+	@OneToMany(mappedBy = "file", cascade = CascadeType.ALL, orphanRemoval = true)
+	@OrderBy(value = "claimdate")
+	public Set<FsClaim> getClaims() {
+		return claims;
+	}
+
+	public void setClaims(Set<FsClaim> claims) {
+		this.claims = claims;
+	}
+
+	@OneToOne(cascade = CascadeType.ALL, mappedBy = "file")
+	public FsIncident getIncident() {
+		return incident;
+	}
+
+	public void setIncident(FsIncident incident) {
+		this.incident = incident;
+	}
+
+	@Transient
+	public HashMap<Long, Double> getMatchingFiles() {
+		return matchingFiles;
+	}
+
+	public void setMatchingFiles(HashMap<Long, Double> matchingFiles) {
+		this.matchingFiles = matchingFiles;
+	}
+
+	@Transient
+	public Set<Person> getPersonCache() {
+		return personCache;
+	}
+
+	public void setPersonCache(Set<Person> personCache) {
+		this.personCache = personCache;
+	}
+
+	@Transient
+	public Set<FsAddress> getAddressCache() {
+		return addressCache;
+	}
+
+	public void setAddressCache(Set<FsAddress> addressCache) {
+		this.addressCache = addressCache;
+	}
+
+	@Transient
+	public Set<Phone> getPhoneCache() {
+		return phoneCache;
+	}
+
+	public void setPhoneCache(Set<Phone> phoneCache) {
+		this.phoneCache = phoneCache;
+	}
+
+	@Transient
+	public RequestStatus getRequestStatus() {
+		return requestStatus;
+	}
+
+	public void setRequestStatus(RequestStatus requestStatus) {
+		this.requestStatus = requestStatus;
+	}
+
+	@Transient
 	public String getDisStatusText() {
 		String toReturn;
 		if (fraudstatusId == CommonsConstants.STATUS_SUSPECTED_FRAUD) {
@@ -175,9 +168,9 @@ public class File implements Serializable {
 		return toReturn;
 	}
 
+	@Transient
 	public String getDisStatus() {
 		String toReturn;
-		//System.out.println("Testing Fraud Status Id Value: "+ id + " " + swapId + " " + statusId + " " + fraudstatusId);
 		if (fraudstatusId == CommonsConstants.STATUS_SUSPECTED_FRAUD) {
 			toReturn = "class=\"suspected_fraud\"";
 		} else if (fraudstatusId == CommonsConstants.STATUS_KNOWN_FRAUD) {
@@ -188,36 +181,17 @@ public class File implements Serializable {
 		return toReturn;
 	}
 
-
-
-//	public String getMatchedAirline() {
-//		if (incident != null) {
-//			return incident.getAirline();
-//		}
-//		return claim.getAirline();
-//	}
-
-	public RequestStatus getRequestStatus() {
-		return requestStatus;
-	}
-
-	public String getValidatingCompanycode() {
-		return validatingCompanycode;
-	}
-
-	public void setValidatingCompanycode(String validatingCompanycode) {
-		this.validatingCompanycode = validatingCompanycode;
-	}
-
-	public void setRequestStatus(RequestStatus requestStatus) {
-		this.requestStatus = requestStatus;
-	}
-
+	@Transient
 	public FsClaim getFirstClaim() {
 		if (claims != null && !claims.isEmpty()) {
 			return claims.toArray(new FsClaim[0])[0];
 		}
 		return null;
 	}
-	
+	public void resetCache() {
+		this.addressCache = null;
+		this.phoneCache = null;
+		this.personCache = null;
+	}
+
 }

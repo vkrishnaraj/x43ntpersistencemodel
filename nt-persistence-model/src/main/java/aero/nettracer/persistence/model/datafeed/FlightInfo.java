@@ -1,91 +1,44 @@
 package aero.nettracer.persistence.model.datafeed;
 
-import java.io.Serializable;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
+import org.hibernate.annotations.Formula;
 
-import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.persistence.Transient;
-
-import org.hibernate.annotations.Formula;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import java.sql.Timestamp;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 
 @Entity
 @Table(name = "z_ws_flight_info")
-public class FlightInfo implements Serializable {
+public class FlightInfo {
 
 	private long id;
-
-
-	private String flightNum;
-
-
-	private Date departureDate;
-
-	private Date arrivalDate;
-
-
-	private String departureCity;
-
 	private String arrivalCity;
-
-	private int totalPax;
-
+	private Timestamp arrivalDate;
 	private int connPax;
+	private String departureCity;
+	private Timestamp departureDate;
+	private String flightNum;
+	private int totalPax;
 
 	@Id
 	@GeneratedValue
+	@Column(name = "id")
 	public long getId() {
 		return id;
 	}
 
-	
 	public void setId(long id) {
 		this.id = id;
 	}
 
-	@Column(length = 10)
-	public String getFlightNum() {
-		return flightNum;
-	}
-
-	public void setFlightNum(String flightNum) {
-		this.flightNum = flightNum;
-	}
-
-	@Basic
-	public Date getDepartureDate() {
-		return departureDate;
-	}
-
-	public void setDepartureDate(Date departureDate) {
-		this.departureDate = departureDate;
-	}
-
-	@Basic
-	public Date getArrivalDate() {
-		return arrivalDate;
-	}
-
-	public void setArrivalDate(Date arrivalDate) {
-		this.arrivalDate = arrivalDate;
-	}
-
-	@Column(length = 5)
-	public String getDepartureCity() {
-		return departureCity;
-	}
-
-	public void setDepartureCity(String departureCity) {
-		this.departureCity = departureCity;
-	}
-
-	@Column(length = 5)
+	@Column(name = "arrivalcity")
 	public String getArrivalCity() {
 		return arrivalCity;
 	}
@@ -94,7 +47,53 @@ public class FlightInfo implements Serializable {
 		this.arrivalCity = arrivalCity;
 	}
 
-	@Basic
+	@Column(name = "arrivaldate")
+	@Temporal(TemporalType.TIMESTAMP)
+	public Timestamp getArrivalDate() {
+		return arrivalDate;
+	}
+
+	public void setArrivalDate(Timestamp arrivalDate) {
+		this.arrivalDate = arrivalDate;
+	}
+
+	@Column(name = "connpax")
+	public int getConnPax() {
+		return connPax;
+	}
+
+	public void setConnPax(int connPax) {
+		this.connPax = connPax;
+	}
+	@Column(name = "departurecity")
+	public String getDepartureCity() {
+		return departureCity;
+	}
+
+	public void setDepartureCity(String departureCity) {
+		this.departureCity = departureCity;
+	}
+
+	@Column(name = "departureDate")
+	@Temporal(TemporalType.TIMESTAMP)
+	public Timestamp getDepartureDate() {
+		return departureDate;
+	}
+
+	public void setDepartureDate(Timestamp departureDate) {
+		this.departureDate = departureDate;
+	}
+
+	@Column(name = "flightNum")
+	public String getFlightNum() {
+		return flightNum;
+	}
+
+	public void setFlightNum(String flightNum) {
+		this.flightNum = flightNum;
+	}
+
+	@Column(name = "totalpax")
 	public int getTotalPax() {
 		return totalPax;
 	}
@@ -103,15 +102,6 @@ public class FlightInfo implements Serializable {
 		this.totalPax = totalPax;
 	}
 
-	@Basic
-	public int getConnPax() {
-		return connPax;
-	}
-
-	public void setConnPax(int connPax) {
-		this.connPax = connPax;
-	}
-	
 	//TODO
 	//Warning this is MySQL specific, if any company other than WestJet uses this, it will have to be moved to compnay specific code
 	@Formula("DATE(departureDate)")

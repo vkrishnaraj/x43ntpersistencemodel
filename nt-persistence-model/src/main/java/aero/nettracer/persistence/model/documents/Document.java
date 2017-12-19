@@ -1,6 +1,8 @@
 package aero.nettracer.persistence.model.documents;
 
 import aero.nettracer.persistence.model.documents.templates.Template;
+import org.apache.commons.lang3.StringUtils;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -8,36 +10,19 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import org.apache.commons.lang.StringUtils;
 
 @Entity
 @Table(name = "document")
 public class Document {
 	
-	@Id
-	@GeneratedValue
 	private long id;
-	
-	private String title;
-	
-	@ManyToOne
-	@JoinColumn(name = "templateId")
 	private Template template;
-	
 	private String content;
-	
+	private String title;
 	private String fileName;
-	
-	@Column(length = 5)
 	private String marginTop;
-
-	@Column(length = 5)
 	private String marginBottom;
-
-	@Column(length = 5)
 	private String marginLeft;
-
-	@Column(length = 5)
 	private String marginRight;
 	
 	public Document() { }
@@ -46,6 +31,9 @@ public class Document {
 		this.template = template;
 	}
 
+	@Id
+	@GeneratedValue
+	@Column(name = "id")
 	public long getId() {
 		return id;
 	}
@@ -54,14 +42,8 @@ public class Document {
 		this.id = id;
 	}
 
-	public String getTitle() {
-		return title;
-	}
-
-	public void setTitle(String title) {
-		this.title = title;
-	}
-
+	@ManyToOne
+	@JoinColumn(name = "templateId")
 	public Template getTemplate() {
 		return template;
 	}
@@ -70,6 +52,7 @@ public class Document {
 		this.template = template;
 	}
 
+	@Column(name = "content")
 	public String getContent() {
 		return content;
 	}
@@ -77,7 +60,17 @@ public class Document {
 	public void setContent(String content) {
 		this.content = content;
 	}
-	
+
+	@Column(name = "title")
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	@Column(name = "filename")
 	public String getFileName() {
 		return fileName;
 	}
@@ -86,6 +79,7 @@ public class Document {
 		this.fileName = fileName;
 	}
 
+	@Column(name = "margintop")
 	public String getMarginTop() {
 		return marginTop;
 	}
@@ -94,6 +88,7 @@ public class Document {
 		this.marginTop = marginTop;
 	}
 
+	@Column(name = "marginbottom")
 	public String getMarginBottom() {
 		return marginBottom;
 	}
@@ -102,6 +97,7 @@ public class Document {
 		this.marginBottom = marginBottom;
 	}
 
+	@Column(name = "marginleft")
 	public String getMarginLeft() {
 		return marginLeft;
 	}
@@ -110,6 +106,7 @@ public class Document {
 		this.marginLeft = marginLeft;
 	}
 
+	@Column(name = "marginright")
 	public String getMarginRight() {
 		return marginRight;
 	}

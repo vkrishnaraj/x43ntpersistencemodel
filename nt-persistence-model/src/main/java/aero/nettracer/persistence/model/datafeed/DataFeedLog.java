@@ -1,8 +1,5 @@
 package aero.nettracer.persistence.model.datafeed;
 
-import java.io.Serializable;
-import java.util.Date;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -12,6 +9,10 @@ import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import java.io.Serializable;
+import java.sql.Timestamp;
 
 @NamedQueries({
 	@NamedQuery(
@@ -32,75 +33,27 @@ public class DataFeedLog implements Serializable {
 		FLIGHT_INFO,
 	}
 	
-	@Id @GeneratedValue
 	private long id;
-	
-	@Column(name="data_type", length=20)
-	@Enumerated(EnumType.STRING)
-	private DataType dataType;
-	
-	@Column(name="import_date")
-	private Date importDate;
-
-	@Column(name="file_name", length=40)
-	private String fileName;
-	
-	@Column(name="num_rows")
-	private long numRows;
-	
-	@Column(name="flight_date")
-	private Date fileDate;
-	
-	@Column(name="companycode_id")
 	private String companyCode;
-	
-	@Column(name="result", length=10)
+	private DataType dataType;
+	private Timestamp fileDate;
+	private String fileName;
+	private Timestamp importDate;
+	private long numRows;
 	private String result;
 
+	@Id
+	@GeneratedValue
+	@Column(name = "id")
 	public long getId() {
 		return id;
 	}
 
-	public DataType getDataType() {
-		return dataType;
+	public void setId(long id) {
+		this.id = id;
 	}
 
-	public void setDataType(DataType dataType) {
-		this.dataType = dataType;
-	}
-
-	public Date getImportDate() {
-		return importDate;
-	}
-
-	public void setImportDate(Date importDate) {
-		this.importDate = importDate;
-	}
-
-	public String getFileName() {
-		return fileName;
-	}
-
-	public void setFileName(String fileName) {
-		this.fileName = fileName;
-	}
-
-	public long getNumRows() {
-		return numRows;
-	}
-
-	public void setNumRows(long numRows) {
-		this.numRows = numRows;
-	}
-
-	public Date getFileDate() {
-		return fileDate;
-	}
-
-	public void setFileDate(Date fileDate) {
-		this.fileDate = fileDate;
-	}
-
+	@Column(name="companycode_id")
 	public String getCompanyCode() {
 		return companyCode;
 	}
@@ -109,6 +62,55 @@ public class DataFeedLog implements Serializable {
 		this.companyCode = company;
 	}
 
+	@Column(name="data_type")
+	@Enumerated(EnumType.STRING)
+	public DataType getDataType() {
+		return dataType;
+	}
+
+	public void setDataType(DataType dataType) {
+		this.dataType = dataType;
+	}
+
+	@Column(name="flight_date")
+	@Temporal(TemporalType.TIMESTAMP)
+	public Timestamp getFileDate() {
+		return fileDate;
+	}
+
+	public void setFileDate(Timestamp fileDate) {
+		this.fileDate = fileDate;
+	}
+
+	@Column(name="file_name")
+	public String getFileName() {
+		return fileName;
+	}
+
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
+	}
+
+	@Column(name="import_date")
+	@Temporal(TemporalType.TIMESTAMP)
+	public Timestamp getImportDate() {
+		return importDate;
+	}
+
+	public void setImportDate(Timestamp importDate) {
+		this.importDate = importDate;
+	}
+
+	@Column(name="num_rows")
+	public long getNumRows() {
+		return numRows;
+	}
+
+	public void setNumRows(long numRows) {
+		this.numRows = numRows;
+	}
+
+	@Column(name="result")
 	public String getResult() {
 		return result;
 	}
@@ -116,8 +118,5 @@ public class DataFeedLog implements Serializable {
 	public void setResult(String result) {
 		this.result = result;
 	}
-	
-	
 
-	
 }

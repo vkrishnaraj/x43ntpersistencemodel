@@ -1,33 +1,26 @@
 package aero.nettracer.persistence.model.documents.templates;
 
-import java.util.Set;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import java.util.Set;
 
 @Entity
 @Table(name="template_var")
 public class TemplateVar {
 
+	private long id;
+	private String displayTag;
+	private String associatedClass;
+	private boolean containsHtml;
+	private Set<Template> templates;
+
 	@Id
 	@GeneratedValue
-	private long id;
-	
-	@Column(nullable = false)
-	private String displayTag;
-	
-	@Column(nullable = false)
-	private String associatedClass;
-	
-	@ManyToMany(mappedBy = "variables")
-	private Set<Template> templates;
-	
-	private boolean containsHtml;
-	
+	@Column(name = "id")
 	public long getId() {
 		return id;
 	}
@@ -36,6 +29,7 @@ public class TemplateVar {
 		this.id = id;
 	}
 
+	@Column(name = "displaytag", nullable = false)
 	public String getDisplayTag() {
 		return displayTag;
 	}
@@ -44,6 +38,7 @@ public class TemplateVar {
 		this.displayTag = displayTag;
 	}
 
+	@Column(name = "associatedclass", nullable = false)
 	public String getAssociatedClass() {
 		return associatedClass;
 	}
@@ -51,7 +46,8 @@ public class TemplateVar {
 	public void setAssociatedClass(String associatedClass) {
 		this.associatedClass = associatedClass;
 	}
-	
+
+	@Column(name = "containshtml")
 	public boolean getContainsHtml() {
 		return containsHtml;
 	}
@@ -59,17 +55,15 @@ public class TemplateVar {
 	public void setContainsHtml(boolean containsHtml) {
 		this.containsHtml = containsHtml;
 	}
-	
-	public boolean variableValueCanContainHtml() {
-		return getContainsHtml();
-	}
-	
-	@Override
-	public String toString() {
-		if (associatedClass == null || displayTag == null) return "";
-		return "{" + this.associatedClass + "." + this.displayTag + "}";
+
+	@ManyToMany(mappedBy = "variables")
+	public Set<Template> getTemplates() {
+		return templates;
 	}
 
+	public void setTemplates(Set<Template> templates) {
+		this.templates = templates;
+	}
 
 	@Override
 	public boolean equals(Object o) {

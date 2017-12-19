@@ -1,19 +1,21 @@
 package aero.nettracer.persistence.model.fraudservice;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import org.apache.commons.lang3.StringUtils;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.persistence.Transient;
-
-import org.apache.commons.lang.StringUtils;
-import org.hibernate.annotations.Proxy;
+import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class FsGeodata {
@@ -22,95 +24,120 @@ public class FsGeodata {
 		STREET, CITY, ZIP, UNKNOWN;
 	}
 	
-	@Id
-	@GeneratedValue
 	private long id;
-	
-	@OneToOne(targetEntity = FsAddress.class)
 	private FsAddress fsAddress;
 	
 	private double latitude;
 	private double longitude;
+	private Type geoType;
 	private String geoSource;
-	private Date geoDate;
+	private Timestamp geoDate;
 	private String normAddress;
 	private String normAddressSource;
-	
-	@Enumerated(EnumType.STRING) 
-	private Type geoType;
-	
-	
-	@Transient
 	private boolean success;
-	@Transient
 	private List<String> errors;
-	
+
+	@Id
+	@GeneratedValue
+	@Column(name = "id")
 	public long getId() {
 		return id;
 	}
+
 	public void setId(long id) {
 		this.id = id;
 	}
-	public double getLatitude() {
-		return latitude;
-	}
-	public void setLatitude(double latitude) {
-		this.latitude = latitude;
-	}
-	public double getLongitude() {
-		return longitude;
-	}
-	public void setLongitude(double longitude) {
-		this.longitude = longitude;
-	}
-	
-	public String getGeoSource() {
-		return geoSource;
-	}
-	public void setGeoSource(String geoSource) {
-		this.geoSource = geoSource;
-	}
-	public Date getGeoDate() {
-		return geoDate;
-	}
-	public void setGeoDate(Date geoDate) {
-		this.geoDate = geoDate;
-	}
-	public String getNormAddress() {
-		return normAddress;
-	}
-	public void setNormAddress(String normAddress) {
-		this.normAddress = normAddress;
-	}
-	public String getNormAddressSource() {
-		return normAddressSource;
-	}
-	public void setNormAddressSource(String normAddressSource) {
-		this.normAddressSource = normAddressSource;
-	}
-	public boolean isSuccess() {
-		return success;
-	}
-	public void setSuccess(boolean success) {
-		this.success = success;
-	}
-	public List<String> getErrors() {
-		return errors;
-	}
-	public void setErrors(List<String> errors) {
-		this.errors = errors;
-	}
-	public Type getGeoType() {
-		return geoType;
-	}
-	public void setGeoType(Type geoType) {
-		this.geoType = geoType;
-	}
+
+	@OneToOne
+	@JoinColumn(name = "fsaddress_id")
 	public FsAddress getFsAddress() {
 		return fsAddress;
 	}
+
 	public void setFsAddress(FsAddress fsAddress) {
 		this.fsAddress = fsAddress;
+	}
+
+	@Column(name = "latitude")
+	public double getLatitude() {
+		return latitude;
+	}
+
+	public void setLatitude(double latitude) {
+		this.latitude = latitude;
+	}
+
+	@Column(name = "longitude")
+	public double getLongitude() {
+		return longitude;
+	}
+
+	public void setLongitude(double longitude) {
+		this.longitude = longitude;
+	}
+
+	@Enumerated(EnumType.STRING)
+	public Type getGeoType() {
+		return geoType;
+	}
+
+	public void setGeoType(Type geoType) {
+		this.geoType = geoType;
+	}
+
+	@Column(name = "geosource")
+	public String getGeoSource() {
+		return geoSource;
+	}
+
+	public void setGeoSource(String geoSource) {
+		this.geoSource = geoSource;
+	}
+
+	@Column(name = "geodate")
+	@Temporal(TemporalType.TIMESTAMP)
+	public Timestamp getGeoDate() {
+		return geoDate;
+	}
+
+	public void setGeoDate(Timestamp geoDate) {
+		this.geoDate = geoDate;
+	}
+
+	@Column(name = "normaddress")
+	public String getNormAddress() {
+		return normAddress;
+	}
+
+	public void setNormAddress(String normAddress) {
+		this.normAddress = normAddress;
+	}
+
+	@Column(name = "normaddresssource")
+	public String getNormAddressSource() {
+		return normAddressSource;
+	}
+
+	public void setNormAddressSource(String normAddressSource) {
+		this.normAddressSource = normAddressSource;
+	}
+
+	@Transient
+	public boolean isSuccess() {
+		return success;
+	}
+
+	public void setSuccess(boolean success) {
+		this.success = success;
+	}
+
+	@Column(name = "errors")
+	public List<String> getErrors() {
+		return errors;
+	}
+
+	public void setErrors(List<String> errors) {
+		this.errors = errors;
 	}
 
 	public String toString(){

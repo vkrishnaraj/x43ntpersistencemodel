@@ -1,36 +1,25 @@
 package aero.nettracer.persistence.model.documents.templates;
 
-import java.util.Set;
-
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import java.util.Set;
 
 @Entity
 @Table(name = "template_type")
 public class TemplateTypeMapping {
 
-	@Id
-	@GeneratedValue
 	private long id;
-	
 	private int ordinal;
-	
 	private String defaultName;
-	
-	@ManyToMany(mappedBy = "types")
 	private Set<Template> templates;
 	
-	public TemplateTypeMapping() { }
-
-	//NTFIXME
-	/*public TemplateTypeMapping(TemplateType type) {
-		this.ordinal = type.ordinal();
-		this.defaultName = type.getDefaultName();
-	}*/
-
+	@Id
+	@GeneratedValue
+	@Column(name = "id")
 	public long getId() {
 		return id;
 	}
@@ -39,6 +28,7 @@ public class TemplateTypeMapping {
 		this.id = id;
 	}
 
+	@Column(name = "ordinal")
 	public int getOrdinal() {
 		return ordinal;
 	}
@@ -47,6 +37,7 @@ public class TemplateTypeMapping {
 		this.ordinal = ordinal;
 	}
 
+	@Column(name = "defaultname")
 	public String getDefaultName() {
 		return defaultName;
 	}
@@ -55,6 +46,7 @@ public class TemplateTypeMapping {
 		this.defaultName = defaultName;
 	}
 
+	@ManyToMany(mappedBy = "types")
 	public Set<Template> getTemplates() {
 		return templates;
 	}

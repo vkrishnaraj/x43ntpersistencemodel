@@ -1,12 +1,9 @@
 package aero.nettracer.persistence.model.documents.templates;
 
-import java.util.Date;
-import java.util.Set;
-
 import aero.nettracer.persistence.util.TemplateType;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -15,59 +12,31 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import org.hibernate.annotations.Type;
+import java.sql.Timestamp;
+import java.util.Set;
 
 @Entity
 @Table(name="template")
 public class Template {
 	
-	@Id
-	@GeneratedValue
 	private long id;
-	
-	@Column(length = 256)
 	private String name;
-	
-	@Column(length = 256)
 	private String description;
-	
-	@ManyToMany(fetch = FetchType.EAGER)
-	@JoinTable(name = "template_type_mapping",
-			   joinColumns = {@JoinColumn(name = "templateId")},
-			   inverseJoinColumns = {@JoinColumn(name = "templateTypeId")})
-	private Set<TemplateTypeMapping> types;
-
 	private boolean active;
-
-	@Temporal(value = TemporalType.TIMESTAMP)
-	private Date createDate;
-
-	@Temporal(value = TemporalType.TIMESTAMP)
-	private Date lastUpdated;
-
-	@Type(type = "text")
+	private Timestamp createDate;
+	private Timestamp lastUpdated;
 	private String data;
-
-	@ManyToMany(fetch = FetchType.EAGER)
-	@JoinTable(name = "template_var_mapping",
-			   joinColumns = {@JoinColumn(name = "templateId")},
-			   inverseJoinColumns = {@JoinColumn(name = "templateVarId")})
+	private int typeAvailableFor;
+	private String marginTop;
+	private String marginBottom;
+	private String marginLeft;
+	private String marginRight;
+	private Set<TemplateTypeMapping> types;
 	private Set<TemplateVar> variables;
 
-	private int typeAvailableFor;
-
-	@Column(length = 5)
-	private String marginTop;
-
-	@Column(length = 5)
-	private String marginBottom;
-
-	@Column(length = 5)
-	private String marginLeft;
-
-	@Column(length = 5)
-	private String marginRight;
-
+	@Id
+	@GeneratedValue
+	@Column(name = "id")
 	public long getId() {
 		return id;
 	}
@@ -76,6 +45,7 @@ public class Template {
 		this.id = id;
 	}
 
+	@Column(name = "name")
 	public String getName() {
 		return name;
 	}
@@ -84,6 +54,7 @@ public class Template {
 		this.name = name;
 	}
 
+	@Column(name = "description")
 	public String getDescription() {
 		return description;
 	}
@@ -92,14 +63,7 @@ public class Template {
 		this.description = description;
 	}
 
-	public Set<TemplateTypeMapping> getTypes() {
-		return types;
-	}
-
-	public void setTypes(Set<TemplateTypeMapping> types) {
-		this.types = types;
-	}
-
+	@Column(name = "active")
 	public boolean isActive() {
 		return active;
 	}
@@ -108,22 +72,27 @@ public class Template {
 		this.active = active;
 	}
 
-	public Date getCreateDate() {
+	@Column(name = "createDate", insertable = false, updatable = false)
+	@Temporal(TemporalType.TIMESTAMP)
+	public Timestamp getCreateDate() {
 		return createDate;
 	}
 
-	public void setCreateDate(Date createDate) {
+	public void setCreateDate(Timestamp createDate) {
 		this.createDate = createDate;
 	}
 
-	public Date getLastUpdated() {
+	@Column(name = "lastupdated", nullable = false)
+	@Temporal(TemporalType.TIMESTAMP)
+	public Timestamp getLastUpdated() {
 		return lastUpdated;
 	}
 
-	public void setLastUpdated(Date lastUpdated) {
+	public void setLastUpdated(Timestamp lastUpdated) {
 		this.lastUpdated = lastUpdated;
 	}
 
+	@Column(name = "data")
 	public String getData() {
 		return data;
 	}
@@ -132,14 +101,7 @@ public class Template {
 		this.data = data;
 	}
 
-	public Set<TemplateVar> getVariables() {
-		return variables;
-	}
-
-	public void setVariables(Set<TemplateVar> variables) {
-		this.variables = variables;
-	}
-	
+	@Column(name = "typeavailablefor")
 	public int getTypeAvailableFor() {
 		return typeAvailableFor;
 	}
@@ -148,6 +110,7 @@ public class Template {
 		this.typeAvailableFor = typeAvailableFor;
 	}
 
+	@Column(name = "margintop")
 	public String getMarginTop() {
 		return marginTop;
 	}
@@ -156,6 +119,7 @@ public class Template {
 		this.marginTop = marginTop;
 	}
 
+	@Column(name = "marginbottom")
 	public String getMarginBottom() {
 		return marginBottom;
 	}
@@ -164,6 +128,7 @@ public class Template {
 		this.marginBottom = marginBottom;
 	}
 
+	@Column(name = "marginleft")
 	public String getMarginLeft() {
 		return marginLeft;
 	}
@@ -172,6 +137,7 @@ public class Template {
 		this.marginLeft = marginLeft;
 	}
 
+	@Column(name = "marginright")
 	public String getMarginRight() {
 		return marginRight;
 	}
@@ -180,7 +146,30 @@ public class Template {
 		this.marginRight = marginRight;
 	}
 
-	//NTFIXME
+	@ManyToMany
+	@JoinTable(name = "template_type_mapping",
+			joinColumns = {@JoinColumn(name = "templateId")},
+			inverseJoinColumns = {@JoinColumn(name = "templateTypeId")})
+	public Set<TemplateTypeMapping> getTypes() {
+		return types;
+	}
+
+	public void setTypes(Set<TemplateTypeMapping> types) {
+		this.types = types;
+	}
+
+	@ManyToMany
+	@JoinTable(name = "template_var_mapping",
+			joinColumns = {@JoinColumn(name = "templateId")},
+			inverseJoinColumns = {@JoinColumn(name = "templateVarId")})
+	public Set<TemplateVar> getVariables() {
+		return variables;
+	}
+
+	public void setVariables(Set<TemplateVar> variables) {
+		this.variables = variables;
+	}
+
 	public boolean isValid() {
 		for (TemplateTypeMapping mapping: types) {
 			if (TemplateType.INVALID == TemplateType.fromOrdinal(mapping.getOrdinal())) {
