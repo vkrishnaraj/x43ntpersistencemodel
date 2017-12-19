@@ -1,8 +1,7 @@
 package aero.nettracer.persistence.model.communications;
 
-import java.util.Date;
-
 import aero.nettracer.persistence.model.Agent;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,30 +11,21 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import java.sql.Timestamp;
 
 @Entity
 @Table(name = "incident_activity_remark")
 public class IncidentActivityRemark {
 	
+	private long id;
+	private Agent agent;
+	private Timestamp createDate;
+	private String remarkText;
+	private IncidentActivity incidentActivity;
+
 	@Id
 	@GeneratedValue
-	private long id;
-	
-	@ManyToOne
-	@JoinColumn(name = "agent", nullable = false)
-	private Agent agent;
-
-	@Temporal(value = TemporalType.TIMESTAMP)
-	@Column(nullable = false)
-	private Date createDate;
-
-	@ManyToOne
-	@JoinColumn(name = "incidentActivity", nullable = false)
-	private IncidentActivity incidentActivity;
-	
-	@Column(name = "remarkText", nullable = false, length = 255)
-	private String remarkText;
-
+	@Column(name = "id")
 	public long getId() {
 		return id;
 	}
@@ -44,6 +34,8 @@ public class IncidentActivityRemark {
 		this.id = id;
 	}
 
+	@ManyToOne
+	@JoinColumn(name = "agent", nullable = false)
 	public Agent getAgent() {
 		return agent;
 	}
@@ -52,14 +44,27 @@ public class IncidentActivityRemark {
 		this.agent = agent;
 	}
 
-	public Date getCreateDate() {
+	@Temporal(value = TemporalType.TIMESTAMP)
+	@Column(name = "createdate")
+	public Timestamp getCreateDate() {
 		return createDate;
 	}
 
-	public void setCreateDate(Date createDate) {
+	public void setCreateDate(Timestamp createDate) {
 		this.createDate = createDate;
 	}
 
+	@Column(name = "remarktext", nullable = false)
+	public String getRemarkText() {
+		return remarkText;
+	}
+
+	public void setRemarkText(String remarkText) {
+		this.remarkText = remarkText;
+	}
+
+	@ManyToOne
+	@JoinColumn(name = "incidentActivity", nullable = false)
 	public IncidentActivity getIncidentActivity() {
 		return incidentActivity;
 	}
@@ -68,12 +73,4 @@ public class IncidentActivityRemark {
 		this.incidentActivity = incidentActivity;
 	}
 
-	public String getRemarkText() {
-		return remarkText;
-	}
-
-	public void setRemarkText(String remarkText) {
-		this.remarkText = remarkText;
-	}
-	
 }
