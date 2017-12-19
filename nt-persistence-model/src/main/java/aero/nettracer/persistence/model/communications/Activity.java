@@ -10,15 +10,9 @@ import javax.persistence.Table;
 @Table(name = "activity")
 public class Activity {
 
-	@Id
-	@GeneratedValue
 	private long id;
-	
-	@Column(length=8)
 	private String code;
-	
 	private String description;
-	
 	private boolean display;
 	
 	public Activity() { }
@@ -27,6 +21,9 @@ public class Activity {
 		this.code = code;
 	}
 
+	@Id
+	@GeneratedValue
+	@Column(name = "id")
 	public long getId() {
 		return id;
 	}
@@ -34,7 +31,8 @@ public class Activity {
 	public void setId(long id) {
 		this.id = id;
 	}
-	
+
+	@Column(name = "code")
 	public String getCode() {
 		return code;
 	}
@@ -43,6 +41,7 @@ public class Activity {
 		this.code = code;
 	}
 
+	@Column(name = "description")
 	public String getDescription() {
 		return description;
 	}
@@ -51,6 +50,7 @@ public class Activity {
 		this.description = description;
 	}
 
+	@Column(name = "display")
 	public boolean isDisplay() {
 		return display;
 	}

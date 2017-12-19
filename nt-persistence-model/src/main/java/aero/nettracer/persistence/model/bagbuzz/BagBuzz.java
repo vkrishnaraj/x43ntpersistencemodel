@@ -2,6 +2,8 @@ package aero.nettracer.persistence.model.bagbuzz;
 
 import aero.nettracer.persistence.model.Category;
 import aero.nettracer.persistence.model.Status;
+
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -10,7 +12,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.persistence.Column;
 import java.sql.Timestamp;
 
 @Entity
@@ -44,6 +45,7 @@ public class BagBuzz {
 		created_timestamp = createdTimestamp;
 	}
 
+	@Column(name = "data")
 	public String getData() {
 		return data;
 	}
@@ -52,7 +54,7 @@ public class BagBuzz {
 		this.data = data;
 	}
 
-	@Column(length=30)
+	@Column(name = "description")
 	public String getDescription() {
 		return description;
 	}
@@ -80,6 +82,5 @@ public class BagBuzz {
 	public void setCategory(Category category) {
 		this.category = category;
 	}
-
 
 }

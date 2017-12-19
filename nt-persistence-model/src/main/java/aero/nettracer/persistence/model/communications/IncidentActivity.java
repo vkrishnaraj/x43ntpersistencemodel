@@ -1,10 +1,5 @@
 package aero.nettracer.persistence.model.communications;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
 import aero.nettracer.persistence.model.Agent;
 import aero.nettracer.persistence.model.ExpensePayout;
 import aero.nettracer.persistence.model.Incident;
@@ -13,10 +8,25 @@ import aero.nettracer.persistence.model.documents.Document;
 import aero.nettracer.persistence.model.onlineclaims.OCFile;
 import aero.nettracer.persistence.model.onlineclaims.OCMessage;
 import aero.nettracer.persistence.model.taskmanager.IncidentActivityTask;
-import javax.persistence.*;
 
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.OrderBy;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import java.io.Serializable;
+import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "incident_activity")
@@ -24,77 +34,28 @@ public class IncidentActivity implements Serializable {
 
 	private static final long serialVersionUID = -7194092797476837039L;
 
-	@Id
-	@GeneratedValue
 	private long id;
-	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "incident", nullable = false)
-	@Fetch(FetchMode.SELECT)
 	private Incident incident;
-
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "expensepayout_id")
-	@Fetch(FetchMode.SELECT)
-	private ExpensePayout expensePayout;
-
-	@Temporal(value = TemporalType.TIMESTAMP)
-	private Date lastPrinted;
-	
-	@Temporal(value = TemporalType.TIMESTAMP)
-	private Date createDate;
-
-	@Temporal(value = TemporalType.TIMESTAMP)
-	private Date publishedDate;
-	
-	@ManyToOne
-	@JoinColumn(name = "agent")
+	private Timestamp createDate;
+	private Timestamp publishedDate;
 	private Agent agent;
-	
-	@ManyToOne
-	@JoinColumn(name = "approvalAgent")
 	private Agent approvalAgent;
-	
-	@ManyToOne
-	@JoinColumn(name = "acknowlegeAgent")
-	private Agent acknowlegeAgent;
-	
-	@OneToOne(targetEntity = Document.class)
-	@JoinColumn(name = "document")
-	@Fetch(FetchMode.SELECT)
 	private Document document;
-
-	@ManyToOne
-	@JoinColumn(name = "activity")
 	private Activity activity;
-
-	@OneToMany(mappedBy = "incAct", cascade = CascadeType.ALL, fetch=FetchType.EAGER)
-	@org.hibernate.annotations.OrderBy(clause="dateCreated")
-	@Fetch(FetchMode.SELECT)
+	private String description;
+	private int custCommId;
+	private ExpensePayout expensePayout;
+	private Date lastPrinted;
+	private Agent acknowlegeAgent;
+	private boolean visibleOnClaimProcessPage = true;
 	private List<OCMessage> messages;
-
-	@OneToMany(mappedBy = "incAct", cascade = CascadeType.ALL, fetch=FetchType.EAGER)
-	@org.hibernate.annotations.OrderBy(clause="id")
-	@Fetch(FetchMode.SELECT)
 	private List<OCFile> files;
-
-	@OneToMany(mappedBy = "incidentActivity", cascade = CascadeType.ALL, fetch=FetchType.EAGER)
-	@org.hibernate.annotations.OrderBy(clause="createDate")
-	@Fetch(FetchMode.SELECT)
 	private List<IncidentActivityRemark> remarks;
-
-	@OneToMany(mappedBy = "incidentActivity", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	@org.hibernate.annotations.OrderBy(clause="opened_timestamp")
-	@Fetch(FetchMode.SELECT)
 	private List<IncidentActivityTask> tasks;
 
-	private String description;
-
-	private int custCommId;
-
-	@Column(name = "visible_claim_process_page", nullable = false, columnDefinition = "bit")
-	private boolean visibleOnClaimProcessPage = true;
-
+	@Id
+	@GeneratedValue
+	@Column(name = "id")
 	public long getId() {
 		return id;
 	}
@@ -103,6 +64,8 @@ public class IncidentActivity implements Serializable {
 		this.id = id;
 	}
 
+	@ManyToOne
+	@JoinColumn(name = "incident", nullable = false)
 	public Incident getIncident() {
 		return incident;
 	}
@@ -111,30 +74,28 @@ public class IncidentActivity implements Serializable {
 		this.incident = incident;
 	}
 
-	public ExpensePayout getExpensePayout() {
-		return expensePayout;
-	}
-
-	public void setExpensePayout(ExpensePayout expensePayout) {
-		this.expensePayout = expensePayout;
-	}
-
-	public Date getCreateDate() {
+	@Column(name = "createdate")
+	@Temporal(value = TemporalType.TIMESTAMP)
+	public Timestamp getCreateDate() {
 		return createDate;
 	}
 
-	public void setCreateDate(Date createDate) {
+	public void setCreateDate(Timestamp createDate) {
 		this.createDate = createDate;
 	}
 
-	public Date getPublishedDate() {
+	@Column(name = "publisheddate")
+	@Temporal(value = TemporalType.TIMESTAMP)
+	public Timestamp getPublishedDate() {
 		return publishedDate;
 	}
 
-	public void setPublishedDate(Date publishedDate) {
+	public void setPublishedDate(Timestamp publishedDate) {
 		this.publishedDate = publishedDate;
 	}
 
+	@ManyToOne
+	@JoinColumn(name = "agent")
 	public Agent getAgent() {
 		return agent;
 	}
@@ -143,6 +104,8 @@ public class IncidentActivity implements Serializable {
 		this.agent = agent;
 	}
 
+	@ManyToOne
+	@JoinColumn(name = "approvalagent")
 	public Agent getApprovalAgent() {
 		return approvalAgent;
 	}
@@ -151,14 +114,8 @@ public class IncidentActivity implements Serializable {
 		this.approvalAgent = approvalAgent;
 	}
 
-	public Agent getAcknowlegeAgent() {
-		return acknowlegeAgent;
-	}
-
-	public void setAcknowlegeAgent(Agent acknowlegeAgent) {
-		this.acknowlegeAgent = acknowlegeAgent;
-	}
-
+	@OneToOne
+	@JoinColumn(name = "document")
 	public Document getDocument() {
 		return document;
 	}
@@ -167,6 +124,8 @@ public class IncidentActivity implements Serializable {
 		this.document = document;
 	}
 
+	@ManyToOne
+	@JoinColumn(name = "activity")
 	public Activity getActivity() {
 		return activity;
 	}
@@ -175,6 +134,7 @@ public class IncidentActivity implements Serializable {
 		this.activity = activity;
 	}
 
+	@Column(name = "description")
 	public String getDescription() {
 		return description;
 	}
@@ -183,6 +143,7 @@ public class IncidentActivity implements Serializable {
 		this.description = description;
 	}
 
+	@Column(name = "custcommid")
 	public int getCustCommId() {
 		return custCommId;
 	}
@@ -191,25 +152,47 @@ public class IncidentActivity implements Serializable {
 		this.custCommId = custCommId;
 	}
 
-	public List<IncidentActivityRemark> getRemarks() {
-		return remarks;
+	@ManyToOne
+	@JoinColumn(name = "expensepayout_id")
+	public ExpensePayout getExpensePayout() {
+		return expensePayout;
 	}
 
-	public void setRemarks(List<IncidentActivityRemark> remarks) {
-		this.remarks = remarks;
+	public void setExpensePayout(ExpensePayout expensePayout) {
+		this.expensePayout = expensePayout;
 	}
 
-	public List<IncidentActivityTask> getTasks() {
-		if (tasks == null) {
-			tasks = new ArrayList<IncidentActivityTask>();
-		}
-		return tasks;
+	@Column(name = "lastprinted")
+	@Temporal(value = TemporalType.DATE)
+	public Date getLastPrinted() {
+		return lastPrinted;
 	}
 
-	public void setTasks(List<IncidentActivityTask> tasks) {
-		this.tasks = tasks;
+	public void setLastPrinted(Date lastPrinted) {
+		this.lastPrinted = lastPrinted;
 	}
 
+	@ManyToOne
+	@JoinColumn(name = "acknowlegeAgent")
+	public Agent getAcknowlegeAgent() {
+		return acknowlegeAgent;
+	}
+
+	public void setAcknowlegeAgent(Agent acknowlegeAgent) {
+		this.acknowlegeAgent = acknowlegeAgent;
+	}
+
+	@Column(name = "visible_claim_process_page", nullable = false)
+	public boolean isVisibleOnClaimProcessPage() {
+		return this.visibleOnClaimProcessPage;
+	}
+
+	public void setVisibleOnClaimProcessPage(boolean visibleOnClaimProcessPage) {
+		this.visibleOnClaimProcessPage = visibleOnClaimProcessPage;
+	}
+
+	@OneToMany(mappedBy = "incAct", cascade = CascadeType.ALL)
+	@OrderBy(value = "dateCreated")
 	public List<OCMessage> getMessages() {
 		if (messages == null) {
 			messages = new ArrayList<OCMessage>();
@@ -221,6 +204,8 @@ public class IncidentActivity implements Serializable {
 		this.messages = messages;
 	}
 
+	@OneToMany(mappedBy = "incAct", cascade = CascadeType.ALL)
+	@OrderBy(value="id")
 	public List<OCFile> getFiles() {
 		if (files == null) {
 			files = new ArrayList<OCFile>();
@@ -231,26 +216,34 @@ public class IncidentActivity implements Serializable {
 	public void setFiles(List<OCFile> files) {
 		this.files = files;
 	}
-	
+
+	@OneToMany(mappedBy = "incidentActivity", cascade = CascadeType.ALL)
+	@OrderBy(value="createDate")
+	public List<IncidentActivityRemark> getRemarks() {
+		return remarks;
+	}
+
+	public void setRemarks(List<IncidentActivityRemark> remarks) {
+		this.remarks = remarks;
+	}
+
+	@OneToMany(mappedBy = "incidentActivity", cascade = CascadeType.ALL)
+	@OrderBy(value="opened_timestamp")
+	public List<IncidentActivityTask> getTasks() {
+		if (tasks == null) {
+			tasks = new ArrayList<IncidentActivityTask>();
+		}
+		return tasks;
+	}
+
+	public void setTasks(List<IncidentActivityTask> tasks) {
+		this.tasks = tasks;
+	}
+
+
 	public Status getLastStatus() {
 		if (tasks == null || tasks.isEmpty()) return null;
 		return tasks.get(tasks.size() - 1).getStatus();
 	}
-	
-	public Date getLastPrinted() {
-		return lastPrinted;
-	}
 
-	public void setLastPrinted(Date lastPrinted) {
-		this.lastPrinted = lastPrinted;
-	}
-
-	public boolean isVisibleOnClaimProcessPage() {
-		return this.visibleOnClaimProcessPage;
-	}
-
-	public void setVisibleOnClaimProcessPage(boolean visibleOnClaimProcessPage) {
-		this.visibleOnClaimProcessPage = visibleOnClaimProcessPage;
-	}
-	
 }

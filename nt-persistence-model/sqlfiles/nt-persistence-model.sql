@@ -34,6 +34,13 @@ drop table if exists special_flag;
 drop table if exists wt_fwd_log_itinerary;
 drop table if exists wt_fwd_log;
 
+alter table z_b6_claim_settlement drop column amountclaimed;
+alter table z_b6_claim_settlement drop column amountOffered;
+alter table z_b6_claim_settlement drop column auditVOOffered;
+alter table z_b6_claim_settlement drop column totalpaid;
+alter table z_b6_claim_settlement drop column totalPaidCertif;
+alter table z_b6_claim_settlement drop column totalPaidVouchers;
+
 
 
 

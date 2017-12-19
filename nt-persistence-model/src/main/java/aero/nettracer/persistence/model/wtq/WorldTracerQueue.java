@@ -28,11 +28,6 @@ import org.hibernate.annotations.Proxy;
 @DiscriminatorColumn(name="wtq_action", discriminatorType = DiscriminatorType.STRING)
 public abstract class WorldTracerQueue implements Serializable{
 	
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 4144455648325224860L;
-
 	//stored in db as string, max length of 20 chars
 	public static enum WtqStatus {PENDING, SUCCESS, FAIL, REPLACED, CANCELED, LOCKED}
 	

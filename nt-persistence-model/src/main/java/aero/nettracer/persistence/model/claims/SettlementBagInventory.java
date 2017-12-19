@@ -1,13 +1,17 @@
 package aero.nettracer.persistence.model.claims;
 
-import javax.persistence.*;
-
-import org.hibernate.annotations.Proxy;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name = "z_b6_claim_settlement_inventory")
 public class SettlementBagInventory {
-
 
 	private long id;
 	private int categorytype_id;
@@ -16,10 +20,9 @@ public class SettlementBagInventory {
 	private int position;
 	private boolean flaggedforremoval;
 
-
 	@Id
 	@GeneratedValue
-	@Column(name="inventoryId")
+	@Column(name="inventoryid")
 	public long getId() {
 		return id;
 	}
@@ -28,7 +31,7 @@ public class SettlementBagInventory {
 		this.id = id;
 	}
 
-	@Basic
+	@Column(name = "categorytype_id")
 	public int getCategorytype_id() {
 		return categorytype_id;
 	}
@@ -37,7 +40,7 @@ public class SettlementBagInventory {
 		this.categorytype_id = categorytype_id;
 	}
 
-	@Basic
+	@Column(name = "description")
 	public String getDescription() {
 		return description;
 	}
@@ -46,8 +49,8 @@ public class SettlementBagInventory {
 		this.description = description;
 	}
 
-	@ManyToOne(targetEntity = ClaimSettlementBag.class)
-	@JoinColumn(name = "bagId", nullable = false)
+	@ManyToOne
+	@JoinColumn(name = "bagid", nullable = false)
 	public ClaimSettlementBag getClaimsettlementbag() {
 		return claimsettlementbag;
 	}
@@ -56,7 +59,7 @@ public class SettlementBagInventory {
 		this.claimsettlementbag = claimsettlementbag;
 	}
 
-	@Basic
+	@Column(name = "position")
 	public int getPosition() {
 		return position;
 	}

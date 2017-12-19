@@ -1,28 +1,20 @@
 package aero.nettracer.persistence.model.claims;
 
-import java.util.List;
-
-import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderColumn;
 import javax.persistence.Table;
-
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
-import org.hibernate.annotations.IndexColumn;
-import org.hibernate.annotations.Proxy;
+import java.util.List;
 
 @Entity
 @Table(name = "z_b6_claim_settlement_bag")
 public class ClaimSettlementBag {
-
 
 	private long id;
 	private String color;
@@ -32,10 +24,9 @@ public class ClaimSettlementBag {
 	private int position;
 	private List<SettlementBagInventory> inventory;
 
-
 	@Id
 	@GeneratedValue
-	@Column(name = "bagId")
+	@Column(name = "bagid")
 	public long getId() {
 		return id;
 	}
@@ -44,7 +35,7 @@ public class ClaimSettlementBag {
 		this.id = id;
 	}
 
-	@Column(length = 2)
+	@Column(name = "color")
 	public String getColor() {
 		return color;
 	}
@@ -53,7 +44,7 @@ public class ClaimSettlementBag {
 		this.color = color;
 	}
 
-	@Column(length = 100)
+	@Column(name = "manufacturer")
 	public String getManufacturer() {
 		return manufacturer;
 	}
@@ -62,7 +53,7 @@ public class ClaimSettlementBag {
 		this.manufacturer = manufacturer;
 	}
 
-	@Column(length = 2)
+	@Column(name = "type")
 	public String getType() {
 		return type;
 	}
@@ -71,8 +62,8 @@ public class ClaimSettlementBag {
 		this.type = type;
 	}
 
-	@ManyToOne(targetEntity = ClaimSettlement.class)
-	@JoinColumn(name = "claimSettlementId", nullable = false)
+	@ManyToOne
+	@JoinColumn(name = "claimsettlementid", nullable = false)
 	public ClaimSettlement getClaimsettlement() {
 		return claimsettlement;
 	}
@@ -81,7 +72,7 @@ public class ClaimSettlementBag {
 		this.claimsettlement = claimsettlement;
 	}
 
-	@Basic
+	@Column(name = "position")
 	public int getPosition() {
 		return position;
 	}
@@ -90,9 +81,8 @@ public class ClaimSettlementBag {
 		this.position = position;
 	}
 
-	@OneToMany(mappedBy = "claimSettlementBag", cascade=CascadeType.ALL, fetch=FetchType.EAGER)
-	@IndexColumn(name="position")
-	@Fetch(FetchMode.SELECT)
+	@OneToMany(mappedBy = "claimSettlementBag", cascade=CascadeType.ALL)
+	@OrderColumn(name="position")
 	public List<SettlementBagInventory> getInventory() {
 		return inventory;
 	}
