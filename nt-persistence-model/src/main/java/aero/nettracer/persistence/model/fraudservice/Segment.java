@@ -8,15 +8,16 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import javax.persistence.Transient;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.Proxy;
 
 @Entity
-public class Segment implements Serializable {
-	private static final long serialVersionUID = 1L;
-	
+@Table(name = "segment")
+public class Segment {
+
 	@Id
 	@GeneratedValue
 	private long id;
@@ -32,13 +33,13 @@ public class Segment implements Serializable {
 	private Date scharrivetime;
 	private Date actdeparttime;
 	private Date actarrivetime;
-	@ManyToOne(targetEntity = Reservation.class)
+	@ManyToOne(targetEntity = aero.nettracer.fs.model.Reservation.class)
 	@Fetch(FetchMode.SELECT)
 	private Reservation reservation;
-	@ManyToOne(targetEntity = FsIncident.class)
+	@ManyToOne(targetEntity = aero.nettracer.fs.model.FsIncident.class)
 	@Fetch(FetchMode.SELECT)
 	private FsIncident incident;
-	@ManyToOne(targetEntity = FsClaim.class)
+	@ManyToOne(targetEntity = aero.nettracer.fs.model.FsClaim.class)
 	@Fetch(FetchMode.SELECT)
 	private FsClaim claim;
 
@@ -64,11 +65,11 @@ public class Segment implements Serializable {
 	}
 
 	public String getDisDate() {
-		return GenericDateUtils.formatDate(date, dateFormat, "", null);
+		return DateUtils.formatDate(date, dateFormat, "", null);
 	}
 
 	public void setDisDate(String date) {
-		setDate(GenericDateUtils.convertToDate(date, dateFormat, null));
+		setDate(DateUtils.convertToDate(date, dateFormat, null));
 	}
 
 	public Date getArrivedate() {
@@ -80,11 +81,11 @@ public class Segment implements Serializable {
 	}
 
 	public String getDisArrivedate() {
-		return GenericDateUtils.formatDate(arrivedate, dateFormat, "", null);
+		return DateUtils.formatDate(arrivedate, dateFormat, "", null);
 	}
 
 	public void setDisArrivedate(String date) {
-		setArrivedate(GenericDateUtils.convertToDate(date, dateFormat, null));
+		setArrivedate(DateUtils.convertToDate(date, dateFormat, null));
 	}
 
 	public String getDeparture() {
@@ -145,11 +146,11 @@ public class Segment implements Serializable {
 
 	@Transient
 	public String getDisschdeparttime() {
-		return GenericDateUtils.formatDate(getSchdeparttime(), getTimeFormat(), null, null);
+		return DateUtils.formatDate(getSchdeparttime(), getTimeFormat(), null, null);
 	}
 
 	public void setDisschdeparttime(String s) {
-		setSchdeparttime(GenericDateUtils.convertToDate(s, getTimeFormat(), null));
+		setSchdeparttime(DateUtils.convertToDate(s, getTimeFormat(), null));
 	}
 
 	public Date getScharrivetime() {
@@ -162,11 +163,11 @@ public class Segment implements Serializable {
 
 	@Transient
 	public String getDisscharrivetime() {
-		return GenericDateUtils.formatDate(getScharrivetime(), getTimeFormat(), null, null);
+		return DateUtils.formatDate(getScharrivetime(), getTimeFormat(), null, null);
 	}
 
 	public void setDisscharrivetime(String s) {
-		setScharrivetime(GenericDateUtils.convertToDate(s, getTimeFormat(), null));
+		setScharrivetime(DateUtils.convertToDate(s, getTimeFormat(), null));
 	}
 
 	public Date getActdeparttime() {
@@ -179,11 +180,11 @@ public class Segment implements Serializable {
 
 	@Transient
 	public String getDisactdeparttime() {
-		return GenericDateUtils.formatDate(getActdeparttime(), getTimeFormat(), null, null);
+		return DateUtils.formatDate(getActdeparttime(), getTimeFormat(), null, null);
 	}
 
 	public void setDisactdeparttime(String s) {
-		setActdeparttime(GenericDateUtils.convertToDate(s, getTimeFormat(), null));
+		setActdeparttime(DateUtils.convertToDate(s, getTimeFormat(), null));
 	}
 
 	public Date getActarrivetime() {
@@ -196,11 +197,11 @@ public class Segment implements Serializable {
 
 	@Transient
 	public String getDisactarrivetime() {
-		return GenericDateUtils.formatDate(getActarrivetime(), getTimeFormat(), null, null);
+		return DateUtils.formatDate(getActarrivetime(), getTimeFormat(), null, null);
 	}
 
 	public void setDisactarrivetime(String s) {
-		setActarrivetime(GenericDateUtils.convertToDate(s, getTimeFormat(), null));
+		setActarrivetime(DateUtils.convertToDate(s, getTimeFormat(), null));
 	}
 
 	public Reservation getReservation() {

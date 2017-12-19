@@ -1,77 +1,54 @@
 package aero.nettracer.persistence.model.fraudservice;
 
-import java.io.Serializable;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
-
 import aero.nettracer.persistence.model.fraudservice.detection.Whitelist;
+
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
-import org.hibernate.annotations.Proxy;
+import javax.persistence.OrderBy;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import java.sql.Timestamp;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
-public class Reservation implements Serializable {
-	private static final long serialVersionUID = 1L;
+@Table(name = "reservation")
+public class Reservation {
+
+	private long id;
+	private String airline;
+	private int ccExpMonth;
+	private int ccExpYear;
+	private String ccNumLastFour;
+	private String ccNumber;
+	private String ccType;
+	private String formOfPayment;
+	private int itinComplexity;
+	private String recordLocator;
+	private double ticketAmount;
+	private Timestamp travelDate;
+	private int tripLength;
+	private Whitelist ccWhitelist;
+	private FsIncident incident;
+	private Person purchaser;
+	private String ccFName;
+	private String ccLName;
+	private String ccMName;
+	private Set<Segment> segments;
+	private PnrData pnrData;
+	private Set<Person> passengers;
+	private Set<Phone> phones;
 
 	@Id
 	@GeneratedValue
-	private long id;
-
-	@OneToOne(targetEntity = FsIncident.class)
-	private FsIncident incident;
-	private String airline;
-	private String recordLocator;
-	private Date travelDate;
-	private String formOfPayment;
-	private String ccType;
-	private String ccNumber;
-	private String ccNumLastFour;
-//	private String ccLName;
-//	private String ccFName;
-//	private String ccMName;
-	private int ccExpMonth;
-	private int ccExpYear;
-
-	@OneToMany(mappedBy = "reservation", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-//	@Cascade(org.hibernate.annotations.CascadeType.DELETE_ORPHAN)
-	@org.hibernate.annotations.OrderBy(clause = "id")
-	@Fetch(FetchMode.SELECT)
-	private Set<Segment> segments;
-
-	@OneToOne(targetEntity = Whitelist.class, cascade = CascadeType.ALL)
-	private Whitelist ccWhitelist;
-
-	@OneToOne(targetEntity = Person.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	@JoinColumn(name="purchaser_id")
-	private Person purchaser;
-
-	private double ticketAmount;
-	private int itinComplexity;
-	private int tripLength;
-	@OneToOne(targetEntity = PnrData.class, cascade = CascadeType.ALL, mappedBy = "reservation", fetch = FetchType.EAGER)
-	private PnrData pnrData;
-
-	@OneToMany(mappedBy = "reservation", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-//	@Cascade(org.hibernate.annotations.CascadeType.DELETE_ORPHAN)
-	@org.hibernate.annotations.OrderBy(clause = "id")
-	@Fetch(FetchMode.SELECT)
-	private Set<Person> passengers;
-
-	@OneToMany(mappedBy = "reservation", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-//	@Cascade(org.hibernate.annotations.CascadeType.DELETE_ORPHAN)
-	@org.hibernate.annotations.OrderBy(clause = "id")
-	@Fetch(FetchMode.SELECT)
-	private Set<Phone> phones;
-
+	@Column(name = "id")
 	public long getId() {
 		return id;
 	}
@@ -80,14 +57,7 @@ public class Reservation implements Serializable {
 		this.id = id;
 	}
 
-	public FsIncident getIncident() {
-		return incident;
-	}
-
-	public void setIncident(FsIncident incident) {
-		this.incident = incident;
-	}
-
+	@Column(name = "airline")
 	public String getAirline() {
 		return airline;
 	}
@@ -96,158 +66,7 @@ public class Reservation implements Serializable {
 		this.airline = airline;
 	}
 
-	public String getRecordLocator() {
-		return recordLocator;
-	}
-
-	public void setRecordLocator(String recordLocator) {
-		this.recordLocator = recordLocator;
-	}
-
-	public Date getTravelDate() {
-		return travelDate;
-	}
-
-	public void setTravelDate(Date travelDate) {
-		this.travelDate = travelDate;
-	}
-
-	public String getFormOfPayment() {
-		return formOfPayment;
-	}
-
-	public void setFormOfPayment(String formOfPayment) {
-		this.formOfPayment = formOfPayment;
-	}
-
-	public String getRedactedCcNumber() {
-//		String toReturn = "";
-//		if ((ccNumber != null && !ccNumber.isEmpty()) || (getCcNumLastFour() != null && !getCcNumLastFour().isEmpty())) {
-//			toReturn += "************" + getCcNumLastFour();
-//		}
-//		return toReturn;
-		return getCcNumber();
-	}
-
-	public String getCcNumber() {
-		return this.ccNumber;
-	}
-
-	public void setRedactedCcNumber(String ccNumber) {
-		setCcNumber(ccNumber);
-	}
-
-	public void setCcNumber(String ccNumber) {
-//		if (ccNumber != null && ccNumber.trim().length() > 0 && (ccNumber.matches("[0-9]{4,}"))) {
-//			if (ccNumber.length() > 12) {
-//				this.ccNumber = StringUtils.sha1_256(ccNumber,true);
-//			} else {
-//				this.ccNumber = null;
-//			}
-//			this.setCcNumLastFour(ccNumber.substring(ccNumber.length() - 4));
-//		} else if(ccNumber == null || ccNumber.trim().length() == 0){
-//			this.ccNumber = null;
-//			this.ccNumLastFour = null;
-//		}
-		this.ccNumber = ccNumber;
-	}
-
-	public double getTicketAmount() {
-		return ticketAmount;
-	}
-
-	public void setTicketAmount(double ticketAmount) {
-		this.ticketAmount = ticketAmount;
-	}
-
-	public int getItinComplexity() {
-		return itinComplexity;
-	}
-
-	public void setItinComplexity(int itinComplexity) {
-		this.itinComplexity = itinComplexity;
-	}
-
-	public int getTripLength() {
-		return tripLength;
-	}
-
-	public void setTripLength(int tripLength) {
-		this.tripLength = tripLength;
-	}
-
-	public PnrData getPnrData() {
-		return pnrData;
-	}
-
-	public void setPnrData(PnrData pnrData) {
-		this.pnrData = pnrData;
-	}
-
-	public Set<Person> getPassengers() {
-		return passengers;
-	}
-
-	public void setPassengers(Set<Person> passengers) {
-		this.passengers = passengers;
-	}
-
-	public Set<Phone> getPhones() {
-		return phones;
-	}
-
-	public void setPhones(Set<Phone> phones) {
-		this.phones = phones;
-	}
-
-	public Whitelist getCcWhitelist() {
-		return ccWhitelist;
-	}
-
-	public void setCcWhitelist(Whitelist ccWhitelist) {
-		this.ccWhitelist = ccWhitelist;
-	}
-
-	public Set<Segment> getSegments() {
-		return segments;
-	}
-
-	public void setSegments(Set<Segment> segments) {
-		this.segments = segments;
-	}
-
-	public String getCcType() {
-		return ccType;
-	}
-
-	public void setCcType(String ccType) {
-		this.ccType = ccType;
-	}
-
-//	public String getCcLName() {
-//		return ccLName;
-//	}
-//
-//	public void setCcLName(String ccLName) {
-//		this.ccLName = ccLName;
-//	}
-//
-//	public String getCcFName() {
-//		return ccFName;
-//	}
-//
-//	public void setCcFName(String ccFName) {
-//		this.ccFName = ccFName;
-//	}
-//
-//	public String getCcMName() {
-//		return ccMName;
-//	}
-//
-//	public void setCcMName(String ccMName) {
-//		this.ccMName = ccMName;
-//	}
-
+	@Column(name = "ccexpmonth")
 	public int getCcExpMonth() {
 		return ccExpMonth;
 	}
@@ -256,6 +75,7 @@ public class Reservation implements Serializable {
 		this.ccExpMonth = ccExpMonth;
 	}
 
+	@Column(name = "ccexpyear")
 	public int getCcExpYear() {
 		return ccExpYear;
 	}
@@ -264,6 +84,7 @@ public class Reservation implements Serializable {
 		this.ccExpYear = ccExpYear;
 	}
 
+	@Column(name = "ccnumlastfour")
 	public String getCcNumLastFour() {
 		return ccNumLastFour;
 	}
@@ -272,12 +93,179 @@ public class Reservation implements Serializable {
 		this.ccNumLastFour = ccNumLastFour;
 	}
 
+	@Column(name = "ccnumber")
+	public String getCcNumber() {
+		return this.ccNumber;
+	}
+
+	public void setCcNumber(String ccNumber) {
+		this.ccNumber = ccNumber;
+	}
+
+	@Column(name = "cctype")
+	public String getCcType() {
+		return ccType;
+	}
+
+	public void setCcType(String ccType) {
+		this.ccType = ccType;
+	}
+
+	@Column(name = "formofpayment")
+	public String getFormOfPayment() {
+		return formOfPayment;
+	}
+
+	public void setFormOfPayment(String formOfPayment) {
+		this.formOfPayment = formOfPayment;
+	}
+
+	@Column(name = "itincomplexity")
+	public int getItinComplexity() {
+		return itinComplexity;
+	}
+
+	public void setItinComplexity(int itinComplexity) {
+		this.itinComplexity = itinComplexity;
+	}
+
+	@Column(name = "recordlocator")
+	public String getRecordLocator() {
+		return recordLocator;
+	}
+
+	public void setRecordLocator(String recordLocator) {
+		this.recordLocator = recordLocator;
+	}
+
+	@Column(name = "ticketamount")
+	public double getTicketAmount() {
+		return ticketAmount;
+	}
+
+	public void setTicketAmount(double ticketAmount) {
+		this.ticketAmount = ticketAmount;
+	}
+
+	@Column(name = "traveldate")
+	@Temporal(TemporalType.TIMESTAMP)
+	public Timestamp getTravelDate() {
+		return travelDate;
+	}
+
+	public void setTravelDate(Timestamp travelDate) {
+		this.travelDate = travelDate;
+	}
+
+	@Column(name = "triplength")
+	public int getTripLength() {
+		return tripLength;
+	}
+
+	public void setTripLength(int tripLength) {
+		this.tripLength = tripLength;
+	}
+
+	@OneToOne(cascade = CascadeType.ALL)
+	public Whitelist getCcWhitelist() {
+		return ccWhitelist;
+	}
+
+	public void setCcWhitelist(Whitelist ccWhitelist) {
+		this.ccWhitelist = ccWhitelist;
+	}
+
+	@OneToOne
+	public FsIncident getIncident() {
+		return incident;
+	}
+
+	public void setIncident(FsIncident incident) {
+		this.incident = incident;
+	}
+
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name="purchaser_id")
 	public Person getPurchaser() {
 		return purchaser;
 	}
 
 	public void setPurchaser(Person purchaser) {
 		this.purchaser = purchaser;
+	}
+
+	@Column(name = "ccfname")
+	public String getCcFName() {
+		return ccFName;
+	}
+
+	public void setCcFName(String ccFName) {
+		this.ccFName = ccFName;
+	}
+
+	@Column(name = "cclname")
+	public String getCcLName() {
+		return ccLName;
+	}
+
+	public void setCcLName(String ccLName) {
+		this.ccLName = ccLName;
+	}
+
+	@Column(name = "ccmname")
+	public String getCcMName() {
+		return ccMName;
+	}
+
+	public void setCcMName(String ccMName) {
+		this.ccMName = ccMName;
+	}
+
+	@OneToMany(mappedBy = "reservation", cascade = CascadeType.ALL)
+	@OrderBy(value = "id")
+	public Set<Segment> getSegments() {
+		return segments;
+	}
+
+	public void setSegments(Set<Segment> segments) {
+		this.segments = segments;
+	}
+
+	@OneToOne(cascade = CascadeType.ALL, mappedBy = "reservation")
+	public PnrData getPnrData() {
+		return pnrData;
+	}
+
+	public void setPnrData(PnrData pnrData) {
+		this.pnrData = pnrData;
+	}
+
+	@OneToMany(mappedBy = "reservation", cascade = CascadeType.ALL)
+	@OrderBy(value = "id")
+	public Set<Person> getPassengers() {
+		return passengers;
+	}
+
+	public void setPassengers(Set<Person> passengers) {
+		this.passengers = passengers;
+	}
+
+	@OneToMany(mappedBy = "reservation", cascade = CascadeType.ALL)
+	@OrderBy(value = "id")
+	public Set<Phone> getPhones() {
+		return phones;
+	}
+
+	public void setPhones(Set<Phone> phones) {
+		this.phones = phones;
+	}
+
+	public String getRedactedCcNumber() {
+		return getCcNumber();
+	}
+
+	public void setRedactedCcNumber(String ccNumber) {
+		setCcNumber(ccNumber);
 	}
 
 	public FsAddress getBillingAddress() {
