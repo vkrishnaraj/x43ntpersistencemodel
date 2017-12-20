@@ -1,12 +1,12 @@
 package aero.nettracer.persistence.model.taskmanager;
 
 
+import org.apache.commons.lang3.StringEscapeUtils;
+import org.hibernate.annotations.Proxy;
+
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.Transient;
-
-import org.apache.commons.lang.StringEscapeUtils;
-import org.hibernate.annotations.Proxy;
 
 @Entity
 @DiscriminatorValue(FourDayTask.TASK_TYPE)
@@ -40,7 +40,7 @@ public class FourDayTask extends MorningDutiesTask {
 
 	@Transient
 	public String getAlert() {
-		String s = "Fourth Day Call currently in progress.  Continue working  <a href='GeneralTask.do?loadIncident=" + this.getIncident().getIncident_ID() + "'>" + this.getIncident().getIncident_ID() + "</a>";
-		return StringEscapeUtils.unescapeHtml(s);
+		String s = "Fourth Day Call currently in progress.  Continue working  <a href='GeneralTask.do?loadIncident=" + this.getIncident().getId() + "'>" + this.getIncident().getId() + "</a>";
+		return StringEscapeUtils.unescapeHtml4(s);
 	}
 }

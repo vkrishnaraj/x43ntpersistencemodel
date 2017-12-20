@@ -8,7 +8,6 @@ import org.hibernate.annotations.Proxy;
 
 @Entity
 @DiscriminatorValue("ACAA")
-@Proxy(lazy = true)
 public class AcaaTask extends InboundQueueTask {
 	@Transient
 	public String getDescription() {

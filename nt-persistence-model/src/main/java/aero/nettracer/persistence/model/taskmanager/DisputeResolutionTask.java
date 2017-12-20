@@ -12,12 +12,11 @@ import org.hibernate.annotations.Proxy;
 
 @Entity
 @DiscriminatorValue("DISPUTE")
-@Proxy(lazy = true)
 public class DisputeResolutionTask extends GeneralTask {
 	
-	Dispute dispute;
+	private Dispute dispute;
 	
-	@OneToOne(targetEntity = Dispute.class)
+	@OneToOne
 	@JoinColumn(name = "dispute_res_id")
 	public Dispute getDispute() {
 		return dispute;

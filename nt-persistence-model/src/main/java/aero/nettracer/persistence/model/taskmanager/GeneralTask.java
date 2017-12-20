@@ -29,6 +29,7 @@ import org.hibernate.annotations.FetchMode;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name="task_type", discriminatorType = DiscriminatorType.STRING, length=16)
 public abstract class GeneralTask {
+
 	private String locale;
 
 	@Id
