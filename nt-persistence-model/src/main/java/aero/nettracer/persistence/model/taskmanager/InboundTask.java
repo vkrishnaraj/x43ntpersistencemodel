@@ -4,12 +4,10 @@ import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.Transient;
 
-import org.hibernate.annotations.Proxy;
-
 @Entity
 @DiscriminatorValue("INBOUND")
-@Proxy(lazy = true)
 public class InboundTask extends InboundQueueTask {
+
 	@Transient
 	public String getDescription() {
 		String description = null;

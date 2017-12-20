@@ -21,11 +21,9 @@ import org.hibernate.annotations.FetchMode;
 
 @Entity
 @Table(name = "view_tasks_not_in_work")
-public class VTaskNotInWork implements Serializable {
+public class VTaskNotInWork {
 
-	private static final long serialVersionUID = 3624314912197701152L;
-
-	private long task_id;	
+	private long task_id;
 	private TaskType taskType;
 	private Date opened_timestamp;
 	private Agent agent;

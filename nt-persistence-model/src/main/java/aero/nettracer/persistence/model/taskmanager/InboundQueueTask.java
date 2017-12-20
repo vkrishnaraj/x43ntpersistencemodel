@@ -1,14 +1,16 @@
 package aero.nettracer.persistence.model.taskmanager;
 
 import aero.nettracer.persistence.model.InboundQueue;
-import javax.persistence.*;
-
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.Proxy;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Transient;
+
 @Entity
-@Proxy(lazy = true)
 public class InboundQueueTask extends GeneralTask {
 
 	private InboundQueue inboundqueue;
@@ -24,9 +26,8 @@ public class InboundQueueTask extends GeneralTask {
 		this.task_type = task_type;
 	}
 
-	@ManyToOne(targetEntity = InboundQueue.class, cascade = CascadeType.ALL, fetch=FetchType.EAGER)
+	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "inboundqueue_id")
-	@Fetch(FetchMode.SELECT)
 	public InboundQueue getInboundqueue() {
 		return inboundqueue;
 	}
@@ -59,5 +60,4 @@ public class InboundQueueTask extends GeneralTask {
 	public boolean isDamaged(){
 		return this instanceof DamagedTask;
 	}
-	
 }

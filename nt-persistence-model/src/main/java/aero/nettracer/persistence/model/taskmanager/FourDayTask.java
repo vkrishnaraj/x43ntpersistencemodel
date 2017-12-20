@@ -10,7 +10,6 @@ import javax.persistence.Transient;
 
 @Entity
 @DiscriminatorValue(FourDayTask.TASK_TYPE)
-@Proxy(lazy = true)
 public class FourDayTask extends MorningDutiesTask {
 
 	@Transient

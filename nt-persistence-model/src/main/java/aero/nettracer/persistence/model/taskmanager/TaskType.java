@@ -1,24 +1,18 @@
 package aero.nettracer.persistence.model.taskmanager;
 
-import java.io.Serializable;
-
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name="task_type")
-public class TaskType implements Serializable {
+public class TaskType {
 
-	private static final long serialVersionUID = 5433654702759772963L;
-
-	@Id
-	@GeneratedValue
 	private long id;
-	
 	private int code;
-	
 	private String description;
 	
 	public TaskType() { }
@@ -27,6 +21,9 @@ public class TaskType implements Serializable {
 		this.id = id;
 	}
 
+	@Id
+	@GeneratedValue
+	@Column(name = "id")
 	public long getId() {
 		return id;
 	}
@@ -35,6 +32,7 @@ public class TaskType implements Serializable {
 		this.id = id;
 	}
 
+	@Column(name = "code")
 	public int getCode() {
 		return code;
 	}
@@ -43,6 +41,7 @@ public class TaskType implements Serializable {
 		this.code = code;
 	}
 
+	@Column(name = "description")
 	public String getDescription() {
 		return description;
 	}
@@ -50,7 +49,8 @@ public class TaskType implements Serializable {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	
+
+	@Transient
 	public String getKey() {
 		return "TASK_TYPE_" + getCode();
 	}
