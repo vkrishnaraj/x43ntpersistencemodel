@@ -1,35 +1,30 @@
 package aero.nettracer.persistence.model.salvage;
 
-import java.util.Date;
-import java.util.Set;
-
 import aero.nettracer.commons.utils.GenericDateUtils;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.Transient;
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
-import org.hibernate.annotations.OrderBy;
-import org.hibernate.annotations.Proxy;
+import java.sql.Timestamp;
+import java.util.Set;
 
 @Entity
 @Table(name = "salvage")
 public class Salvage {
 	
-	private int salvageId;
+	private int id;
 	private String companyCodeId;
-	private Date salvageDate;
-	private String pickedUpByLName;
 	private String pickedUpByFName;
+	private String pickedUpByLName;
+	private Timestamp salvageDate;
 	private int status;
 	private Set<SalvageBox> salvageBoxes;
 	private Set<SalvageOHDReference> ohdReferences;
@@ -39,15 +34,15 @@ public class Salvage {
 	@Id
 	@GeneratedValue
 	@Column(name="salvage_id")
-	public int getSalvageId() {
-		return salvageId;
+	public int getId() {
+		return id;
 	}
 
-	public void setSalvageId(int salvageId) {
-		this.salvageId = salvageId;
+	public void setId(int id) {
+		this.id = id;
 	}
 
-	@Column(name="companycode_id", length=2)
+	@Column(name="companycode_id")
 	public String getCompanyCodeId() {
 		return companyCodeId;
 	}
@@ -56,16 +51,16 @@ public class Salvage {
 		this.companyCodeId = companyCodeId;
 	}
 
-	@Column(name="salvage_date")
-	public Date getSalvageDate() {
-		return salvageDate;
+	@Column(name="pickedupby_fname")
+	public String getPickedUpByFName() {
+		return pickedUpByFName;
 	}
 
-	public void setSalvageDate(Date salvageDate) {
-		this.salvageDate = salvageDate;
+	public void setPickedUpByFName(String pickedUpByFName) {
+		this.pickedUpByFName = pickedUpByFName;
 	}
 
-	@Column(name="pickedupby_lname", length=30)
+	@Column(name="pickedupby_lname")
 	public String getPickedUpByLName() {
 		return pickedUpByLName;
 	}
@@ -74,13 +69,13 @@ public class Salvage {
 		this.pickedUpByLName = pickedUpByLName;
 	}
 
-	@Column(name="pickedupby_fname", length=30)
-	public String getPickedUpByFName() {
-		return pickedUpByFName;
+	@Column(name="salvage_date")
+	public Timestamp getSalvageDate() {
+		return salvageDate;
 	}
 
-	public void setPickedUpByFName(String pickedUpByFName) {
-		this.pickedUpByFName = pickedUpByFName;
+	public void setSalvageDate(Timestamp salvageDate) {
+		this.salvageDate = salvageDate;
 	}
 
 	@Column(name="status")
@@ -92,10 +87,8 @@ public class Salvage {
 		this.status = status;
 	}
 
-	@OneToMany(mappedBy = "salvage", cascade = CascadeType.ALL, fetch=FetchType.EAGER)
-	@Cascade(org.hibernate.annotations.CascadeType.DELETE_ORPHAN)
-	@OrderBy(clause = "display_id")
-	@Fetch(FetchMode.SELECT)
+	@OneToMany(mappedBy = "salvage", cascade = CascadeType.ALL, orphanRemoval = true)
+	@OrderBy(value = "display_id")
 	public Set<SalvageBox> getSalvageBoxes() {
 		return salvageBoxes;
 	}
@@ -104,10 +97,8 @@ public class Salvage {
 		this.salvageBoxes = salvageBoxes;
 	}
 
-	@OneToMany(mappedBy = "salvage", cascade = CascadeType.ALL, fetch=FetchType.EAGER)
-	@Cascade(org.hibernate.annotations.CascadeType.DELETE_ORPHAN)
-	@OrderBy(clause = "ohd_id")
-	@Fetch(FetchMode.SELECT)
+	@OneToMany(mappedBy = "salvage", cascade = CascadeType.ALL, orphanRemoval = true)
+	@OrderBy(value = "ohd_id")
 	public Set<SalvageOHDReference> getOhdReferences() {
 		return ohdReferences;
 	}
@@ -116,8 +107,8 @@ public class Salvage {
 		this.ohdReferences = ohdReferences;
 	}
 
-	@OneToOne(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
-	@JoinColumn(name="remark_id", nullable=true)
+	@OneToOne(cascade=CascadeType.ALL)
+	@JoinColumn(name="remark_id")
 	public SalvageRemark getRemark() {
 		return remark;
 	}

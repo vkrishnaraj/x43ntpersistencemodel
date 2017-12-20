@@ -1,50 +1,53 @@
 package aero.nettracer.persistence.model.salvage;
 
-import java.util.ArrayList;
-import java.util.Set;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.Transient;
-
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
-import org.hibernate.annotations.OrderBy;
-import org.hibernate.annotations.Proxy;
+import java.util.ArrayList;
+import java.util.Set;
 
 @Entity
 @Table(name = "salvage_box")
 public class SalvageBox {
+
 	public static final int TYPE_DEFAULT = 0;
 	public static final int TYPE_LOW_VALUE = 1;
 	public static final int TYPE_HIGH_VALUE = 2;
 	
 	
-	private int boxId;
-	private int displayId;
-	private Salvage salvage;
+	private int id;
 	private String description;
+	private int displayId;
 	private int type; // valid values are: 0 - default, 1-low value, 2-high value
+	private Salvage salvage;
 	private Set<SalvageItem> salvageItems;
 	
 	@Id
 	@GeneratedValue
 	@Column(name="box_id")
-	public int getBoxId() {
-		return boxId;
+	public int getId() {
+		return id;
 	}
 	
-	public void setBoxId(int boxId) {
-		this.boxId = boxId;
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	@Column(name="description")
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
 	
 	@Column(name="display_id", nullable=false)
@@ -55,10 +58,18 @@ public class SalvageBox {
 	public void setDisplayId(int displayId) {
 		this.displayId = displayId;
 	}
+
+	@Column(name="type")
+	public int getType() {
+		return type;
+	}
+
+	public void setType(int type) {
+		this.type = type;
+	}
 	
 	@ManyToOne
 	@JoinColumn(name = "salvage_id", nullable = false)
-	@Fetch(FetchMode.SELECT)
 	public Salvage getSalvage() {
 		return salvage;
 	}
@@ -67,28 +78,8 @@ public class SalvageBox {
 		this.salvage = salvage;
 	}
 
-	@Column(name="description")
-	public String getDescription() {
-		return description;
-	}
-	
-	public void setDescription(String description) {
-		this.description = description;
-	}
-	
-	@Column(name="type", length=1)
-	public int getType() {
-		return type;
-	}
-	
-	public void setType(int type) {
-		this.type = type;
-	}
-
-	@OneToMany(mappedBy = "box", cascade = CascadeType.ALL, fetch=FetchType.EAGER)
-	@Cascade(org.hibernate.annotations.CascadeType.DELETE_ORPHAN) 
-	@OrderBy(clause = "item_id")
-	@Fetch(FetchMode.SELECT)
+	@OneToMany(mappedBy = "box", cascade = CascadeType.ALL, orphanRemoval = true)
+	@OrderBy(value = "item_id")
 	public Set<SalvageItem> getSalvageItems() {
 		return salvageItems;
 	}
