@@ -1,57 +1,34 @@
 package aero.nettracer.persistence.model.issuance;
 
-import java.text.DecimalFormat;
-import java.util.Set;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.Transient;
-
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
-import org.hibernate.annotations.Proxy;
+import java.text.DecimalFormat;
+import java.util.Set;
 
 @Entity
 @Table(name="issuance_item")
 public class IssuanceItem {
 
-	@Id
-	@GeneratedValue
 	private long id;
-	
-	@Column(length = 100)
-	private String description;
-	
-	boolean active;
-
-	@Column(name = "cost")
-	private double cost = 0;
-	
-	@ManyToOne
-	@JoinColumn(name="issuance_category_id")
 	private IssuanceCategory category;
-
-	@Fetch(FetchMode.SELECT)
-	@org.hibernate.annotations.OrderBy(clause="station_id")
-	@OneToMany(mappedBy="issuanceItem", cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+	private String description;
+	boolean active;
+	private double cost;
 	private Set<IssuanceItemQuantity> quantityItems;
-
-	@Fetch(FetchMode.SELECT)
-	@org.hibernate.annotations.OrderBy(clause="station_id")
-	@OneToMany(mappedBy="issuanceItem", cascade=CascadeType.ALL, fetch=FetchType.EAGER)
 	private Set<IssuanceItemInventory> inventoryItems;
 
-	@Transient
-	private DecimalFormat df = new DecimalFormat("#0.00");
-
+	@Id
+	@GeneratedValue
+	@Column(name = "id")
 	public long getId() {
 		return id;
 	}
@@ -60,14 +37,8 @@ public class IssuanceItem {
 		this.id = id;
 	}
 
-	public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
-	}
-
+	@ManyToOne
+	@JoinColumn(name="issuance_category_id")
 	public IssuanceCategory getCategory() {
 		return this.category;
 	}
@@ -76,6 +47,16 @@ public class IssuanceItem {
 		this.category = category;
 	}
 
+	@Column(name = "description")
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	@Column(name = "active")
 	public boolean isActive() {
 		return active;
 	}
@@ -84,6 +65,7 @@ public class IssuanceItem {
 		this.active = active;
 	}
 
+	@Column(name = "cost")
 	public double getCost() {
 		return cost;
 	}
@@ -92,6 +74,8 @@ public class IssuanceItem {
 		this.cost = cost;
 	}
 
+	@OrderBy(value="station_id")
+	@OneToMany(mappedBy="issuanceItem", cascade=CascadeType.ALL)
 	public Set<IssuanceItemQuantity> getQuantityItems() {
 		return quantityItems;
 	}
@@ -100,6 +84,8 @@ public class IssuanceItem {
 		this.quantityItems = quantityItems;
 	}
 
+	@OrderBy(value="station_id")
+	@OneToMany(mappedBy="issuanceItem", cascade=CascadeType.ALL)
 	public Set<IssuanceItemInventory> getInventoryItems() {
 		return inventoryItems;
 	}
@@ -107,8 +93,10 @@ public class IssuanceItem {
 	public void setInventoryItems(Set<IssuanceItemInventory> inventoryItems) {
 		this.inventoryItems = inventoryItems;
 	}
-	
+
+	@Transient
 	public String getDispCost() {
+		DecimalFormat df = new DecimalFormat("#0.00");
 		return df.format(getCost());
 	}
 	
@@ -119,7 +107,8 @@ public class IssuanceItem {
 	public boolean isInventoryIssuanceItem() {
 		return inventoryItems != null && !inventoryItems.isEmpty();
 	}
-	
+
+	@Transient
 	public String getInventoryIssuanceItemBarcode() {
 		if (this.isInventoryIssuanceItem()) {
 			return inventoryItems.toArray(new IssuanceItemInventory[0])[0].getBarcode();

@@ -1,10 +1,9 @@
 package aero.nettracer.persistence.model.issuance;
 
-import java.util.Date;
-
 import aero.nettracer.persistence.model.Agent;
 import aero.nettracer.persistence.model.Incident;
 import aero.nettracer.persistence.model.documents.Document;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -17,49 +16,115 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
-
-import org.hibernate.annotations.Proxy;
+import java.sql.Timestamp;
 
 @Entity
 @Table(name="issuance_item_incident")
 public class IssuanceItemIncident {
 
+	private long id;
+	private int quantity;
+	private boolean returned;
+	private Timestamp returnDate;
+	private IssuanceItemQuantity issuanceItemQuantity;
+	private IssuanceItemInventory issuanceItemInventory;
+	private Incident incident;
+	private Timestamp issueDate;
+	private Agent issueAgent;
+	private Document document;
+	boolean updated = false;
+
 	@Id
 	@GeneratedValue
-	private long id;
-	
-	private int quantity;
-	
-	private boolean returned;
+	@Column(name = "id")
+	public long getId() {
+		return id;
+	}
 
-	@Column(name="returndate", columnDefinition="DATETIME")
+	public void setId(long id) {
+		this.id = id;
+	}
+
+	@Column(name = "quantity")
+	public int getQuantity() {
+		return quantity;
+	}
+
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
+	}
+
+	@Column(name = "returned")
+	public boolean isReturned() {
+		return returned;
+	}
+
+	public void setReturned(boolean returned) {
+		this.returned = returned;
+	}
+
+	@Column(name="returndate")
 	@Temporal(TemporalType.TIMESTAMP)
-	private Date returnDate;
+	public Timestamp getReturnDate() {
+		return returnDate;
+	}
+
+	public void setReturnDate(Timestamp returnDate) {
+		this.returnDate = returnDate;
+	}
 
 	@ManyToOne
 	@JoinColumn(name = "issuance_item_quantity_id")
-	private IssuanceItemQuantity issuanceItemQuantity;
+	public IssuanceItemQuantity getIssuanceItemQuantity() {
+		return issuanceItemQuantity;
+	}
+
+	public void setIssuanceItemQuantity(IssuanceItemQuantity issuanceItemQuantity) {
+		this.issuanceItemQuantity = issuanceItemQuantity;
+	}
 
 	@ManyToOne
 	@JoinColumn(name = "issuance_item_inventory_id")
-	private IssuanceItemInventory issuanceItemInventory;
+	public IssuanceItemInventory getIssuanceItemInventory() {
+		return issuanceItemInventory;
+	}
+
+	public void setIssuanceItemInventory(IssuanceItemInventory issuanceItemInventory) {
+		this.issuanceItemInventory = issuanceItemInventory;
+	}
 
 	@ManyToOne
 	@JoinColumn(name = "incident_id")
-	private Incident incident;
+	public Incident getIncident() {
+		return incident;
+	}
 
-	@Column(name="issuedate", columnDefinition="DATETIME")
+	public void setIncident(Incident incident) {
+		this.incident = incident;
+	}
+
+	@Column(name="issuedate")
 	@Temporal(TemporalType.TIMESTAMP)
-	private Date issueDate;
+	public Timestamp getIssueDate() {
+		return issueDate;
+	}
+
+	public void setIssueDate(Timestamp issueDate) {
+		this.issueDate = issueDate;
+	}
 
 	@ManyToOne
 	@JoinColumn(name = "issueagent_id")
-	private Agent issueAgent;
+	public Agent getIssueAgent() {
+		return issueAgent;
+	}
+
+	public void setIssueAgent(Agent issueAgent) {
+		this.issueAgent = issueAgent;
+	}
 
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "document_id")
-	private Document document;
-
 	public Document getDocument() {
 		return document;
 	}
@@ -69,80 +134,6 @@ public class IssuanceItemIncident {
 	}
 
 	@Transient
-	boolean updated = false;
-
-	public long getId() {
-		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
-	}
-
-	public int getQuantity() {
-		return quantity;
-	}
-
-	public void setQuantity(int quantity) {
-		this.quantity = quantity;
-	}
-
-	public boolean isReturned() {
-		return returned;
-	}
-
-	public void setReturned(boolean returned) {
-		this.returned = returned;
-	}
-
-	public Date getReturnDate() {
-		return returnDate;
-	}
-
-	public void setReturnDate(Date returnDate) {
-		this.returnDate = returnDate;
-	}
-
-	public IssuanceItemQuantity getIssuanceItemQuantity() {
-		return issuanceItemQuantity;
-	}
-
-	public void setIssuanceItemQuantity(IssuanceItemQuantity issuanceItemQuantity) {
-		this.issuanceItemQuantity = issuanceItemQuantity;
-	}
-
-	public IssuanceItemInventory getIssuanceItemInventory() {
-		return issuanceItemInventory;
-	}
-
-	public void setIssuanceItemInventory(IssuanceItemInventory issuanceItemInventory) {
-		this.issuanceItemInventory = issuanceItemInventory;
-	}
-
-	public Incident getIncident() {
-		return incident;
-	}
-
-	public void setIncident(Incident incident) {
-		this.incident = incident;
-	}
-
-	public Date getIssueDate() {
-		return issueDate;
-	}
-
-	public void setIssueDate(Date issueDate) {
-		this.issueDate = issueDate;
-	}
-
-	public Agent getIssueAgent() {
-		return issueAgent;
-	}
-
-	public void setIssueAgent(Agent issueAgent) {
-		this.issueAgent = issueAgent;
-	}
-
 	public boolean isUpdated() {
 		return updated;
 	}

@@ -1,9 +1,8 @@
 package aero.nettracer.persistence.model.issuance;
 
-import java.util.Date;
-
 import aero.nettracer.persistence.model.Station;
 import aero.nettracer.persistence.model.Status;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -13,83 +12,38 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import org.hibernate.annotations.Proxy;
+import java.sql.Timestamp;
 
 @Entity
 @Table(name="issuance_item_inventory")
 public class IssuanceItemInventory {
 
-	@Id
-	@GeneratedValue
 	private long id;
-	
-	@Column(name = "trade_type")
 	private int tradeType;
-
-	@Column(name = "cost")
-	private double cost;
-		
-	@Column(length = 100)
 	private String description;
-	
-	@Column(length = 20)
 	private String barcode;
-
-	@ManyToOne
-	@JoinColumn(name = "inventory_status_id")
 	private Status inventoryStatus;
-	
-	@ManyToOne
-	@JoinColumn(name = "station_id")
 	private Station station;
-
-	@ManyToOne
-	@JoinColumn(name = "issuance_item_id")
 	private IssuanceItem issuanceItem;
-	
-	@Column(name="incident_id", length=13)
 	private String incidentID;
-
-	@Column(name="issuedate", columnDefinition="DATETIME")
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date issueDate;
-	
-	@Column(name="verified_incident")
+	private Timestamp issueDate;
 	private boolean verifiedIncident;
-	
-	@Column(length = 25)
+	private double cost;
 	private String firstName;
-	
-	@Column(length = 25)
 	private String lastName;
-
-	@Column(length = 2)
 	private String country;
-
-	@Column(length = 20)
 	private String phoneNumber;
-
-	@Column(length = 100)
 	private String address1;
-
-	@Column(length = 100)
 	private String address2;
-
-	@Column(length = 50)
 	private String city;
-
-	@Column(length = 2)
 	private String state;
-
-	@Column(length = 20)
 	private String province;
-
-	@Column(length = 12)
 	private String zip;
-
-	@Column(length = 255)
 	private String specialNeedDescription;
 
+	@Id
+	@GeneratedValue
+	@Column(name = "id")
 	public long getId() {
 		return id;
 	}
@@ -98,22 +52,7 @@ public class IssuanceItemInventory {
 		this.id = id;
 	}
 
-	public Station getStation() {
-		return station;
-	}
-
-	public void setStation(Station station) {
-		this.station = station;
-	}
-
-	public IssuanceItem getIssuanceItem() {
-		return issuanceItem;
-	}
-
-	public void setIssuanceItem(IssuanceItem issuanceItem) {
-		this.issuanceItem = issuanceItem;
-	}
-
+	@Column(name = "trade_type")
 	public int getTradeType() {
 		return tradeType;
 	}
@@ -122,6 +61,7 @@ public class IssuanceItemInventory {
 		this.tradeType = tradeType;
 	}
 
+	@Column(name = "description")
 	public String getDescription() {
 		return description;
 	}
@@ -130,6 +70,7 @@ public class IssuanceItemInventory {
 		this.description = description;
 	}
 
+	@Column(name = "barcode")
 	public String getBarcode() {
 		return barcode;
 	}
@@ -138,6 +79,8 @@ public class IssuanceItemInventory {
 		this.barcode = barcode;
 	}
 
+	@ManyToOne
+	@JoinColumn(name = "inventory_status_id")
 	public Status getInventoryStatus() {
 		return inventoryStatus;
 	}
@@ -146,6 +89,27 @@ public class IssuanceItemInventory {
 		this.inventoryStatus = inventoryStatus;
 	}
 
+	@ManyToOne
+	@JoinColumn(name = "station_id")
+	public Station getStation() {
+		return station;
+	}
+
+	public void setStation(Station station) {
+		this.station = station;
+	}
+
+	@ManyToOne
+	@JoinColumn(name = "issuance_item_id")
+	public IssuanceItem getIssuanceItem() {
+		return issuanceItem;
+	}
+
+	public void setIssuanceItem(IssuanceItem issuanceItem) {
+		this.issuanceItem = issuanceItem;
+	}
+
+	@Column(name="incident_id")
 	public String getIncidentID() {
 		return incidentID;
 	}
@@ -154,14 +118,17 @@ public class IssuanceItemInventory {
 		this.incidentID = incidentID;
 	}
 
-	public Date getIssueDate() {
+	@Column(name="issuedate")
+	@Temporal(TemporalType.TIMESTAMP)
+	public Timestamp getIssueDate() {
 		return issueDate;
 	}
 
-	public void setIssueDate(Date issueDate) {
+	public void setIssueDate(Timestamp issueDate) {
 		this.issueDate = issueDate;
 	}
 
+	@Column(name="verified_incident")
 	public boolean isVerifiedIncident() {
 		return verifiedIncident;
 	}
@@ -169,7 +136,8 @@ public class IssuanceItemInventory {
 	public void setVerifiedIncident(boolean verifiedIncident) {
 		this.verifiedIncident = verifiedIncident;
 	}
-	
+
+	@Column(name = "cost")
 	public double getCost() {
 		return cost;
 	}
@@ -178,6 +146,7 @@ public class IssuanceItemInventory {
 		this.cost = cost;
 	}
 
+	@Column(name = "firstname")
 	public String getFirstName() {
 		return firstName;
 	}
@@ -186,6 +155,7 @@ public class IssuanceItemInventory {
 		this.firstName = firstName;
 	}
 
+	@Column(name = "lastname")
 	public String getLastName() {
 		return lastName;
 	}
@@ -194,6 +164,7 @@ public class IssuanceItemInventory {
 		this.lastName = lastName;
 	}
 
+	@Column(name = "country")
 	public String getCountry() {
 		return country;
 	}
@@ -202,6 +173,7 @@ public class IssuanceItemInventory {
 		this.country = country;
 	}
 
+	@Column(name = "phonenumber")
 	public String getPhoneNumber() {
 		return phoneNumber;
 	}
@@ -210,6 +182,7 @@ public class IssuanceItemInventory {
 		this.phoneNumber = phoneNumber;
 	}
 
+	@Column(name = "address1")
 	public String getAddress1() {
 		return address1;
 	}
@@ -218,6 +191,7 @@ public class IssuanceItemInventory {
 		this.address1 = address1;
 	}
 
+	@Column(name = "address2")
 	public String getAddress2() {
 		return address2;
 	}
@@ -226,6 +200,7 @@ public class IssuanceItemInventory {
 		this.address2 = address2;
 	}
 
+	@Column(name = "city")
 	public String getCity() {
 		return city;
 	}
@@ -234,6 +209,7 @@ public class IssuanceItemInventory {
 		this.city = city;
 	}
 
+	@Column(name = "state")
 	public String getState() {
 		return state;
 	}
@@ -242,6 +218,7 @@ public class IssuanceItemInventory {
 		this.state = state;
 	}
 
+	@Column(name = "province")
 	public String getProvince() {
 		return province;
 	}
@@ -250,6 +227,7 @@ public class IssuanceItemInventory {
 		this.province = province;
 	}
 
+	@Column(name = "zip")
 	public String getZip() {
 		return zip;
 	}
@@ -258,6 +236,7 @@ public class IssuanceItemInventory {
 		this.zip = zip;
 	}
 
+	@Column(name = "specialneeddescription")
 	public String getSpecialNeedDescription() {
 		return specialNeedDescription;
 	}
@@ -266,49 +245,4 @@ public class IssuanceItemInventory {
 		this.specialNeedDescription = specialNeedDescription;
 	}
 
-	//NTFIXME
-	/*public String getFirstNameJavascript() {
-		return firstName != null ? StringUtils.sanitizeForSingleQuoteJavascript(firstName) : "";
-	}
-
-	public String getLastNameJavascript() {
-		return lastName != null ? StringUtils.sanitizeForSingleQuoteJavascript(lastName) : "";
-	}
-
-	public String getCountryJavascript() {
-		return country != null ? StringUtils.sanitizeForSingleQuoteJavascript(country) : "";
-	}
-
-	public String getPhoneNumberJavascript() {
-		return phoneNumber != null ? StringUtils.sanitizeForSingleQuoteJavascript(phoneNumber) : "";
-	}
-
-	public String getAddress1Javascript() {
-		return address1 != null ? StringUtils.sanitizeForSingleQuoteJavascript(address1) : "";
-	}
-
-	public String getAddress2Javascript() {
-		return address2 != null ? StringUtils.sanitizeForSingleQuoteJavascript(address2) : "";
-	}
-
-	public String getCityJavascript() {
-		return city != null ? StringUtils.sanitizeForSingleQuoteJavascript(city) : "";
-	}
-
-	public String getStateJavascript() {
-		return state != null ? StringUtils.sanitizeForSingleQuoteJavascript(state) : "";
-	}
-	
-	public String getProvinceJavascript() {
-		return province != null ? StringUtils.sanitizeForSingleQuoteJavascript(province) : "";
-	}
-
-	public String getZipJavascript() {
-		return zip != null ? StringUtils.sanitizeForSingleQuoteJavascript(zip) : "";
-	}
-
-	public String getSpecialNeedDescriptionJavascript() {
-		return specialNeedDescription != null ? StringUtils.sanitizeForSingleQuoteJavascript(specialNeedDescription) : "";
-	}*/
-	
 }

@@ -1,8 +1,5 @@
 package aero.nettracer.persistence.model.fraudservice.messaging;
 
-import java.io.Serializable;
-import java.util.Date;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,14 +7,12 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-
-import org.hibernate.annotations.Proxy;
+import java.sql.Timestamp;
 
 @Entity
 @Table(name="central_message")
-public class FsMessage implements Serializable{
-	private static final long serialVersionUID = 1L;
-	
+public class FsMessage {
+
 	public static enum MessageContext {
 		FraudScreening
 	}
@@ -26,30 +21,16 @@ public class FsMessage implements Serializable{
 
 	}
 
+	private long id;
+	private String message;
+	private MessageContext messageContext;
+	private long senderAgentId;
+	private String senderName;
+	private Timestamp createdate;
+
 	@Id
 	@GeneratedValue
-	private long id;
-
-	private long senderAgentId;
-	private MessageContext messageContext;
-	
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date timestamp;
-
-	public Date getTimestamp() {
-		return timestamp;
-	}
-
-	public void setTimestamp(Date timestamp) {
-		this.timestamp = timestamp;
-	}
-
-	@Column(length=100)
-	private String senderName;
-	
-	@Column(length=2500)
-	private String message;
-
+	@Column(name = "id")
 	public long getId() {
 		return id;
 	}
@@ -58,6 +39,7 @@ public class FsMessage implements Serializable{
 		this.id = id;
 	}
 
+	@Column(name = "message")
 	public String getMessage() {
 		return message;
 	}
@@ -66,14 +48,7 @@ public class FsMessage implements Serializable{
 		this.message = message;
 	}
 
-	public long getSenderAgentId() {
-		return senderAgentId;
-	}
-
-	public void setSenderAgentId(long senderAgentId) {
-		this.senderAgentId = senderAgentId;
-	}
-
+	@Column(name = "messagecontext")
 	public MessageContext getMessageContext() {
 		return messageContext;
 	}
@@ -82,6 +57,16 @@ public class FsMessage implements Serializable{
 		this.messageContext = messageContext;
 	}
 
+	@Column(name = "senderagentid")
+	public long getSenderAgentId() {
+		return senderAgentId;
+	}
+
+	public void setSenderAgentId(long senderAgentId) {
+		this.senderAgentId = senderAgentId;
+	}
+
+	@Column(name = "sendername")
 	public String getSenderName() {
 		return senderName;
 	}
@@ -90,4 +75,13 @@ public class FsMessage implements Serializable{
 		this.senderName = senderName;
 	}
 
+	@Column(name = "createdate")
+	@Temporal(TemporalType.TIMESTAMP)
+	public Timestamp getCreatedate() {
+		return createdate;
+	}
+
+	public void setCreatedate(Timestamp createdate) {
+		this.createdate = createdate;
+	}
 }

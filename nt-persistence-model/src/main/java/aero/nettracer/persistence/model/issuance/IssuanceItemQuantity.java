@@ -1,6 +1,7 @@
 package aero.nettracer.persistence.model.issuance;
 
 import aero.nettracer.persistence.model.Station;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,29 +10,19 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.Proxy;
-
 @Entity
 @Table(name="issuance_item_quantity")
 public class IssuanceItemQuantity {
 
-	@Id
-	@GeneratedValue
 	private long id;
-	
 	private int quantity;
-	
-	@Column(name="minimum_active_quantity")
 	private int minimuActiveQuantity;
-	
-	@ManyToOne
-	@JoinColumn(name = "station_id")
 	private Station station;
-
-	@ManyToOne
-	@JoinColumn(name = "issuance_item_id")
 	private IssuanceItem issuanceItem;
 
+	@Id
+	@GeneratedValue
+	@Column(name = "id")
 	public long getId() {
 		return id;
 	}
@@ -40,6 +31,7 @@ public class IssuanceItemQuantity {
 		this.id = id;
 	}
 
+	@Column(name = "quantity")
 	public int getQuantity() {
 		return quantity;
 	}
@@ -48,6 +40,17 @@ public class IssuanceItemQuantity {
 		this.quantity = quantity;
 	}
 
+	@Column(name="minimum_active_quantity")
+	public int getMinimuActiveQuantity() {
+		return minimuActiveQuantity;
+	}
+
+	public void setMinimuActiveQuantity(int minimuActiveQuantity) {
+		this.minimuActiveQuantity = minimuActiveQuantity;
+	}
+
+	@ManyToOne
+	@JoinColumn(name = "station_id")
 	public Station getStation() {
 		return station;
 	}
@@ -56,6 +59,8 @@ public class IssuanceItemQuantity {
 		this.station = station;
 	}
 
+	@ManyToOne
+	@JoinColumn(name = "issuance_item_id")
 	public IssuanceItem getIssuanceItem() {
 		return issuanceItem;
 	}
@@ -64,12 +69,4 @@ public class IssuanceItemQuantity {
 		this.issuanceItem = issuanceItem;
 	}
 
-	public int getMinimuActiveQuantity() {
-		return minimuActiveQuantity;
-	}
-
-	public void setMinimuActiveQuantity(int minimuActiveQuantity) {
-		this.minimuActiveQuantity = minimuActiveQuantity;
-	}
-	
 }

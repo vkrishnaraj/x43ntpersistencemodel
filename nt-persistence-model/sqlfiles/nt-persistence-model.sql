@@ -49,6 +49,7 @@ alter table segment change column 'date' 'createdate' datetime;
 
 
 -- Fraud Service Related Changes - Do we have any negative impact if we do this in agentview database.
+alter table central_message change column 'timestamp' 'createdate' datetime;
 drop table if exists accessrequest;
 drop table if exists addresswhitelist;
 drop table if exists blacklist;
