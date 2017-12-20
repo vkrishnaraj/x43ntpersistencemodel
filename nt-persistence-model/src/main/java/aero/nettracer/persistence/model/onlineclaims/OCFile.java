@@ -1,9 +1,7 @@
 package aero.nettracer.persistence.model.onlineclaims;
 
-import java.util.Date;
-
 import aero.nettracer.persistence.model.communications.IncidentActivity;
-import javax.persistence.Basic;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -13,45 +11,28 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-
-import org.hibernate.annotations.Proxy;
+import java.sql.Timestamp;
 
 @Entity
 @Table(name = "oc_file")
 public class OCFile {
 
+	private long id;
+	private Timestamp dateUploaded;
+	private String filename;
+	private OnlineClaim claim;
+	private boolean interim;
+	private String path;
+	private IncidentActivity incAct;
+	private boolean publish;
+	private Timestamp dateViewed;
+	private int statusId;
+	private Timestamp dateTimeDeleted;
+	private String agentDeleted;
+
 	@Id
 	@GeneratedValue
-	private long id;
-
-	@ManyToOne(targetEntity = OnlineClaim.class)
-	@JoinColumn(name = "claimId", nullable = false)
-	private OnlineClaim claim;
-
-	@ManyToOne(targetEntity = IncidentActivity.class)
-	@JoinColumn(name = "incActId", nullable = true)
-	private IncidentActivity incAct;
-
-	@Column(length = 100)
-	private String filename;
-
-	@Column(length = 1000)
-	private String path;
-
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date dateUploaded;
-
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date dateViewed;
-	
-	@Basic
-	private boolean interim;
-	
-	private boolean publish;
-	private int statusId;
-	private Date dateTimeDeleted;
-	private String agentDeleted;	
-
+	@Column(name = "id")
 	public long getId() {
 		return id;
 	}
@@ -60,6 +41,15 @@ public class OCFile {
 		this.id = id;
 	}
 
+	public Timestamp getDateUploaded() {
+		return dateUploaded;
+	}
+
+	public void setDateUploaded(Timestamp dateUploaded) {
+		this.dateUploaded = dateUploaded;
+	}
+
+	@Column(name = "filename")
 	public String getFilename() {
 		return filename;
 	}
@@ -68,22 +58,8 @@ public class OCFile {
 		this.filename = filename;
 	}
 
-	public Date getDateUploaded() {
-		return dateUploaded;
-	}
-
-	public void setDateUploaded(Date dateUploaded) {
-		this.dateUploaded = dateUploaded;
-	}
-
-	public Date getDateViewed() {
-		return dateViewed;
-	}
-
-	public void setDateViewed(Date dateViewed) {
-		this.dateViewed = dateViewed;
-	}
-
+	@ManyToOne
+	@JoinColumn(name = "claimid", nullable = false)
 	public OnlineClaim getClaim() {
 		return claim;
 	}
@@ -92,6 +68,16 @@ public class OCFile {
 		this.claim = claim;
 	}
 
+	@Column(name = "interim")
+	public boolean isInterim() {
+		return interim;
+	}
+
+	public void setInterim(boolean interim) {
+		this.interim = interim;
+	}
+
+	@Column(name = "path")
 	public String getPath() {
 		return path;
 	}
@@ -100,22 +86,17 @@ public class OCFile {
 		this.path = path;
 	}
 
-	public boolean isInterim() {
-		return interim;
-	}
-
-	public void setInterim(boolean interim) {
-		this.interim = interim;
-	}
-	
+	@ManyToOne
+	@JoinColumn(name = "incactid")
 	public IncidentActivity getIncAct(){
 		return incAct;
 	}
-	
+
 	public void setIncAct(IncidentActivity incAct){
 		this.incAct=incAct;
 	}
 
+	@Column(name = "publish")
 	public boolean isPublish() {
 		return publish;
 	}
@@ -124,6 +105,16 @@ public class OCFile {
 		this.publish = publish;
 	}
 
+	@Column(name = "dateviewed")
+	public Timestamp getDateViewed() {
+		return dateViewed;
+	}
+
+	public void setDateViewed(Timestamp dateViewed) {
+		this.dateViewed = dateViewed;
+	}
+
+	@Column(name = "statusid")
 	public int getStatusId() {
 		return statusId;
 	}
@@ -132,14 +123,17 @@ public class OCFile {
 		this.statusId = statusId;
 	}
 
-	public Date getDateTimeDeleted() {
+	@Column(name = "datetimedeleted")
+	@Temporal(TemporalType.TIMESTAMP)
+	public Timestamp getDateTimeDeleted() {
 		return dateTimeDeleted;
 	}
 
-	public void setDateTimeDeleted(Date dateTimeDeleted) {
+	public void setDateTimeDeleted(Timestamp dateTimeDeleted) {
 		this.dateTimeDeleted = dateTimeDeleted;
 	}
 
+	@Column(name = "agentdeleted")
 	public String getAgentDeleted() {
 		return agentDeleted;
 	}

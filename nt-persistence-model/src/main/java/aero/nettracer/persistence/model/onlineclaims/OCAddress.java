@@ -6,38 +6,29 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.Proxy;
-
 @Entity
 @Table(name = "oc_address")
 public class OCAddress {
+
+	private long id;
+	private String address1;
+	private String address2;
+	private String city;
+	private String country;
+	private String postalCode;
+	private String stateProvince;
+
 	@Id
 	@GeneratedValue
-	private long id;
-	
-	
-//	@ManyToOne(targetEntity = aero.nettracer.legacy.persistence.model.onlineclaims.OnlineClaim.class)
-//	@JoinColumn(name = "claimId", nullable = false)
-//	private OnlineClaim claim;
-	
-	@Column(length = 50)
-	private String address1;
-	
-	@Column(length = 50)
-	private String address2;
-	
-	@Column(length = 50)
-	private String city;
-	
-	@Column(length = 50)
-	private String stateProvince;
-	
-	@Column(length = 20)
-	private String postalCode;
-	
-	@Column(length = 3)
-	private String country;
+	public long getId() {
+		return id;
+	}
 
+	public void setId(long id) {
+		this.id = id;
+	}
+
+	@Column(name = "address1")
 	public String getAddress1() {
 		return address1;
 	}
@@ -46,6 +37,7 @@ public class OCAddress {
 		this.address1 = address1;
 	}
 
+	@Column(name = "address2")
 	public String getAddress2() {
 		return address2;
 	}
@@ -54,6 +46,7 @@ public class OCAddress {
 		this.address2 = address2;
 	}
 
+	@Column(name = "city")
 	public String getCity() {
 		return city;
 	}
@@ -62,22 +55,7 @@ public class OCAddress {
 		this.city = city;
 	}
 
-	public String getStateProvince() {
-		return stateProvince;
-	}
-
-	public void setStateProvince(String stateProvince) {
-		this.stateProvince = stateProvince;
-	}
-
-	public String getPostalCode() {
-		return postalCode;
-	}
-
-	public void setPostalCode(String postalCode) {
-		this.postalCode = postalCode;
-	}
-
+	@Column(name = "country")
 	public String getCountry() {
 		return country;
 	}
@@ -86,20 +64,22 @@ public class OCAddress {
 		this.country = country;
 	}
 
-	public long getId() {
-  	return id;
-  }
+	@Column(name = "postalcode")
+	public String getPostalCode() {
+		return postalCode;
+	}
 
-	public void setId(long id) {
-  	this.id = id;
-  }
-//
-//	public OnlineClaim getClaim() {
-//		return claim;
-//	}
-//
-//	public void setClaim(OnlineClaim claim) {
-//		this.claim = claim;
-//	}
+	public void setPostalCode(String postalCode) {
+		this.postalCode = postalCode;
+	}
+
+	@Column(name = "stateprovince")
+	public String getStateProvince() {
+		return stateProvince;
+	}
+
+	public void setStateProvince(String stateProvince) {
+		this.stateProvince = stateProvince;
+	}
 
 }

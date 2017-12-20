@@ -4,16 +4,6 @@
  */
 package aero.nettracer.persistence.model;
 
-import java.sql.Time;
-import java.sql.Timestamp;
-import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
 import aero.nettracer.persistence.model.communications.IncidentActivity;
 import aero.nettracer.persistence.model.dr.Dispute;
 import aero.nettracer.persistence.model.issuance.IssuanceItemIncident;
@@ -22,6 +12,10 @@ import aero.nettracer.persistence.model.taskmanager.ThreeDayTask;
 import aero.nettracer.persistence.model.taskmanager.TwoDayTask;
 import aero.nettracer.persistence.util.ReportMethod;
 import aero.nettracer.persistence.util.TracingStatus;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+import org.hibernate.annotations.OrderBy;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
@@ -39,9 +33,15 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 import javax.persistence.Version;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
-import org.hibernate.annotations.OrderBy;
+import java.sql.Time;
+import java.sql.Timestamp;
+import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 @Entity
 @Table(name = "incident")
@@ -854,7 +854,7 @@ public class Incident {
 
 	@Transient
 	public int getStation_ID() {
-		return stationassigned.getStation_ID();
+		return stationassigned.getId();
 	}
 
 	@Transient

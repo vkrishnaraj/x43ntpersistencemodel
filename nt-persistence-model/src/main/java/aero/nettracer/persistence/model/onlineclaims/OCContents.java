@@ -1,6 +1,5 @@
 package aero.nettracer.persistence.model.onlineclaims;
 
-import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,68 +8,36 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.Proxy;
-
 @Entity
 @Table(name = "oc_content")
 public class OCContents {
-	@Id
-	@GeneratedValue
-	long id;
-	
-	@ManyToOne(targetEntity = OCBag.class)
-	@JoinColumn(name = "bagId", nullable = false)
-	private OCBag bag;
-	
-	@Basic
-	private int male;
-	
-	@Column(length = 50)
-	private String article;
-	
-	@Column(length = 50)
-	private String color;
-	
-	@Column(length = 50)
-	private String size;
-	
-	@Column(length = 50)
-	private String brand;
-	
-	@Column(length = 50)
-	private String purchasedAt;
-	
-	@Column(length = 50)
-	private String purchasedDate;
-	
-	@Basic
-	private double price;
-	
-	@Column(length = 3)
-	private String currency;
 
-	@Column(length = 50)
+	long id;
+	private String article;
+	private String brand;
+	private String color;
+	private String currency;
+	private int male;
+	private double price;
+	private String purchasedAt;
+	private String purchasedDate;
+	private String size;
+	private OCBag bag;
 	private String contentOwner;
-	
-	@Basic
 	private int quantity;
 
-	public int getQuantity() {
-		return quantity;
+	@Id
+	@GeneratedValue
+	@Column(name = "id")
+	public long getId() {
+		return id;
 	}
 
-	public void setQuantity(int quantity) {
-		this.quantity = quantity;
+	public void setId(long id) {
+		this.id = id;
 	}
 
-	public int getMale() {
-		return male;
-	}
-
-	public void setMale(int male) {
-		this.male = male;
-	}
-
+	@Column(name = "article")
 	public String getArticle() {
 		return article;
 	}
@@ -79,22 +46,7 @@ public class OCContents {
 		this.article = article;
 	}
 
-	public String getColor() {
-		return color;
-	}
-
-	public void setColor(String color) {
-		this.color = color;
-	}
-
-	public String getSize() {
-		return size;
-	}
-
-	public void setSize(String size) {
-		this.size = size;
-	}
-
+	@Column(name = "brand")
 	public String getBrand() {
 		return brand;
 	}
@@ -103,30 +55,16 @@ public class OCContents {
 		this.brand = brand;
 	}
 
-	public String getPurchasedAt() {
-		return purchasedAt;
+	@Column(name = "color")
+	public String getColor() {
+		return color;
 	}
 
-	public void setPurchasedAt(String purchasedAt) {
-		this.purchasedAt = purchasedAt;
+	public void setColor(String color) {
+		this.color = color;
 	}
 
-	public String getPurchasedDate() {
-		return purchasedDate;
-	}
-
-	public void setPurchasedDate(String purchasedDate) {
-		this.purchasedDate = purchasedDate;
-	}
-
-	public double getPrice() {
-		return price;
-	}
-
-	public void setPrice(double price) {
-		this.price = price;
-	}
-
+	@Column(name = "currency")
 	public String getCurrency() {
 		return currency;
 	}
@@ -135,14 +73,53 @@ public class OCContents {
 		this.currency = currency;
 	}
 
-	public long getId() {
-  	return id;
-  }
+	@Column(name = "male")
+	public int getMale() {
+		return male;
+	}
 
-	public void setId(long id) {
-  	this.id = id;
-  }
+	public void setMale(int male) {
+		this.male = male;
+	}
 
+	@Column(name = "price")
+	public double getPrice() {
+		return price;
+	}
+
+	public void setPrice(double price) {
+		this.price = price;
+	}
+
+	@Column(name = "purchasedat")
+	public String getPurchasedAt() {
+		return purchasedAt;
+	}
+
+	public void setPurchasedAt(String purchasedAt) {
+		this.purchasedAt = purchasedAt;
+	}
+
+	@Column(name = "purchaseddate")
+	public String getPurchasedDate() {
+		return purchasedDate;
+	}
+
+	public void setPurchasedDate(String purchasedDate) {
+		this.purchasedDate = purchasedDate;
+	}
+
+	@Column(name = "size")
+	public String getSize() {
+		return size;
+	}
+
+	public void setSize(String size) {
+		this.size = size;
+	}
+
+	@ManyToOne
+	@JoinColumn(name = "bagid", nullable = false)
 	public OCBag getBag() {
 		return bag;
 	}
@@ -151,12 +128,22 @@ public class OCContents {
 		this.bag = bag;
 	}
 
+	@Column(name = "contentowner")
 	public String getContentOwner() {
 		return contentOwner;
 	}
 
 	public void setContentOwner(String contentOwner) {
 		this.contentOwner = contentOwner;
+	}
+
+	@Column(name = "quantity")
+	public int getQuantity() {
+		return quantity;
+	}
+
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
 	}
 
 }

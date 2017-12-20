@@ -8,35 +8,21 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.Proxy;
-
 @Entity
 @Table(name = "oc_passenger")
 public class OCPassenger {
 
-	@Id
-	@GeneratedValue
 	private long id;
-	
-	@Column(length = 20)
+	private OnlineClaim claim;
 	private String accept;
-
-	@Column(length = 20)
-	private String lastName;
-
-	@Column(length = 20)
 	private String firstName;
-
-	@Column(length = 1)
+	private String lastName;
 	private String middleInitial;
-
-	@Column(length = 10)
 	private String salutation;
 	
-	@ManyToOne(targetEntity = OnlineClaim.class)
-	@JoinColumn(name = "claimId", nullable = false)
-	private OnlineClaim claim;
-	
+	@Id
+	@GeneratedValue
+	@Column(name = "id")
 	public long getId() {
 		return id;
 	}
@@ -45,30 +31,17 @@ public class OCPassenger {
 		this.id = id;
 	}
 
-	public String getLastName() {
-		return lastName;
+	@ManyToOne
+	@JoinColumn(name = "claimid", nullable = false)
+	public OnlineClaim getClaim() {
+		return claim;
 	}
 
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
+	public void setClaim(OnlineClaim claim) {
+		this.claim = claim;
 	}
 
-	public String getFirstName() {
-		return firstName;
-	}
-
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
-
-	public String getMiddleInitial() {
-		return middleInitial;
-	}
-
-	public void setMiddleInitial(String middleInitial) {
-		this.middleInitial = middleInitial;
-	}
-
+	@Column(name = "accept")
 	public String getAccept() {
 		return accept;
 	}
@@ -77,6 +50,34 @@ public class OCPassenger {
 		this.accept = accept;
 	}
 
+	@Column(name = "firstname")
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	@Column(name = "lastname")
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
+	@Column(name = "middleinitial")
+	public String getMiddleInitial() {
+		return middleInitial;
+	}
+
+	public void setMiddleInitial(String middleInitial) {
+		this.middleInitial = middleInitial;
+	}
+
+	@Column(name = "salutation")
 	public String getSalutation() {
 		return salutation;
 	}
@@ -85,13 +86,4 @@ public class OCPassenger {
 		this.salutation = salutation;
 	}
 
-	public OnlineClaim getClaim() {
-		return claim;
-	}
-
-	public void setClaim(OnlineClaim claim) {
-		this.claim = claim;
-	}
-	
-	
 }

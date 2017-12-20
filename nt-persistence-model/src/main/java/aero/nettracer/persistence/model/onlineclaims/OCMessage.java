@@ -1,42 +1,37 @@
 package aero.nettracer.persistence.model.onlineclaims;
 
-import java.util.Date;
-
 import aero.nettracer.persistence.model.communications.IncidentActivity;
+
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-
-import org.hibernate.annotations.Proxy;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import java.sql.Timestamp;
 
 @Entity
 @Table(name = "oc_message")
 public class OCMessage {
-	@Id
-	@GeneratedValue
-	long id;
 
-	@ManyToOne(targetEntity = OnlineClaim.class)
-	@JoinColumn(name = "claimId", nullable = false)
+	private long id;
 	private OnlineClaim claim;
-
-	@ManyToOne(targetEntity = IncidentActivity.class)
-	@JoinColumn(name = "incActId", nullable = true)
 	private IncidentActivity incAct;
-
-
-	private String message;
-	private Date dateCreated;
-	private Date dateReviewed;
+	private Timestamp dateCreated;
 	private String username;
+	private String message;
+	private Timestamp dateReviewed;
 	private boolean publish;
 	private int statusId;
-	private Date dateTimeDeleted;
+	private Timestamp dateTimeDeleted;
 	private String agentDeleted;
 
+	@Id
+	@GeneratedValue
+	@Column(name = "id")
 	public long getId(){
 		return id;
 	}
@@ -45,6 +40,8 @@ public class OCMessage {
 		this.id=id;
 	}
 
+	@ManyToOne
+	@JoinColumn(name = "claimId", nullable = false)
 	public OnlineClaim getClaim(){
 		return claim;
 	}
@@ -53,7 +50,8 @@ public class OCMessage {
 		this.claim=claim;
 	}
 
-	
+	@ManyToOne
+	@JoinColumn(name = "incActId")
 	public IncidentActivity getIncAct(){
 		return incAct;
 	}
@@ -61,31 +59,18 @@ public class OCMessage {
 	public void setIncAct(IncidentActivity incAct){
 		this.incAct=incAct;
 	}
-	
-	public String getMessage() {
-		return message;
-	}
 
-	public void setMessage(String message) {
-		this.message = message;
-	}
-
-	public Date getDateCreated() {
+	@Column(name = "datecreated")
+	@Temporal(TemporalType.TIMESTAMP)
+	public Timestamp getDateCreated() {
 		return dateCreated;
 	}
 
-	public void setDateCreated(Date dateCreated) {
+	public void setDateCreated(Timestamp dateCreated) {
 		this.dateCreated = dateCreated;
 	}
 
-	public Date getDateReviewed() {
-		return dateReviewed;
-	}
-
-	public void setDateReviewed(Date dateReviewed) {
-		this.dateReviewed = dateReviewed;
-	}
-
+	@Column(name = "username")
 	public String getUsername() {
 		return username;
 	}
@@ -94,6 +79,26 @@ public class OCMessage {
 		this.username = username;
 	}
 
+	@Column(name = "message")
+	public String getMessage() {
+		return message;
+	}
+
+	public void setMessage(String message) {
+		this.message = message;
+	}
+
+	@Column(name = "datereviewed")
+	@Temporal(TemporalType.TIMESTAMP)
+	public Timestamp getDateReviewed() {
+		return dateReviewed;
+	}
+
+	public void setDateReviewed(Timestamp dateReviewed) {
+		this.dateReviewed = dateReviewed;
+	}
+
+	@Column(name = "publish")
 	public boolean isPublish() {
 		return publish;
 	}
@@ -102,6 +107,7 @@ public class OCMessage {
 		this.publish = publish;
 	}
 
+	@Column(name = "statusid")
 	public int getStatusId() {
 		return statusId;
 	}
@@ -110,14 +116,17 @@ public class OCMessage {
 		this.statusId = statusId;
 	}
 
-	public Date getDateTimeDeleted() {
+	@Column(name = "datetimedeleted")
+	@Temporal(TemporalType.TIMESTAMP)
+	public Timestamp getDateTimeDeleted() {
 		return dateTimeDeleted;
 	}
 
-	public void setDateTimeDeleted(Date dateTimeDeleted) {
+	public void setDateTimeDeleted(Timestamp dateTimeDeleted) {
 		this.dateTimeDeleted = dateTimeDeleted;
 	}
 
+	@Column(name = "agentdeleted")
 	public String getAgentDeleted() {
 		return agentDeleted;
 	}
@@ -125,6 +134,5 @@ public class OCMessage {
 	public void setAgentDeleted(String agentDeleted) {
 		this.agentDeleted = agentDeleted;
 	}
-	
-	
+
 }

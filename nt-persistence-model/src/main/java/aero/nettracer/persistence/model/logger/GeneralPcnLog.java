@@ -1,20 +1,11 @@
 package aero.nettracer.persistence.model.logger;
 
-import java.io.Serializable;
+import org.hibernate.annotations.Proxy;
 
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
-import org.hibernate.annotations.Proxy;
-
 @Entity
 @DiscriminatorValue("PCN")
-@Proxy(lazy = true)
-public class GeneralPcnLog extends GeneralLog implements Serializable{
-
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 522713347090003550L;
-
+public class GeneralPcnLog extends GeneralLog {
 }

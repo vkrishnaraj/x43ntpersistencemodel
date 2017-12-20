@@ -1,130 +1,65 @@
 package aero.nettracer.persistence.model.onlineclaims;
 
-import java.util.Date;
-import java.util.Set;
-
-import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.persistence.Transient;
-
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
-import org.hibernate.annotations.Proxy;
+import java.util.Date;
+import java.util.Set;
 
 @Entity
 @Table(name = "oc_bag")
 public class OCBag {
 	
-	@Id
-	@GeneratedValue
-	private long bagId;
-	
-	@ManyToOne(targetEntity = OnlineClaim.class)
-	@JoinColumn(name = "claimId", nullable = false)
-	private OnlineClaim claim;
-
-	@Column(length = 10)
-	private String tag;
-
-	@Basic
+	private long id;
 	private boolean bagArrive;
-
-	@Column(length = 40)
-	private String nameOnBag;
-
-	@Column(length = 25)
-	private String brand;
-
-	@Column(length = 50)
-	private String externalMarkings;
-
-	@Temporal(TemporalType.DATE)
-	private Date purchaseDate;
-
-	@Column(length = 2)
 	private String bagColor;
-
-	@Column(length = 2)
 	private String bagType;
-
-	@Column(length = 20)
-	private String bagValue;
-
-	@Column(length = 3)
-	private String bagCurrency;
-
-	@Column(length = 50)
-	private String bagOwner;
-
-	@Basic
-	private boolean hardSided;
-
-	@Basic
-	private boolean softSided;
-
-	@Basic
-	private boolean locks;
-
-	@Basic
-	private boolean wheels;
-
-	@Basic
-	private boolean zippers;
-
-	@Basic
-	private boolean pullStrap;
-
-	@Basic
+	private String brand;
+	private String externalMarkings;
 	private boolean feet;
-
-	@Basic
-	private boolean retractibleHandle;
-
-	@Basic
+	private boolean hardSided;
+	private boolean locks;
+	private String nameOnBag;
 	private boolean nameTag;
-
-	@Basic
-	private boolean trim;
-
-	@Basic
 	private boolean pockets;
-
-	@Basic
+	private boolean pullStrap;
+	private Date purchaseDate;
+	private boolean retractibleHandle;
 	private boolean ribbonsOrMarkings;
-
-	@Basic
+	private boolean softSided;
+	private String tag;
+	private boolean trim;
+	private boolean wheels;
+	private boolean zippers;
+	private OnlineClaim claim;
+	private String bagOwner;
+	private String bagCurrency;
+	private String bagValue;
 	private boolean leather;
-
-	@Basic
 	private boolean metal;
-
-	@Column(length = 20)
 	private String trimDescription;
-
-	@OneToMany(mappedBy = "bag", cascade=CascadeType.ALL, fetch=FetchType.EAGER)
-	@org.hibernate.annotations.OrderBy(clause = "id")
-	@Fetch(FetchMode.SELECT)
 	private Set<OCContents> contents;
 
-	public String getTag() {
-		return tag;
+	@Id
+	@GeneratedValue
+	@Column(name = "bagid")
+	public long getId() {
+		return id;
 	}
 
-	public void setTag(String tag) {
-		this.tag = tag;
+	public void setId(long id) {
+		this.id = id;
 	}
 
+	@Column(name = "bagarrive")
 	public boolean isBagArrive() {
 		return bagArrive;
 	}
@@ -133,38 +68,7 @@ public class OCBag {
 		this.bagArrive = bagArrive;
 	}
 
-	public String getNameOnBag() {
-		return nameOnBag;
-	}
-
-	public void setNameOnBag(String nameOnBag) {
-		this.nameOnBag = nameOnBag;
-	}
-
-	public String getBrand() {
-		return brand;
-	}
-
-	public void setBrand(String brand) {
-		this.brand = brand;
-	}
-
-	public String getExternalMarkings() {
-		return externalMarkings;
-	}
-
-	public void setExternalMarkings(String externalMarkings) {
-		this.externalMarkings = externalMarkings;
-	}
-
-	public Date getPurchaseDate() {
-		return purchaseDate;
-	}
-
-	public void setPurchaseDate(Date purchaseDate) {
-		this.purchaseDate = purchaseDate;
-	}
-
+	@Column(name = "bagcolor")
 	public String getBagColor() {
 		return bagColor;
 	}
@@ -173,6 +77,7 @@ public class OCBag {
 		this.bagColor = bagColor;
 	}
 
+	@Column(name = "bagtype")
 	public String getBagType() {
 		return bagType;
 	}
@@ -181,54 +86,25 @@ public class OCBag {
 		this.bagType = bagType;
 	}
 
-	public boolean isHardSided() {
-		return hardSided;
+	@Column(name = "brand")
+	public String getBrand() {
+		return brand;
 	}
 
-	public void setHardSided(boolean hardSided) {
-		this.hardSided = hardSided;
+	public void setBrand(String brand) {
+		this.brand = brand;
 	}
 
-	public boolean isSoftSided() {
-		return softSided;
+	@Column(name = "externalmarkings")
+	public String getExternalMarkings() {
+		return externalMarkings;
 	}
 
-	public void setSoftSided(boolean softSided) {
-		this.softSided = softSided;
+	public void setExternalMarkings(String externalMarkings) {
+		this.externalMarkings = externalMarkings;
 	}
 
-	public boolean isLocks() {
-		return locks;
-	}
-
-	public void setLocks(boolean locks) {
-		this.locks = locks;
-	}
-
-	public boolean isWheels() {
-		return wheels;
-	}
-
-	public void setWheels(boolean wheels) {
-		this.wheels = wheels;
-	}
-
-	public boolean isZippers() {
-		return zippers;
-	}
-
-	public void setZippers(boolean zippers) {
-		this.zippers = zippers;
-	}
-
-	public boolean isPullStrap() {
-		return pullStrap;
-	}
-
-	public void setPullStrap(boolean pullStrap) {
-		this.pullStrap = pullStrap;
-	}
-
+	@Column(name = "feet")
 	public boolean isFeet() {
 		return feet;
 	}
@@ -237,14 +113,34 @@ public class OCBag {
 		this.feet = feet;
 	}
 
-	public boolean isRetractibleHandle() {
-		return retractibleHandle;
+	@Column(name = "hardsided")
+	public boolean isHardSided() {
+		return hardSided;
 	}
 
-	public void setRetractibleHandle(boolean retractibleHandle) {
-		this.retractibleHandle = retractibleHandle;
+	public void setHardSided(boolean hardSided) {
+		this.hardSided = hardSided;
 	}
 
+	@Column(name = "locks")
+	public boolean isLocks() {
+		return locks;
+	}
+
+	public void setLocks(boolean locks) {
+		this.locks = locks;
+	}
+
+	@Column(name = "nameonbag")
+	public String getNameOnBag() {
+		return nameOnBag;
+	}
+
+	public void setNameOnBag(String nameOnBag) {
+		this.nameOnBag = nameOnBag;
+	}
+
+	@Column(name = "nametag")
 	public boolean isNameTag() {
 		return nameTag;
 	}
@@ -253,14 +149,7 @@ public class OCBag {
 		this.nameTag = nameTag;
 	}
 
-	public boolean isTrim() {
-		return trim;
-	}
-
-	public void setTrim(boolean trim) {
-		this.trim = trim;
-	}
-
+	@Column(name = "pockets")
 	public boolean isPockets() {
 		return pockets;
 	}
@@ -269,6 +158,34 @@ public class OCBag {
 		this.pockets = pockets;
 	}
 
+	@Column(name = "pullstrap")
+	public boolean isPullStrap() {
+		return pullStrap;
+	}
+
+	public void setPullStrap(boolean pullStrap) {
+		this.pullStrap = pullStrap;
+	}
+
+	@Column(name = "purchasedate")
+	public Date getPurchaseDate() {
+		return purchaseDate;
+	}
+
+	public void setPurchaseDate(Date purchaseDate) {
+		this.purchaseDate = purchaseDate;
+	}
+
+	@Column(name = "retractiblehandle")
+	public boolean isRetractibleHandle() {
+		return retractibleHandle;
+	}
+
+	public void setRetractibleHandle(boolean retractibleHandle) {
+		this.retractibleHandle = retractibleHandle;
+	}
+
+	@Column(name = "ribbonsormarkings")
 	public boolean isRibbonsOrMarkings() {
 		return ribbonsOrMarkings;
 	}
@@ -277,6 +194,53 @@ public class OCBag {
 		this.ribbonsOrMarkings = ribbonsOrMarkings;
 	}
 
+	@Column(name = "softsided")
+	public boolean isSoftSided() {
+		return softSided;
+	}
+
+	public void setSoftSided(boolean softSided) {
+		this.softSided = softSided;
+	}
+
+	@Column(name = "tag")
+	public String getTag() {
+		return tag;
+	}
+
+	public void setTag(String tag) {
+		this.tag = tag;
+	}
+
+	@Column(name = "trim")
+	public boolean isTrim() {
+		return trim;
+	}
+
+	public void setTrim(boolean trim) {
+		this.trim = trim;
+	}
+
+	@Column(name = "wheels")
+	public boolean isWheels() {
+		return wheels;
+	}
+
+	public void setWheels(boolean wheels) {
+		this.wheels = wheels;
+	}
+
+	@Column(name = "zippers")
+	public boolean isZippers() {
+		return zippers;
+	}
+
+	public void setZippers(boolean zippers) {
+		this.zippers = zippers;
+	}
+
+	@ManyToOne
+	@JoinColumn(name = "claimId", nullable = false)
 	public OnlineClaim getClaim() {
 		return claim;
 	}
@@ -285,30 +249,16 @@ public class OCBag {
 		this.claim = claim;
 	}
 
-	public Set<OCContents> getContents() {
-  	return contents;
-  }
-
-	public void setContents(Set<OCContents> contents) {
-  	this.contents = contents;
-  }
-
-	public long getBagId() {
-		return bagId;
+	@Column(name = "bagowner")
+	public String getBagOwner() {
+		return bagOwner;
 	}
 
-	public void setBagId(long bagId) {
-		this.bagId = bagId;
+	public void setBagOwner(String bagOwner) {
+		this.bagOwner = bagOwner;
 	}
 
-	public String getBagValue() {
-		return bagValue;
-	}
-
-	public void setBagValue(String bagValue) {
-		this.bagValue = bagValue;
-	}
-
+	@Column(name = "bagcurrency")
 	public String getBagCurrency() {
 		return bagCurrency;
 	}
@@ -317,14 +267,16 @@ public class OCBag {
 		this.bagCurrency = bagCurrency;
 	}
 
-	public String getBagOwner() {
-		return bagOwner;
+	@Column(name = "bagvalue")
+	public String getBagValue() {
+		return bagValue;
 	}
 
-	public void setBagOwner(String bagOwner) {
-		this.bagOwner = bagOwner;
+	public void setBagValue(String bagValue) {
+		this.bagValue = bagValue;
 	}
-	
+
+	@Column(name = "leather")
 	public boolean isLeather() {
 		return leather;
 	}
@@ -333,6 +285,7 @@ public class OCBag {
 		this.leather = leather;
 	}
 
+	@Column(name = "metal")
 	public boolean isMetal() {
 		return metal;
 	}
@@ -341,6 +294,7 @@ public class OCBag {
 		this.metal = metal;
 	}
 
+	@Column(name = "trimdescription")
 	public String getTrimDescription() {
 		return trimDescription;
 	}
@@ -348,6 +302,16 @@ public class OCBag {
 	public void setTrimDescription(String trimDescription) {
 		this.trimDescription = trimDescription;
 	}
+
+	@OneToMany(mappedBy = "bag", cascade=CascadeType.ALL)
+	@OrderBy(value = "id")
+	public Set<OCContents> getContents() {
+  	return contents;
+  }
+
+	public void setContents(Set<OCContents> contents) {
+  	this.contents = contents;
+  }
 
 	@Transient
 	public String getGrandTotal() {
