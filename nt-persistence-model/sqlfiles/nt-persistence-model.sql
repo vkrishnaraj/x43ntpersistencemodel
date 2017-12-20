@@ -44,6 +44,7 @@ alter table fsclaim drop column claimprorate_id;
 alter table fsclaim drop column ntincident_incident_id;
 alter table fsclaim drop column signature_id;
 alter table fsclaim drop column questionnaire_id;
+alter table segment change column 'date' 'createdate' datetime;
 
 
 

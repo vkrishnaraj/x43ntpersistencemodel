@@ -16,55 +16,58 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 import org.hibernate.annotations.Proxy;
 
 @Entity
-public class AccessRequest implements Serializable {
-	private static final long serialVersionUID = 1L;
+public class AccessRequest {
 
-	public static enum RequestStatus {
-		Created, Approved, Denied
+	public enum RequestStatus {
+		Created(0), Approved(1), Denied(2);
+
+		private int requestStatusIndex;
+
+		private RequestStatus(int requestStatusIndex) { this.requestStatusIndex = requestStatusIndex; }
+
+		public static RequestStatus getRequestStatus(int requestStatusIndex) {
+			for (RequestStatus r : RequestStatus.values()) {
+				if (r.requestStatusIndex == requestStatusIndex) {
+					return r;
+				}
+			}
+			throw new IllegalArgumentException("RequestStatus not found.");
+		}
 	}
 
 	@Id
 	@GeneratedValue
 	private long id;
-
-	@OneToOne(fetch = FetchType.EAGER)
-	private File file;
-
-	public File getFile() {
-		return file;
-	}
-
-	public void setFile(File file) {
-		this.file = file;
-	}
-
-	@ManyToOne(fetch = FetchType.EAGER)
-	private MatchHistory matchHistory;
+	private String requestedAgent;
+	private String requestedAirline;
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date requestedDate;
+	private String responseAgent;
+	private Date responseDate;
 
 	@Enumerated(EnumType.STRING)
 	@Column(nullable = false, length = 20)
 	private RequestStatus status;
 
+	@OneToOne(fetch = FetchType.EAGER)
+	private File file;
+
+	@ManyToOne(fetch = FetchType.EAGER)
+	private MatchHistory matchHistory;
+
 	@OneToOne(fetch = FetchType.EAGER, cascade=CascadeType.ALL)
 	private FsMessage message;
 
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date requestedDate;
-
-	private String requestedAgent;
-	//private String contact;
-
-	private String contactName;
-	private String contactEmail;
-	private String contactPhone;
-
-	private String requestedAirline;
+	public File getFile() {
+		return file;
+	}
 
 	public String getRequestedAirline() {
 		return requestedAirline;
@@ -121,14 +124,6 @@ public class AccessRequest implements Serializable {
 	public void setRequestedAgent(String requestedAgent) {
 		this.requestedAgent = requestedAgent;
 	}
-	
-//	public String getContact() {
-//		return contact;
-//	}
-//
-//	public void setContact(String contact) {
-//		this.contact = contact;
-//	}
 
 	public Date getResponseDate() {
 		return responseDate;
@@ -146,40 +141,9 @@ public class AccessRequest implements Serializable {
 		this.responseAgent = responseAgent;
 	}
 
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
-
-	private Date responseDate;
-	private String responseAgent;
-	
 	@Transient
 	public String getDisRequestedDate(String dateFormat) {
 		return GenericDateUtils.formatDate(requestedDate, dateFormat, "", null);
-	}
-
-	public void setContactPhone(String contactPhone) {
-		this.contactPhone = contactPhone;
-	}
-
-	public String getContactPhone() {
-		return contactPhone;
-	}
-
-	public void setContactEmail(String contactEmail) {
-		this.contactEmail = contactEmail;
-	}
-
-	public String getContactEmail() {
-		return contactEmail;
-	}
-
-	public void setContactName(String contactName) {
-		this.contactName = contactName;
-	}
-
-	public String getContactName() {
-		return contactName;
 	}
 
 }
