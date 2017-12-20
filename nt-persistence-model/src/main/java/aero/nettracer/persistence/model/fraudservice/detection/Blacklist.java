@@ -1,23 +1,21 @@
 package aero.nettracer.persistence.model.fraudservice.detection;
 
-import java.io.Serializable;
-
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-
-import org.hibernate.annotations.Proxy;
+import javax.persistence.Table;
 
 @Entity
-public class Blacklist implements Serializable {
+@Table(name = "blacklist")
+public class Blacklist {
 
-	private static final long serialVersionUID = 1L;
-	
-	@Id
-	@GeneratedValue
 	private long id;
 	private String description;
 
+	@Id
+	@GeneratedValue
+	@Column(name = "id")
 	public long getId() {
 		return id;
 	}
@@ -26,6 +24,7 @@ public class Blacklist implements Serializable {
 		this.id = id;
 	}
 
+	@Column(name = "description")
 	public String getDescription() {
 		return description;
 	}
@@ -33,4 +32,5 @@ public class Blacklist implements Serializable {
 	public void setDescription(String description) {
 		this.description = description;
 	}
+
 }

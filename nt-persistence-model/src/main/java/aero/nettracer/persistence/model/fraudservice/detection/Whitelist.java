@@ -1,29 +1,22 @@
 package aero.nettracer.persistence.model.fraudservice.detection;
 
-import java.io.Serializable;
-
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-
-import org.hibernate.annotations.Proxy;
+import javax.persistence.Table;
 
 @Entity
-/**
- * This class should be used to provide reference for
- * data that is white listed.  An example would be a 
- * valid and common phone number, especially for an
- * incident which might be associated with a hotel.
- * 
- * We do not want to display matches to hotel phone
- * numbers if possible.
- */
-public class Whitelist implements Serializable {
-	@Id
-	@GeneratedValue
+@Table(name = "whitelist")
+public class Whitelist {
+
 	private long id;
+
 	private String description;
 
+	@Id
+	@GeneratedValue
+	@Column(name = "id")
 	public long getId() {
 		return id;
 	}
@@ -32,6 +25,7 @@ public class Whitelist implements Serializable {
 		this.id = id;
 	}
 
+	@Column(name = "description")
 	public String getDescription() {
 		return description;
 	}

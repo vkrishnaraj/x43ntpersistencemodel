@@ -1,23 +1,26 @@
 package aero.nettracer.persistence.model.fraudservice.detection;
 
 import aero.nettracer.persistence.model.fraudservice.FsClaim;
+
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
-
-import org.hibernate.annotations.Proxy;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "internalsummary")
 public class InternalSummary {
+
+	private long id;
+	private String description;
+	private FsClaim claim;
+
 	@Id
 	@GeneratedValue
-	private long id;
-	
-	@OneToOne(targetEntity = FsClaim.class)
-	private FsClaim claim;
-	private String description;
-
+	@Column(name = "id")
 	public long getId() {
 		return id;
 	}
@@ -26,6 +29,7 @@ public class InternalSummary {
 		this.id = id;
 	}
 
+	@Column(name = "description")
 	public String getDescription() {
 		return description;
 	}
@@ -34,6 +38,8 @@ public class InternalSummary {
 		this.description = description;
 	}
 
+	@OneToOne
+	@JoinColumn(name = "claim_id")
 	public FsClaim getClaim() {
 		return claim;
 	}
@@ -41,4 +47,5 @@ public class InternalSummary {
 	public void setClaim(FsClaim claim) {
 		this.claim = claim;
 	}
+
 }
