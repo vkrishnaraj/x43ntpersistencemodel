@@ -1,7 +1,5 @@
 package aero.nettracer.persistence.model;
 
-import java.io.Serializable;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,21 +7,12 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
-
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
-import org.hibernate.annotations.Proxy;
-
+import javax.persistence.Table;
 
 @Entity
-@Proxy(lazy = false)
-public class LFPhone implements Serializable{
+@Table(name = "lfphone")
+public class LFPhone {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 2558668661501822735L;
-	
 	//TODO this should be refactored NT-6064
 	public static final int PRIMARY = 1;
 	public static final int SECONDARY = 2;
@@ -33,34 +22,17 @@ public class LFPhone implements Serializable{
 	public static final int WORK = 5;
 	public static final int ALTERNATE = 6;
 	
-	@Id
-	@GeneratedValue
 	private long id;
-	
-	@Column(name="phone_num",length = 32)
 	private String phoneNumber;
-	
-	@Column(name="extension",length = 32)
 	private String extension;
-	
-	/* Primary/Secondary */
-	@Column(name="number_type")
 	private int numberType;
-	
-	/* Home/Mobile/Work/Alternate */
-	@Column(name="phone_type")
 	private int phoneType;
-	
-	@ManyToOne
-	@JoinColumn(name = "person_id", nullable = true)
-	@Fetch(FetchMode.SELECT)
 	private LFPerson person;
-	
-	@OneToOne
-	@JoinColumn(name = "item_id", nullable = true)
-	@Fetch(FetchMode.SELECT)
 	private LFItem item;
 
+	@Id
+	@GeneratedValue
+	@Column(name = "id")
 	public long getId() {
 		return id;
 	}
@@ -69,6 +41,7 @@ public class LFPhone implements Serializable{
 		this.id = id;
 	}
 
+	@Column(name="phone_num")
 	public String getPhoneNumber() {
 		return phoneNumber;
 	}
@@ -76,31 +49,8 @@ public class LFPhone implements Serializable{
 	public void setPhoneNumber(String phoneNumber) {
 		this.phoneNumber = phoneNumber;
 	}
-	
-	public int getNumberType() {
-		return numberType;
-	}
 
-	public void setNumberType(int numberType) {
-		this.numberType = numberType;
-	}
-	
-	public int getPhoneType() {
-		return phoneType;
-	}
-
-	public void setPhoneType(int phoneType) {
-		this.phoneType = phoneType;
-	}
-
-	public LFPerson getPerson() {
-		return person;
-	}
-
-	public void setPerson(LFPerson person) {
-		this.person = person;
-	}
-
+	@Column(name="extension")
 	public String getExtension() {
 		return extension;
 	}
@@ -112,8 +62,45 @@ public class LFPhone implements Serializable{
 			this.extension = extension;
 		}
 	}
+
+	@Column(name="number_type")
+	public int getNumberType() {
+		return numberType;
+	}
+
+	public void setNumberType(int numberType) {
+		this.numberType = numberType;
+	}
+
+	@Column(name="phone_type")
+	public int getPhoneType() {
+		return phoneType;
+	}
+
+	public void setPhoneType(int phoneType) {
+		this.phoneType = phoneType;
+	}
+
+	@ManyToOne
+	@JoinColumn(name = "person_id")
+	public LFPerson getPerson() {
+		return person;
+	}
+
+	public void setPerson(LFPerson person) {
+		this.person = person;
+	}
+
+	@OneToOne
+	@JoinColumn(name = "item_id")
+	public LFItem getItem() {
+		return item;
+	}
+
+	public void setItem(LFItem item) {
+		this.item = item;
+	}
 	
-	//TODO this should be refactored NT-6064
 	public static String normalizePhone(String phone){
 		if (phone == null) return null;
 		StringBuffer sb = new StringBuffer(100);
@@ -126,15 +113,6 @@ public class LFPhone implements Serializable{
 		return sb.toString();
 	}
 
-	public void setItem(LFItem item) {
-		this.item = item;
-	}
-
-	public LFItem getItem() {
-		return item;
-	}
-	
-	//TODO this should be refactored NT-6064
 	public boolean isEmpty() {
 		boolean empty = true;
 		if ((getPhoneNumber() != null && !getPhoneNumber().isEmpty())) {

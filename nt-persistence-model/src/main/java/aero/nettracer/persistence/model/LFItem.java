@@ -1,111 +1,49 @@
 package aero.nettracer.persistence.model;
 
-import java.io.Serializable;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
-
-import org.hibernate.annotations.Proxy;
-
+import javax.persistence.Table;
 
 @Entity
-@Proxy(lazy = false)
-public class LFItem implements Serializable{
+@Table(name = "lfitem")
+public class LFItem {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 6744394382570717223L;
+	private long id;
+	private String serialNumber;
+	private String brand;
+	private String description;
+	private long category;
+	private long subCategory;
+	private String color;
+	private String trackingNumber;
+	private int type;
+	private String longDescription;
+	private int returnable;
+	private float weight;
+	private boolean deliveryRejected;
+	private String caseColor;
+	private String model;
+	private String itemCondition;
+	private String size;
+	private LFPhone phone;
+	private int dispositionStatusId;
+	private LFLost lost;
+	private LFFound found;
+	private String forwardtrackingNumber;
+	private String removalReason;
+	private long homingPinCategory;
+	private String homingPinCode;
+	private long lostLocations;
+	private long foundByLocations;
+	private String foundByInfo;
 
 	@Id
 	@GeneratedValue
-	private long id;
-	
-	@Column(name="serial_num",length = 255)
-	private String serialNumber;
-	
-	@Column(name="brand",length = 255)
-	private String brand;
-	
-	@Column(name="description",length = 512)
-	private String description;
-	
-	@Column(name="category")
-	private long category;
-	
-	@Column(name="sub_category")
-	private long subCategory;
-	
-	@Column(name="color",length = 2)
-	private String color;
-
-	@Column(name="tracking_num",length = 128)
-	private String trackingNumber;
-	
-	@Column(name="type")
-	private int type;
-	
-	@Column(name="long_description",length = 2048)
-	private String longDescription;
-	
-	@Column(name="returnable")
-	private int returnable;
-	
-	@Column(name="weight")
-	private float weight;
-	
-	@Column(name="delivery_rejected")
-	private boolean deliveryRejected;
-
-	@Column(name="case_color",length = 2)
-	private String caseColor;
-	
-	@Column(name="model",length = 255)
-	private String model;
-	
-	@Column(name="item_condition",length = 16)
-	private String itemCondition;
-	
-	@Column(name="size",length = 255)
-	private String size;
-	
-	@OneToOne(targetEntity = LFPhone.class, cascade = CascadeType.ALL)
-	private LFPhone phone;
-	
-	@Column(name = "status_id", nullable = true)
-	private int dispositionStatusId;
-
-	@OneToOne(targetEntity = LFLost.class, cascade = CascadeType.ALL)
-	private LFLost lost;
-
-	@OneToOne(targetEntity = LFFound.class, cascade = CascadeType.ALL)
-	private LFFound found;
-	
-	@Column(name="removal_reason",length = 16)
-	private String removalReason;
-
-	@Column(name="forward_tracking_num",length = 128)
-	private String forwardtrackingNumber;
-
-	@Column(name="homingpin_category")
-	private long homingPinCategory;
-
-	@Column(name="homingpin_code")
-	private String homingPinCode;
-
-	@Column(name="lost_location")
-	private long lostLocations;
-
-	@Column(name="found_by")
-	private long foundByLocations;
-
-	@Column(name="found_info",length = 2048)
-	private String foundByInfo;
-
+	@Column(name = "id")
 	public long getId() {
 		return id;
 	}
@@ -113,47 +51,8 @@ public class LFItem implements Serializable{
 	public void setId(long id) {
 		this.id = id;
 	}
-	
-	public String getBrand() {
-		return brand;
-	}
 
-	public void setBrand(String brand) {
-		this.brand = brand;
-	}
-	
-	public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
-	}
-
-	public long getCategory() {
-		return category;
-	}
-
-	public void setCategory(long category) {
-		this.category = category;
-	}
-
-	public long getSubCategory() {
-		return subCategory;
-	}
-
-	public void setSubCategory(long subCategory) {
-		this.subCategory = subCategory;
-	}
-
-	public LFLost getLost() {
-		return lost;
-	}
-
-	public void setLost(LFLost lost) {
-		this.lost = lost;
-	}
-
+	@Column(name = "serialnumber")
 	public String getSerialNumber() {
 		return serialNumber;
 	}
@@ -162,6 +61,43 @@ public class LFItem implements Serializable{
 		this.serialNumber = serialNumber;
 	}
 
+	@Column(name="brand")
+	public String getBrand() {
+		return brand;
+	}
+
+	public void setBrand(String brand) {
+		this.brand = brand;
+	}
+
+	@Column(name="description")
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	@Column(name="category")
+	public long getCategory() {
+		return category;
+	}
+
+	public void setCategory(long category) {
+		this.category = category;
+	}
+
+	@Column(name="sub_category")
+	public long getSubCategory() {
+		return subCategory;
+	}
+
+	public void setSubCategory(long subCategory) {
+		this.subCategory = subCategory;
+	}
+
+	@Column(name="color")
 	public String getColor() {
 		return color;
 	}
@@ -170,14 +106,7 @@ public class LFItem implements Serializable{
 		this.color = color;
 	}
 
-	public void setFound(LFFound found) {
-		this.found = found;
-	}
-
-	public LFFound getFound() {
-		return found;
-	}
-
+	@Column(name="tracking_num")
 	public String getTrackingNumber() {
 		return trackingNumber;
 	}
@@ -186,6 +115,7 @@ public class LFItem implements Serializable{
 		this.trackingNumber = trackingNumber;
 	}
 
+	@Column(name="type")
 	public int getType() {
 		return type;
 	}
@@ -194,45 +124,7 @@ public class LFItem implements Serializable{
 		this.type = type;
 	}
 
-	public int getReturnable() {
-		return returnable;
-	}
-
-	public void setReturnable(int returnable) {
-		this.returnable = returnable;
-	}
-
-	public boolean getDeliveryRejected() {
-		return deliveryRejected;
-	}
-
-	public void setDeliveryRejected(boolean deliveryRejected) {
-		this.deliveryRejected = deliveryRejected;
-	}
-
-	public float getWeight() {
-		return weight;
-	}
-
-	public void setWeight(float weight) {
-		this.weight = weight;
-	}
-
-	public String getRemovalReason() {
-		return removalReason;
-	}
-
-	public void setRemovalReason(String removalReason) {
-		this.removalReason = removalReason;
-	}
-
-	public int getDispositionStatusId() {
-		return dispositionStatusId;
-	}
-
-	public void setDispositionStatusId(int dispositionStatusId) {
-		this.dispositionStatusId = dispositionStatusId;
-	}
+	@Column(name="long_description")
 	public String getLongDescription() {
 		return longDescription;
 	}
@@ -241,6 +133,34 @@ public class LFItem implements Serializable{
 		this.longDescription = longDescription;
 	}
 
+	@Column(name="returnable")
+	public int getReturnable() {
+		return returnable;
+	}
+
+	public void setReturnable(int returnable) {
+		this.returnable = returnable;
+	}
+
+	@Column(name="weight")
+	public float getWeight() {
+		return weight;
+	}
+
+	public void setWeight(float weight) {
+		this.weight = weight;
+	}
+
+	@Column(name="delivery_rejected")
+	public boolean isDeliveryRejected() {
+		return deliveryRejected;
+	}
+
+	public void setDeliveryRejected(boolean deliveryRejected) {
+		this.deliveryRejected = deliveryRejected;
+	}
+
+	@Column(name="case_color")
 	public String getCaseColor() {
 		return caseColor;
 	}
@@ -249,6 +169,7 @@ public class LFItem implements Serializable{
 		this.caseColor = caseColor;
 	}
 
+	@Column(name="model")
 	public String getModel() {
 		return model;
 	}
@@ -257,6 +178,7 @@ public class LFItem implements Serializable{
 		this.model = model;
 	}
 
+	@Column(name="item_condition")
 	public String getItemCondition() {
 		return itemCondition;
 	}
@@ -265,6 +187,7 @@ public class LFItem implements Serializable{
 		this.itemCondition = itemCondition;
 	}
 
+	@Column(name="size")
 	public String getSize() {
 		return size;
 	}
@@ -273,6 +196,7 @@ public class LFItem implements Serializable{
 		this.size = size;
 	}
 
+	@OneToOne(cascade = CascadeType.ALL)
 	public LFPhone getPhone() {
 		return phone;
 	}
@@ -281,6 +205,34 @@ public class LFItem implements Serializable{
 		this.phone = phone;
 	}
 
+	@Column(name = "status_id")
+	public int getDispositionStatusId() {
+		return dispositionStatusId;
+	}
+
+	public void setDispositionStatusId(int dispositionStatusId) {
+		this.dispositionStatusId = dispositionStatusId;
+	}
+
+	@OneToOne(cascade = CascadeType.ALL)
+	public LFLost getLost() {
+		return lost;
+	}
+
+	public void setLost(LFLost lost) {
+		this.lost = lost;
+	}
+
+	@OneToOne(cascade = CascadeType.ALL)
+	public LFFound getFound() {
+		return found;
+	}
+
+	public void setFound(LFFound found) {
+		this.found = found;
+	}
+
+	@Column(name="forward_tracking_num")
 	public String getForwardtrackingNumber() {
 		return forwardtrackingNumber;
 	}
@@ -289,6 +241,16 @@ public class LFItem implements Serializable{
 		this.forwardtrackingNumber = forwardtrackingNumber;
 	}
 
+	@Column(name="removal_reason")
+	public String getRemovalReason() {
+		return removalReason;
+	}
+
+	public void setRemovalReason(String removalReason) {
+		this.removalReason = removalReason;
+	}
+
+	@Column(name="homingpin_category")
 	public long getHomingPinCategory() {
 		return homingPinCategory;
 	}
@@ -297,6 +259,7 @@ public class LFItem implements Serializable{
 		this.homingPinCategory = homingPinCategory;
 	}
 
+	@Column(name="homingpin_code")
 	public String getHomingPinCode() {
 		return homingPinCode;
 	}
@@ -305,6 +268,7 @@ public class LFItem implements Serializable{
 		this.homingPinCode = homingPinCode;
 	}
 
+	@Column(name="lost_location")
 	public long getLostLocations() {
 		return lostLocations;
 	}
@@ -313,6 +277,7 @@ public class LFItem implements Serializable{
 		this.lostLocations = lostLocations;
 	}
 
+	@Column(name="found_by")
 	public long getFoundByLocations() {
 		return foundByLocations;
 	}
@@ -321,6 +286,7 @@ public class LFItem implements Serializable{
 		this.foundByLocations = foundByLocations;
 	}
 
+	@Column(name="found_info")
 	public String getFoundByInfo() {
 		return foundByInfo;
 	}
@@ -328,4 +294,5 @@ public class LFItem implements Serializable{
 	public void setFoundByInfo(String foundByInfo) {
 		this.foundByInfo = foundByInfo;
 	}
+
 }

@@ -1,30 +1,22 @@
 package aero.nettracer.persistence.model;
 
-import java.io.Serializable;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-
-import org.hibernate.annotations.Proxy;
+import javax.persistence.Table;
 
 @Entity
-@Proxy(lazy = false)
-public class LFProperty implements Serializable {
+@Table(name = "lfproperty")
+public class LFProperty {
 
-	private static final long serialVersionUID = -6078105295569760266L;
+	private long id;
+	private String keyStr;
+	private String valueStr;
 
 	@Id
 	@GeneratedValue
-	private long id;
-
-	@Column(name="keyStr",length = 50)
-	private String keyStr;
-
-	@Column(name="valueStr",length = 255)
-	private String valueStr;
-
+	@Column(name = "id")
 	public long getId() {
 		return id;
 	}
@@ -33,6 +25,7 @@ public class LFProperty implements Serializable {
 		this.id = id;
 	}
 
+	@Column(name="keyStr")
 	public String getKeyStr() {
 		return keyStr;
 	}
@@ -40,7 +33,8 @@ public class LFProperty implements Serializable {
 	public void setKeyStr(String keyStr) {
 		this.keyStr = keyStr;
 	}
-	
+
+	@Column(name="valueStr")
 	public String getValueStr() {
 		return valueStr;
 	}
@@ -48,4 +42,5 @@ public class LFProperty implements Serializable {
 	public void setValueStr(String valueStr) {
 		this.valueStr = valueStr;
 	}
+
 }

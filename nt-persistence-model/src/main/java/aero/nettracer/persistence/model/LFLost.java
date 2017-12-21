@@ -1,145 +1,62 @@
 package aero.nettracer.persistence.model;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import aero.nettracer.commons.utils.GenericStringUtils;
+import org.hibernate.annotations.OrderBy;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.persistence.Transient;
-
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
-import org.hibernate.annotations.OrderBy;
-import org.hibernate.annotations.Proxy;
-
-import aero.nettracer.commons.utils.GenericStringUtils;
+import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
-@Proxy(lazy = false)
-public class LFLost implements LFObject, Serializable, Cloneable {
+@Table(name = "lflost")
+public class LFLost implements Cloneable {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 7672592006533855019L;
-	
-	public LFLost() {
-		
-	}
+	private long id;
+	private int agentId;
+	private int closeAgentId;
+	private String locationStationCode;
+	private int statusId;
+	private String companyCode;
+	private Timestamp openDate;
+	private Timestamp closeDate;
+	private Timestamp emailSentDate;
+	private String remarks;
+	private String vantiveNumber;
+	private LFShipping shipment;
+	private LFItem item;
+	private LFPerson client;
+	private LFLossInfo lossInfo;
+	private boolean email1;
+	private boolean email2;
+	private boolean email3;
+	private boolean email4;
+	private boolean email5;
+	private String firstName;
+	private String middleName;
+	private String lastName;
+	private boolean foundEmail;
+	private String feedback;
+	private boolean emailPaymentRemind;
+	private List<LFSegment> segments;
+	private List<LFRemark> agentRemarks;
+	private List<LFFile> files;
+	private long lastLoaded;
 
 	@Id
 	@GeneratedValue
-	private long id;
-
-	@Column(name = "agent_id", nullable = false)
-	private int agentId;
-
-	@Column(name = "close_agent_id", nullable = true)
-	private int closeAgentId;
-	
-	@Column(name="loc_stn_code",length = 8)
-	private String locationStationCode;
-
-	@Column(name = "status_id", nullable = false)
-	private int statusId;
-	
-	@Column(name="company_code",length = 8)
-	private String companyCode;
-
-	@Column(name="open_datetime")
-	private Date openDate;
-
-	@Column(name="close_datetime")
-	private Date closeDate;
-
-	@Column(name="email_sent_datetime")
-	private Date emailSentDate;
-
-	@Column(name="remarks",length = 255)
-	private String remarks;
-	
-	@Column(name="vantive_num",length = 32)
-	private String vantiveNumber;
-	
-	@OneToOne(targetEntity = aero.nettracer.persistence.model.LFShipping.class, cascade = CascadeType.ALL)
-	private LFShipping shipment;
-
-	@OneToOne(targetEntity = aero.nettracer.persistence.model.LFPerson.class, cascade = CascadeType.ALL)
-	private LFPerson client;
-
-	@OneToOne(targetEntity = aero.nettracer.persistence.model.LFLossInfo.class, cascade = CascadeType.ALL)
-	@JoinColumn(name = "loss_info_id")
-	private LFLossInfo lossInfo;
-
-	@SuppressWarnings("deprecation")
-	@OneToMany(mappedBy = "lost", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	@OrderBy(clause = "id")
-	@Fetch(FetchMode.SELECT)
-	@Cascade(value = org.hibernate.annotations.CascadeType.DELETE_ORPHAN)
-	private List<LFSegment> segments;
-
-	@OneToOne(targetEntity = LFItem.class, cascade = CascadeType.ALL)
-	@JoinColumn(name = "item_id")
-	private LFItem item;
-	
-	@SuppressWarnings("deprecation")
-	@OneToMany(mappedBy = "lost", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	@OrderBy(clause = "id")
-	@Fetch(FetchMode.SELECT)
-	@Cascade(value = org.hibernate.annotations.CascadeType.DELETE_ORPHAN)
-	private List<LFRemark> agentRemarks;
-
-	@SuppressWarnings("deprecation")
-	@OneToMany(mappedBy = "lost", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	@Fetch(FetchMode.SELECT)
-	private List<LFFile> files;
-	
-	@Column(name="email_1")
-	private boolean email1;
-	
-	@Column(name="email_2")
-	private boolean email2;
-	
-	@Column(name="email_3")
-	private boolean email3;
-	
-	@Column(name="email_4")
-	private boolean email4;
-	
-	@Column(name="email_5")
-	private boolean email5;
-
-	@Column(name="email_payment_remind")
-	private boolean emailPaymentRemind;
-	
-	@Column(name="first_name",length = 32)
-	private String firstName;
-	
-	@Column(name="middle_name",length = 32)
-	private String middleName;
-	
-	@Column(name="last_name",length = 32)
-	private String lastName;
-	
-	@Column(name="found_email")
-	private boolean foundEmail;
-	
-	@Column(name="feedback",length = 512)
-	private String feedback;
-	
-	@Transient
-	private long lastLoaded;
-	
+	@Column(name = "id")
 	public long getId() {
 		return id;
 	}
@@ -147,7 +64,8 @@ public class LFLost implements LFObject, Serializable, Cloneable {
 	public void setId(long id) {
 		this.id = id;
 	}
-	
+
+	@Column(name = "agent_id", nullable = false)
 	public int getAgentId() {
 		return agentId;
 	}
@@ -156,94 +74,7 @@ public class LFLost implements LFObject, Serializable, Cloneable {
 		this.agentId = agentId;
 	}
 
-	public String getLocationStationCode() {
-		return locationStationCode;
-	}
-
-	public void setLocationStationCode(String locationStationCode) {
-		this.locationStationCode = locationStationCode;
-	}
-	
-	public int getStatusId() {
-		return statusId;
-	}
-
-	public void setStatusId(int statusId) {
-		this.statusId = statusId;
-	}
-	
-	public Date getOpenDate() {
-		return openDate;
-	}
-
-	public void setOpenDate(Date openDate) {
-		this.openDate = openDate;
-	}
-
-	public Date getCloseDate() {
-		return closeDate;
-	}
-
-	public void setCloseDate(Date closeDate) {
-		this.closeDate = closeDate;
-	}
-
-	public LFPerson getClient() {
-		return client;
-	}
-
-	public void setClient(LFPerson client) {
-		this.client = client;
-	}
-
-	public LFShipping getShipment() {
-		return shipment;
-	}
-
-	public void setShipment(LFShipping shipment) {
-		this.shipment = shipment;
-	}
-
-	public LFLossInfo getLossInfo() {
-		return lossInfo;
-	}
-	
-	public void setLossInfo(LFLossInfo lossInfo) {
-		this.lossInfo = lossInfo;
-	}
-
-	public Date getEmailSentDate() {
-		return emailSentDate;
-	}
-
-	public void setEmailSentDate(Date emailSentDate) {
-		this.emailSentDate = emailSentDate;
-	}
-
-	public String getRemarks() {
-		return remarks;
-	}
-
-	public void setRemarks(String remarks) {
-		this.remarks = remarks;
-	}
-	
-	public String getCompanyCode() {
-		return companyCode;
-	}
-
-	public void setCompanyCode(String companyCode) {
-		this.companyCode = companyCode;
-	}
-
-	public LFItem getItem() {
-		return item;
-	}
-
-	public void setItem(LFItem item) {
-		this.item = item;
-	}
-
+	@Column(name = "close_agent_id")
 	public int getCloseAgentId() {
 		return closeAgentId;
 	}
@@ -252,6 +83,73 @@ public class LFLost implements LFObject, Serializable, Cloneable {
 		this.closeAgentId = closeAgentId;
 	}
 
+	@Column(name="loc_stn_code")
+	public String getLocationStationCode() {
+		return locationStationCode;
+	}
+
+	public void setLocationStationCode(String locationStationCode) {
+		this.locationStationCode = locationStationCode;
+	}
+
+	@Column(name = "status_id", nullable = false)
+	public int getStatusId() {
+		return statusId;
+	}
+
+	public void setStatusId(int statusId) {
+		this.statusId = statusId;
+	}
+
+	@Column(name="company_code")
+	public String getCompanyCode() {
+		return companyCode;
+	}
+
+	public void setCompanyCode(String companyCode) {
+		this.companyCode = companyCode;
+	}
+
+	@Column(name="open_datetime")
+	@Temporal(TemporalType.TIMESTAMP)
+	public Timestamp getOpenDate() {
+		return openDate;
+	}
+
+	public void setOpenDate(Timestamp openDate) {
+		this.openDate = openDate;
+	}
+
+	@Column(name="close_datetime")
+	@Temporal(TemporalType.TIMESTAMP)
+	public Timestamp getCloseDate() {
+		return closeDate;
+	}
+
+	public void setCloseDate(Timestamp closeDate) {
+		this.closeDate = closeDate;
+	}
+
+	@Column(name="email_sent_datetime")
+	@Temporal(TemporalType.TIMESTAMP)
+	public Timestamp getEmailSentDate() {
+		return emailSentDate;
+	}
+
+	public void setEmailSentDate(Timestamp emailSentDate) {
+		this.emailSentDate = emailSentDate;
+	}
+
+	@Column(name="remarks")
+	public String getRemarks() {
+		return remarks;
+	}
+
+	public void setRemarks(String remarks) {
+		this.remarks = remarks;
+	}
+
+	@Column(name="vantive_num")
 	public String getVantiveNumber() {
 		return vantiveNumber;
 	}
@@ -260,30 +158,63 @@ public class LFLost implements LFObject, Serializable, Cloneable {
 		this.vantiveNumber = vantiveNumber;
 	}
 
-	public void setAgentRemarks(List<LFRemark> agentRemarks) {
-		this.agentRemarks = agentRemarks;
+	@OneToOne(cascade = CascadeType.ALL)
+	public LFShipping getShipment() {
+		return shipment;
 	}
 
-	public List<LFRemark> getAgentRemarks() {
-		return agentRemarks;
+	public void setShipment(LFShipping shipment) {
+		this.shipment = shipment;
+	}
+
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "item_id")
+	public LFItem getItem() {
+		return item;
+	}
+
+	public void setItem(LFItem item) {
+		this.item = item;
+	}
+
+	@OneToOne(cascade = CascadeType.ALL)
+	public LFPerson getClient() {
+		return client;
+	}
+
+	public void setClient(LFPerson client) {
+		this.client = client;
+	}
+
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "loss_info_id")
+	public LFLossInfo getLossInfo() {
+		return lossInfo;
+	}
+
+	public void setLossInfo(LFLossInfo lossInfo) {
+		this.lossInfo = lossInfo;
+	}
+
+	@Column(name="email_1")
+	public boolean isEmail1() {
+		return email1;
 	}
 
 	public void setEmail1(boolean email1) {
 		this.email1 = email1;
 	}
 
-	public boolean isEmail1() {
-		return email1;
+	@Column(name="email_2")
+	public boolean isEmail2() {
+		return email2;
 	}
 
 	public void setEmail2(boolean email2) {
 		this.email2 = email2;
 	}
 
-	public boolean isEmail2() {
-		return email2;
-	}
-
+	@Column(name="email_3")
 	public boolean isEmail3() {
 		return email3;
 	}
@@ -292,6 +223,7 @@ public class LFLost implements LFObject, Serializable, Cloneable {
 		this.email3 = email3;
 	}
 
+	@Column(name="email_4")
 	public boolean isEmail4() {
 		return email4;
 	}
@@ -300,6 +232,7 @@ public class LFLost implements LFObject, Serializable, Cloneable {
 		this.email4 = email4;
 	}
 
+	@Column(name="email_5")
 	public boolean isEmail5() {
 		return email5;
 	}
@@ -307,23 +240,63 @@ public class LFLost implements LFObject, Serializable, Cloneable {
 	public void setEmail5(boolean email5) {
 		this.email5 = email5;
 	}
-	
-	public void setFoundEmail(boolean foundEmail) {
-		this.foundEmail = foundEmail;
+
+	@Column(name="first_name")
+	public String getFirstName() {
+		return firstName;
 	}
 
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	@Column(name="middle_name")
+	public String getMiddleName() {
+		return middleName;
+	}
+
+	public void setMiddleName(String middleName) {
+		this.middleName = middleName;
+	}
+
+	@Column(name="last_name")
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
+	@Column(name="found_email")
 	public boolean isFoundEmail() {
 		return foundEmail;
 	}
 
-	public void setLastLoaded(long lastLoaded) {
-		this.lastLoaded = lastLoaded;
+	public void setFoundEmail(boolean foundEmail) {
+		this.foundEmail = foundEmail;
 	}
 
-	public long getLastLoaded() {
-		return lastLoaded;
+	@Column(name="feedback")
+	public String getFeedback() {
+		return feedback;
 	}
 
+	public void setFeedback(String feedback) {
+		this.feedback = feedback;
+	}
+
+	@Column(name="email_payment_remind")
+	public boolean isEmailPaymentRemind() {
+		return emailPaymentRemind;
+	}
+
+	public void setEmailPaymentRemind(boolean emailPaymentRemind) {
+		this.emailPaymentRemind = emailPaymentRemind;
+	}
+
+	@OneToMany(mappedBy = "lost", cascade = CascadeType.ALL, orphanRemoval = true)
+	@OrderBy(clause = "id")
 	public List<LFSegment> getSegments() {
 		return segments;
 	}
@@ -332,12 +305,32 @@ public class LFLost implements LFObject, Serializable, Cloneable {
 		this.segments = segments;
 	}
 
+	@OneToMany(mappedBy = "lost", cascade = CascadeType.ALL, orphanRemoval = true)
+	@OrderBy(clause = "id")
+	public List<LFRemark> getAgentRemarks() {
+		return agentRemarks;
+	}
+
+	public void setAgentRemarks(List<LFRemark> agentRemarks) {
+		this.agentRemarks = agentRemarks;
+	}
+
+	@OneToMany(mappedBy = "lost", cascade = CascadeType.ALL)
 	public List<LFFile> getFiles() {
 		return files;
 	}
 
 	public void setFiles(List<LFFile> files) {
 		this.files = files;
+	}
+
+	@Transient
+	public long getLastLoaded() {
+		return lastLoaded;
+	}
+
+	public void setLastLoaded(long lastLoaded) {
+		this.lastLoaded = lastLoaded;
 	}
 
 	@Transient
@@ -351,38 +344,6 @@ public class LFLost implements LFObject, Serializable, Cloneable {
 			}
 		}
 		return "('" + GenericStringUtils.join(stations,"','") + "')";
-	}
-
-	public String getFirstName() {
-		return firstName;
-	}
-
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
-
-	public String getMiddleName() {
-		return middleName;
-	}
-
-	public void setMiddleName(String middleName) {
-		this.middleName = middleName;
-	}
-
-	public String getLastName() {
-		return lastName;
-	}
-
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
-	}
-
-	public String getFeedback() {
-		return feedback;
-	}
-
-	public void setFeedback(String feedback) {
-		this.feedback = feedback;
 	}
 
 	@Transient //TODO this should be refactored NT-6064
@@ -430,14 +391,6 @@ public class LFLost implements LFObject, Serializable, Cloneable {
 	@Transient
 	public boolean hasSegments() {
 		return getSegments() != null && !getSegments().isEmpty();
-	}
-
-	public boolean isEmailPaymentRemind() {
-		return emailPaymentRemind;
-	}
-
-	public void setEmailPaymentRemind(boolean emailPaymentRemind) {
-		this.emailPaymentRemind = emailPaymentRemind;
 	}
 
 }

@@ -1,61 +1,33 @@
 package aero.nettracer.persistence.model;
 
-import java.io.Serializable;
-import java.util.List;
+import org.hibernate.annotations.OrderBy;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
-
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
-import org.hibernate.annotations.OrderBy;
-import org.hibernate.annotations.Proxy;
+import javax.persistence.Table;
+import java.util.List;
 
 @Entity
-@Proxy(lazy = false)
-public class LFPerson implements Serializable{
+@Table(name = "lfperson")
+public class LFPerson {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -7228145418177131087L;
+	private long id;
+	private String lastName;
+	private String firstName;
+	private String middleName;
+	private String email;
+	private LFAddress address;
+	private String secondaryEmail;
+	private List<LFPhone> phones;
 
 	@Id
 	@GeneratedValue
-	private long id;
-	
-	@Column(name="last_name",length = 32)
-	private String lastName;
-	
-	@Column(name="first_name",length = 32)
-	private String firstName;
-	
-	@Column(name="middle_name",length = 32)
-	private String middleName;
-	
-	@Column(name="email",length = 128)
-	private String email;
-
-	@Column(name="secondary_email",length = 128)
-	private String secondaryEmail;
-	
-	@OneToOne(targetEntity = aero.nettracer.persistence.model.LFAddress.class, cascade = CascadeType.ALL)
-	private LFAddress address;
-	
-	@SuppressWarnings("deprecation")
-	@OneToMany(mappedBy = "person", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	@OrderBy(clause = "id")
-	@Fetch(FetchMode.SELECT)
-	@Cascade(value = org.hibernate.annotations.CascadeType.DELETE_ORPHAN)
-	private List<LFPhone> phones;
-
+	@Column(name = "id")
 	public long getId() {
 		return id;
 	}
@@ -64,6 +36,7 @@ public class LFPerson implements Serializable{
 		this.id = id;
 	}
 
+	@Column(name="last_name")
 	public String getLastName() {
 		return lastName;
 	}
@@ -72,6 +45,7 @@ public class LFPerson implements Serializable{
 		this.lastName = lastName;
 	}
 
+	@Column(name="first_name")
 	public String getFirstName() {
 		return firstName;
 	}
@@ -80,6 +54,7 @@ public class LFPerson implements Serializable{
 		this.firstName = firstName;
 	}
 
+	@Column(name="middle_name")
 	public String getMiddleName() {
 		return middleName;
 	}
@@ -88,22 +63,7 @@ public class LFPerson implements Serializable{
 		this.middleName = middleName;
 	}
 
-	public LFAddress getAddress() {
-		return address;
-	}
-
-	public void setAddress(LFAddress address) {
-		this.address = address;
-	}
-
-	public List<LFPhone> getPhones() {
-		return phones;
-	}
-
-	public void setPhones(List<LFPhone> phones) {
-		this.phones = phones;
-	}
-
+	@Column(name="email")
 	public String getEmail() {
 		return email;
 	}
@@ -112,6 +72,16 @@ public class LFPerson implements Serializable{
 		this.email = email;
 	}
 
+	@OneToOne(cascade = CascadeType.ALL)
+	public LFAddress getAddress() {
+		return address;
+	}
+
+	public void setAddress(LFAddress address) {
+		this.address = address;
+	}
+
+	@Column(name="secondary_email")
 	public String getSecondaryEmail() {
 		return secondaryEmail;
 	}
@@ -120,7 +90,16 @@ public class LFPerson implements Serializable{
 		this.secondaryEmail = secondaryEmail;
 	}
 
-	//TODO this should be refactored NT-6064
+	@OneToMany(mappedBy = "person", cascade = CascadeType.ALL, orphanRemoval = true)
+	@OrderBy(clause = "id")
+	public List<LFPhone> getPhones() {
+		return phones;
+	}
+
+	public void setPhones(List<LFPhone> phones) {
+		this.phones = phones;
+	}
+
 	public boolean isEmpty() {
 		boolean empty = true;
 		
