@@ -1,61 +1,38 @@
 package aero.nettracer.persistence.model.detection;
 
-import java.io.Serializable;
-import java.util.Date;
-import java.util.List;
+import aero.nettracer.commons.utils.CommonsConstants;
+import aero.nettracer.persistence.model.LFFound;
+import aero.nettracer.persistence.model.LFLost;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.persistence.Transient;
-
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
-import org.hibernate.annotations.Proxy;
-
-import aero.nettracer.lfservice.constants.LFServiceConstants;
-import aero.nettracer.persistence.model.LFFound;
-import aero.nettracer.persistence.model.LFLost;
+import java.sql.Timestamp;
+import java.util.List;
 
 @Entity
-@Proxy(lazy = false)
-public class LFMatchHistory implements Serializable {
+@Table(name = "lfmatchhistory")
+public class LFMatchHistory {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 2203263893678251215L;
+	private long id;
+	private LFFound found;
+	private LFLost lost;
+	private int statusId;
+	private double score;
+	private Timestamp matchTimeStamp;
+	private List<LFMatchDetail> details;
 
 	@Id
 	@GeneratedValue
-	private long id;
-	
-	@OneToOne(targetEntity = aero.nettracer.persistence.model.LFLost.class, cascade = {})//cascade needs to be none
-	@Fetch(FetchMode.SELECT)
-	private LFLost lost;
-	
-	@OneToOne(targetEntity = aero.nettracer.persistence.model.LFFound.class, cascade = {})//cascade needs to be none
-	@Fetch(FetchMode.SELECT)
-	private LFFound found;
-	
-	@OneToMany(mappedBy = "matchHistory", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	@Fetch(FetchMode.SELECT)
-	private List<LFMatchDetail> details;
-	
-	@Column(name = "status_id", nullable = false)
-	private int statusId;
-	
-	@Column(name="score")
-	private double score;
-	
-	@Column(name="match_datetime")
-	private Date matchTimeStamp;
-
+	@Column(name = "id")
 	public long getId() {
 		return id;
 	}
@@ -64,14 +41,7 @@ public class LFMatchHistory implements Serializable {
 		this.id = id;
 	}
 
-	public LFLost getLost() {
-		return lost;
-	}
-
-	public void setLost(LFLost lost) {
-		this.lost = lost;
-	}
-
+	@OneToOne
 	public LFFound getFound() {
 		return found;
 	}
@@ -80,6 +50,44 @@ public class LFMatchHistory implements Serializable {
 		this.found = found;
 	}
 
+	@OneToOne
+	public LFLost getLost() {
+		return lost;
+	}
+
+	public void setLost(LFLost lost) {
+		this.lost = lost;
+	}
+
+	@Column(name = "status_id", nullable = false)
+	public int getStatusId() {
+		return statusId;
+	}
+
+	public void setStatusId(int statusId) {
+		this.statusId = statusId;
+	}
+
+	@Column(name = "score")
+	public double getScore() {
+		return score;
+	}
+
+	public void setScore(double score) {
+		this.score = score;
+	}
+
+	@Column(name = "match_datetime")
+	@Temporal(TemporalType.TIMESTAMP)
+	public Timestamp getMatchTimeStamp() {
+		return matchTimeStamp;
+	}
+
+	public void setMatchTimeStamp(Timestamp matchTimeStamp) {
+		this.matchTimeStamp = matchTimeStamp;
+	}
+
+	@OneToMany(mappedBy = "matchHistory", cascade = CascadeType.ALL)
 	public List<LFMatchDetail> getDetails() {
 		return details;
 	}
@@ -89,7 +97,6 @@ public class LFMatchHistory implements Serializable {
 	}
 	
 	@Transient
-	//TODO this should be refactored NT-6064
 	public double getTotalScore(){
 		if(details == null){
 			return 0;
@@ -101,31 +108,8 @@ public class LFMatchHistory implements Serializable {
 		return score;
 	}
 
-	public void setScore(double score) {
-		this.score = score;
-	}
-
-	public double getScore() {
-		return score;
-	}
-
-	public Date getMatchTimeStamp() {
-		return matchTimeStamp;
-	}
-
-	public void setMatchTimeStamp(Date matchTimeStamp) {
-		this.matchTimeStamp = matchTimeStamp;
-	}
-
-	public int getStatusId() {
-		return statusId;
-	}
-
-	public void setStatusId(int statusId) {
-		this.statusId = statusId;
-	}
-	
 	public boolean hasClosedLostOrFoundReport(){
-		return (getLost().getStatusId() == LFServiceConstants.LF_STATUS_CLOSED || getFound().getStatusId() == LFServiceConstants.LF_STATUS_CLOSED);
+		return (getLost().getStatusId() == CommonsConstants.LF_STATUS_CLOSED || getFound().getStatusId() == CommonsConstants.LF_STATUS_CLOSED);
 	}
+
 }

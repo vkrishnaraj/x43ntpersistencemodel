@@ -1,49 +1,30 @@
 package aero.nettracer.persistence.model;
 
-import java.io.Serializable;
+import aero.nettracer.commons.utils.GenericStringUtils;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Table;
 import javax.persistence.Transient;
 
-import org.hibernate.annotations.Proxy;
-
-import aero.nettracer.commons.utils.GenericStringUtils;
-
-
 @Entity
-@Proxy(lazy = false)
-public class LFAddress implements Serializable{
+@Table(name = "lfaddress")
+public class LFAddress {
 
-	private static final long serialVersionUID = 4392614284865636644L;
+	private long id;
+	private String address1;
+	private String address2;
+	private String city;
+	private String state;
+	private String province;
+	private String zip;
+	private String country;
 
 	@Id
 	@GeneratedValue
-	private long id;
-	
-	@Column(name="addr_1",length = 128)
-	private String address1;
-	
-	@Column(name="addr_2",length = 128)
-	private String address2;
-	
-	@Column(name="city",length = 128)
-	private String city;
-	
-	@Column(name="state",length = 2)
-	private String state;
-	
-	@Column(name="province",length = 128)
-	private String province;
-	
-	@Column(name="zip",length = 16)
-	private String zip;
-	
-	@Column(name="country",length = 3)
-	private String country;
-
+	@Column(name = "id")
 	public long getId() {
 		return id;
 	}
@@ -52,6 +33,7 @@ public class LFAddress implements Serializable{
 		this.id = id;
 	}
 
+	@Column(name="addr_1")
 	public String getAddress1() {
 		return address1;
 	}
@@ -60,6 +42,7 @@ public class LFAddress implements Serializable{
 		this.address1 = address1;
 	}
 
+	@Column(name="addr_2")
 	public String getAddress2() {
 		return address2;
 	}
@@ -68,6 +51,7 @@ public class LFAddress implements Serializable{
 		this.address2 = address2;
 	}
 
+	@Column(name="city")
 	public String getCity() {
 		return city;
 	}
@@ -76,6 +60,7 @@ public class LFAddress implements Serializable{
 		this.city = city;
 	}
 
+	@Column(name="state")
 	public String getState() {
 		return state;
 	}
@@ -84,6 +69,7 @@ public class LFAddress implements Serializable{
 		this.state = state;
 	}
 
+	@Column(name="province")
 	public String getProvince() {
 		return province;
 	}
@@ -92,6 +78,7 @@ public class LFAddress implements Serializable{
 		this.province = province;
 	}
 
+	@Column(name="zip")
 	public String getZip() {
 		return zip;
 	}
@@ -100,6 +87,7 @@ public class LFAddress implements Serializable{
 		this.zip = zip;
 	}
 
+	@Column(name="country")
 	public String getCountry() {
 		return country;
 	}
@@ -108,13 +96,6 @@ public class LFAddress implements Serializable{
 		this.country = country;
 	}
 
-	public String getCountryName() {
-//		if (country != null && country.length() > 0) {
-//			return TracerUtils.getCountry(country).getCountry();
-//		}
-		return "";
-	}
-	
 	@Transient
 	public boolean isEmpty() {
 		boolean empty = true;

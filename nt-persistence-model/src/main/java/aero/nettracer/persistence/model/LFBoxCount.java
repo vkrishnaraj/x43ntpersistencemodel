@@ -1,40 +1,25 @@
 package aero.nettracer.persistence.model;
 
-import java.io.Serializable;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
-import org.hibernate.annotations.Proxy;
-
+import javax.persistence.Table;
 
 @Entity
-@Proxy(lazy = false)
-public class LFBoxCount implements Serializable {
-	
-	private static final long serialVersionUID = 5806495189281178779L;
+@Table(name = "lfboxcount")
+public class LFBoxCount {
+
+	private long id;
+	private String sourceStationCode;
+	private int boxCount;
+	private LFBoxContainer container;
 
 	@Id
 	@GeneratedValue
-	private long id;
-	
-	@Column(name="src_stn_code",length = 8)
-	private String sourceStationCode;
-	
-	@JoinColumn(name = "box_count", nullable = false)
-	private int boxCount;
-	
-	@ManyToOne
-	@JoinColumn(name = "container_id", nullable = true)
-	@Fetch(FetchMode.SELECT)
-	private LFBoxContainer container;
-	
+	@Column(name = "id")
 	public long getId() {
 		return id;
 	}
@@ -42,23 +27,8 @@ public class LFBoxCount implements Serializable {
 	public void setId(long id) {
 		this.id = id;
 	}
-	
-	public int getBoxCount() {
-		return boxCount;
-	}
-	
-	public void setBoxCount(int boxCount) {
-		this.boxCount=boxCount;
-	}
-	
-	public LFBoxContainer getContainer() {
-		return container;
-	}
-	
-	public void setContainer (LFBoxContainer container) {
-		this.container=container;
-	}
 
+	@Column(name="src_stn_code")
 	public String getSourceStationCode() {
 		return sourceStationCode;
 	}
@@ -67,5 +37,23 @@ public class LFBoxCount implements Serializable {
 		this.sourceStationCode = sourceStationCode;
 	}
 
+	@JoinColumn(name = "box_count", nullable = false)
+	public int getBoxCount() {
+		return boxCount;
+	}
 	
+	public void setBoxCount(int boxCount) {
+		this.boxCount=boxCount;
+	}
+
+	@ManyToOne
+	@JoinColumn(name = "container_id")
+	public LFBoxContainer getContainer() {
+		return container;
+	}
+	
+	public void setContainer (LFBoxContainer container) {
+		this.container=container;
+	}
+
 }

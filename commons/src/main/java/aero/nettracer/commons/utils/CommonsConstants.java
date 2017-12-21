@@ -56,4 +56,8 @@ public class CommonsConstants {
     public static final int INCIDENT_REPORT_METHOD_DEFAULT = 0;
     public static final int INCIDENT_REPORT_METHOD_PHONE = 7;
     public static final int INCIDENT_REPORT_METHOD_UNKNOWN = -1;
+
+    //LF
+    public static final int LF_STATUS_OPEN = 600;
+    public static final int LF_STATUS_CLOSED = 601;
 }
