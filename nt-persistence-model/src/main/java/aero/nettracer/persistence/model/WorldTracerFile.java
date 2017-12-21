@@ -27,6 +27,7 @@ public class WorldTracerFile {
 	public WTStatus getWt_status() {
 		return wt_status;
 	}
+
 	public void setWt_status(WTStatus wt_status) {
 		this.wt_status = wt_status;
 	}
@@ -35,6 +36,7 @@ public class WorldTracerFile {
 	public String getWt_id() {
 		return wt_id;
 	}
+
 	public void setWt_id(String wt_id) {
 		this.wt_id = wt_id;
 	}
