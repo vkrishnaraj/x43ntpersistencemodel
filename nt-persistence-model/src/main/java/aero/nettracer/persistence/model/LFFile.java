@@ -1,52 +1,29 @@
-/*
- * Created on Jul 13, 2004
- *
- * TODO To change the template for this generated file go to
- * Window - Preferences - Java - Code Style - Code Templates
- */
 package aero.nettracer.persistence.model;
 
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
-import org.hibernate.annotations.Proxy;
-
-import javax.persistence.*;
-import java.io.Serializable;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name="lffile")
-public class LFFile implements Serializable {
-	
-	private static final long serialVersionUID = 490403433222640320L;
+public class LFFile {
 
 	private long id;
 	private String filepath;
 	private String fileName;
 	private String uploaderName;
-	private String lostId;
-	private String foundId;
-	private LFFound found;
 	private LFLost lost;
-
+	private LFFound found;
 	private String companyCode;
-
-	public String getFileName() {
-		String result = "";
-		if (fileName == null || fileName.equals("")) {
-			result = filepath.substring(filepath.lastIndexOf('/')+1, filepath.length());
-		} else {
-			result = fileName;
-		}
-		
-		return result;
-	}
-
-	public void setFileName(String fileName) {
-		this.fileName = fileName;
-	}
 
 	@Id
 	@GeneratedValue
+	@Column(name = "id")
 	public long getId() {
 		return id;
 	}
@@ -55,15 +32,32 @@ public class LFFile implements Serializable {
 		this.id = id;
 	}
 
+	@Column(name = "filepath")
 	public String getFilepath() {
 		return filepath;
 	}
-
 
 	public void setFilepath(String filepath) {
 		this.filepath = filepath;
 	}
 
+	@Column(name = "filename")
+	public String getFileName() {
+		String result = "";
+		if (fileName == null || fileName.equals("")) {
+			result = filepath.substring(filepath.lastIndexOf('/')+1, filepath.length());
+		} else {
+			result = fileName;
+		}
+
+		return result;
+	}
+
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
+	}
+
+	@Column(name = "uploadername")
 	public String getUploaderName() {
 		return uploaderName;
 	}
@@ -73,8 +67,7 @@ public class LFFile implements Serializable {
 	}
 
 	@ManyToOne
-	@JoinColumn(name = "lostId", nullable = true, insertable = false, updatable = false)
-	@Fetch(FetchMode.SELECT)
+	@JoinColumn(name = "lostId", insertable = false, updatable = false)
 	public LFLost getLost() {
 		return lost;
 	}
@@ -84,30 +77,13 @@ public class LFFile implements Serializable {
 	}
 
 	@ManyToOne
-	@JoinColumn(name = "foundId", nullable = true, insertable = false, updatable = false)
-	@Fetch(FetchMode.SELECT)
+	@JoinColumn(name = "foundId", insertable = false, updatable = false)
 	public LFFound getFound() {
 		return found;
 	}
 
 	public void setFound(LFFound found) {
 		this.found = found;
-	}
-
-	public String getLostId() {
-		return lostId;
-	}
-
-	public void setLostId(String lostId) {
-		this.lostId = lostId;
-	}
-
-	public String getFoundId() {
-		return foundId;
-	}
-
-	public void setFoundId(String foundId) {
-		this.foundId = foundId;
 	}
 
 	@Transient
@@ -118,4 +94,5 @@ public class LFFile implements Serializable {
 	public void setCompanyCode(String companyCode) {
 		this.companyCode = companyCode;
 	}
+
 }

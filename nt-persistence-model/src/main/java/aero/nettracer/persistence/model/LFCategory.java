@@ -1,90 +1,76 @@
 package aero.nettracer.persistence.model;
 
-import java.io.Serializable;
-import java.util.List;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
-
-import org.hibernate.annotations.Proxy;
+import javax.persistence.OrderBy;
+import javax.persistence.Table;
+import java.util.List;
 
 @Entity
-@Proxy(lazy = false)
-public class LFCategory implements Serializable{
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 4630331956112342386L;
+@Table(name = "lfcategory")
+public class LFCategory {
+
+	private long id;
+	private String description;
+	private int score;
+	private String companycode;
+	private boolean dataplan;
+	private int weightInLB;
+	private String harmonizedCode;
+	private List<LFSubCategory> subcategories;
+
 	@Id
 	@GeneratedValue
-	private long id;
-	
-	@Column(name="description",length = 64)
-	String description;
-	
-	@OneToMany(mappedBy = "parent", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	@org.hibernate.annotations.OrderBy(clause = "id")
-	List<LFSubCategory> subcategories;
-	
-	@Column(name="score")
-	private int score;
-	
-	@Column(name="company_code",length = 8)
-	private String companycode;
-	
-	@Column(name="dataplan")
-	private boolean dataplan;
-
-	@Column(name="wt_in_lb")
-	private int weightInLB;
-
-	@Column(name="HS_CODE")
-	private String harmonizedCode;
-	
+	@Column(name = "id")
 	public long getId() {
 		return id;
 	}
+
 	public void setId(long id) {
 		this.id = id;
 	}
+
+	@Column(name="description")
 	public String getDescription() {
 		return description;
 	}
+
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	public List<LFSubCategory> getSubcategories() {
-		return subcategories;
-	}
-	public void setSubcategories(List<LFSubCategory> subcategories) {
-		this.subcategories = subcategories;
-	}
+
+	@Column(name="score")
 	public int getScore() {
 		return score;
 	}
+
 	public void setScore(int score) {
 		this.score = score;
 	}
-	
-	public void setCompanycode(String companycode) {
-		this.companycode = companycode;
-	}
+
+	@Column(name="company_code",length = 8)
 	public String getCompanycode() {
 		return companycode;
 	}
 
+	public void setCompanycode(String companycode) {
+		this.companycode = companycode;
+	}
+
+	@Column(name="dataplan")
 	public boolean isDataplan() {
 		return dataplan;
 	}
+
 	public void setDataplan(boolean dataplan) {
 		this.dataplan = dataplan;
 	}
 
+	@Column(name="wt_in_lb")
 	public int getWeightInLB() {
 		return weightInLB;
 	}
@@ -93,6 +79,7 @@ public class LFCategory implements Serializable{
 		this.weightInLB = weightInLB;
 	}
 
+	@Column(name="HS_CODE")
 	public String getHarmonizedCode() {
 		return harmonizedCode;
 	}
@@ -100,4 +87,15 @@ public class LFCategory implements Serializable{
 	public void setHarmonizedCode(String harmonizedCode) {
 		this.harmonizedCode = harmonizedCode;
 	}
+
+	@OneToMany(mappedBy = "parent", cascade = CascadeType.ALL)
+	@OrderBy(value = "id")
+	public List<LFSubCategory> getSubcategories() {
+		return subcategories;
+	}
+
+	public void setSubcategories(List<LFSubCategory> subcategories) {
+		this.subcategories = subcategories;
+	}
+
 }
