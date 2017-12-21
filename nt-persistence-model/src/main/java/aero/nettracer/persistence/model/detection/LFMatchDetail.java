@@ -1,6 +1,6 @@
 package aero.nettracer.persistence.model.detection;
 
-import java.io.Serializable;
+import aero.nettracer.persistence.util.AES;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,39 +8,22 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-
-import aero.nettracer.persistence.util.AES;
-import org.hibernate.annotations.Proxy;
+import javax.persistence.Table;
 
 @Entity
-@Proxy(lazy = true)
-public class LFMatchDetail implements Serializable{
+@Table(name = "lfmatchdetail")
+public class LFMatchDetail {
 	
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 8133424320220693299L;
-
-	@Id
-	@GeneratedValue
 	private long id;
-	
-	@Column(name="description",length = 255)
 	private String description;
-	
-	@Column(name="lost_value",length = 255)
+	private LFMatchHistory matchHistory;
+	private double score;
 	private String lostValue;
-	
-	@Column(name="found_value",length = 255)
 	private String foundValue;
 	
-	@ManyToOne(targetEntity = aero.nettracer.persistence.model.detection.LFMatchHistory.class)
-	@JoinColumn(name="match_history_id")
-	private LFMatchHistory matchHistory;
-
-	@Column(name="score")
-	private double score;
-	
+	@Id
+	@GeneratedValue
+	@Column(name = "id")
 	public long getId() {
 		return id;
 	}
@@ -49,6 +32,7 @@ public class LFMatchDetail implements Serializable{
 		this.id = id;
 	}
 
+	@Column(name="description")
 	public String getDescription() {
 		return description;
 	}
@@ -57,6 +41,8 @@ public class LFMatchDetail implements Serializable{
 		this.description = description;
 	}
 
+	@ManyToOne
+	@JoinColumn(name="match_history_id")
 	public LFMatchHistory getMatchHistory() {
 		return matchHistory;
 	}
@@ -65,14 +51,16 @@ public class LFMatchDetail implements Serializable{
 		this.matchHistory = matchHistory;
 	}
 
-	public void setScore(double score) {
-		this.score = score;
-	}
-
+	@Column(name = "score")
 	public double getScore() {
 		return score;
 	}
 
+	public void setScore(double score) {
+		this.score = score;
+	}
+
+	@Column(name="lost_value")
 	public String getLostValue() {
 		return AES.decrypt(lostValue);
 	}
@@ -81,6 +69,7 @@ public class LFMatchDetail implements Serializable{
 		this.lostValue = AES.encrypt(lostValue);
 	}
 
+	@Column(name="found_value")
 	public String getFoundValue() {
 		return AES.decrypt(foundValue);
 	}
