@@ -1,12 +1,9 @@
 package aero.nettracer.persistence.model;
 
-import java.sql.Time;
-import java.sql.Timestamp;
-import java.util.Date;
-import java.util.List;
-import java.util.Set;
-
 import aero.nettracer.persistence.util.DeliveryIntegrationType;
+import aero.nettracer.persistence.util.DeliveryStatusType;
+import org.hibernate.annotations.OrderBy;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -22,7 +19,11 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import org.hibernate.annotations.OrderBy;
+import java.sql.Time;
+import java.sql.Timestamp;
+import java.util.Date;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "bdo")
