@@ -1,15 +1,12 @@
 package aero.nettracer.persistence.model.wtq;
 
 
-import java.io.Serializable;
-import java.util.Date;
-
-import aero.nettracer.commons.utils.CommonsUtils;
 import aero.nettracer.persistence.model.Agent;
 import aero.nettracer.persistence.model.Incident;
 import aero.nettracer.persistence.model.OHD;
 import aero.nettracer.persistence.util.TxType;
-import javax.persistence.Basic;
+import org.hibernate.annotations.Proxy;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -19,13 +16,14 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import org.hibernate.annotations.Proxy;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import java.sql.Timestamp;
 
-@SuppressWarnings("serial")
 @Entity
 @Table(name="wt_transaction")
 @Proxy(lazy=false)
-public class WorldTracerTransaction implements Serializable {
+public class WorldTracerTransaction {
 	
 	public static final String UNKNOWN_ERROR = "Unknown Error";
 	
@@ -34,7 +32,7 @@ public class WorldTracerTransaction implements Serializable {
 	public enum Result {FAILURE("wt_txfailure"), SUCCESS("wt_txsuccess");
 		private String messageKey;
 		
-		private Result(String messageKey) {
+		Result(String messageKey) {
 			this.messageKey = messageKey;
 		}
 		
@@ -48,33 +46,22 @@ public class WorldTracerTransaction implements Serializable {
 	}
 
 	private long id;
-	
-	private Date createDate;
-	
+	private Timestamp createDate;
 	private long duration = -1;
-	
+	private String error;
 	private Result result;
-	
-	private String error;	
-
-	private TxType txType;
-
-	private Incident incident;
-
-	private Agent agent;
-
-	private OHD ohd;
-	
 	private String txInputData;
-
 	private String txOutputData;
-	
+	private TxType txType;
+	private Incident incident;
+	private OHD ohd;
+	private Agent agent;
 	private long start = -1;
 	private long finish = -1;
 
 	public WorldTracerTransaction() {
-		super();
-		this.createDate = CommonsUtils.getGMTDate();
+		//super();
+		//this.createDate = CommonsUtils.getGMTDate();
 	}
 
 	public WorldTracerTransaction(TxType txType) {
@@ -82,7 +69,9 @@ public class WorldTracerTransaction implements Serializable {
 		this.txType = txType;
 	}
 
-	@Id @GeneratedValue
+	@Id
+	@GeneratedValue
+	@Column(name = "id")
 	public long getId() {
 		return id;
 	}
@@ -91,16 +80,17 @@ public class WorldTracerTransaction implements Serializable {
 		this.id = id;
 	}
 
-	@Basic
-	public Date getCreateDate() {
+	@Column(name = "createdate")
+	@Temporal(TemporalType.TIMESTAMP)
+	public Timestamp getCreateDate() {
 		return createDate;
 	}
 
-	public void setCreateDate(Date createDate) {
+	public void setCreateDate(Timestamp createDate) {
 		this.createDate = createDate;
 	}
 
-	@Basic
+	@Column(name = "duration")
 	public long getDuration() {
 		return duration;
 	}
@@ -109,17 +99,7 @@ public class WorldTracerTransaction implements Serializable {
 		this.duration = duration;
 	}
 
-	@Enumerated(EnumType.STRING)
-	@Column(length=100)
-	public Result getResult() {
-		return result;
-	}
-
-	public void setResult(Result result) {
-		this.result = result;
-	}
-
-	@Column(length=255)
+	@Column(name = "error")
 	public String getError() {
 		return error;
 	}
@@ -128,7 +108,45 @@ public class WorldTracerTransaction implements Serializable {
 		this.error = error;
 	}
 
-	@ManyToOne(targetEntity = Incident.class)
+	@Enumerated(EnumType.STRING)
+	@Column(name = "result")
+	public Result getResult() {
+		return result;
+	}
+
+	public void setResult(Result result) {
+		this.result = result;
+	}
+
+	@Column(name = "txinputdata", length = 1020)
+	public String getTxInputData() {
+		return this.txInputData;
+	}
+
+	public void setTxInputData(String txData) {
+		this.txInputData = txData;
+	}
+
+	@Column(name = "txoutputdata", length=1020)
+	public String getTxOutputData() {
+		return txOutputData;
+	}
+
+	public void setTxOutputData(String txResult) {
+		this.txOutputData = txResult;
+	}
+
+	@Enumerated(EnumType.STRING)
+	@Column(name = "txtype", nullable=false)
+	public TxType getTxType() {
+		return txType;
+	}
+
+	public void setTxType(TxType txType) {
+		this.txType = txType;
+	}
+
+	@ManyToOne
 	@JoinColumn(name = "incident_id")
 	public Incident getIncident() {
 		return incident;
@@ -137,18 +155,8 @@ public class WorldTracerTransaction implements Serializable {
 	public void setIncident(Incident incidentId) {
 		this.incident = incidentId;
 	}
-	
-	@ManyToOne(targetEntity = Agent.class)
-	@JoinColumn(name = "agent_ID")
-	public Agent getAgent() {
-		return agent;
-	}
 
-	public void setAgent(Agent agent) {
-		this.agent = agent;
-	}
-
-	@ManyToOne(targetEntity = OHD.class)
+	@ManyToOne
 	@JoinColumn(name = "ohd_id")
 	public OHD getOhd() {
 		return ohd;
@@ -157,36 +165,15 @@ public class WorldTracerTransaction implements Serializable {
 	public void setOhd(OHD ohd) {
 		this.ohd = ohd;
 	}
-
-
-	@Column(length=1020)
-	public String getTxInputData() {
-		return this.txInputData;
-	}
 	
-	public void setTxInputData(String txData) {
-		this.txInputData = txData;
-	}
-	
-	@Column(length=1020)
-	public String getTxOutputData() {
-		return txOutputData;
+	@ManyToOne
+	@JoinColumn(name = "agent_id")
+	public Agent getAgent() {
+		return agent;
 	}
 
-	public void setTxOutputData(String txResult) {
-		this.txOutputData = txResult;
-	}
-	
-
-	//NTFIXME
-	@Enumerated(EnumType.STRING)
-	@Column(nullable=false, length = 40)
-	public TxType getTxType() {
-		return txType;
-	}
-
-	public void setTxType(TxType txType) {
-		this.txType = txType;
+	public void setAgent(Agent agent) {
+		this.agent = agent;
 	}
 
 	public void startTransaction() {

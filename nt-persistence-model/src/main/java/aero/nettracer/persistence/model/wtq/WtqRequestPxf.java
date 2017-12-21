@@ -1,52 +1,31 @@
 package aero.nettracer.persistence.model.wtq;
 
-import java.util.Set;
-
 import aero.nettracer.persistence.model.WT_PXF;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.OneToOne;
-import javax.persistence.Table;
 import javax.persistence.Transient;
-
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
-import org.hibernate.annotations.Proxy;
+import java.util.Set;
 
 @Entity
 @DiscriminatorValue("REQUEST_PXF")
 
 public class WtqRequestPxf extends WtqIncidentAction {
-	public WtqRequestPxf() {
-		// 
-		super();
-	}
-	
-	private WT_PXF pxf;
-	
-	@OneToOne(cascade = CascadeType.ALL)
-	public WT_PXF getPxf() {
-		return pxf;
-	}
 
-	public void setPxf(WT_PXF pxf) {
-		this.pxf = pxf;
+	public WtqRequestPxf() {
 	}
 
 	private String furtherInfo;
-	
+	private WT_PXF pxf;
 	private Set<String> teletypes;
 
-	
-	@Column(length=3000)
+	@Column(name = "furtherinfo")
 	public String getFurtherInfo() {
 		return furtherInfo;
 	}
@@ -55,10 +34,19 @@ public class WtqRequestPxf extends WtqIncidentAction {
 		this.furtherInfo = furtherInfo;
 	}
 	
-	@ElementCollection(targetClass = String.class, fetch=FetchType.EAGER)
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "pxf")
+	public WT_PXF getPxf() {
+		return pxf;
+	}
+
+	public void setPxf(WT_PXF pxf) {
+		this.pxf = pxf;
+	}
+
+	@ElementCollection
 	@JoinTable(name = "wtq_teletype", joinColumns=@JoinColumn(name="wt_queue_id"))
 	@Column(name = "ttype_address", nullable = false)
-	@Fetch(FetchMode.SELECT)
 	public Set<String> getTeletypes() {
 		return teletypes;
 	}

@@ -1,16 +1,15 @@
 package aero.nettracer.persistence.model.wtq;
 
 import aero.nettracer.persistence.model.Incident;
-import javax.persistence.Column;
+
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Transient;
 
-import org.hibernate.annotations.Proxy;
-
 @Entity
 public abstract class WtqIncidentAction extends WorldTracerQueue {
+
 	private Incident incident;
 	
 	public WtqIncidentAction() {}
@@ -19,7 +18,7 @@ public abstract class WtqIncidentAction extends WorldTracerQueue {
 		this.incident = incident;
 	}
 	
-	@ManyToOne(targetEntity = Incident.class)
+	@ManyToOne
 	@JoinColumn(name = "incident_id")
 	public Incident getIncident() {
 		return incident;
@@ -38,6 +37,6 @@ public abstract class WtqIncidentAction extends WorldTracerQueue {
 	@Override
 	@Transient
 	public Object[] getExistsParameters() {
-		return new Object[] {incident.getIncident_ID(), this.getStatus()};
+		return new Object[] {incident.getId(), this.getStatus()};
 	}
 }

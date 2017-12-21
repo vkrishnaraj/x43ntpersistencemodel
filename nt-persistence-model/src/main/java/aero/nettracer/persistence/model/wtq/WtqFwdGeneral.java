@@ -1,11 +1,8 @@
 package aero.nettracer.persistence.model.wtq;
 
-import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-
-import org.hibernate.annotations.Proxy;
 
 @Entity
 @DiscriminatorValue(value = "FWD_GENERAL")
@@ -14,13 +11,20 @@ public class WtqFwdGeneral extends WtqFwd {
 	public WtqFwdGeneral() {
 	}
 
-	private String lossComments;
 	private int lossCode;
+	private String lossComments;
 	private String from_station;
 
+	@Column(name = "losscode")
+	public int getLossCode() {
+		return lossCode;
+	}
 
+	public void setLossCode(int lossCode) {
+		this.lossCode = lossCode;
+	}
 
-	@Column
+	@Column(name = "losscomments")
 	public String getLossComments() {
 		return lossComments;
 	}
@@ -29,16 +33,7 @@ public class WtqFwdGeneral extends WtqFwd {
 		this.lossComments = lossComments;
 	}
 	
-	@Basic
-	public int getLossCode() {
-		return lossCode;
-	}
-	
-	public void setLossCode(int lossCode) {
-		this.lossCode = lossCode;
-	}
-
-	@Column(length = 5)
+	@Column(name = "from_station")
 	public String getFrom_station() {
 		return from_station;
 	}

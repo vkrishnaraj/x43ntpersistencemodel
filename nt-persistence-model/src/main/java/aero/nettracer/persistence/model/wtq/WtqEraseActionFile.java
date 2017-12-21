@@ -1,12 +1,9 @@
 package aero.nettracer.persistence.model.wtq;
 
-import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.Transient;
-
-import org.hibernate.annotations.Proxy;
 
 @Entity
 @DiscriminatorValue("ERASE_AF")
@@ -14,7 +11,7 @@ public class WtqEraseActionFile extends WorldTracerQueue {
 	
 	private String af_id;
 
-	@Column(length = 15)
+	@Column(name = "af_id")
 	public String getAf_id() {
 		return af_id;
 	}
@@ -26,7 +23,6 @@ public class WtqEraseActionFile extends WorldTracerQueue {
 	@Override
 	@Transient
 	public Object[] getExistsParameters() {
-		// TODO Auto-generated method stub
 		return new Object[] {af_id, WtqStatus.PENDING};
 	}
 

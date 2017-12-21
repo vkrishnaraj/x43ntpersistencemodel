@@ -1,77 +1,40 @@
 package aero.nettracer.persistence.model.wtq;
 
-import java.util.Date;
-
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import java.sql.Timestamp;
 
 @Embeddable
+@Table(name = "wtq_segment")
 public class WtqSegment {
-	
-	@Column(nullable = false)
-	private String legfrom;
 
-	@Column(nullable = false)
-	private String legto;
-	
-	@Column(nullable = false)
-	private Date departdate;
-	
-	@Column(nullable = false)
-	private Date departureTime;
-	
-	@Column(nullable = false)
-	private Date arrivedate;
-	
-	@Column(nullable = false)
+	private long id;
 	private String airline;
-	
-	@Column(nullable = false)
+	private Timestamp arrivalTime;
+	private Timestamp arrivedate;
+	private Timestamp departdate;
+	private Timestamp departureTime;
 	private String flightnum;
+	private String legfrom;
+	private String legto;
 
-	@Column(nullable = false)
-	private Date arrivalTime;
-	
-	public String getLegfrom() {
-		return legfrom;
+	@Id
+	@GeneratedValue
+	@Column(name = "segment_id")
+	public long getId() {
+		return id;
 	}
 
-	public void setLegfrom(String legfrom) {
-		this.legfrom = legfrom;
+	public void setId(long id) {
+		this.id = id;
 	}
 
-	public String getLegto() {
-		return legto;
-	}
-
-	public void setLegto(String legto) {
-		this.legto = legto;
-	}
-
-	public Date getDepartdate() {
-		return departdate;
-	}
-
-	public void setDepartdate(Date departdate) {
-		this.departdate = departdate;
-	}
-
-	public Date getDepartureTime() {
-		return departureTime;
-	}
-
-	public void setDepartureTime(Date departureTime) {
-		this.departureTime = departureTime;
-	}
-
-	public Date getArrivedate() {
-		return arrivedate;
-	}
-
-	public void setArrivedate(Date arrivedate) {
-		this.arrivedate = arrivedate;
-	}
-
+	@Column(name="airline", nullable = false)
 	public String getAirline() {
 		return airline;
 	}
@@ -80,6 +43,47 @@ public class WtqSegment {
 		this.airline = airline;
 	}
 
+	@Column(name = "arrivaltime", nullable = false)
+	@Temporal(TemporalType.TIMESTAMP)
+	public Timestamp getArrivalTime() {
+		return arrivalTime;
+	}
+
+	public void setArrivalTime(Timestamp arrivalTime) {
+		this.arrivalTime = arrivalTime;
+	}
+
+	@Column(name="arrivedate", nullable = false)
+	@Temporal(TemporalType.TIMESTAMP)
+	public Timestamp getArrivedate() {
+		return arrivedate;
+	}
+
+	public void setArrivedate(Timestamp arrivedate) {
+		this.arrivedate = arrivedate;
+	}
+
+	@Column(name="departdate", nullable = false)
+	@Temporal(TemporalType.TIMESTAMP)
+	public Timestamp getDepartdate() {
+		return departdate;
+	}
+
+	public void setDepartdate(Timestamp departdate) {
+		this.departdate = departdate;
+	}
+
+	@Column(name="departureTime", nullable = false)
+	@Temporal(TemporalType.TIMESTAMP)
+	public Timestamp getDepartureTime() {
+		return departureTime;
+	}
+
+	public void setDepartureTime(Timestamp departureTime) {
+		this.departureTime = departureTime;
+	}
+
+	@Column(name = "flightnum", nullable = false)
 	public String getFlightnum() {
 		return flightnum;
 	}
@@ -88,16 +92,22 @@ public class WtqSegment {
 		this.flightnum = flightnum;
 	}
 
-	public Date getArrivalTime() {
-		return arrivalTime;
+	@Column(name = "legfrom")
+	public String getLegfrom() {
+		return legfrom;
 	}
 
-	public void setArrivalTime(Date arrivalTime) {
-		this.arrivalTime = arrivalTime;
+	public void setLegfrom(String legfrom) {
+		this.legfrom = legfrom;
 	}
 
-	public void set_DATEFORMAT(String format) {
-		// TODO Auto-generated method stub
-		
+	@Column(name = "legto")
+	public String getLegto() {
+		return legto;
 	}
+
+	public void setLegto(String legto) {
+		this.legto = legto;
+	}
+
 }

@@ -127,7 +127,7 @@ public class GenericDateUtils {
 				return s;
 			}
 		} catch (Exception e) {
-			logger.warn("bad format style: " + outstyle);
+			logger.error("bad format style: " + outstyle);
 		}
 		return indate.toString();
 	}

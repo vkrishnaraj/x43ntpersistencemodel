@@ -12,7 +12,7 @@ import org.hibernate.annotations.Proxy;
 public class WtqCloseAhl extends WtqIncidentAction {
 
 	public WtqCloseAhl() {
-		super();
+
 	}
 
 	public WtqCloseAhl(Incident incident) {

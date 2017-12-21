@@ -1,5 +1,6 @@
 package aero.nettracer.commons.utils;
 
+import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
@@ -62,6 +63,18 @@ public class CommonsUtils {
             return newdate;
         } catch (Exception e) {
             return new Date();
+        }
+    }
+
+    public static Timestamp getGMTTimestamp() {
+        try {
+            Date now = new Date(); // current system date
+            DateFormat df = new SimpleDateFormat(GenericConstants.DB_DATETIMEFORMAT);
+            df.setTimeZone(TimeZone.getTimeZone("GMT"));
+            Date newdate = GenericDateUtils.convertToDate(df.format(now), GenericConstants.DB_DATETIMEFORMAT, null);
+            return new Timestamp(newdate.getTime());
+        } catch (Exception e) {
+            return new Timestamp((new Date()).getTime());
         }
     }
 
