@@ -1,9 +1,9 @@
 package aero.nettracer.persistence.model;
 
-import org.hibernate.annotations.Proxy;
-
-import javax.persistence.*;
-import java.io.Serializable;
+import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
 @Entity
 @Table(name = "agent_autoassign_load")

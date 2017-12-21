@@ -1,11 +1,10 @@
 package aero.nettracer.persistence.model.taskmanager;
 
 import aero.nettracer.persistence.model.Incident;
+
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-
-import org.hibernate.annotations.Proxy;
 
 @Entity
 public class MorningDutiesTask extends GeneralTask {

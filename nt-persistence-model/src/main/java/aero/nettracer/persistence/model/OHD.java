@@ -6,18 +6,11 @@
  */
 package aero.nettracer.persistence.model;
 
-import java.sql.Time;
-import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.Date;
-import java.util.Iterator;
-import java.util.Set;
-import java.util.TreeSet;
-
 import aero.nettracer.commons.constant.GenericConstants;
 import aero.nettracer.commons.utils.CommonsUtils;
 import aero.nettracer.commons.utils.GenericDateUtils;
+import org.hibernate.annotations.OrderBy;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
@@ -31,7 +24,14 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
-import org.hibernate.annotations.OrderBy;
+import java.sql.Time;
+import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.Date;
+import java.util.Iterator;
+import java.util.Set;
+import java.util.TreeSet;
 
 
 @Entity

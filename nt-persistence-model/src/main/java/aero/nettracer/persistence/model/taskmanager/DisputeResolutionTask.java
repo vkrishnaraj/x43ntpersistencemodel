@@ -2,13 +2,11 @@ package aero.nettracer.persistence.model.taskmanager;
 
 
 import aero.nettracer.persistence.model.dr.Dispute;
+
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
-import javax.persistence.Transient;
-
-import org.hibernate.annotations.Proxy;
 
 @Entity
 @DiscriminatorValue("DISPUTE")

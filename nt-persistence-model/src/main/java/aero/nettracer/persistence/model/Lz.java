@@ -1,6 +1,7 @@
 package aero.nettracer.persistence.model;
 
 import aero.nettracer.persistence.util.LzType;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;

@@ -1,8 +1,8 @@
 package aero.nettracer.persistence.model;
 
-import java.util.Set;
-
 import aero.nettracer.persistence.util.DeliveryIntegrationType;
+import org.hibernate.annotations.OrderBy;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -13,7 +13,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import org.hibernate.annotations.OrderBy;
+import java.util.Set;
 
 
 @Entity

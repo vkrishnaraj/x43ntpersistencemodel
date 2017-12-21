@@ -1,11 +1,11 @@
 package aero.nettracer.persistence.model.taskmanager;
 
-import java.io.Serializable;
-import java.util.Date;
-
 import aero.nettracer.persistence.model.Agent;
 import aero.nettracer.persistence.model.Incident;
 import aero.nettracer.persistence.model.Status;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -15,9 +15,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
+import java.util.Date;
 
 @Entity
 @Table(name = "view_tasks_not_in_work")

@@ -1,7 +1,5 @@
 package aero.nettracer.persistence.model;
 
-import java.sql.Timestamp;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -12,6 +10,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.UniqueConstraint;
+import java.sql.Timestamp;
 
 @Entity
 @Table(name = "global_lock", uniqueConstraints = @UniqueConstraint(columnNames={"locktype", "lockkey"}))

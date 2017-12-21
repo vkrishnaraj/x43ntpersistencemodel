@@ -1,10 +1,10 @@
 package aero.nettracer.persistence.model;
 
-import static aero.nettracer.commons.utils.CommonsConstants.DECIMALFORMAT;
-
-import java.util.Date;
-
 import aero.nettracer.persistence.model.fraudservice.Attachment;
+import org.apache.commons.lang3.math.NumberUtils;
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,9 +14,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
-import org.apache.commons.lang3.math.NumberUtils;
-import org.hibernate.annotations.NotFound;
-import org.hibernate.annotations.NotFoundAction;
+import java.util.Date;
+
+import static aero.nettracer.commons.utils.CommonsConstants.DECIMALFORMAT;
 
 @Entity
 @Table(name = "interim_depreciation_item")

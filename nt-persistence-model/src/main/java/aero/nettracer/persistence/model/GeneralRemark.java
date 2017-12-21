@@ -1,11 +1,10 @@
 package aero.nettracer.persistence.model;
 
-import java.util.Date;
-import java.util.TimeZone;
-
 import javax.persistence.Embeddable;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import java.util.Date;
+import java.util.TimeZone;
 
 
 @Embeddable

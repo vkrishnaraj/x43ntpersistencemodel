@@ -1,7 +1,6 @@
 package aero.nettracer.persistence.model;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
+import org.apache.commons.lang3.StringUtils;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,7 +10,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
-import org.apache.commons.lang3.StringUtils;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 
 @Entity
 @Table(name="item_photo")

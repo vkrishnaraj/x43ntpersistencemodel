@@ -1,9 +1,7 @@
 package aero.nettracer.persistence.model.fraudservice;
 
-import java.io.Serializable;
-
 import aero.nettracer.persistence.model.fraudservice.detection.AddressWhiteList;
-import javax.persistence.CascadeType;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,9 +10,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
-import org.hibernate.annotations.Proxy;
 
 @Entity
 @Table(name = "fsaddress")

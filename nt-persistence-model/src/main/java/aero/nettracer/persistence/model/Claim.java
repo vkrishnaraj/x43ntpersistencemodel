@@ -1,6 +1,7 @@
 package aero.nettracer.persistence.model;
 
 import aero.nettracer.persistence.model.fraudservice.FsClaim;
+
 import javax.persistence.CascadeType;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;

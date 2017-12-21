@@ -1,6 +1,7 @@
 package aero.nettracer.persistence.model;
 
 import aero.nettracer.commons.utils.CommonsUtils;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

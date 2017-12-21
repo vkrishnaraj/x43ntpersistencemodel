@@ -1,8 +1,6 @@
 package aero.nettracer.persistence.model;
 
-import java.sql.Timestamp;
-import java.util.Iterator;
-import java.util.Set;
+import org.hibernate.annotations.OrderBy;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -14,7 +12,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
-import org.hibernate.annotations.OrderBy;
+import java.sql.Timestamp;
+import java.util.Iterator;
+import java.util.Set;
 
 @Entity
 @Table(name = "message")

@@ -1,7 +1,8 @@
 package aero.nettracer.persistence.model;
 
-import java.sql.Timestamp;
-import java.util.Set;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
+import org.hibernate.annotations.OrderBy;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,9 +13,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.CascadeType;
-import org.hibernate.annotations.OrderBy;
+import java.sql.Timestamp;
+import java.util.Set;
 
 @Entity
 @Table(name = "lost_found")

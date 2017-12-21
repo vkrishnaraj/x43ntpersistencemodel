@@ -4,8 +4,6 @@ import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.Transient;
 
-import org.hibernate.annotations.Proxy;
-
 @Entity
 @DiscriminatorValue("ACAA")
 public class AcaaTask extends InboundQueueTask {

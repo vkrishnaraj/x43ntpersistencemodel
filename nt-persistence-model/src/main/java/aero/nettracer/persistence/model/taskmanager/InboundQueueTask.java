@@ -1,7 +1,6 @@
 package aero.nettracer.persistence.model.taskmanager;
 
 import aero.nettracer.persistence.model.InboundQueue;
-import org.hibernate.annotations.Proxy;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;

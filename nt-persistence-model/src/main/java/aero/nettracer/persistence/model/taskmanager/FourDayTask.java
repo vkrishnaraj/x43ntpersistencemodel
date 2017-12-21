@@ -2,7 +2,6 @@ package aero.nettracer.persistence.model.taskmanager;
 
 
 import org.apache.commons.lang3.StringEscapeUtils;
-import org.hibernate.annotations.Proxy;
 
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;

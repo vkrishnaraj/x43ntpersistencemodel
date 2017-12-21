@@ -2,6 +2,7 @@ package aero.nettracer.persistence.model;
 
 import aero.nettracer.persistence.model.i8n.LocaleBasedObject;
 import aero.nettracer.persistence.util.ItemTypeDescription;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;

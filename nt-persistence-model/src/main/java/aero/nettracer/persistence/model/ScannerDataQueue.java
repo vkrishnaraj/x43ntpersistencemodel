@@ -1,10 +1,7 @@
 package aero.nettracer.persistence.model;
 
-import java.io.Serializable;
-import java.sql.Timestamp;
-import java.util.Date;
+import aero.nettracer.persistence.util.ScanStatus;
 
-import aero.nettracer.commons.utils.CommonsUtils;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -14,9 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-
-import aero.nettracer.persistence.util.ScanStatus;
-import org.hibernate.annotations.Proxy;
+import java.sql.Timestamp;
 
 @Entity
 @Table(name="scanner_data_queue")

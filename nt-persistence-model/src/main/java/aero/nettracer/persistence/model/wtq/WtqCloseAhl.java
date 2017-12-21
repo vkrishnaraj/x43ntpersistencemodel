@@ -1,10 +1,9 @@
 package aero.nettracer.persistence.model.wtq;
 
 import aero.nettracer.persistence.model.Incident;
+
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-
-import org.hibernate.annotations.Proxy;
 
 
 @Entity
