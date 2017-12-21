@@ -1,14 +1,9 @@
-/*
- * Created on Jul 13, 2004
- *
- * TODO To change the template for this generated file go to
- * Window - Preferences - Java - Code Style - Code Templates
- */
 package aero.nettracer.persistence.model;
 
 import aero.nettracer.commons.constant.GenericConstants;
 import aero.nettracer.commons.utils.CommonsUtils;
 import aero.nettracer.commons.utils.GenericDateUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.hibernate.annotations.OrderBy;
 
 import javax.persistence.CascadeType;
@@ -32,7 +27,6 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.Set;
 import java.util.TreeSet;
-
 
 @Entity
 @Table(name="ohd")
@@ -65,8 +59,8 @@ public class OHD {
 	private int ohd_type;
 	private Status disposal_status;
 	private WorldTracerFile wtFile;	// worldtracer id
-	private int faultStation = 0;
-	private int loss_code = 0;
+	private int faultStation;
+	private int loss_code;
 	private boolean earlyBag;
 	private String matched_incident;
 	private boolean tagSentToWt;
@@ -722,9 +716,9 @@ public class OHD {
 	@Transient
 	public String getFullName() {
 		StringBuilder fullName = new StringBuilder();
-		boolean haveLast = lastname != null && !lastname.isEmpty();
-		boolean haveFirst = firstname != null && !firstname.isEmpty();
-		boolean haveMiddle = middlename != null && !middlename.isEmpty();
+		boolean haveLast = StringUtils.isNotBlank(lastname);
+		boolean haveFirst = StringUtils.isNotBlank(firstname);
+		boolean haveMiddle = StringUtils.isNotBlank(middlename);
 		
 		if (haveLast) {
 			fullName.append(getLastname());
@@ -866,7 +860,8 @@ public class OHD {
 		return builder.toString();
 	}
 
-	@Transient
+	//NTFIXME - Commenting of these methods will break dozer. Leaving it commented out to fix it the right way.
+	/*@Transient
 	public int getCreationMethodDescription(){
 		return creationMethod;
 	}
@@ -910,6 +905,6 @@ public class OHD {
 
 	public void setTagSentToWtStationCompanyCode(int tagSentToWtStationId) {
 		//do nothing
-	}
+	}*/
 
 }

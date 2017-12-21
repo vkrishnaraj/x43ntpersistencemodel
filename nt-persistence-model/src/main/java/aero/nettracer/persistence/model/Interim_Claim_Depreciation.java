@@ -1,5 +1,6 @@
 package aero.nettracer.persistence.model;
 
+import org.apache.commons.collections4.CollectionUtils;
 import org.hibernate.annotations.OrderBy;
 
 import javax.persistence.CascadeType;
@@ -160,16 +161,13 @@ public class Interim_Claim_Depreciation {
 
     @Transient
     public int getClaimTypeId() {
-        if(claimType!=null)
-            return claimType.getId();
-        else
-            return 0;
+        return claimType == null ? 0 : claimType.getId();
     }
 
     @Transient
     public double getTotalClaim(){
         double tc=0;
-        if(interimitemlist!=null && interimitemlist.size()>0)
+        if(CollectionUtils.isNotEmpty(interimitemlist))
             for(Interim_Depreciation_Item di:interimitemlist){
                 tc+=di.getAmountClaimed();
             }
@@ -179,11 +177,26 @@ public class Interim_Claim_Depreciation {
     @Transient
     public double getTotalValue(){
         double tv=0;
-        if(interimitemlist!=null && interimitemlist.size()>0)
+        if(CollectionUtils.isNotEmpty(interimitemlist))
             for(Interim_Depreciation_Item di:interimitemlist){
                 tv+=di.getClaimValue();
             }
         return tv;
+    }
+
+    @Transient
+    public String getClaimAirlineIncidentId() {
+        return claim == null ? "" :claim.getAirlineIncidentId();
+    }
+
+    @Transient
+    public String getClaimId() {
+        return claim == null ? "" : String.valueOf(claim.getId());
+    }
+
+    @Transient
+    public String getClaimTypeDescription() {
+        return claimType == null ? "" : claimType.getDescription();
     }
 
 }

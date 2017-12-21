@@ -1,6 +1,7 @@
 package aero.nettracer.persistence.model;
 
 import aero.nettracer.commons.utils.CommonsUtils;
+import org.apache.commons.collections4.CollectionUtils;
 import org.hibernate.annotations.OrderBy;
 
 import javax.persistence.CascadeType;
@@ -165,13 +166,12 @@ public class Match {
 
 	@Transient
 	public String getOhdNumber() {
-		return ohd.getOHD_ID();
+		return ohd.getId();
 	}
 
 	@Transient
 	public List getDisplayDetails() {
-		if (details == null || details.size() < 1) return null;
-
+		if (CollectionUtils.isEmpty(details)) return null;
 		return new ArrayList(details);
 	}
 

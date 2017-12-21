@@ -2,6 +2,7 @@ package aero.nettracer.persistence.model;
 
 import aero.nettracer.persistence.util.AES;
 import aero.nettracer.persistence.util.Phone;
+import org.apache.commons.lang3.StringUtils;
 import org.hibernate.annotations.OrderBy;
 
 import javax.persistence.CascadeType;
@@ -283,13 +284,15 @@ public class Passenger {
 	}
 
 	public void setDecriptedDriversLicense(String decriptedDriversLicense) {
-		if (decriptedDriversLicense == null || decriptedDriversLicense.isEmpty()) return;
-		try {
-			this.driverslicense = AES.encrypt(decriptedDriversLicense);
-		} catch (Exception e) {
-			//log.error("Failed to encrypt DriversLicense = {}", decriptedDriversLicense, e);
-			this.driverslicense = null;
+		if(StringUtils.isNotBlank(decriptedDriversLicense)) {
+			try {
+				this.driverslicense = AES.encrypt(decriptedDriversLicense);
+			} catch (Exception e) {
+				//log.error("Failed to encrypt DriversLicense = {}", decriptedDriversLicense, e);
+				this.driverslicense = null;
+			}
 		}
+
 	}
 
 

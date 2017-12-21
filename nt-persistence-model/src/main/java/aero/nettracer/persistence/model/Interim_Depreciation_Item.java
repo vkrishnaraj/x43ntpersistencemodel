@@ -229,45 +229,27 @@ public class Interim_Depreciation_Item {
 
     @Transient
     public String getRefNum() {
-        if(getInterimClaimDepreciation().getClaim()!=null &&getInterimClaimDepreciation().getClaim().getIncident()!=null
-                && getInterimClaimDepreciation().getClaim().getIncident().getAirlineIncidentId()!=null && getInterimClaimDepreciation().getClaim().getIncident().getAirlineIncidentId().length()>0){
-            return getInterimClaimDepreciation().getClaim().getIncident().getAirlineIncidentId();
-        } else {
-            return "";
-        }
+        return interimClaimDepreciation.getClaimAirlineIncidentId();
     }
 
     @Transient
     public String getClaimId() {
-        if(getInterimClaimDepreciation().getClaim()!=null && getInterimClaimDepreciation().getClaim().getId()!=0){
-            return String.valueOf(getInterimClaimDepreciation().getClaim().getId());
-        } else {
-            return "";
-        }
+        return interimClaimDepreciation == null ? "" : interimClaimDepreciation.getClaimId();
     }
 
     @Transient
     public String getClaimTypeVal() {
-        if(getInterimClaimDepreciation().getClaimType()!=null && getInterimClaimDepreciation().getClaimType().getDescription()!=null
-                && getInterimClaimDepreciation().getClaimType().getDescription().length()>0){
-            return getInterimClaimDepreciation().getClaimType().getDescription();
-        } else {
-            return "";
-        }
+        return interimClaimDepreciation == null ? "" : interimClaimDepreciation.getClaimTypeDescription();
     }
 
     @Transient
     public String getCurrency() {
-        if(getInterimClaimDepreciation()!=null && getInterimClaimDepreciation().getCurrency()!=null && getInterimClaimDepreciation().getCurrency().length()>0){
-            return getInterimClaimDepreciation().getCurrency();
-        } else {
-            return "";
-        }
+        return interimClaimDepreciation == null ? "" : interimClaimDepreciation.getCurrency();
     }
 
     @Transient
     public String getApprovedTotal() {
-        if(getInterimClaimDepreciation()!=null){
+        if(interimClaimDepreciation!=null){
             return DECIMALFORMAT.format(getInterimClaimDepreciation().getTotalApprovedPayout());
         } else {
             return "";
@@ -276,12 +258,7 @@ public class Interim_Depreciation_Item {
 
     @Transient
     public String getCategoryName() {
-        if(getCategory()!=null && getCategory().getName()!=null && getCategory().getName().length()>0){
-            return getCategory().getName();
-        } else {
-            return "";
-        }
-
+        return category == null ? "" : category.getName();
     }
 
     @Transient

@@ -82,7 +82,7 @@ public class Match_Detail {
 
 	@Transient
 	public String getReportPercentage() {
-		return "" + percentage;
+		return String.valueOf(percentage);
 	}
 
 	@Transient

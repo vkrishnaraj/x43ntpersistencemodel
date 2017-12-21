@@ -743,9 +743,7 @@ public class Item {
 
 	@Transient
 	public int getFaultStation_id() {
-		if(getFaultStation()==null)
-			return 0;
-		return getFaultStation().getStation_ID();
+		return faultStation == null ? 0 : faultStation.getId();
 	}
 
 	@Transient

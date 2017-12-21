@@ -102,4 +102,5 @@ public class ScannerDataQueue  {
     public void setErrorMessage(String errorMessage) {
         this.errorMessage = errorMessage;
     }
+
 }

@@ -187,13 +187,14 @@ public class OHD_Log {
 		return itinerary.getFlightnum() != null ? itinerary.getFlightnum() : "";
 	}
 
-	@Transient
+	// Commenting out this method will break dozer. Leaving it commented out to fix it the right way
+	/*@Transient
 	public int getLogStatusDescription(){
 		return log_status;
 	}
 
 	public void setLogStatusDescription(int log_status){
 		this.log_status = log_status;
-	}
+	}*/
 
 }

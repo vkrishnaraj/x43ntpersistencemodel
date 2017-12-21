@@ -13,7 +13,6 @@ import java.sql.Timestamp;
 
 @Entity
 @Table(name = "incident_control")
-
 public class IncidentControl {
 
 	private long id;

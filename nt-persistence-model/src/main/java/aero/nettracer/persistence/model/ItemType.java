@@ -1,6 +1,5 @@
 package aero.nettracer.persistence.model;
 
-import aero.nettracer.persistence.model.i8n.LocaleBasedObject;
 import aero.nettracer.persistence.util.ItemTypeDescription;
 
 import javax.persistence.Entity;
@@ -11,7 +10,7 @@ import javax.persistence.Transient;
 
 @Entity
 @Table(name = "itemtype")
-public class ItemType extends LocaleBasedObject {
+public class ItemType {
 
 	private int id;
 	private String description;
