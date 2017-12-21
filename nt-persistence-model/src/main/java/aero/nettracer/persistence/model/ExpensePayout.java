@@ -6,6 +6,7 @@
  */
 package aero.nettracer.persistence.model;
 
+import aero.nettracer.commons.utils.CommonsConstants;
 import org.hibernate.annotations.OrderBy;
 
 import javax.persistence.CascadeType;
@@ -547,7 +548,7 @@ public class ExpensePayout {
 	}
 
 	@OneToMany(cascade = CascadeType.ALL)
-	@JoinColumn(name = "expensepayout_id", referencedColumnName="expensepayout_id")
+	@JoinColumn(name = "expensepayout_id")
 	@OrderBy(clause = "createtime asc")
 	public Set<Remark> getRemarks() {
 		return remarks;
@@ -562,10 +563,8 @@ public class ExpensePayout {
 		return currency.getCurrencyCode();
 	}
 
-	//NTFIXME - Make this new db model dependent on commons before enabling the below code
-	/*@Transient
+	@Transient
 	public double getAmount() {
-		// FIXME: NT-7966: Case statement is only necessary while *amt properties remain employed in the POJO and table.
 		double amount;
 		switch (getPaytype() == null ? "" : getPaytype()) {
 		case CommonsConstants.ENUM_MILE:
@@ -599,7 +598,6 @@ public class ExpensePayout {
 	@Transient
 	public void setAmount(double amount) {
 		this.amount = amount;
-		// FIXME: NT-7966: Case statement is only necessary while *amt properties remain employed in the POJO and table.
 		switch (getPaytype()) {
 		case CommonsConstants.ENUM_DRAFT:
 			setCheckamt(amount);
@@ -632,26 +630,8 @@ public class ExpensePayout {
 			setOtheramt(amount);
 			break;
 		}
-	}*/
+	}
 	
-	/*@Transient
-	public String getDispamount() {
-		if (getPaytype().equals("MILE")) {
-			return String.valueOf((int)Math.round(getAmount()));
-		} else {
-			return CommonsConstants.DECIMALFORMAT.format(getAmount());
-		}
-	}*/
-	
-	/*@Transient
-	public void setDispamount(String amount) {
-		setAmount(CommonsUtils.convertToDouble(amount));
-	}*/
-
-
-
-
-
 	public static Comparator<ExpensePayout> PaymentTypeComparator = new Comparator<ExpensePayout>() {
 	    public int compare(ExpensePayout expense1, ExpensePayout expense2) {
 	      String paytype1 = expense1.getPaytype().toUpperCase();

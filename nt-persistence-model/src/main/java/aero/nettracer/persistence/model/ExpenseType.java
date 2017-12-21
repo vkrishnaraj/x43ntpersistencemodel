@@ -1,7 +1,5 @@
 package aero.nettracer.persistence.model;
 
-import aero.nettracer.persistence.model.i8n.LocaleBasedObject;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -13,7 +11,7 @@ import javax.persistence.Transient;
 
 @Entity
 @Table(name = "ExpenseType")
-public class ExpenseType extends LocaleBasedObject {
+public class ExpenseType {
 
 	private int id;
 	private Company company;

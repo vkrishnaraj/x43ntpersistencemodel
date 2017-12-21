@@ -7,7 +7,6 @@ import org.hibernate.annotations.FetchMode;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -34,7 +33,7 @@ public class InboundQueue {
 		this.id = id;
 	}
 	
-	@ManyToOne(targetEntity = Incident.class, cascade = CascadeType.ALL, fetch=FetchType.EAGER)
+	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "incident_id")
 	@Fetch(FetchMode.SELECT)
 	public Incident getIncident() {

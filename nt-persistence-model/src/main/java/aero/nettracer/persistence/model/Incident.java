@@ -20,7 +20,6 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -697,7 +696,7 @@ public class Incident {
 		this.expenses = expenses;
 	}
 
-	@OneToMany(mappedBy = "incident", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "incident", cascade = CascadeType.ALL)
 	@Fetch(FetchMode.SELECT)
 	public Set<Incident_Claimcheck> getClaimchecks() {
 		return claimchecks;
@@ -757,7 +756,7 @@ public class Incident {
 		this.itinerary = itinerary;
 	}
 
-	@OneToMany(mappedBy = "ntIncident", fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "ntIncident")
 	@org.hibernate.annotations.OrderBy(clause = "claimdate")
 	public Set<Claim> getClaims() {
 		return claims;

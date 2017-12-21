@@ -8,7 +8,6 @@ import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -79,7 +78,7 @@ public class VTaskNotInWork {
 		this.status = status;
 	}
 
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne
 	@JoinColumn(name = "Incident_ID", nullable = false)
 	@Fetch(FetchMode.SELECT)
 	public Incident getIncident() {
