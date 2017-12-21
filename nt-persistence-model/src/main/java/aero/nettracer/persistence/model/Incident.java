@@ -622,6 +622,7 @@ public class Incident {
 	}
 
 	@Column(name = "paxview_login_date")
+	@Temporal(TemporalType.TIMESTAMP)
 	public Timestamp getPaxview_login_date() {
 		return paxview_login_date;
 	}
@@ -866,65 +867,9 @@ public class Incident {
 		return (faultstation == null ? "" : faultstation.getStationcode());
 	}
 
-	//End
-
-
-
-	@Override
-	public int hashCode() {
-		int result = 23;
-		result = 37 * result + (id == null ? 0 : id.hashCode());
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object otherObject) {
-		if (this == otherObject)
-			return true;
-		if (otherObject == null)
-			return false;
-		if (!(otherObject instanceof Incident))
-			return false;
-
-		if (id == null)
-			return false;
-
-		Incident o = (Incident) otherObject;
-		return id.equals(o.getId());
-	}
-
-
-
-	private Double roundToTwoDecimals(Double d) {
-		DecimalFormat twoDForm = new DecimalFormat("#.##");
-		return Double.valueOf(twoDForm.format(d));
-	}
-
 	@Transient
 	public boolean isSwaLocked() {
 		return false;
-	}
-
-	@Override
-	public String toString() {
-		return String.format("Incident [version=%s, Incident_ID=%s, stationcreated=%s, stationassigned=%s, faultstation=%s, agent=%s, agentassigned=%s, "
-				+ "createdate=%s, createtime=%s, closedate=%s, recordlocator=%s, manualreportnum=%s, ticketnumber=%s, reportmethod=%s, checkedlocation=%s, "
-				+ "numpassengers=%s, numbagchecked=%s, numbagreceived=%s, voluntaryseparation=%s, courtesyreport=%s, tsachecked=%s, customcleared=%s, "
-				+ "nonrevenue=%s, itemtype=%s, deliveryInstructions=%s, status=%s, loss_code=%s, printedreceipt=%s, lastupdated=%s, ohd_lasttraced=%s, "
-				+ "wtFile=%s, crmFile=%s, passengers=%s, articles=%s, remarks=%s, itinerary=%s, oc_claim_id=%s, claims=%s, claimchecks=%s, "
-				+ "language=%s, incidentControl=%s, dispute=%s, locked=%s, codeLocked=%s, stationLocked=%s, revenueCode=%s, tracingStatus=%s, "
-				+ "tracingStarted=%s, tracingComplete=%s, tracingAgent=%s, rxTimestamp=%s, courtesyReasonId=%s, courtesyDescription=%s, custCommId=%s, "
-				+ "claimStatusId=%s, issuanceItemIncidents=%s, activities=%s, wtStationCode=%s, wtCompanyCode=%s, overall_weight=%s, overall_weight_unit=%s, "
-				+ "checklist_version=%s]",
-				version, id, stationcreated, stationassigned, faultstation, agent, agentassigned,
-				createdate, createtime, closedate, recordlocator, manualreportnum, ticketnumber, reportmethod, checkedlocation,
-				numpassengers, numbagchecked, numbagreceived, voluntaryseparation, courtesyreport, tsachecked, customcleared, 
-				nonrevenue, itemtype, deliveryInstructions, status, loss_code, printedreceipt, lastupdated, ohd_lasttraced, 
-				wtFile, crmFile, passengers, articles, remarks, itinerary, oc_claim_id, claims, claimchecks,
-				expenses, language, incidentControl, dispute, locked, codeLocked, stationLocked, revenueCode, tracingStatus,
-				tracingStarted, tracingComplete, tracingAgent, rxTimestamp, courtesyReasonId, courtesyDescription, custCommId, 
-				claimStatusId, issuanceItemIncidents, activities, wtStationCode, wtCompanyCode, overall_weight, overall_weight_unit, 
-				checklist_version);
 	}
 
 	@Transient
@@ -968,5 +913,55 @@ public class Incident {
 			}
 		}
 			return fees;
+	}
+
+	@Override
+	public int hashCode() {
+		int result = 23;
+		result = 37 * result + (id == null ? 0 : id.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object otherObject) {
+		if (this == otherObject)
+			return true;
+		if (otherObject == null)
+			return false;
+		if (!(otherObject instanceof Incident))
+			return false;
+
+		if (id == null)
+			return false;
+
+		Incident o = (Incident) otherObject;
+		return id.equals(o.getId());
+	}
+
+	@Override
+	public String toString() {
+		return String.format("Incident [version=%s, Incident_ID=%s, stationcreated=%s, stationassigned=%s, faultstation=%s, agent=%s, agentassigned=%s, "
+						+ "createdate=%s, createtime=%s, closedate=%s, recordlocator=%s, manualreportnum=%s, ticketnumber=%s, reportmethod=%s, checkedlocation=%s, "
+						+ "numpassengers=%s, numbagchecked=%s, numbagreceived=%s, voluntaryseparation=%s, courtesyreport=%s, tsachecked=%s, customcleared=%s, "
+						+ "nonrevenue=%s, itemtype=%s, deliveryInstructions=%s, status=%s, loss_code=%s, printedreceipt=%s, lastupdated=%s, ohd_lasttraced=%s, "
+						+ "wtFile=%s, crmFile=%s, passengers=%s, articles=%s, remarks=%s, itinerary=%s, oc_claim_id=%s, claims=%s, claimchecks=%s, "
+						+ "language=%s, incidentControl=%s, dispute=%s, locked=%s, codeLocked=%s, stationLocked=%s, revenueCode=%s, tracingStatus=%s, "
+						+ "tracingStarted=%s, tracingComplete=%s, tracingAgent=%s, rxTimestamp=%s, courtesyReasonId=%s, courtesyDescription=%s, custCommId=%s, "
+						+ "claimStatusId=%s, issuanceItemIncidents=%s, activities=%s, wtStationCode=%s, wtCompanyCode=%s, overall_weight=%s, overall_weight_unit=%s, "
+						+ "checklist_version=%s]",
+				version, id, stationcreated, stationassigned, faultstation, agent, agentassigned,
+				createdate, createtime, closedate, recordlocator, manualreportnum, ticketnumber, reportmethod, checkedlocation,
+				numpassengers, numbagchecked, numbagreceived, voluntaryseparation, courtesyreport, tsachecked, customcleared,
+				nonrevenue, itemtype, deliveryInstructions, status, loss_code, printedreceipt, lastupdated, ohd_lasttraced,
+				wtFile, crmFile, passengers, articles, remarks, itinerary, oc_claim_id, claims, claimchecks,
+				expenses, language, incidentControl, dispute, locked, codeLocked, stationLocked, revenueCode, tracingStatus,
+				tracingStarted, tracingComplete, tracingAgent, rxTimestamp, courtesyReasonId, courtesyDescription, custCommId,
+				claimStatusId, issuanceItemIncidents, activities, wtStationCode, wtCompanyCode, overall_weight, overall_weight_unit,
+				checklist_version);
+	}
+
+	private Double roundToTwoDecimals(Double d) {
+		DecimalFormat twoDForm = new DecimalFormat("#.##");
+		return Double.valueOf(twoDForm.format(d));
 	}
 }

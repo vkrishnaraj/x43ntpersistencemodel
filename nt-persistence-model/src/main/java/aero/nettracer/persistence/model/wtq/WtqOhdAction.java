@@ -18,7 +18,7 @@ public abstract class WtqOhdAction extends WorldTracerQueue {
 		this.ohd = ohd;
 	}
 	
-	@ManyToOne(targetEntity = OHD.class)
+	@ManyToOne
 	@JoinColumn(name = "ohd_id")
 	public OHD getOhd() {
 		return ohd;

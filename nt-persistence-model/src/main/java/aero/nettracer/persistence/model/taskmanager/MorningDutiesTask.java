@@ -11,7 +11,7 @@ public class MorningDutiesTask extends GeneralTask {
 	
 	private Incident incident;
 
-	@ManyToOne(targetEntity = Incident.class)
+	@ManyToOne
 	@JoinColumn(name = "incident_id")
 	public Incident getIncident() {
 		return incident;

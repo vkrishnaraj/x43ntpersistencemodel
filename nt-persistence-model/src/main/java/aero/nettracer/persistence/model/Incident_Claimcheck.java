@@ -1,5 +1,7 @@
 package aero.nettracer.persistence.model;
 
+import aero.nettracer.commons.utils.CommonsUtils;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -48,11 +50,11 @@ public class Incident_Claimcheck {
 		return claimchecknum;
 	}
 
-	/*public void setClaimchecknum(String claimchecknum) {
+	public void setClaimchecknum(String claimchecknum) {
 		if (claimchecknum != null)
 			claimchecknum = CommonsUtils.removeSpaces(claimchecknum);
 		this.claimchecknum = claimchecknum;
-	}*/
+	}
 
 	@Column(name = "ohd_id")
 	public String getOHD_ID() {

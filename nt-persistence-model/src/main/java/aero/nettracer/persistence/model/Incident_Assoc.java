@@ -44,7 +44,7 @@ public class Incident_Assoc {
 		this.incident_ID = incident_ID;
 	}
 
-	@Column(name = "itemtype_ID")
+	@Column(name = "itemtype_id")
 	public int getItemtype_ID() {
 		return itemtype_ID;
 	}

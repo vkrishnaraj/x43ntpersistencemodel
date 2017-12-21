@@ -24,15 +24,17 @@ public class IncidentChecklist {
 	public long getId() {
 		return id;
 	}
+
 	public void setId(long id) {
 		this.id = id;
 	}
 
-	@ManyToOne(targetEntity = Incident.class)
+	@ManyToOne
 	@JoinColumn(name = "incident_id", nullable = false)
 	public Incident getIncident() {
 		return incident;
 	}
+
 	public void setIncident(Incident incident) {
 		this.incident = incident;
 	}
@@ -52,6 +54,7 @@ public class IncidentChecklist {
 	public ChecklistTaskOption getChecklistTaskOption() {
 		return checklistTaskOption;
 	}
+
 	public void setChecklistTaskOption(ChecklistTaskOption checklistTaskOption) {
 		this.checklistTaskOption = checklistTaskOption;
 	}
