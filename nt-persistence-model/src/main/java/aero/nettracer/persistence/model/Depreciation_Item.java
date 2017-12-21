@@ -223,51 +223,27 @@ public class Depreciation_Item {
 
 	@Transient
 	public String getRefNum() {
-		if(getClaimDepreciation().getClaim()!=null &&getClaimDepreciation().getClaim().getIncident()!=null
-				&& getClaimDepreciation().getClaim().getIncident().getAirlineIncidentId()!=null && getClaimDepreciation().getClaim().getIncident().getAirlineIncidentId().length()>0){
-			return getClaimDepreciation().getClaim().getIncident().getAirlineIncidentId();
-		} else {
-			return "";
-		}
+		return claimDepreciation.getClaimAirlineIncidentId();
 	}
 	
 	@Transient
 	public String getClaimId() {
-		if(getClaimDepreciation().getClaim()!=null && getClaimDepreciation().getClaim().getId()!=0){
-			return String.valueOf(getClaimDepreciation().getClaim().getId());
-		} else {
-			return "";
-		}
+		return claimDepreciation == null ? "" : claimDepreciation.getClaimId();
 	}
 	
 	@Transient
 	public String getClaimTypeVal() {
-		if(getClaimDepreciation().getClaimType()!=null && getClaimDepreciation().getClaimType().getDescription()!=null 
-				&& getClaimDepreciation().getClaimType().getDescription().length()>0){
-			return getClaimDepreciation().getClaimType().getDescription();
-		} else {
-			return "";
-		}
+		return claimDepreciation == null ? "" : claimDepreciation.getClaimTypeDescription();
 	}
 
 	@Transient
 	public String getCurrency() {
-
-		if(getClaimDepreciation()!=null && getClaimDepreciation().getCurrency()!=null && getClaimDepreciation().getCurrency().length()>0){
-			return getClaimDepreciation().getCurrency();
-		} else {
-			return "";
-		}
+		return claimDepreciation == null ? "" : claimDepreciation.getCurrency();
 	}
 
 	@Transient
 	public String getCategoryName() {
-		if(getCategory()!=null && getCategory().getName()!=null && getCategory().getName().length()>0){
-			return getCategory().getName();
-		} else {
-			return "";
-		}
-		
+		return category == null ? "" : category.getName();
 	}
 	
 	@Transient

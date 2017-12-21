@@ -1,6 +1,7 @@
 package aero.nettracer.persistence.model;
 
 import aero.nettracer.persistence.model.fraudservice.FsClaim;
+import aero.nettracer.persistence.model.fraudservice.FsIncident;
 
 import javax.persistence.CascadeType;
 import javax.persistence.DiscriminatorValue;
@@ -36,7 +37,7 @@ public class Claim extends FsClaim {
 	}
 	
 	public void setNtIncident(Incident ntIncident) {
-		super.setNtIncidentId(ntIncident.getIncident_ID());
+		super.setNtIncidentId(ntIncident.getId());
 		this.ntIncident = ntIncident;
 	}
 
@@ -100,5 +101,11 @@ public class Claim extends FsClaim {
 
 	public void setFraudStatusId(int statusId) {
 		super.setFraudStatusId(statusId);
+	}
+
+	@Transient
+	public String getAirlineIncidentId() {
+		FsIncident incident = getIncident();
+		return incident == null ? "" : incident.getAirlineIncidentId();
 	}
 }

@@ -14,6 +14,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -149,5 +150,20 @@ public class Claim_Depreciation {
 	public void setItemList(List<Depreciation_Item> itemList) {
 		this.itemList = itemList;
 	}
+
+	@Transient
+    public String getClaimAirlineIncidentId() {
+	    return claim == null ? "" :claim.getAirlineIncidentId();
+    }
+
+    @Transient
+    public String getClaimId() {
+        return claim == null ? "" : String.valueOf(claim.getId());
+    }
+
+    @Transient
+    public String getClaimTypeDescription() {
+	    return claimType == null ? "" : claimType.getDescription();
+    }
 
 }
