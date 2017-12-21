@@ -1,38 +1,38 @@
 package aero.nettracer.persistence.model.wt;
 
-import java.io.Serializable;
-import java.util.Collection;
-import java.util.Date;
+import aero.nettracer.persistence.model.Worldtracer_Actionfiles.ActionFileType;
 
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import aero.nettracer.legacy.persistence.model.Worldtracer_Actionfiles.ActionFileType;
+import java.sql.Timestamp;
+import java.util.Collection;
 
 @Entity
-public class ActionFileStation implements Serializable {
-
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -2309734754822528500L;
+public class ActionFileStation {
 
 	private long id;
-
-	private Date lastUpdated;
-
 	private String companyCode;
-
+	private Timestamp lastUpdated;
 	private String stationCode;
-
 	private Collection<ActionFileCount> countList;
+
+	@Id
+	@GeneratedValue
+	@Column(name = "id")
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
 
 	@Column(name = "company_code", length = 2)
 	public String getCompanyCode() {
@@ -43,7 +43,17 @@ public class ActionFileStation implements Serializable {
 		this.companyCode = companyCode;
 	}
 
-	@Column(name = "station_code", length = 3)
+	@Column(name = "lastupdated")
+	@Temporal(TemporalType.TIMESTAMP)
+	public Timestamp getLastUpdated() {
+		return lastUpdated;
+	}
+
+	public void setLastUpdated(Timestamp lastUpdated) {
+		this.lastUpdated = lastUpdated;
+	}
+
+	@Column(name = "station_code")
 	public String getStationCode() {
 		return stationCode;
 	}
@@ -52,7 +62,7 @@ public class ActionFileStation implements Serializable {
 		this.stationCode = stationCode;
 	}
 
-	@ElementCollection(targetClass = ActionFileCount.class, fetch=FetchType.EAGER)
+	@ElementCollection
 	@JoinTable(name = "actionfile_station_counts", joinColumns = @JoinColumn(name = "af_station_id"))
 	public Collection<ActionFileCount> getCountList() {
 		return countList;
@@ -60,25 +70,6 @@ public class ActionFileStation implements Serializable {
 
 	public void setCountList(Collection<ActionFileCount> countList) {
 		this.countList = countList;
-	}
-
-	@Id
-	@GeneratedValue
-	public long getId() {
-		return id;
-	}
-
-	@Temporal(TemporalType.TIMESTAMP)
-	public Date getLastUpdated() {
-		return lastUpdated;
-	}
-
-	public void setId(long id) {
-		this.id = id;
-	}
-
-	public void setLastUpdated(Date lastUpdated) {
-		this.lastUpdated = lastUpdated;
 	}
 
 	public boolean summaryLoaded(ActionFileType afType, int day, String seq) {

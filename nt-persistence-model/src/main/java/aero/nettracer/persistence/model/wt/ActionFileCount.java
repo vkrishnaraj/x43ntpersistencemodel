@@ -1,22 +1,15 @@
 package aero.nettracer.persistence.model.wt;
 
-import java.io.Serializable;
-import java.util.Arrays;
-import java.util.Iterator;
+import aero.nettracer.persistence.model.Worldtracer_Actionfiles.ActionFileType;
 
 import javax.persistence.Embeddable;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-
-import aero.nettracer.legacy.persistence.model.Worldtracer_Actionfiles.ActionFileType;
+import java.util.Arrays;
+import java.util.Iterator;
 
 @Embeddable
-public class ActionFileCount implements Serializable, Iterable<Integer>, Comparable<ActionFileCount>{
-	
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 3545886590094938766L;
+public class ActionFileCount implements Iterable<Integer>, Comparable<ActionFileCount>{
 	
 	int dayOne;
 	boolean dayOneLoaded;

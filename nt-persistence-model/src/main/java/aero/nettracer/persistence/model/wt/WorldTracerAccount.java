@@ -1,8 +1,5 @@
 package aero.nettracer.persistence.model.wt;
 
-import java.io.Serializable;
-import java.util.Date;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,34 +7,22 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-
-import org.hibernate.annotations.Proxy;
+import java.sql.Timestamp;
 
 @Entity
 @Table(name = "world_tracer_account")
-public class WorldTracerAccount implements Serializable {
+public class WorldTracerAccount {
 
-	private static final long serialVersionUID = 4856969474327661943L;
+	private long id;
+	private String companyCode;
+	private String instanceName;
+	private Timestamp lastReset;
+	private String password;
+	private String username;
 
 	@Id
 	@GeneratedValue
-	private long id;
-
-	@Column(length = 2)
-	private String companyCode;
-
-	@Column(length = 20)
-	private String instanceName;
-
-	@Column(length = 20)
-	private String username;
-
-	@Column(length = 20)
-	private String password;
-
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date lastReset;
-
+	@Column(name = "id")
 	public long getId() {
 		return id;
 	}
@@ -46,6 +31,16 @@ public class WorldTracerAccount implements Serializable {
 		this.id = id;
 	}
 
+	@Column(name = "companycode")
+	public String getCompanyCode() {
+		return companyCode;
+	}
+
+	public void setCompanyCode(String companyCode) {
+		this.companyCode = companyCode;
+	}
+
+	@Column(name = "instancename")
 	public String getInstanceName() {
 		return instanceName;
 	}
@@ -54,14 +49,17 @@ public class WorldTracerAccount implements Serializable {
 		this.instanceName = instanceName;
 	}
 
-	public String getUsername() {
-		return username;
+	@Column(name = "lastreset")
+	@Temporal(TemporalType.TIMESTAMP)
+	public Timestamp getLastReset() {
+		return lastReset;
 	}
 
-	public void setUsername(String username) {
-		this.username = username;
+	public void setLastReset(Timestamp lastReset) {
+		this.lastReset = lastReset;
 	}
 
+	@Column(name = "password")
 	public String getPassword() {
 		return password;
 	}
@@ -70,19 +68,13 @@ public class WorldTracerAccount implements Serializable {
 		this.password = password;
 	}
 
-	public Date getLastReset() {
-		return lastReset;
+	@Column(name = "username")
+	public String getUsername() {
+		return username;
 	}
 
-	public void setLastReset(Date lastReset) {
-		this.lastReset = lastReset;
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
-	public String getCompanyCode() {
-		return companyCode;
-	}
-
-	public void setCompanyCode(String companyCode) {
-		this.companyCode = companyCode;
-	}
 }
