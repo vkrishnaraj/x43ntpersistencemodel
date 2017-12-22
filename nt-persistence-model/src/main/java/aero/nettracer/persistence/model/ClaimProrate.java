@@ -1,8 +1,5 @@
 package aero.nettracer.persistence.model;
 
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.CascadeType;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -215,8 +212,7 @@ public class ClaimProrate {
 		this.total_share = total_share;
 	}
 
-	@OneToMany(mappedBy = "claimProrate")
-	@Cascade(CascadeType.ALL)
+	@OneToMany(mappedBy = "claimProrate", cascade = javax.persistence.CascadeType.ALL)
 	@OrderBy(value = "prorate_itinerary_id")
 	public Set<Prorate_Itinerary> getProrate_itineraries() {
 		return prorate_itineraries;
