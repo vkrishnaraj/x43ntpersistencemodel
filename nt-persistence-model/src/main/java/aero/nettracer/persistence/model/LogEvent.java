@@ -1,5 +1,6 @@
 package aero.nettracer.persistence.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -133,7 +134,7 @@ public class LogEvent {
 		this.threadName = threadName;
 	}
 
-	@OneToMany(mappedBy = "logevent", cascade = javax.persistence.CascadeType.ALL)
+	@OneToMany(mappedBy = "logevent", cascade = CascadeType.ALL)
 	public List<LogEventThrowable> getLoggingEventThrowableWrapper() {
 		return loggingEventThrowableWrapper;
 	}

@@ -1,6 +1,7 @@
 package aero.nettracer.persistence.model;
 
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -329,7 +330,7 @@ public class LostAndFoundIncident {
 		this.readonly = readonly;
 	}
 
-	@OneToMany(mappedBy = "lostandfoundincident", cascade = javax.persistence.CascadeType.ALL)
+	@OneToMany(mappedBy = "lostandfoundincident", cascade = CascadeType.ALL)
 	@OrderBy(value = "Photo_ID")
 	public Set<LostAndFound_Photo> getPhotos() {
 		return photos;
