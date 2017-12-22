@@ -1,33 +1,22 @@
 package aero.nettracer.persistence.model;
 
-import java.io.Serializable;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.Proxy;
-
 @Entity
 @Table(name="lf_shipping_option_priority")
-@Proxy(lazy = false)
-public class LFShippingOptionPriority implements Serializable {
+public class LFShippingOptionPriority {
 
-	private static final long serialVersionUID = 9021421764254196698L;
+	private long id;
+	private String shippingOption;
+	private int shippingPriority;
 
 	@Id
 	@GeneratedValue
-	private long id;
-	
-	@Column(name="shipping_option",length = 32)
-	private String shippingOption;
-	
-	@Column(name="shipping_priority")
-	private int shippingPriority;
-
-
+	@Column(name = "id")
 	public long getId() {
 		return id;
 	}
@@ -35,6 +24,8 @@ public class LFShippingOptionPriority implements Serializable {
 	public void setId(long id) {
 		this.id = id;
 	}
+
+	@Column(name="shipping_option")
 	public String getShippingOption() {
 		return shippingOption;
 	}
@@ -43,6 +34,7 @@ public class LFShippingOptionPriority implements Serializable {
 		this.shippingOption = shippingOption;
 	}
 
+	@Column(name="shipping_priority")
 	public int getShippingPriority() {
 		return shippingPriority;
 	}
@@ -50,4 +42,5 @@ public class LFShippingOptionPriority implements Serializable {
 	public void setShippingPriority(int shippingPriority) {
 		this.shippingPriority = shippingPriority;
 	}
+
 }

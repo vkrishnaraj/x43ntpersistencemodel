@@ -1,8 +1,5 @@
 package aero.nettracer.persistence.model;
 
-import java.io.Serializable;
-import java.util.Date;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,77 +7,51 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
-
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.Proxy;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import java.sql.Timestamp;
 
 @Entity
-@Proxy(lazy = false)
-public class LFShipping implements Serializable{
+@Table(name = "lfshipping")
+public class LFShipping {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 7635407911286747875L;
+	private long id;
+	private LFPhone shippingPhone;
+	private LFAddress shippingAddress;
+	private LFAddress billingAddress;
+	private String shippingOption;
+	private int shippingPriority;
+	private String shippingName;
+	private String totalPayment;
+	private double declaredValue;
+	private Timestamp pickedTimestamp;
+	private String instructions;
+	private LFTransaction transaction;
+
 	@Id
 	@GeneratedValue
-	private long id;
-	
-	@OneToOne
-	@JoinColumn(name = "phone_id", nullable = true)
-	@Cascade(value = org.hibernate.annotations.CascadeType.ALL)
-	private LFPhone shippingPhone;
+	@Column(name = "id")
+	public long getId() {
+		return id;
+	}
 
-	@OneToOne
-	@JoinColumn(name = "shipping_addr_id", nullable = false)
-	@Cascade(value = org.hibernate.annotations.CascadeType.ALL)
-	private LFAddress shippingAddress;
+	public void setId(long id) {
+		this.id = id;
+	}
 
-	@OneToOne
-	@JoinColumn(name = "billing_addr_id", nullable = true)
-	@Cascade(value = org.hibernate.annotations.CascadeType.ALL)
-	private LFAddress billingAddress;
-	
-	@Column(name="shipping_option",length = 32)
-	private String shippingOption;
-	
-	@Column(name="shipping_priority")
-	private int shippingPriority;
-	
-	@Column(name="shipping_name",length = 64)
-	private String shippingName;
-	
-	@Column(name="total_payment",length = 16)
-	private String totalPayment;
-	
-	@Column(name="declared_value")
-	private double declaredValue;
-	
-	@Column(name="picked_datetime")
-	private Date pickedTimestamp;
-	
-	@Column(name="instructions",length = 512)
-	private String instructions;
-	
-	@OneToOne(targetEntity = aero.nettracer.persistence.model.LFTransaction.class, cascade = CascadeType.ALL)
-	private LFTransaction transaction;
-	
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "phone_id")
 	public LFPhone getShippingPhone() {
 		return shippingPhone;
 	}
-	
+
 	public void setShippingPhone(LFPhone shippingPhone) {
 		this.shippingPhone = shippingPhone;
 	}
 
-	public LFAddress getBillingAddress() {
-		return billingAddress;
-	}
-
-	public void setBillingAddress(LFAddress billingAddress) {
-		this.billingAddress = billingAddress;
-	}
-
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "shipping_addr_id", nullable = false)
 	public LFAddress getShippingAddress() {
 		return shippingAddress;
 	}
@@ -89,6 +60,17 @@ public class LFShipping implements Serializable{
 		this.shippingAddress = shippingAddress;
 	}
 
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "billing_addr_id")
+	public LFAddress getBillingAddress() {
+		return billingAddress;
+	}
+
+	public void setBillingAddress(LFAddress billingAddress) {
+		this.billingAddress = billingAddress;
+	}
+
+	@Column(name="shipping_option")
 	public String getShippingOption() {
 		return shippingOption;
 	}
@@ -96,7 +78,8 @@ public class LFShipping implements Serializable{
 	public void setShippingOption(String shippingOption) {
 		this.shippingOption = shippingOption;
 	}
-	
+
+	@Column(name="shipping_priority")
 	public int getShippingPriority() {
 		return shippingPriority;
 	}
@@ -105,30 +88,7 @@ public class LFShipping implements Serializable{
 		this.shippingPriority = shippingPriority;
 	}
 
-	public String getTotalPayment() {
-		return totalPayment;
-	}
-
-	public void setTotalPayment(String totalPayment) {
-		this.totalPayment = totalPayment;
-	}
-
-	public LFTransaction getTransaction() {
-		return transaction;
-	}
-
-	public void setTransaction(LFTransaction transaction) {
-		this.transaction = transaction;
-	}
-
-	public double getDeclaredValue() {
-		return declaredValue;
-	}
-
-	public void setDeclaredValue(double declaredValue) {
-		this.declaredValue = declaredValue;
-	}
-
+	@Column(name="shipping_name")
 	public String getShippingName() {
 		return shippingName;
 	}
@@ -137,14 +97,35 @@ public class LFShipping implements Serializable{
 		this.shippingName = shippingName;
 	}
 
-	public Date getPickedTimestamp() {
+	@Column(name="total_payment")
+	public String getTotalPayment() {
+		return totalPayment;
+	}
+
+	public void setTotalPayment(String totalPayment) {
+		this.totalPayment = totalPayment;
+	}
+
+	@Column(name="declared_value")
+	public double getDeclaredValue() {
+		return declaredValue;
+	}
+
+	public void setDeclaredValue(double declaredValue) {
+		this.declaredValue = declaredValue;
+	}
+
+	@Column(name="picked_datetime")
+	@Temporal(TemporalType.TIMESTAMP)
+	public Timestamp getPickedTimestamp() {
 		return pickedTimestamp;
 	}
 
-	public void setPickedTimestamp(Date pickedTimestamp) {
+	public void setPickedTimestamp(Timestamp pickedTimestamp) {
 		this.pickedTimestamp = pickedTimestamp;
 	}
 
+	@Column(name="instructions")
 	public String getInstructions() {
 		return instructions;
 	}
@@ -152,14 +133,15 @@ public class LFShipping implements Serializable{
 	public void setInstructions(String instructions) {
 		this.instructions = instructions;
 	}
-	public long getId() {
-		return id;
+
+	@OneToOne(cascade = CascadeType.ALL)
+	public LFTransaction getTransaction() {
+		return transaction;
 	}
 
-	public void setId(long id) {
-		this.id = id;
+	public void setTransaction(LFTransaction transaction) {
+		this.transaction = transaction;
 	}
-	
 }
 
 
