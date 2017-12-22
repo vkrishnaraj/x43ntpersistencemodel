@@ -1,8 +1,5 @@
 package aero.nettracer.persistence.model;
 
-import java.io.Serializable;
-import java.util.Date;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,50 +7,28 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import java.sql.Timestamp;
 
 @Entity
-public class LFRemark implements Serializable{
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 5769095740895350735L;
+@Table(name = "lfremark")
+public class LFRemark {
+
+	private long id;
+	private long calltime;
+	private int outcome;
+	private int agentId;
+	private String remarktext;
+	private Timestamp remarkdate;
+	private int type;
+	private LFFound found;
+	private LFLost lost;
 
 	@Id
 	@GeneratedValue
-	private long id;
-	
-	@Column(name="calltime")
-	private long calltime;
-	
-	@Column(name="outcome")
-	private int outcome;
-
-	@Column(name = "agent_id", nullable = false)
-	private int agentId;
-	
-	@Column(name="remark_text",length = 2048)
-	private String remarktext;
-	
-	@Column(name="remark_datetime")
-	private Date remarkdate;
-	
-	@Column(name="remark_type")
-	private int type;
-
-	@ManyToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "found_id", nullable = true)
-	@Fetch(FetchMode.SELECT)
-	private LFFound found;
-	
-	@ManyToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "lost_id", nullable = true)
-	@Fetch(FetchMode.SELECT)
-	private LFLost lost;
-	
-	
+	@Column(name = "id")
 	public long getId() {
 		return id;
 	}
@@ -62,6 +37,7 @@ public class LFRemark implements Serializable{
 		this.id = id;
 	}
 
+	@Column(name="calltime")
 	public long getCalltime() {
 		return calltime;
 	}
@@ -70,6 +46,7 @@ public class LFRemark implements Serializable{
 		this.calltime = calltime;
 	}
 
+	@Column(name = "outcome")
 	public int getOutcome() {
 		return outcome;
 	}
@@ -78,23 +55,7 @@ public class LFRemark implements Serializable{
 		this.outcome = outcome;
 	}
 
-	public void setFound(LFFound found) {
-		this.found = found;
-	}
-
-	public LFFound getFound() {
-		return found;
-	}
-
-	public void setLost(LFLost lost) {
-		this.lost = lost;
-	}
-
-	public LFLost getLost() {
-		return lost;
-	}
-
-	
+	@Column(name = "agent_id", nullable = false)
 	public int getAgentId() {
 		return agentId;
 	}
@@ -103,6 +64,7 @@ public class LFRemark implements Serializable{
 		this.agentId = agentId;
 	}
 
+	@Column(name="remark_text",length = 2048)
 	public String getRemarktext() {
 		return remarktext;
 	}
@@ -111,20 +73,43 @@ public class LFRemark implements Serializable{
 		this.remarktext = remarktext;
 	}
 
-	public Date getRemarkdate() {
+	@Column(name="remark_datetime")
+	@Temporal(TemporalType.TIMESTAMP)
+	public Timestamp getRemarkdate() {
 		return remarkdate;
 	}
 
-	public void setRemarkdate(Date remarkdate) {
+	public void setRemarkdate(Timestamp remarkdate) {
 		this.remarkdate = remarkdate;
 	}
 
+	@Column(name="remark_type")
 	public int getType() {
 		return type;
 	}
 
 	public void setType(int type) {
 		this.type = type;
+	}
+
+	@ManyToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "found_id")
+	public LFFound getFound() {
+		return found;
+	}
+
+	public void setFound(LFFound found) {
+		this.found = found;
+	}
+
+	@ManyToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "lost_id")
+	public LFLost getLost() {
+		return lost;
+	}
+
+	public void setLost(LFLost lost) {
+		this.lost = lost;
 	}
 
 }

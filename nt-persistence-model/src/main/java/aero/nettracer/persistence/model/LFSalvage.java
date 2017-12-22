@@ -1,60 +1,36 @@
 package aero.nettracer.persistence.model;
 
-import java.io.Serializable;
-import java.util.Date;
-import java.util.List;
-//import java.util.Set;
+import org.hibernate.annotations.OrderBy;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
-
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
-import org.hibernate.annotations.OrderBy;
-import org.hibernate.annotations.Proxy;
-
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import java.sql.Timestamp;
+import java.util.List;
 
 @Entity
-@Proxy(lazy = false)
-public class LFSalvage implements Serializable {
-	
-	private static final long serialVersionUID = 5806495189281178779L;
+@Table(name = "lfsalvage")
+public class LFSalvage {
+
+	private long id;
+	private int agentId;
+	private int statusId;
+	private String companyCode;
+	private String locationStationCode;
+	private Timestamp createdDate;
+	private Timestamp closedDate;
+	private String name;
+	private List<LFFound> items;
 
 	@Id
 	@GeneratedValue
-	private long id;
-
-	@Column(name="name")
-	private String name;
-	
-	@Column(name = "agent_id", nullable = false)
-	private int agentId;
-	
-	@Column(name = "status_id", nullable = false)
-	private int statusId;
-	
-	@Column(name="loc_stn_code",length = 8)
-	private String locationStationCode;
-
-	@Column(name="company_code",length = 8)
-	private String companyCode;
-	
-	@OneToMany(mappedBy = "salvage", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	@OrderBy(clause = "id")
-	@Fetch(FetchMode.SELECT)
-	private List<LFFound> items;
-	
-	@Column(name="created_datetime")
-	private Date createdDate;
-	
-	@Column(name="closed_datetime")
-	private Date closedDate;
-	
+	@Column(name = "id")
 	public long getId() {
 		return id;
 	}
@@ -63,38 +39,7 @@ public class LFSalvage implements Serializable {
 		this.id = id;
 	}
 
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public List<LFFound> getItems() {
-		return items;
-	}
-	
-	public void setItems(List<LFFound> items) {
-		this.items = items;
-	}
-	
-	public Date getCreatedDate() {
-		return createdDate;
-	}
-	
-	public void setCreatedDate(Date createdDate) {
-		this.createdDate = createdDate;
-	}
-	
-	public Date getClosedDate() {
-		return closedDate;
-	}
-	
-	public void setClosedDate(Date closedDate) {
-		this.closedDate = closedDate;
-	}
-
+	@Column(name = "agent_id", nullable = false)
 	public int getAgentId() {
 		return agentId;
 	}
@@ -103,6 +48,7 @@ public class LFSalvage implements Serializable {
 		this.agentId = agentId;
 	}
 
+	@Column(name = "status_id", nullable = false)
 	public int getStatusId() {
 		return statusId;
 	}
@@ -111,6 +57,16 @@ public class LFSalvage implements Serializable {
 		this.statusId = statusId;
 	}
 
+	@Column(name="company_code")
+	public String getCompanyCode() {
+		return companyCode;
+	}
+
+	public void setCompanyCode(String companyCode) {
+		this.companyCode = companyCode;
+	}
+
+	@Column(name="loc_stn_code",length = 8)
 	public String getLocationStationCode() {
 		return locationStationCode;
 	}
@@ -119,11 +75,43 @@ public class LFSalvage implements Serializable {
 		this.locationStationCode = locationStationCode;
 	}
 
-	public String getCompanyCode() {
-		return companyCode;
+	@Column(name="created_datetime")
+	@Temporal(TemporalType.TIMESTAMP)
+	public Timestamp getCreatedDate() {
+		return createdDate;
 	}
 
-	public void setCompanyCode(String companyCode) {
-		this.companyCode = companyCode;
+	public void setCreatedDate(Timestamp createdDate) {
+		this.createdDate = createdDate;
 	}
+
+	@Column(name="closed_datetime")
+	@Temporal(TemporalType.TIMESTAMP)
+	public Timestamp getClosedDate() {
+		return closedDate;
+	}
+
+	public void setClosedDate(Timestamp closedDate) {
+		this.closedDate = closedDate;
+	}
+
+	@Column(name="name")
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	@OneToMany(mappedBy = "salvage", cascade = CascadeType.ALL)
+	@OrderBy(clause = "id")
+	public List<LFFound> getItems() {
+		return items;
+	}
+	
+	public void setItems(List<LFFound> items) {
+		this.items = items;
+	}
+
 }

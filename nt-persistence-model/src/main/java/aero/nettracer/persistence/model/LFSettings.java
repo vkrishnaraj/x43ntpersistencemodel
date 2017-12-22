@@ -1,17 +1,15 @@
 package aero.nettracer.persistence.model;
 
-
-import java.io.Serializable;
-
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
-public class LFSettings implements Serializable{
-    private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue
+@Table(name = "lfsettings")
+public class LFSettings {
+
     private int id;
     private String companyCode;
     private String email_Path;
@@ -29,6 +27,9 @@ public class LFSettings implements Serializable{
     private int auto_close_matched_lr_buffer;
     private int email_payment_remind;
 
+    @Id
+    @GeneratedValue
+    @Column(name = "id")
     public int getId() {
         return id;
     }
@@ -37,6 +38,7 @@ public class LFSettings implements Serializable{
         this.id = id;
     }
 
+    @Column(name = "companycode")
     public String getCompanyCode() {
         return companyCode;
     }
@@ -45,6 +47,7 @@ public class LFSettings implements Serializable{
         this.companyCode = companyCode;
     }
 
+    @Column(name = "email_path")
     public String getEmail_Path() {
         return email_Path;
     }
@@ -53,6 +56,7 @@ public class LFSettings implements Serializable{
         this.email_Path = email_Path;
     }
 
+    @Column(name = "email_notice_1")
     public int getEmail_Notice_1() {
         return email_Notice_1;
     }
@@ -61,6 +65,7 @@ public class LFSettings implements Serializable{
         this.email_Notice_1 = email_Notice_1;
     }
 
+    @Column(name = "email_notice_2")
     public int getEmail_Notice_2() {
         return email_Notice_2;
     }
@@ -69,6 +74,7 @@ public class LFSettings implements Serializable{
         this.email_Notice_2 = email_Notice_2;
     }
 
+    @Column(name = "email_notice_3")
     public int getEmail_Notice_3() {
         return email_Notice_3;
     }
@@ -77,6 +83,7 @@ public class LFSettings implements Serializable{
         this.email_Notice_3 = email_Notice_3;
     }
 
+    @Column(name = "email_notice_4")
     public int getEmail_Notice_4() {
         return email_Notice_4;
     }
@@ -85,6 +92,7 @@ public class LFSettings implements Serializable{
         this.email_Notice_4 = email_Notice_4;
     }
 
+    @Column(name = "email_notice_5")
     public int getEmail_Notice_5() {
         return email_Notice_5;
     }
@@ -93,6 +101,7 @@ public class LFSettings implements Serializable{
         this.email_Notice_5 = email_Notice_5;
     }
 
+    @Column(name = "shippingsurcharge")
     public int getShippingSurcharge() {
         return shippingSurcharge;
     }
@@ -101,6 +110,7 @@ public class LFSettings implements Serializable{
         this.shippingSurcharge = shippingSurcharge;
     }
 
+    @Column(name = "senddataplanemails")
     public boolean isSendDataplanEmails() {
         return sendDataplanEmails;
     }
@@ -109,6 +119,7 @@ public class LFSettings implements Serializable{
         this.sendDataplanEmails = sendDataplanEmails;
     }
 
+    @Column(name = "salvage_low")
     public int getSalvage_Low() {
         return salvage_Low;
     }
@@ -117,6 +128,7 @@ public class LFSettings implements Serializable{
         this.salvage_Low = salvage_Low;
     }
 
+    @Column(name = "salvage_high")
     public int getSalvage_High() {
         return salvage_High;
     }
@@ -125,6 +137,7 @@ public class LFSettings implements Serializable{
         this.salvage_High = salvage_High;
     }
 
+    @Column(name = "shippingsurchargetype")
     public int getShippingSurchargeType() {
         return shippingSurchargeType;
     }
@@ -133,6 +146,7 @@ public class LFSettings implements Serializable{
         this.shippingSurchargeType = shippingSurchargeType;
     }
 
+    @Column(name = "auto_close_lr")
     public int getAuto_close_lr() {
         return auto_close_lr;
     }
@@ -141,6 +155,7 @@ public class LFSettings implements Serializable{
         this.auto_close_lr = auto_close_lr;
     }
 
+    @Column(name = "auto_close_matched_lr_buffer")
     public int getAuto_close_matched_lr_buffer() {
         return auto_close_matched_lr_buffer;
     }
@@ -149,6 +164,7 @@ public class LFSettings implements Serializable{
         this.auto_close_matched_lr_buffer = auto_close_matched_lr_buffer;
     }
 
+    @Column(name = "email_payment_remind")
     public int getEmail_payment_remind() {
         return email_payment_remind;
     }
@@ -156,4 +172,5 @@ public class LFSettings implements Serializable{
     public void setEmail_payment_remind(int email_payment_remind) {
         this.email_payment_remind = email_payment_remind;
     }
+
 }
