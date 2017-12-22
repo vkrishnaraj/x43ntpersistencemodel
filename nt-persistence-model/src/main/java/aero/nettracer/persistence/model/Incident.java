@@ -14,7 +14,6 @@ import aero.nettracer.persistence.util.ReportMethod;
 import aero.nettracer.persistence.util.TracingStatus;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
-import org.hibernate.annotations.OrderBy;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -26,6 +25,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.OrderBy;
 import javax.persistence.OrderColumn;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -688,7 +688,7 @@ public class Incident {
 	}
 
 	@OneToMany(mappedBy = "incident", cascade = CascadeType.ALL)
-	@org.hibernate.annotations.OrderBy(clause = "createdate")
+	@OrderBy(value = "createdate")
 	public Set<ExpensePayout> getExpenses() {
 		return expenses;
 	}
@@ -718,7 +718,7 @@ public class Incident {
 	}
 
 	@OneToMany(mappedBy = "incident", cascade = CascadeType.ALL)
-	@OrderBy(clause = "articles_id desc")
+	@OrderBy(value = "articles_id desc")
 	public Set<Articles> getArticles() {
 		return articles;
 	}
@@ -728,7 +728,7 @@ public class Incident {
 	}
 
 	@OneToMany(mappedBy = "incident", cascade = CascadeType.ALL)
-	@OrderBy(clause = "passenger_id")
+	@OrderBy(value = "passenger_id")
 	public Set<Passenger> getPassengers() {
 		return passengers;
 	}
@@ -738,7 +738,7 @@ public class Incident {
 	}
 
 	@OneToMany(mappedBy = "incident", cascade = CascadeType.ALL)
-	@OrderBy(clause = "createtime")
+	@OrderBy(value = "createtime")
 	public Set<Remark> getRemarks() {
 		return remarks;
 	}
@@ -748,7 +748,7 @@ public class Incident {
 	}
 
 	@OneToMany(mappedBy = "incident", cascade = CascadeType.ALL)
-	@OrderBy(clause = "itinerary_id")
+	@OrderBy(value = "itinerary_id")
 	public Set<Itinerary> getItinerary() {
 		return itinerary;
 	}
@@ -758,7 +758,7 @@ public class Incident {
 	}
 
 	@OneToMany(mappedBy = "ntIncident")
-	@org.hibernate.annotations.OrderBy(clause = "claimdate")
+	@OrderBy(value = "claimdate")
 	public Set<Claim> getClaims() {
 		return claims;
 	}
@@ -768,7 +768,7 @@ public class Incident {
 	}
 
 	@OneToMany(mappedBy = "incident", cascade = CascadeType.ALL)
-	@OrderBy(clause = "issuedate")
+	@OrderBy(value = "issuedate")
 	public List<IssuanceItemIncident> getIssuanceItemIncidents() {
 		return issuanceItemIncidents;
 	}
@@ -778,7 +778,7 @@ public class Incident {
 	}
 
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "incident")
-	@OrderBy(clause = "createdate")
+	@OrderBy(value = "createdate")
 	public Set<IncidentActivity> getActivities() {
 		return activities;
 	}

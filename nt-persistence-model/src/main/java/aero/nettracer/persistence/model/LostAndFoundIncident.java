@@ -1,6 +1,5 @@
 package aero.nettracer.persistence.model;
 
-import org.hibernate.annotations.OrderBy;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,6 +7,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -330,7 +330,7 @@ public class LostAndFoundIncident {
 	}
 
 	@OneToMany(mappedBy = "lostandfoundincident", cascade = javax.persistence.CascadeType.ALL)
-	@OrderBy(clause = "Photo_ID")
+	@OrderBy(value = "Photo_ID")
 	public Set<LostAndFound_Photo> getPhotos() {
 		return photos;
 	}

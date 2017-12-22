@@ -3,8 +3,6 @@ package aero.nettracer.persistence.model.fraudservice;
 import aero.nettracer.commons.utils.GenericDateUtils;
 import aero.nettracer.persistence.model.Agent;
 import aero.nettracer.persistence.model.fraudservice.detection.Blacklist;
-import org.hibernate.annotations.OrderBy;
-import org.hibernate.annotations.Proxy;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -19,6 +17,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -33,7 +32,6 @@ import java.util.TreeSet;
 @Table(name = "fsclaim")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name="subclass_type", discriminatorType = DiscriminatorType.STRING, length=16)
-@Proxy(lazy = false)
 public class FsClaim {
 
 	@Id
@@ -346,7 +344,7 @@ public class FsClaim {
 	}
 
 	@OneToMany(mappedBy = "claim", cascade = CascadeType.ALL, orphanRemoval = true)
-	@OrderBy(clause = "id")
+	@OrderBy(value = "id")
 	public Set<Attachment> getAttachments() {
 		return attachments;
 	}
@@ -376,7 +374,7 @@ public class FsClaim {
 	}
 
 	@OneToMany(mappedBy = "claim", cascade = CascadeType.ALL)
-	@OrderBy(clause = "id")
+	@OrderBy(value = "id")
 	public Set<Segment> getSegments() {
 		if (segments == null) {
 			return new LinkedHashSet<>();
@@ -389,7 +387,7 @@ public class FsClaim {
 	}
 
 	@OneToMany(mappedBy = "claim", cascade = CascadeType.ALL)
-	@OrderBy(clause = "id")
+	@OrderBy(value = "id")
 	public Set<FsReceipt> getReceipts() {
 		return receipts;
 	}
@@ -399,7 +397,7 @@ public class FsClaim {
 	}
 
 	@OneToMany(mappedBy = "claim", cascade = CascadeType.ALL, orphanRemoval = true)
-	@OrderBy(clause = "id")
+	@OrderBy(value = "id")
 	public Set<FsIPAddress> getIpAddresses() {
 		return ipAddresses;
 	}

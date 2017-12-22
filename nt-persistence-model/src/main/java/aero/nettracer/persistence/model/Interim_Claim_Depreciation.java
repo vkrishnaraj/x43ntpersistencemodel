@@ -1,7 +1,6 @@
 package aero.nettracer.persistence.model;
 
 import org.apache.commons.collections4.CollectionUtils;
-import org.hibernate.annotations.OrderBy;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -13,6 +12,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import java.util.ArrayList;
@@ -150,7 +150,7 @@ public class Interim_Claim_Depreciation {
     }
 
     @OneToMany(mappedBy = "interimClaimDepreciation", cascade = CascadeType.ALL)
-    @OrderBy(clause = "id")
+    @OrderBy(value = "id")
     public List<Interim_Depreciation_Item> getInterimitemlist() {
         return interimitemlist;
     }

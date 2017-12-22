@@ -1,7 +1,6 @@
 package aero.nettracer.persistence.model;
 
 import aero.nettracer.persistence.util.Phone;
-import org.hibernate.annotations.OrderBy;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -11,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import java.util.ArrayList;
@@ -94,7 +94,7 @@ public class OHD_Passenger {
 
 
 	@OneToMany(mappedBy = "ohd_passenger", cascade = CascadeType.ALL)
-	@OrderBy(clause = "address_id")
+	@OrderBy(value = "address_id")
 	public Set<OHD_Address> getAddresses() {
 		return addresses;
 	}

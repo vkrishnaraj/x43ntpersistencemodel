@@ -2,13 +2,13 @@ package aero.nettracer.persistence.model;
 
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
-import org.hibernate.annotations.OrderBy;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -217,7 +217,7 @@ public class ClaimProrate {
 
 	@OneToMany(mappedBy = "claimProrate")
 	@Cascade(CascadeType.ALL)
-	@OrderBy(clause = "prorate_itinerary_id")
+	@OrderBy(value = "prorate_itinerary_id")
 	public Set<Prorate_Itinerary> getProrate_itineraries() {
 		return prorate_itineraries;
 	}

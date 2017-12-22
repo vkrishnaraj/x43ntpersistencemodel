@@ -3,7 +3,6 @@ package aero.nettracer.persistence.model;
 import aero.nettracer.persistence.util.AES;
 import aero.nettracer.persistence.util.Phone;
 import org.apache.commons.lang3.StringUtils;
-import org.hibernate.annotations.OrderBy;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -13,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import java.util.ArrayList;
@@ -232,7 +232,7 @@ public class Passenger {
 	}
 
 	@OneToMany(mappedBy = "passenger")
-	@OrderBy(clause = "address_id")
+	@OrderBy(value = "address_id")
 	public Set <Address> getAddresses() {
 		return addresses;
 	}

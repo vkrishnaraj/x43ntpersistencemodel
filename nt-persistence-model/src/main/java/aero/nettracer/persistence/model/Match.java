@@ -2,7 +2,6 @@ package aero.nettracer.persistence.model;
 
 import aero.nettracer.commons.utils.CommonsUtils;
 import org.apache.commons.collections4.CollectionUtils;
-import org.hibernate.annotations.OrderBy;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -12,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import java.util.ArrayList;
@@ -131,7 +131,7 @@ public class Match {
 	}
 
 	@OneToMany(mappedBy = "match", cascade = CascadeType.ALL)
-	@OrderBy(clause = "item")
+	@OrderBy(value = "item")
 	public Set<Match_Detail> getDetails() {
 		return details;
 	}

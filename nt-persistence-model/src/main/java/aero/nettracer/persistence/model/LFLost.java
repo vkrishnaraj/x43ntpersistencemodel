@@ -1,7 +1,6 @@
 package aero.nettracer.persistence.model;
 
 import aero.nettracer.commons.utils.GenericStringUtils;
-import org.hibernate.annotations.OrderBy;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -11,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -296,7 +296,7 @@ public class LFLost implements Cloneable {
 	}
 
 	@OneToMany(mappedBy = "lost", cascade = CascadeType.ALL, orphanRemoval = true)
-	@OrderBy(clause = "id")
+	@OrderBy(value = "id")
 	public List<LFSegment> getSegments() {
 		return segments;
 	}
@@ -306,7 +306,7 @@ public class LFLost implements Cloneable {
 	}
 
 	@OneToMany(mappedBy = "lost", cascade = CascadeType.ALL, orphanRemoval = true)
-	@OrderBy(clause = "id")
+	@OrderBy(value = "id")
 	public List<LFRemark> getAgentRemarks() {
 		return agentRemarks;
 	}

@@ -3,7 +3,6 @@ package aero.nettracer.persistence.model;
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
-import org.hibernate.annotations.OrderBy;
 
 import javax.persistence.Cacheable;
 import javax.persistence.CascadeType;
@@ -15,6 +14,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import java.util.Set;
@@ -453,7 +453,7 @@ public class Station {
 	}
 
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "station")
-	@OrderBy(clause="id")
+	@OrderBy(value="id")
 	public Set<Carrier_Operation_Hours> getCarrierHours() {
 		return carrierHours;
 	}

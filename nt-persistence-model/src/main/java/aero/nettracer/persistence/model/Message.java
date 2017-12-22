@@ -1,6 +1,5 @@
 package aero.nettracer.persistence.model;
 
-import org.hibernate.annotations.OrderBy;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -10,6 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import java.sql.Timestamp;
@@ -107,7 +107,7 @@ public class Message {
 	}
 
 	@OneToMany(mappedBy = "message", cascade = CascadeType.ALL)
-	@OrderBy(clause = "recipient_id")
+	@OrderBy(value = "recipient_id")
 	public Set<Recipient> getRecipients() {
 		return recipients;
 	}

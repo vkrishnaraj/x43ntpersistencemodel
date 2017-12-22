@@ -11,7 +11,6 @@ import aero.nettracer.commons.utils.CommonsConstants;
 import aero.nettracer.commons.utils.CommonsUtils;
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
-import org.hibernate.annotations.OrderBy;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -21,6 +20,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -540,7 +540,7 @@ public class Item {
 	}
 
 
-	@OrderBy(clause="photo_id")
+	@OrderBy(value="photo_id")
 	@OneToMany(mappedBy="item", cascade=CascadeType.ALL)
 	public Set<Item_Photo> getPhotos() {
 		if (photolist == null)
@@ -553,7 +553,7 @@ public class Item {
 		if (photos != null) this.photolist = new ArrayList<Item_Photo>(photos);
 	}
 
-	@OrderBy(clause="inventory_id")
+	@OrderBy(value="inventory_id")
 	@OneToMany(mappedBy="item", cascade=CascadeType.ALL)
 	public Set<Item_Inventory> getInventory() {
 		if (inventorylist == null)
@@ -566,7 +566,7 @@ public class Item {
 		if (inventory != null) this.inventorylist = new ArrayList<Item_Inventory>(inventory);
 	}
 
-	@OrderBy(clause="bdo_id")
+	@OrderBy(value="bdo_id")
 	@OneToMany(mappedBy="item", cascade=CascadeType.ALL)
 	public Set<Item_BDO> getItem_bdo() {
 		return item_bdo;

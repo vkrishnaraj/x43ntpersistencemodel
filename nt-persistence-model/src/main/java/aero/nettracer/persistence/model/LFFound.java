@@ -1,6 +1,5 @@
 package aero.nettracer.persistence.model;
 
-import org.hibernate.annotations.OrderBy;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -11,6 +10,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -310,7 +310,7 @@ public class LFFound {
 	}
 
 	@OneToMany(mappedBy = "found", cascade = CascadeType.ALL, orphanRemoval = true)
-	@OrderBy(clause = "id")
+	@OrderBy(value = "id")
 	public List<LFRemark> getAgentRemarks() {
 		return agentRemarks;
 	}

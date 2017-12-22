@@ -2,7 +2,6 @@ package aero.nettracer.persistence.model;
 
 import aero.nettracer.persistence.util.DeliveryIntegrationType;
 import aero.nettracer.persistence.util.DeliveryStatusType;
-import org.hibernate.annotations.OrderBy;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -16,6 +15,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -268,7 +268,7 @@ public class BDO {
 	}
 
 	@OneToMany
-	@OrderBy(clause = "bdo_passenger_id")
+	@OrderBy(value = "bdo_passenger_id")
 	public Set<BDO_Passenger> getPassengers() {
 		return passengers;
 	}
@@ -286,4 +286,5 @@ public class BDO {
 	public void setItems(Set<Item> items) {
 		this.items = items;
 	}
+
 }

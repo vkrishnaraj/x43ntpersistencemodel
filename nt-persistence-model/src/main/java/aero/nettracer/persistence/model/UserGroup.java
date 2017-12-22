@@ -1,6 +1,5 @@
 package aero.nettracer.persistence.model;
 
-import org.hibernate.annotations.OrderBy;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -8,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import java.util.HashMap;
@@ -96,7 +96,7 @@ public class UserGroup {
 	}
 
 	@OneToMany(mappedBy = "usergroup", cascade = CascadeType.ALL)
-	@OrderBy(clause = "policy_id")
+	@OrderBy(value = "policy_id")
 	public Set<GroupComponentPolicy> getComponentPolicies() {
 		return componentPolicies;
 	}

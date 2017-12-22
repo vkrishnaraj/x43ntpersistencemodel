@@ -7,7 +7,6 @@
 package aero.nettracer.persistence.model;
 
 import aero.nettracer.commons.utils.CommonsConstants;
-import org.hibernate.annotations.OrderBy;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -17,6 +16,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -549,7 +549,7 @@ public class ExpensePayout {
 
 	@OneToMany(cascade = CascadeType.ALL)
 	@JoinColumn(name = "expensepayout_id")
-	@OrderBy(clause = "createtime asc")
+	@OrderBy(value = "createtime asc")
 	public Set<Remark> getRemarks() {
 		return remarks;
 	}

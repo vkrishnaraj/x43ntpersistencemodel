@@ -1,6 +1,5 @@
 package aero.nettracer.persistence.model;
 
-import org.hibernate.annotations.OrderBy;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -10,6 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -134,7 +134,7 @@ public class OHD_Log {
 	}
 
 	@OneToMany(mappedBy = "log", cascade = CascadeType.ALL)
-	@OrderBy(clause = "itinerarytype,departdate,schdeparttime")
+	@OrderBy(value = "itinerarytype,departdate,schdeparttime")
 	public Set<OHD_Log_Itinerary> getItinerary() {
 		return itinerary;
 	}

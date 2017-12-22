@@ -4,7 +4,6 @@ import aero.nettracer.commons.constant.GenericConstants;
 import aero.nettracer.commons.utils.CommonsUtils;
 import aero.nettracer.commons.utils.GenericDateUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.hibernate.annotations.OrderBy;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -15,6 +14,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -559,7 +559,7 @@ public class OHD {
 		this.weight = weight;
 	}
 
-	@OrderBy(clause="ohd_inventory_id")
+	@OrderBy(value="ohd_inventory_id")
 	@OneToMany(mappedBy="ohd", cascade=CascadeType.ALL)
 	public Set<OHD_Inventory> getItems() {
 		return items;
@@ -569,7 +569,7 @@ public class OHD {
 		this.items = items;
 	}
 
-	@OrderBy(clause="createtime")
+	@OrderBy(value="createtime")
 	@OneToMany(mappedBy="ohd", cascade=CascadeType.ALL)
 	public Set<Remark> getRemarks() {
 		return remarks;
@@ -593,7 +593,7 @@ public class OHD {
 		this.passengers = passengers;
 	}
 
-	@OrderBy(clause="Photo_ID")
+	@OrderBy(value="Photo_ID")
 	@OneToMany(mappedBy="ohd", cascade=CascadeType.ALL)
 	public Set<OHD_Photo> getPhotos() {
 		return photos;
@@ -603,7 +603,7 @@ public class OHD {
 		this.photos = photos;
 	}
 
-	@OrderBy(clause="due_date_time")
+	@OrderBy(value="due_date_time")
 	@OneToMany(cascade=CascadeType.ALL)
 	@JoinColumn(name="file_ref_number")
 	public Set<Task> getTasks() {
@@ -614,7 +614,7 @@ public class OHD {
 		this.tasks = tasks;
 	}
 
-	@OrderBy(clause="control_id")
+	@OrderBy(value="control_id")
 	@OneToMany(mappedBy="ohd", cascade=CascadeType.ALL)
 	public Set<ControlLog> getControlLog() {
 		return controlLog;
@@ -624,7 +624,7 @@ public class OHD {
 		this.controlLog = controlLog;
 	}
 
-	@OrderBy(clause="itinerarytype,itinerary_id")
+	@OrderBy(value="itinerarytype,itinerary_id")
 	@OneToMany(mappedBy="ohd", cascade=CascadeType.ALL)
 	public Set<OHD_Itinerary> getItinerary() {
 		return itinerary;
