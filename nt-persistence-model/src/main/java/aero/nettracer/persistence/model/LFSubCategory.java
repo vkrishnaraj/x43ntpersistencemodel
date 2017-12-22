@@ -1,79 +1,74 @@
 package aero.nettracer.persistence.model;
 
-import java.io.Serializable;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
-import org.hibernate.annotations.Proxy;
-
+import javax.persistence.Table;
 
 @Entity
-@Proxy(lazy = false)
-public class LFSubCategory implements Serializable{
+@Table(name = "lfsubcategory")
+public class LFSubCategory {
 	
-	private static final long serialVersionUID = -8770644874113876878L;
+	private long id;
+	private String description;
+	private LFCategory parent;
+	private int score;
+	private boolean dataplan;
+	private int weightInLB;
+	private String harmonizedCode;
+
 	@Id
 	@GeneratedValue
-	private long id;
-	
-	@Column(name="description",length = 64)
-	private String description;
-	@ManyToOne
-	@JoinColumn(name = "category_id", nullable = false)
-	@Fetch(FetchMode.SELECT)
-	private LFCategory parent;
-	
-	@Column(name="score")
-	private int score;
-	
-	@Column(name="dataplan")
-	private boolean dataplan;
-
-	@Column(name="wt_in_lb")
-	private int weightInLB;
-
-	@Column(name="HS_CODE")
-	private String harmonizedCode;
-	
+	@Column(name = "id")
 	public long getId() {
 		return id;
 	}
+
 	public void setId(long id) {
 		this.id = id;
 	}
+
+	@Column(name="description")
 	public String getDescription() {
 		return description;
 	}
+
 	public void setDescription(String description) {
 		this.description = description;
 	}
+
+	@ManyToOne
+	@JoinColumn(name = "category_id", nullable = false)
 	public LFCategory getParent() {
 		return parent;
 	}
+
 	public void setParent(LFCategory parent) {
 		this.parent = parent;
 	}
+
+	@Column(name="score")
 	public int getScore() {
 		return score;
 	}
+
 	public void setScore(int score) {
 		this.score = score;
 	}
 
+	@Column(name="dataplan")
 	public boolean isDataplan() {
 		return dataplan;
 	}
+
 	public void setDataplan(boolean dataplan) {
 		this.dataplan = dataplan;
 	}
 
+	@Column(name="wt_in_lb")
 	public int getWeightInLB() {
 		return weightInLB;
 	}
@@ -82,6 +77,7 @@ public class LFSubCategory implements Serializable{
 		this.weightInLB = weightInLB;
 	}
 
+	@Column(name="HS_CODE")
 	public String getHarmonizedCode() {
 		return harmonizedCode;
 	}
@@ -89,4 +85,5 @@ public class LFSubCategory implements Serializable{
 	public void setHarmonizedCode(String harmonizedCode) {
 		this.harmonizedCode = harmonizedCode;
 	}
+
 }

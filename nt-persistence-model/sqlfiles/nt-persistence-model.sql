@@ -56,7 +56,7 @@ drop table if exists blacklist;
 drop table if exists internalsummary;
 drop table if exists phonewhitelist;
 drop table if exists whitelist;
-drop table if exists central_message
+drop table if exists central_message;
 alter table oc_itinerary change column 'date' 'createdate' datetime;
 
 
