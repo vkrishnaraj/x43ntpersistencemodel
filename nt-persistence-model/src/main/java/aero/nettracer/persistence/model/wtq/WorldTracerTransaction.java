@@ -5,7 +5,6 @@ import aero.nettracer.persistence.model.Agent;
 import aero.nettracer.persistence.model.Incident;
 import aero.nettracer.persistence.model.OHD;
 import aero.nettracer.persistence.util.TxType;
-import org.hibernate.annotations.Proxy;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -22,7 +21,6 @@ import java.sql.Timestamp;
 
 @Entity
 @Table(name="wt_transaction")
-@Proxy(lazy=false)
 public class WorldTracerTransaction {
 	
 	public static final String UNKNOWN_ERROR = "Unknown Error";
