@@ -5,11 +5,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import java.io.Serializable;
 
 @Entity
 @Table(name = "incident_group")
-public class IncidentGroup implements Serializable {
+public class IncidentGroup {
 
 	private int id;
 	private String name;

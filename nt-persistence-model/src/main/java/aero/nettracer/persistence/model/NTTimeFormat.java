@@ -5,11 +5,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import java.io.Serializable;
 
 @Entity
 @Table(name = "timeformat")
-public class NTTimeFormat implements Serializable {
+public class NTTimeFormat {
 
 	private int id;
 	private String format;

@@ -11,7 +11,6 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import java.io.Serializable;
 import java.sql.Timestamp;
 
 @NamedQueries({
@@ -22,7 +21,7 @@ import java.sql.Timestamp;
 	})
 @Entity
 @Table(name="z_ws_data_feed_log")
-public class DataFeedLog implements Serializable {
+public class DataFeedLog {
 	
 	public static final String ALREADY_PROCESSED_BY_TYPE = "alreadyProcessedByType";
 	

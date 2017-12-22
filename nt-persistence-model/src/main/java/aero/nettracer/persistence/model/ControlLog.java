@@ -9,18 +9,16 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import java.io.Serializable;
 import java.sql.Timestamp;
 
 @Entity
 @Table(name = "file_control")
-public class ControlLog implements Serializable {
+public class ControlLog {
 
 	private int control_id;
 	private Timestamp start_date;
 	private Timestamp end_date;
 	private Station controlling_station;
-	
 	private OHD ohd;
 
 	@Id

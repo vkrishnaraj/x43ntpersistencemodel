@@ -7,11 +7,10 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import java.io.Serializable;
 
 @Entity
 @Table(name = "wt_roh")
-public class WT_ROH implements Serializable{
+public class WT_ROH {
 	
 	private int id;
 	private String wt_ahl_id;

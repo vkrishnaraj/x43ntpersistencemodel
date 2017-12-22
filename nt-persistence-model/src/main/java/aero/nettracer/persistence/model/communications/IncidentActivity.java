@@ -22,7 +22,6 @@ import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
@@ -30,9 +29,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "incident_activity")
-public class IncidentActivity implements Serializable {
-
-	private static final long serialVersionUID = -7194092797476837039L;
+public class IncidentActivity {
 
 	private long id;
 	private Incident incident;
