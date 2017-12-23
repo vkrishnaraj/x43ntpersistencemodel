@@ -1,6 +1,5 @@
 package aero.nettracer.persistence.model;
 
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -34,8 +33,7 @@ public class Claim_Depreciation {
 	private double totalClaimed;
 	private double additionalDepreciation;
 	private double totalApprovedPayout;
-
-	private List<Depreciation_Item> itemList=new ArrayList<Depreciation_Item>();
+	private List<Depreciation_Item> itemList=new ArrayList<>();
 
 	@Id
 	@GeneratedValue

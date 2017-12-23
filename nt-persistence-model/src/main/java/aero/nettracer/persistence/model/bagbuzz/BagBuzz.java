@@ -36,6 +36,7 @@ public class BagBuzz {
 		id = id;
 	}
 
+	@Column(name = "created_timestamp")
 	@Temporal(value = TemporalType.TIMESTAMP)
 	public Timestamp getCreated_timestamp() {
 		return created_timestamp;
