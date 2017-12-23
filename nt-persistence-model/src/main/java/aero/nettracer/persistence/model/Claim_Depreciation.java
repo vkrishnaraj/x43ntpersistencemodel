@@ -57,7 +57,7 @@ public class Claim_Depreciation {
 	}
 
 	@ManyToOne
-	@JoinColumn(name = "claimtype_id", nullable = true)
+	@JoinColumn(name = "claimtype_id")
 	public Claim_Type getClaimType() {
 		return claimType;
 	}

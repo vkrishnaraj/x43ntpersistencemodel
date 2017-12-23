@@ -499,7 +499,7 @@ public class Incident {
 	}
 
 	@OneToOne
-	@JoinColumn(name = "deliveryinstructions_id", nullable = true)
+	@JoinColumn(name = "deliveryinstructions_id")
 	public DeliveryInstructions getDeliveryInstructions() {
 		return deliveryInstructions;
 	}
