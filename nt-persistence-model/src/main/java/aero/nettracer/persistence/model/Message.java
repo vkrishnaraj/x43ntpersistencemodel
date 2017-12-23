@@ -11,6 +11,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 import java.sql.Timestamp;
 import java.util.Iterator;
@@ -89,6 +91,7 @@ public class Message {
 	}
 
 	@Column(name = "send_date")
+	@Temporal(TemporalType.TIMESTAMP)
 	public Timestamp getSend_date() {
 		return send_date;
 	}

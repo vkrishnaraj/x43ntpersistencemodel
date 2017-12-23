@@ -223,6 +223,7 @@ public class FsClaim {
 	}
 
 	@Column(name = "traveldate")
+	@Temporal(TemporalType.TIMESTAMP)
 	public Timestamp getTravelDate() {
 		return travelDate;
 	}

@@ -5,6 +5,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import java.sql.Timestamp;
 
 @Entity
@@ -56,6 +58,7 @@ public class Webservice_Session {
 	}
 
 	@Column(name = "date_active")
+	@Temporal(TemporalType.TIMESTAMP)
 	public Timestamp getDate_active() {
 		return date_active;
 	}

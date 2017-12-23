@@ -15,26 +15,26 @@ import java.sql.Timestamp;
 @Table(name = "wt_tty")
 public class WT_TTY {
 
-	public int id;
-	public String teletype_address1;
-	public String teletype_address2;
-	public String teletype_address3;
-	public String teletype_address4;
-	public String origin_address;
-	public String airline_code;
-	public String file_type1;
-	public String file_type2;
-	public String file_type3;
-	public String file_type4;
-	public String file_reference1;
-	public String file_reference2;
-	public String file_reference3;
-	public String file_reference4;
-	public int tty_status;
-	public int tty_station_id;
-	public Agent tty_agent;
-	public Timestamp send_time;
-	public String text;
+	private int id;
+	private String teletype_address1;
+	private String teletype_address2;
+	private String teletype_address3;
+	private String teletype_address4;
+	private String origin_address;
+	private String airline_code;
+	private String file_type1;
+	private String file_type2;
+	private String file_type3;
+	private String file_type4;
+	private String file_reference1;
+	private String file_reference2;
+	private String file_reference3;
+	private String file_reference4;
+	private int tty_status;
+	private int tty_station_id;
+	private Agent tty_agent;
+	private Timestamp send_time;
+	private String text;
 
 	@Id
 	@GeneratedValue

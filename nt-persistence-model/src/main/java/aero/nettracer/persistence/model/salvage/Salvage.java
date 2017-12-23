@@ -12,6 +12,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 import java.sql.Timestamp;
 import java.util.Set;
@@ -70,6 +72,7 @@ public class Salvage {
 	}
 
 	@Column(name="salvage_date")
+	@Temporal(TemporalType.TIMESTAMP)
 	public Timestamp getSalvageDate() {
 		return salvageDate;
 	}

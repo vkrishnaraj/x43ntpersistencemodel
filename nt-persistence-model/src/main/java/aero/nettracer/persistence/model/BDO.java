@@ -192,6 +192,7 @@ public class BDO {
 	}
 
 	@Column(name = "lastdeliveryupdate")
+	@Temporal(TemporalType.TIMESTAMP)
 	public Timestamp getLastDeliveryUpdate() {
 		return lastDeliveryUpdate;
 	}

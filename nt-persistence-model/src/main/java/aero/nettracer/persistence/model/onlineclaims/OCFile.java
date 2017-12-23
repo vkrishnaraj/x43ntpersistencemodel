@@ -41,6 +41,8 @@ public class OCFile {
 		this.id = id;
 	}
 
+	@Column(name = "dateUploaded")
+	@Temporal(TemporalType.TIMESTAMP)
 	public Timestamp getDateUploaded() {
 		return dateUploaded;
 	}
@@ -106,6 +108,7 @@ public class OCFile {
 	}
 
 	@Column(name = "dateviewed")
+	@Temporal(TemporalType.TIMESTAMP)
 	public Timestamp getDateViewed() {
 		return dateViewed;
 	}

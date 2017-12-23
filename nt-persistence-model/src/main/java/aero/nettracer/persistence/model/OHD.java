@@ -450,6 +450,7 @@ public class OHD {
 		this.warehouseReceivedDate = warehouseReceivedDate;
 	}
 
+	@Column(name = "warehouseSentDate")
 	@Temporal(value = TemporalType.TIMESTAMP)
 	public Timestamp getWarehouseSentDate() {
 		return warehouseSentDate;
@@ -541,6 +542,7 @@ public class OHD {
 		this.other = other;
 	}
 
+	@Column(name = "inventoryDate")
 	@Temporal(value = TemporalType.TIMESTAMP)
 	public Timestamp getInventoryDate() {
 		return inventoryDate;

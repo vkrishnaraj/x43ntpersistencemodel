@@ -72,6 +72,7 @@ public class Lock {
 		this.createDate = createDate;
 	}
 
+	@Column(name = "expirationDate")
 	@Temporal(TemporalType.TIMESTAMP)
 	public Timestamp getExpirationDate() {
 		return expirationDate;
